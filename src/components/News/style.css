@@ -1,0 +1,26 @@
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    width: 200px; 
+    margin: 10px;
+}
+
+.card-image {
+    width: 17rem;
+    height: auto;
+    display: block;
+    margin: 0 auto 12px; 
+}
+
+.category {
+    font-weight: lighter;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.description {
+    font-size: 14px;
+    color: #555;
+}
