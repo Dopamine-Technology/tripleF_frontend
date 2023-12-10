@@ -1,0 +1,49 @@
+/* Your variable definitions */
+:root {
+  --primary: #213555;
+  --primary-rgb: 193, 147, 253;
+  --secondary: #77DCBF;
+  --secondary-rgb: 255, 183, 42;
+  --tertiary-1: #91C852;
+  --tertiary-1-rgb: 142, 210, 83;
+  --tertiary-2: #2fc3fb;
+  --tertiary-2-rgb: 47, 195, 251;
+  --success: #464646;
+  --success-rgb: 141, 213, 79;
+  --warning: #1877F2;
+  --warning-rgb: 255, 183, 42;
+  --danger: #e51717;
+  --gray: #F5F5F5;
+  --light-gray: #E0E0ED;
+  --light-gray-2: #D1D1D1;
+  --btn-color: white;
+}
+
+/* Override Bootstrap's bg-primary */
+body .bg-primary {
+  background-color: var(--primary);
+  /* Other necessary styles */
+}
+
+/* Apply styles to elements */
+ul {
+  list-style: none;
+}
+
+/* Define specific CSS styles */
+.row {
+  --bs-gutter-x: 30px;
+}
+
+.container,
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* ... other basic styles */

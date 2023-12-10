@@ -1,25 +1,22 @@
-import './App.scss';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from './components/Header/Header';
-import About from './components/About/About';
-import Steps from './components/Steps/Steps';
-import WhosFor from './components/WhosFor/WhosFor';
-import BecomeClient from './components/BecomeClient/BecomeClient';
-import News from './components/News/News';
-import Footer from './components/Footer/Footer';
-import OurClients from './components/OurClients/OurClients';
+import LandingPage from './pages/LandingPage';
+import { Route, BrowserRouter as Router, Routes , Navigate} from "react-router-dom";
+import React from 'react';
+import Register from './pages/Register';
+import Login from './pages/Login';
 
 function App() {
+  
   return (
     <div className="App">
-      <Header />
-      <About />
-      <WhosFor />
-      <Steps />
-      <OurClients />
-      <BecomeClient />
-      <News />
-      <Footer />
+       <Router>
+        <Routes>
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+      </Routes>
+      </Router>
     </div>
   );
 }

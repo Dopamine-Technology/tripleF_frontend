@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="169px" height="54px" viewBox="0 0 169 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Asset 3</title>
+    <defs>
+        <linearGradient x1="53.7766061%" y1="14.7800587%" x2="36.9494794%" y2="91.2609971%" id="linearGradient-1">
+            <stop stop-color="#25589A" offset="25%"></stop>
+            <stop stop-color="#0C0C68" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="64.8169618%" y1="2.25645814%" x2="31.9786306%" y2="99.2063492%" id="linearGradient-2">
+            <stop stop-color="#25589A" offset="25%"></stop>
+            <stop stop-color="#0C0C68" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="64.7124457%" y1="1.16861436%" x2="35.2875543%" y2="98.7896494%" id="linearGradient-3">
+            <stop stop-color="#25589A" offset="25%"></stop>
+            <stop stop-color="#0C0C68" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="62.9474986%" y1="48.1180427%" x2="34.7096575%" y2="51.7812002%" id="linearGradient-4">
+            <stop stop-color="#25589A" offset="25%"></stop>
+            <stop stop-color="#0C0C68" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Trash-🗑️-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home-Page---Option-2.1" transform="translate(-80, -5233)" fill-rule="nonzero">
+            <g id="Asset-3" transform="translate(80, 5233)">
+                <g id="CUSTOM-group" transform="translate(0, 5.4204)">
+                    <path d="M36.9721544,24.2897942 C36.9721544,21.2204956 34.8862356,18.6274675 32.0596645,17.8412432 L32.0596645,30.7307854 C34.8862356,29.952121 36.9721544,27.3590928 36.9721544,24.2822344 L36.9721544,24.2897942 Z" id="Path" fill="url(#linearGradient-1)"></path>
+                    <path d="M23.6026243,24.2897942 C23.6026243,27.3590928 25.6885431,29.9596808 28.5151141,30.7383452 L28.5151141,17.8412432 C25.6885431,18.6199076 23.6026243,21.2129357 23.6026243,24.2897942 L23.6026243,24.2897942 Z" id="Path" fill="#84F4D4"></path>
+                    <polygon id="Path" fill="#84F4D4" points="0 33.3464931 0 15.2330953 9.43953818 15.2330953 9.43953818 33.3389332 0 33.3389332"></polygon>
+                    <path d="M32.0596645,14.2049559 C36.8587892,15.051659 40.5167047,19.2473751 40.5167047,24.2897942 C40.5167047,29.3322134 36.8587892,33.5279294 32.0596645,34.3746325 L32.0596645,48.5795884 L55.2466166,48.5795884 C58.1789952,48.5795884 60.567221,46.1906762 60.567221,43.2574549 L60.567221,36.899622 L49.3289558,36.899622 C48.3464578,36.899622 47.5529017,36.1058379 47.5529017,35.1230575 L47.5529017,13.4565309 C47.5529017,12.4737505 48.3464578,11.6799664 49.3289558,11.6799664 L60.567221,11.6799664 L60.567221,5.32213356 C60.567221,2.38891222 58.1789952,0 55.2466166,0 L32.0596645,0 L32.0596645,14.2049559 Z" id="Path" fill="url(#linearGradient-2)"></path>
+                    <path d="M28.5151141,34.3746325 C23.7159895,33.5354893 20.0580739,29.3322134 20.0580739,24.2897942 C20.0580739,19.2473751 23.7159895,15.051659 28.5151141,14.2049559 L28.5151141,0 L5.32060439,0 C2.38822583,0 0,2.38891222 0,5.32213356 L0,11.6799664 L11.2155922,11.6799664 C12.1980902,11.6799664 12.9916462,12.4737505 12.9916462,13.4565309 L12.9916462,35.1154977 C12.9916462,36.098278 12.1980902,36.8920622 11.2155922,36.8920622 L0,36.8920622 L0,43.249895 C0,46.1831163 2.38822583,48.5720286 5.32060439,48.5720286 L28.5075565,48.5720286 L28.5075565,34.3670727 L28.5151141,34.3746325 Z" id="Path" fill="#84F4D4"></path>
+                    <polygon id="Path" fill="url(#linearGradient-3)" points="51.1125674 33.3464931 51.1125674 15.2330953 60.5747787 15.2330953 60.5747787 33.3389332 51.1125674 33.3389332"></polygon>
+                </g>
+                <path d="M165.286389,44.7467451 C165.286389,46.7652247 164.485275,48.5947081 163.192913,49.9176816 C161.90055,51.2406552 160.116938,52.0571189 158.151942,52.0571189 L67.5429566,52.0571189 L67.5429566,44.7391852 L165.286389,44.7391852 L165.286389,44.7467451 Z" id="CUSTOM" fill="url(#linearGradient-4)"></path>
+                <g id="Group" transform="translate(66.9151, 0)" fill="#0C0C68" font-family="Quicksand-Bold, Quicksand" font-size="28.3971363" font-weight="bold">
+                    <text id="T">
+                        <tspan x="0" y="28">T</tspan>
+                    </text>
+                    <text id="rip">
+                        <tspan x="16.0514927" y="28">rip</tspan>
+                    </text>
+                    <text id="l">
+                        <tspan x="52.7419786" y="28">l</tspan>
+                    </text>
+                    <text id="e-F">
+                        <tspan x="60.1033859" y="28">e F</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(68.2534, 32.1596)" fill="#0C0C68" font-family="Poppins-Regular, Poppins" font-size="7.45103336" font-weight="normal">
+                    <text id="Football-Future-Finder">
+                        <tspan x="0" y="8">Football Future Finder</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

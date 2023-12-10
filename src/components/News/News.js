@@ -1,10 +1,33 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import SingleOne from './SingleOne';
 import { Row, Col } from 'react-bootstrap';
+import axios from 'axios';
 
 
 const News = () => {
-    const news=[{
+  const [news, setNews] = useState([]);
+
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    params: {
+      page: 0,
+      limit: 5
+    }
+  };
+
+  useEffect(() => {
+    axios.post('http://172.104.243.57/api/app/latest_posts', axiosConfig)
+      .then((response) => {
+        console.log('news',response.data); 
+        setNews(response.data.result);
+      })
+      .catch((error) => {
+        console.error('Error fetching news:', error);
+      });
+  }, []);
+    const news2=[{
         img:"https://th.bing.com/th/id/R.e9509b638beca9e17499ee45b20fc1dd?rik=%2fmxruNZokLGgPg&pid=ImgRaw&r=0",
         category:"Category name",
         content:"Few benifits of group & personal training"
@@ -21,13 +44,18 @@ const News = () => {
     },
 ]
     return ( <div className='p-4'>
+       {console.log(news)} {/* Add this line */}
         <h2 className='who-h1'>Our Latest News </h2>
         <Row className='m-5'>
-        {news.map((step, index) => (
+           {news && news.length > 0 ? (
+            news.map((item, index) => (
           <Col key={index} md={4}>
-            <SingleOne img={step.img} content={step.content} category={step.category} />
+            <SingleOne img={item.main_image} content={item.content} category={item.title} />
           </Col>
-        ))}
+        ))
+      ) : (
+        <p>No news available</p>
+      )}
       </Row>
     </div> );
 }

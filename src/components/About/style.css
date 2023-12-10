@@ -1,13 +1,25 @@
+@font-face {
+  font-family: 'Quicksand';
+  src: url('') format('woff2'), /* Path to downloaded font */
+       url('') format('woff'); /* Different font formats for cross-browser compatibility */
+  font-weight: normal;
+  font-style: normal;
+}
+
 .about-p{
     width:30rem;
-    margin-left: 15rem;
+    margin-left: 3rem;
 }
 .about-h1{
-  width: 13rem;
-  margin-left: 15rem;
+  color: #464646;
+  font-family: 'Quicksand', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  margin-left: 3rem;
+  width: 14rem;
 }
 .button-container{
-  margin-left: 15rem;
+  margin-left: 5rem;
 }
 /* .image-container {
     position: relative;

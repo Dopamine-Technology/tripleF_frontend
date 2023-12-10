@@ -1,0 +1,10 @@
+{
+    "navbar": {
+      "home": "Home",
+      "aboutus":"About Us ",
+      "whoFor": "Who is TripleF For",
+      "howItWorks": "How it works",
+      "contactUs": "Contact us",
+      "blog": "Blog"
+    }
+  }

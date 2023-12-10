@@ -24,10 +24,17 @@ const Input = ({
           as="textarea"
           size="lg"
           rows={rows || 3}
+          cols={23}
           {...register(name, validation)}
           className={`${className} ${
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
+          style={{
+            backgroundColor: "transparent",
+            border: "1px solid white",
+            color: "white",
+            width: "100%", // Adjust the width here
+          }}
           placeholder={placeholder}
         />
       ) : (
@@ -37,6 +44,12 @@ const Input = ({
           className={`${className} ${
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
+          style={{
+            backgroundColor: "transparent",
+            border: "1px solid white",
+            color: "white",
+            width: "10rem", // Adjust the width here
+          }}
           placeholder={placeholder}
           type={type}
         />

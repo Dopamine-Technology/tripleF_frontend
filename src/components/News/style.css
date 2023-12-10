@@ -6,6 +6,13 @@
     width: 200px; 
     margin: 10px;
 }
+.who-h1{
+    color:#464646;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    margin-left: 3rem;
+}
 
 .card-image {
     width: 17rem;

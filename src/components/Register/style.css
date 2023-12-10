@@ -1,0 +1,75 @@
+.btn-tall {
+    width: 60rem; 
+    background-color: #213555;
+    color:white;
+    border-radius: 24px;
+  }
+  .account-type-options {
+    display: flex;
+  }
+  
+  .account-type-options label {
+    margin-right: 10px; 
+  }
+  
+  .account-type-options label:last-child {
+    margin-right: 0; /* Remove margin from the last radio button */
+  }
+  /* Add these styles to your CSS or style file */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px; /* Adjust width as needed */
+    margin-top: 2rem;/* Center the form */
+  }
+  
+
+  
+  .form-container select,
+  .form-container input[type='date'],
+  .form-container input[type='number'],
+  .form-container input[type='tel'],
+  .form-container input[type='radio'] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .form-container input[type='radio'] {
+    width: auto;
+    margin-right: 10px;
+  }
+  
+  .form-container div {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .form-container div label {
+    flex-basis: 30%; /* Adjust label width */
+  }
+  
+  /* Style submit button */
+  .form-container button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .form-container button:hover {
+    background-color: #0056b3;
+  }
+  .talent-type-label {
+    border: 2px solid #E1E1E1; /* Border style */
+   /* Rounded border */
+    padding: 5px 15px; /* Adjust padding as needed */
+    display: inline-block; /* Display as inline-block to wrap content */
+    margin-right: 10px; /* Adjust margin between labels */
+    padding: 5px;
+  }

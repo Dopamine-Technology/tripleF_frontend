@@ -1,0 +1,13 @@
+.whos-for-container {
+    background-image: url('../../assets/imgs/Artboard.svg'); 
+    background-position: top right;
+    background-repeat: no-repeat; 
+
+  }
+  .whos-card{
+
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center,
+  }

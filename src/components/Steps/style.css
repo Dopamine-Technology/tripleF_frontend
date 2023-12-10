@@ -1,5 +1,7 @@
 .steps-div{
-    background-color: black;
+    background-color:  #213555;
     margin-top: 3rem;
-    padding: 2rem
+    padding: 2rem;
+    position: relative;
+
 }
