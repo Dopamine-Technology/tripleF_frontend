@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import registerImg from '../../assets/imgs/registerImage.svg';
+import loginPic from '../../assets/imgs/login.png'
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import search from '../../assets/imgs/search.png';
 import facebook from '../../assets/imgs/facebook.png';
@@ -9,7 +9,7 @@ import Input from './Input';
 import './style.css';
 import { FaArrowRight } from "react-icons/fa6";
 import EditImage from './EditImg';
-
+import axios from 'axios';
 
 function RegisterForm() {
     const {
@@ -21,38 +21,38 @@ function RegisterForm() {
       } = useForm();
       const [currentStep, setCurrentStep] = useState(1);
       const [accountType, setAccountType] = useState('talent');
+      const [formData, setFormData] = useState();
 
-
-
-
- 
-      function generateUsername(firstName, lastName) {
-
-        const username = firstName.toLowerCase() + '_' + lastName.toLowerCase(); 
+      const onSubmit = async (data) => {
+        if (currentStep === 1) {
+          setFormData(data);
+          setCurrentStep(currentStep + 1);
+        } else if (currentStep === 2) {
+          const mergedData = { ...formData, ...data };
       
-        return username;
-      }
-      const firstNameInput = document.querySelector('input[name="first_name"]');
-const lastNameInput = document.querySelector('input[name="last_name"]');
-const usernameInput = document.querySelector('input[name="user_name"]');
+          if (Object.keys(mergedData).length === 0) {
+            console.error('No form data available');
+            return;
+          }
 
-function updateUsername() {
-  const firstName = firstNameInput.value;
-  const lastName = lastNameInput.value;
+          try {
+            const response = await axios.post(`http://172.104.243.57/api/user/auth/register`, mergedData);
+            console.log('API Response:', response.data);
+          } catch (error) {
+            console.error('API Error:', error);
+            
+          }
+        }
+ 
+      };
 
-  // Generate a username based on the current first and last name
-  const generatedUsername = generateUsername(firstName, lastName);
-
-  // Set the generated username as the value for the username input field
-  usernameInput.value = generatedUsername;
-  console.log('user',generatedUsername)
-}
-
-
-
-
+    
       const handleNextStep = () => {
-        setCurrentStep(currentStep + 1);
+        if (currentStep === 2) {
+          onSubmit(formData); 
+        } else {
+          setCurrentStep(currentStep + 1); 
+        }
       };
       const handleAccountTypeChange = (e) => {
         setAccountType(e.target.value);
@@ -81,11 +81,11 @@ function updateUsername() {
                 <Form>
                   <Form.Group className='mb-3' controlId='formFile'>
                   <EditImage
-            register={register}
-            watch={watch}
-            name={"image"}
-            label={"upload image"}
-          />
+                  register={register}
+                  watch={watch}
+                  name={"image"}
+                  label={"upload image"}
+                      />
                   </Form.Group>
         
                   <div className='mb-3 d-flex '>
@@ -99,7 +99,6 @@ function updateUsername() {
                         className="form-control form-control-sm rounded"
                         validation={{}}
                         type="text"
-                        onChange={updateUsername}
                         
                       />
                     </div>
@@ -113,7 +112,6 @@ function updateUsername() {
                         className="form-control form-control-sm rounded"
                         validation={{}}
                         type="text"
-                        onChange={updateUsername}
                       />
                     </div>
                   </div>
@@ -164,29 +162,28 @@ function updateUsername() {
             case 2:
               return (
                 <div>
-                <p>Account Type</p>
+                <p>Accoount Type</p>
                 <div className="account-type-options" onChange={handleAccountTypeChange}>
                   <label className='talent-type-label'>
-                    <input type="radio" value="talents" name="accountType" /> Talents
+                    <input type="radio" value="talents" name="user_type" /> Talents
                   </label>
                   <label className='talent-type-label'>
-                    <input type="radio" value="coaches" name="accountType" /> Coaches
+                    <input type="radio" value="coaches" name="user_type" /> Coaches
                   </label>
                   <label className='talent-type-label'>
-                    <input type="radio" value="clubs" name="accountType" /> Clubs
+                    <input type="radio" value="clubs" name="user_type" /> Clubs
                   </label>
                   <label className='talent-type-label'>
-                    <input type="radio" value="scouts" name="accountType" /> Scouts
+                    <input type="radio" value="scouts" name="user_type" /> Scouts
                   </label>
                 </div>
                 {renderAccountTypeFields()}
-                <Button variant="" className='w-50 btn-tall mt-4' onClick={handleNextStep}>
+                <Button variant="" className='w-50 btn-tall mt-4 ' onClick={handleNextStep}>
                   Get Started <FaArrowRight color='white'/>
                 </Button>
               </div>
          
               );
-      
       
             default:
               return null;
@@ -201,7 +198,7 @@ function updateUsername() {
               <div className='form-container'>
               <div>
                 <label htmlFor="sport">Talent Type</label>
-                <select id="sport" name="sport">
+                <select id="sport" name="talent_type">
                   <option value="football">Football</option>
                   <option value="tennis">Tennis</option>
               
@@ -209,7 +206,7 @@ function updateUsername() {
               </div>
               <div>
                 <label htmlFor="position">Position:</label>
-                <select id="position" name="position">
+                <select id="position" name="parent_position">
                   <option value="defender">Defender</option>
                 </select>
               </div>
@@ -227,7 +224,7 @@ function updateUsername() {
               </div>
               <div>
                 <label htmlFor="birthdate">Birthdate:</label>
-                <input type="date" id="birthdate" name="birthdate" />
+                <input type="date" id="birthdate" name="birth_date" />
               </div>
               <div>
                 <label htmlFor="height">Height (cm):</label>
@@ -237,14 +234,14 @@ function updateUsername() {
               </div>
               <div>
                 <label htmlFor="residence">Residence:</label>
-                <select id="residence" name="residence">
+                <select id="residence" name="residence_place">
                   <option value="city1">City 1</option>
                   <option value="city2">City 2</option>
                 </select>
               </div>
               <div>
                 <label htmlFor="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone" />
+                <input type="tel" id="phone" name="mobile_number" />
               </div>
             </div>
             );
@@ -276,20 +273,20 @@ function updateUsername() {
                 <label htmlFor="birthdate">Birthdate:</label>
                 <input type="date" id="birthdate" name="birthdate" />
                 <label htmlFor="ExpYears">Years of experience</label>
-                <input type="number" id="birthdate" name="birthdate" />
+                <input type="number" id="birthdate" name="years_of_experience" />
               </div>
         
     
               <div>
                 <label htmlFor="residence">Residence:</label>
-                <select id="residence" name="residence">
+                <select id="residence" name="residence_place">
                   <option value="city1">City 1</option>
                   <option value="city2">City 2</option>
                 </select>
               </div>
               <div>
                 <label htmlFor="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone" />
+                <input type="tel" id="phone" name="mobile_number" />
               </div>
             </div>
             );
@@ -307,7 +304,7 @@ function updateUsername() {
              
               <div>
                 <label htmlFor="residence">Country:</label>
-                <select id="residence" name="residence">
+                <select id="residence" name="country_id">
                   <option value="city1">City 1</option>
                   <option value="city2">City 2</option>
               
@@ -321,7 +318,7 @@ function updateUsername() {
               </div>
               <div>
                 <label htmlFor="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone" />
+                <input type="tel" id="phone" name="mobile_number" />
               </div>
             </div>
             );
@@ -350,14 +347,14 @@ function updateUsername() {
               </div>
               <div>
                 <label htmlFor="birthdate">Birthdate:</label>
-                <input type="date" id="birthdate" name="birthdate" />
+                <input type="date" id="birthdate" name="birth_date" />
                 <label htmlFor="ExpYears">Years of experience</label>
-                <input type="number" id="birthdate" name="birthdate" />
+                <input type="number" id="birthdate" name="years_of_experience" />
               </div>
 
               <div>
                 <label htmlFor="residence">place of residence:</label>
-                <select id="residence" name="residence">
+                <select id="residence" name="residence_place">
                   <option value="city1">City 1</option>
                   <option value="city2">City 2</option>
               
@@ -366,12 +363,12 @@ function updateUsername() {
               
               <div>
                 <label htmlFor="birthdate">Years founded:</label>
-                <input type="number" id="birthdate" name="birthdate" min="1900" max="2023" />
+                <input type="number" id="birthdate" name="year_founded" min="1900" max="2023" />
                
               </div>
               <div>
                 <label htmlFor="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone" />
+                <input type="tel" id="phone" name="mobile_number" />
               </div>
             </div>
             );
@@ -383,7 +380,7 @@ function updateUsername() {
   return (
     <Row>
     <Col md={6}>
-      <img src={registerImg} alt="Your Image" style={{ width: '20rem', height: '20rem' }} />
+      <img src={loginPic} alt="Your Image" style={{ width: '33rem', height: '33rem' }}  />
     </Col>
     <Col md={6}>
         <p className='fs-4'>Create an Account</p>

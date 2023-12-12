@@ -1,11 +1,12 @@
 import React from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import RegisterImg from '../../assets/imgs/registerImage.svg';
-import Input from '../Register/Input';
+import Input from './Input';
 import { useForm } from 'react-hook-form';
 import search from '../../assets/imgs/search.png';
 import facebook from '../../assets/imgs/facebook.png';
 import { Link } from 'react-router-dom';
+import loginPic from '../../assets/imgs/login.png'
 
 function LoginForm() {
   const {
@@ -17,19 +18,19 @@ function LoginForm() {
   } = useForm();
 
   const onSubmit = (data) => {
-    // Handle form submission logic here
     console.log(data);
   };
 
   return (
     <Row className='mt-2'>
       <Col md={6}>
-        <img src={RegisterImg} alt="Your Image" style={{ width: '20rem', height: '20rem' }} />
+        <img src={loginPic} alt="Your Image" style={{ width: '33rem', height: '33rem' }} />
+     
       </Col>
-      <Col md={6}>
+      <Col md={6} className='mt-5'>
         <div>
-          <p className='fs-4' style={{ color: '#464646' }}>Welcome Back</p>
-          <p style={{ color: '#464646' }}>Welcome Back, please enter your details</p>
+          <p className='fs-3 ' style={{ color: '#464646',marginLeft:'4rem' }}>Welcome Back</p>
+          <p  style={{ color: '#464646',marginLeft:'2rem' }}>Welcome Back, please enter your details</p>
         </div>
 
         <Button variant='' className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px' }}>
@@ -71,11 +72,17 @@ function LoginForm() {
    />
  </Form.Group>
  <Form.Group className='mb-3' controlId='formRememberMe'>
-            <Form.Check type='checkbox' label='Remember Me' />
-            <Form.Text className='text-end'>
-              <a href='/forgotpassword'>Forgot Password?</a>
-            </Form.Text>
-          </Form.Group>
+  <Row>
+    <Col xs={8}>
+      <Form.Check type='checkbox' label='Remember Me' />
+    </Col>
+    <Col xs={4} className=''>
+      <Form.Text>
+        <a href='/forgotpassword' className='text-black'>Forgot Password?</a>
+      </Form.Text>
+    </Col>
+  </Row>
+</Form.Group>
 
 
           
@@ -84,7 +91,7 @@ function LoginForm() {
             Sign in
           </Button>
         </Form>
-       <p> Don’t have an account? <Link to='/register'>Sign Up</Link>  </p>
+       <p className='m-3'> Don’t have an account? <Link to='/register'>Sign Up</Link>  </p>
       </Col>
     </Row>
   );

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,11 +8,15 @@ import { useTranslation } from 'react-i18next';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { GoPerson } from "react-icons/go";
+import Cookies from 'js-cookie';
 
 const TopNavbar = () => {
   const [t, i18n] = useTranslation();
+  const currentLanguage = Cookies.get('language') || 'en';
+
   const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
+    window.location.reload();
+    Cookies.set('language', lng);
   };
   const availableLanguages = [
     { code: 'en', label: 'English' },
