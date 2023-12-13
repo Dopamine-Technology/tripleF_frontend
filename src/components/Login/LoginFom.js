@@ -1,25 +1,60 @@
-import React from 'react';
+import React,{useContext,useState,useEffect} from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import RegisterImg from '../../assets/imgs/registerImage.svg';
 import Input from './Input';
 import { useForm } from 'react-hook-form';
 import search from '../../assets/imgs/search.png';
 import facebook from '../../assets/imgs/facebook.png';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate  } from 'react-router-dom';
 import loginPic from '../../assets/imgs/login.png'
+import { UserDataContext } from "../UserContext/UserData.context";
+import Cookies from "js-cookie";
+import axios from 'axios';
+
 
 function LoginForm() {
   const {
     register,
     handleSubmit,
-    reset,
-    watch,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const [error, setError] = useState();
+  const { user, setUser } = useContext(UserDataContext);
+
+  const onSubmit = async (data) => {
+    data.email = data.email.toLowerCase();
+    setError();
+    axios
+      .post(`http://172.104.243.57/api/user/auth/email_login`, data)
+      .then((response) => {
+          Cookies.set(
+            "token",
+            response.data.result.token
+         
+          );
+        
+        setUser({
+          isAuthenticated: true,
+          ...response.data.result.user,
+        });
+
+        // navigate("/test");
+
+       console.log('logged in successfullly');
+       console.log(response.data.result.user);
+      
+    
+      })
+      .catch((error) => {
+        setError(error?.response?.data?.detail);
+      });
   };
+  useEffect(() => {
+    console.log('User updated:', user);
+    // You can perform additional actions here when user state changes
+  }, [user]); 
 
   return (
     <Row className='mt-2'>
@@ -68,7 +103,7 @@ function LoginForm() {
      placeholder=''
      className='form-control form-control-sm rounded'
      validation={{}}
-     type='text'
+     type='password'
    />
  </Form.Group>
  <Form.Group className='mb-3' controlId='formRememberMe'>

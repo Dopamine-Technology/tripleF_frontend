@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Routes , Navigate} from "react-router-d
 import React from 'react';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import Test from './pages/test';
 
 function App() {
   
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<LandingPage />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
+        {/* <Route path='/test' element={<Test />} /> */}
       </Routes>
       </Router>
     </div>

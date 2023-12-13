@@ -22,41 +22,127 @@ function RegisterForm() {
       const [currentStep, setCurrentStep] = useState(1);
       const [accountType, setAccountType] = useState('talent');
       const [formData, setFormData] = useState();
+      const [countries,setCountries]=useState();
+      const [sports,setSports]=useState();
+      const [positions,setPositions]=useState();
+      const [subPositions,setSubPositions]=useState();
+      
+
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('http://172.104.243.57/api/app/get_sports');
+            setSports(response.data.result);
+          } catch (error) {
+            console.error('Error fetching sports:', error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('http://172.104.243.57/api/app/get_user_types');
+            setAccountType(response.data.result);
+          } catch (error) {
+            console.error('Error fetching sports:', error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('http://172.104.243.57/api/app/get_countries');
+            setCountries(response.data.result);
+          } catch (error) {
+            console.error('Error fetching countries:', error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.post('http://172.104.243.57/api/app/get_sport_positions/1');
+            setPositions(response.data.result);
+          } catch (error) {
+            console.error('Error fetching positions:', error);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
+      
+
+      useEffect(() => {
+        console.log('Sports:', sports);
+        console.log('Positions:', positions);
+        console.log('Countries:', countries);
+      }, [sports, positions, countries,accountType]);
+
+      const handlePositionSelect = async (selectedPositionId) => {
+        try {
+          const response = await axios.post('http://172.104.243.57/api/app/get_sport_positions/1', {
+            parent_id: selectedPositionId,
+            name: ''
+          });
+          setSubPositions(response.data.result);
+        } catch (error) {
+          console.error('Error fetching sub-positions:', error);
+        }
+      };
+      
+    
 
       const onSubmit = async (data) => {
         if (currentStep === 1) {
           setFormData(data);
+          console.log('1 Data', data);
           setCurrentStep(currentStep + 1);
         } else if (currentStep === 2) {
           const mergedData = { ...formData, ...data };
-      
-          if (Object.keys(mergedData).length === 0) {
-            console.error('No form data available');
-            return;
-          }
-
-          try {
-            const response = await axios.post(`http://172.104.243.57/api/user/auth/register`, mergedData);
-            console.log('API Response:', response.data);
-          } catch (error) {
-            console.error('API Error:', error);
-            
-          }
-        }
- 
-      };
-
     
-      const handleNextStep = () => {
+          const imageFile = data.image[0];
+          
+
+          const formDataWithImage = new FormData();
+          
+
+          for (const key in mergedData) {
+            formDataWithImage.append(key, mergedData[key]);
+          }
+          formDataWithImage.delete('image');
+          formDataWithImage.append('image', imageFile);
+          formDataWithImage.append('user_type', '1');
+
+          
+          const response = await axios.post(`http://172.104.243.57/api/user/auth/register`, formDataWithImage);
+          console.log('API Response:', response.data);
+        }
+      };
+    
+      const handleNextStep = (data) => {
         if (currentStep === 2) {
-          onSubmit(formData); 
+          onSubmit(data); 
         } else {
+          onSubmit(data);
           setCurrentStep(currentStep + 1); 
+          
         }
       };
       const handleAccountTypeChange = (e) => {
         setAccountType(e.target.value);
       };
+
+      
 
       const renderFormStep = () => {
         switch (currentStep) {
@@ -78,7 +164,7 @@ function RegisterForm() {
                 
                 <hr className='w-50 mt-4' />
                 
-                <Form>
+                <Form onSubmit={handleSubmit(onSubmit)}>
                   <Form.Group className='mb-3' controlId='formFile'>
                   <EditImage
                   register={register}
@@ -152,7 +238,7 @@ function RegisterForm() {
                     errors=''
                   />
                   </Form.Group>
-                  <Button variant="" className='w-50 btn-tall' onClick={handleNextStep}>
+                  <Button variant="" className='w-50 btn-tall' type='submit'>
                     Next <FaArrowRight color='white'/>
                 </Button>
                 </Form>
@@ -165,22 +251,20 @@ function RegisterForm() {
                 <p>Accoount Type</p>
                 <div className="account-type-options" onChange={handleAccountTypeChange}>
                   <label className='talent-type-label'>
-                    <input type="radio" value="talents" name="user_type" /> Talents
+                    <input type="radio" value="1" name="user_type" /> Talents
                   </label>
                   <label className='talent-type-label'>
-                    <input type="radio" value="coaches" name="user_type" /> Coaches
+                    <input type="radio" value="2" name="user_type" /> Coaches
                   </label>
                   <label className='talent-type-label'>
-                    <input type="radio" value="clubs" name="user_type" /> Clubs
+                    <input type="radio" value="3" name="user_type" /> Clubs
                   </label>
                   <label className='talent-type-label'>
-                    <input type="radio" value="scouts" name="user_type" /> Scouts
+                    <input type="radio" value="4" name="user_type" /> Scouts
                   </label>
                 </div>
                 {renderAccountTypeFields()}
-                <Button variant="" className='w-50 btn-tall mt-4 ' onClick={handleNextStep}>
-                  Get Started <FaArrowRight color='white'/>
-                </Button>
+           
               </div>
          
               );
@@ -192,185 +276,224 @@ function RegisterForm() {
         }
       };
       const renderAccountTypeFields = () => {
+        
         switch (accountType) {
-          case 'talents':
+          case '1':
             return (
-              <div className='form-container'>
-              <div>
-                <label htmlFor="sport">Talent Type</label>
-                <select id="sport" name="talent_type">
-                  <option value="football">Football</option>
-                  <option value="tennis">Tennis</option>
-              
-                </select>
-              </div>
-              <div>
-                <label htmlFor="position">Position:</label>
-                <select id="position" name="parent_position">
-                  <option value="defender">Defender</option>
-                </select>
-              </div>
-              <div>
-                <p>Gender:</p>
-                <label>
-                  <input type="radio" value="male" name="gender" /> Male
-                </label>
-                <label>
-                  <input type="radio" value="female" name="gender" /> Female
-                </label>
-                <label>
-                  <input type="radio" value="other" name="gender" /> Other
-                </label>
-              </div>
-              <div>
-                <label htmlFor="birthdate">Birthdate:</label>
-                <input type="date" id="birthdate" name="birth_date" />
-              </div>
-              <div>
-                <label htmlFor="height">Height (cm):</label>
-                <input type="number" id="height" name="height" />
-                <label htmlFor="weight">Weight (kg):</label>
-                <input type="number" id="weight" name="weight" />
-              </div>
-              <div>
-                <label htmlFor="residence">Residence:</label>
-                <select id="residence" name="residence_place">
-                  <option value="city1">City 1</option>
-                  <option value="city2">City 2</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="phone">Phone:</label>
-                <input type="tel" id="phone" name="mobile_number" />
-              </div>
-            </div>
+              <form onSubmit={handleSubmit(onSubmit)}>
+      <div className='form-container'>
+      <div>
+  <label htmlFor="talentType">Talent Type</label>
+  <select id="talentType" {...register('talent_type')}>
+    {sports.map(sport => (
+      <option key={sport.id} value={sport.id}>
+        {sport.name}
+      </option>
+    ))}
+  </select>
+</div>
+<div>
+  <label htmlFor="position">Position:</label>
+  <select id="position" {...register('parent_position')} onChange={(e) => handlePositionSelect(e.target.value)}>
+    {positions?.map(position => (
+      <option key={position.id} value={position.id}>
+        {position.name}
+      </option>
+    ))}
+  </select>
+</div>
+{subPositions?.length > 0 && (
+        <div>
+          <label htmlFor="subPosition">Sub Positions:</label>
+          <select id="subPosition" {...register('position')}>
+            {subPositions?.map(subPosition => (
+              <option key={subPosition.id} value={subPosition.id}>
+                {subPosition.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+        <div>
+          <label>Gender:</label>
+          <label htmlFor="male">Male</label>
+          <input type="radio" id="male" value="male" {...register('gender')} />
+          <label htmlFor="female">Female</label>
+          <input type="radio" id="female" value="female" {...register('gender')} />
+          <label htmlFor="other">Other</label>
+          <input type="radio" id="other" value="other" {...register('gender')} />
+        </div>
+        <div>
+          <label htmlFor="birthdate">Birthdate:</label>
+          <input type="date" id="birthdate" {...register('birth_date')} />
+        </div>
+        <div>
+          <label htmlFor="height">Height (cm):</label>
+          <input type="number" id="height" {...register('height')} />
+          <label htmlFor="weight">Weight (kg):</label>
+          <input type="number" id="weight" {...register('wight')} />
+        </div>
+        <div>
+          <label htmlFor="residence">Residence:</label>
+          <select id="residence" {...register('residence_place')}>
+            <option value="city1">City 1</option>
+            <option value="city2">City 2</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="phone">Phone:</label>
+          <input type="tel" id="phone" {...register('mobile_number')} />
+        </div>
+      </div>
+      <button type="submit" className='w-50 btn-tall mt-4'>
+        Get Started <FaArrowRight color='white' />
+      </button>
+    </form>
             );
-          case 'coaches':
+          case '2':
             return (
-              <div className='form-container'>
-              <div>
-                <label htmlFor="sport">Talent Type</label>
-                <select id="sport" name="sport">
-                  <option value="football">Football</option>
-                  <option value="tennis">Tennis</option>
-              
-                </select>
-              </div>
-        
-              <div>
-                <p>Gender:</p>
-                <label>
-                  <input type="radio" value="male" name="gender" /> Male
-                </label>
-                <label>
-                  <input type="radio" value="female" name="gender" /> Female
-                </label>
-                <label>
-                  <input type="radio" value="other" name="gender" /> Other
-                </label>
-              </div>
-              <div>
-                <label htmlFor="birthdate">Birthdate:</label>
-                <input type="date" id="birthdate" name="birthdate" />
-                <label htmlFor="ExpYears">Years of experience</label>
-                <input type="number" id="birthdate" name="years_of_experience" />
-              </div>
-        
-    
-              <div>
-                <label htmlFor="residence">Residence:</label>
-                <select id="residence" name="residence_place">
-                  <option value="city1">City 1</option>
-                  <option value="city2">City 2</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="phone">Phone:</label>
-                <input type="tel" id="phone" name="mobile_number" />
-              </div>
-            </div>
+              <form onSubmit={handleSubmit(onSubmit)}>
+      <div className='form-container'>
+      <div>
+  <label htmlFor="talentType">Talent Type</label>
+  <select id="talentType" {...register('talent_type')}>
+    {sports.map(sport => (
+      <option key={sport.id} value={sport.name}>
+        {sport.name}
+      </option>
+    ))}
+  </select>
+</div>
+        <div>
+          <label>Gender:</label>
+          <label htmlFor="male">Male</label>
+          <input type="radio" id="male" value="male" {...register('gender')} />
+          <label htmlFor="female">Female</label>
+          <input type="radio" id="female" value="female" {...register('gender')} />
+          <label htmlFor="other">Other</label>
+          <input type="radio" id="other" value="other" {...register('gender')} />
+        </div>
+        <div>
+          <label htmlFor="birthdate">Birthdate:</label>
+          <input type="date" id="birthdate" {...register('birth_date')} />
+          <label htmlFor="yearsOfExp">Years of experience:</label>
+          <input type="number" id="yearsOfExp" {...register('years_of_experience')} />
+        </div>
+        <div>
+          <label htmlFor="residence">Residence:</label>
+          <select id="residence" {...register('residence_place')}>
+            <option value="city1">City 1</option>
+            <option value="city2">City 2</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="phone">Phone:</label>
+          <input type="tel" id="phone" {...register('mobile_number')} />
+        </div>
+      </div>
+      <button type="submit" className='w-50 btn-tall mt-4'>
+        Get Started <FaArrowRight color='white'/>
+      </button>
+    </form>
             );
-          case 'clubs':
+          case '4':
             return (
+              <form onSubmit={handleSubmit(onSubmit)}>
               <div className='form-container'>
               <div>
-                <label htmlFor="sport">Talent Type</label>
-                <select id="sport" name="sport">
-                  <option value="football">Football</option>
-                  <option value="tennis">Tennis</option>
-              
-                </select>
+  <label htmlFor="talentType">Talent Type</label>
+  <select id="talentType" {...register('talent_type')}>
+    {sports.map(sport => (
+      <option key={sport.id} value={sport.name}>
+        {sport.name}
+      </option>
+    ))}
+  </select>
+</div>
+                <div>
+                  <label htmlFor="residence">Place of residence:</label>
+                  <select id="residence" {...register('residence_place')}>
+                    <option value="city1">City 1</option>
+                    <option value="city2">City 2</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="birthdate">Birthdate:</label>
+                  <input type="date" id="birthdate" {...register('birth_date')} />
+                  <label htmlFor="yearsOfExperience">Years of experience</label>
+                  <input
+                    type="number"
+                    id="yearsOfExperience"
+                    name="years_of_experience"
+                    {...register('years_of_experience')}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="yearsFounded">Years founded:</label>
+                  <input
+                    type="number"
+                    id="yearsFounded"
+                    name="year_founded"
+                    min="1900"
+                    max="2023"
+                    {...register('year_founded')}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="phone">Phone:</label>
+                  <input type="tel" id="phone" {...register('mobile_number')} />
+                </div>
               </div>
-             
-              <div>
-                <label htmlFor="residence">Country:</label>
-                <select id="residence" name="country_id">
-                  <option value="city1">City 1</option>
-                  <option value="city2">City 2</option>
-              
-                </select>
-              </div>
-              
-              <div>
-                <label htmlFor="birthdate">Years founded:</label>
-                <input type="number" id="birthdate" name="birthdate" min="1900" max="2023" />
-               
-              </div>
-              <div>
-                <label htmlFor="phone">Phone:</label>
-                <input type="tel" id="phone" name="mobile_number" />
-              </div>
-            </div>
-            );
-          case 'scouts':
-            return (
-              <div className='form-container'>
-              <div>
-                <label htmlFor="sport">Talent Type</label>
-                <select id="sport" name="sport">
-                  <option value="football">Football</option>
-                  <option value="tennis">Tennis</option>
-              
-                </select>
-              </div>
-              <div>
-                <p>Gender:</p>
-                <label>
-                  <input type="radio" value="male" name="gender" /> Male
-                </label>
-                <label>
-                  <input type="radio" value="female" name="gender" /> Female
-                </label>
-                <label>
-                  <input type="radio" value="other" name="gender" /> Other
-                </label>
-              </div>
-              <div>
-                <label htmlFor="birthdate">Birthdate:</label>
-                <input type="date" id="birthdate" name="birth_date" />
-                <label htmlFor="ExpYears">Years of experience</label>
-                <input type="number" id="birthdate" name="years_of_experience" />
-              </div>
+              <button type="submit" className='w-50 btn-tall mt-4'>
+                Get Started <FaArrowRight color='white' />
+              </button>
+            </form>
 
-              <div>
-                <label htmlFor="residence">place of residence:</label>
-                <select id="residence" name="residence_place">
-                  <option value="city1">City 1</option>
-                  <option value="city2">City 2</option>
-              
-                </select>
-              </div>
-              
-              <div>
-                <label htmlFor="birthdate">Years founded:</label>
-                <input type="number" id="birthdate" name="year_founded" min="1900" max="2023" />
-               
-              </div>
-              <div>
-                <label htmlFor="phone">Phone:</label>
-                <input type="tel" id="phone" name="mobile_number" />
-              </div>
-            </div>
+            );
+          case '3':
+            return (
+              <form onSubmit={handleSubmit(onSubmit)}>
+      <div className='form-container'>
+      <div>
+  <label htmlFor="talentType">Talent Type</label>
+  <select id="talentType" {...register('talent_type')}>
+    {sports.map(sport => (
+      <option key={sport.id} value={sport.name}>
+        {sport.name}
+      </option>
+    ))}
+  </select>
+</div>
+        <div>
+  <label htmlFor="country">Country:</label>
+  <select id="country" {...register('country_id')}>
+    {countries.map(country => (
+      <option key={country.id} value={country.id}>
+        {country.name}
+      </option>
+    ))}
+  </select>
+</div>
+        <div>
+          <label htmlFor="yearsFounded">Years founded:</label>
+          <input
+            type="number"
+            id="yearsFounded"
+            name="year_founded"
+            min="1900"
+            max="2023"
+            {...register('year_founded')}
+          />
+        </div>
+        <div>
+          <label htmlFor="phone">Phone:</label>
+          <input type="tel" id="phone" {...register('mobile_number')} />
+        </div>
+      </div>
+      <button type="submit" className='w-50 btn-tall mt-4'>
+        Get Started <FaArrowRight color='white' />
+      </button>
+    </form>
             );
           default:
             return null;

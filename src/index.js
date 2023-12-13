@@ -7,6 +7,7 @@ import global_ar from './translation/ar/global_ar.json';
 import global_en from './translation/en/global_en.json';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
+import UserProvider from './components/UserContext/UserProvider';
 
 i18next.init({
   interpolation: {
@@ -30,9 +31,9 @@ i18next.init({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-    <I18nextProvider i18n={i18next}>
+    <UserProvider>
       <App />
-    </I18nextProvider>
+      </UserProvider>
   // </React.StrictMode>
 );
 
