@@ -10,6 +10,7 @@ import './style.css';
 import { FaArrowRight } from "react-icons/fa6";
 import EditImage from './EditImg';
 import axios from 'axios';
+import { message } from 'antd';
 
 function RegisterForm() {
     const {
@@ -20,12 +21,14 @@ function RegisterForm() {
         formState: { errors },
       } = useForm();
       const [currentStep, setCurrentStep] = useState(1);
+      const [accountTypes,setAccountTypes]=useState();
       const [accountType, setAccountType] = useState('talent');
       const [formData, setFormData] = useState();
       const [countries,setCountries]=useState();
       const [sports,setSports]=useState();
       const [positions,setPositions]=useState();
       const [subPositions,setSubPositions]=useState();
+      const [termsAccepted, setTermsAccepted] = useState(false);
       
 
       useEffect(() => {
@@ -79,14 +82,32 @@ function RegisterForm() {
       
         fetchData();
       }, []);
+
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('http://172.104.243.57/api/app/get_user_types');
+            setAccountTypes(response.data.result);
+          } catch (error) {
+            console.error('Error fetching positions:', error);
+          }
+        };
       
+        fetchData();
+      }, []);
+      
+
       
 
       useEffect(() => {
         console.log('Sports:', sports);
         console.log('Positions:', positions);
         console.log('Countries:', countries);
-      }, [sports, positions, countries,accountType]);
+      }, [sports, positions, countries,accountTypes]);
+
+      const handleTermsCheckbox = (e) => {
+        setTermsAccepted(e.target.checked); // Update the termsAccepted state based on checkbox status
+      };
 
       const handlePositionSelect = async (selectedPositionId) => {
         try {
@@ -111,6 +132,14 @@ function RegisterForm() {
           const mergedData = { ...formData, ...data };
     
           const imageFile = data.image[0];
+      
+          if(accountType=='3')
+          {
+            const logo = data.club_logo[0];
+            formDataWithImage.delete('club_logo');
+            formDataWithImage.append('clube_logo', logo);
+          }
+      
           
 
           const formDataWithImage = new FormData();
@@ -121,13 +150,26 @@ function RegisterForm() {
           }
           formDataWithImage.delete('image');
           formDataWithImage.append('image', imageFile);
-          formDataWithImage.append('user_type', '1');
+          formDataWithImage.append('user_type', accountType);
+     
 
           
-          const response = await axios.post(`http://172.104.243.57/api/user/auth/register`, formDataWithImage);
-          console.log('API Response:', response.data);
-        }
-      };
+          try {
+            const response = await axios.post(`http://172.104.243.57/api/user/auth/register`, formDataWithImage);
+ 
+            if (response.status === 200 ) {
+  
+              message.success('Registration successful!');
+            } else {
+     
+              message.error(response.data.error);
+            }
+          } catch (error) {
+   
+            message.error('An error occurred. Please try again later.');
+          }
+       
+      };}
     
       const handleNextStep = (data) => {
         if (currentStep === 2) {
@@ -138,6 +180,10 @@ function RegisterForm() {
           
         }
       };
+      const handleBack = () => {
+        setCurrentStep(currentStep - 1);
+      };
+
       const handleAccountTypeChange = (e) => {
         setAccountType(e.target.value);
       };
@@ -238,7 +284,14 @@ function RegisterForm() {
                     errors=''
                   />
                   </Form.Group>
-                  <Button variant="" className='w-50 btn-tall' type='submit'>
+                  <Form.Group controlId="termsCheckbox" className="mb-3">
+              <Form.Check
+                type="checkbox"
+                label="I accept the terms and conditions"
+                onChange={handleTermsCheckbox}
+              />
+            </Form.Group>
+                  <Button variant="" className='w-50 btn-tall' type='submit' disabled={!termsAccepted}>
                     Next <FaArrowRight color='white'/>
                 </Button>
                 </Form>
@@ -250,7 +303,7 @@ function RegisterForm() {
                 <div>
                 <p>Accoount Type</p>
                 <div className="account-type-options" onChange={handleAccountTypeChange}>
-                  <label className='talent-type-label'>
+                  {/* <label className='talent-type-label'>
                     <input type="radio" value="1" name="user_type" /> Talents
                   </label>
                   <label className='talent-type-label'>
@@ -261,10 +314,16 @@ function RegisterForm() {
                   </label>
                   <label className='talent-type-label'>
                     <input type="radio" value="4" name="user_type" /> Scouts
+                  </label> */}
+                  {
+                    accountTypes?.map(account=>(
+                      <label className='talent-type-label'>
+                    <input type="radio" value={account.id} name="user_type" /> {account.name}
                   </label>
+                    ))
+                  }
                 </div>
-                {renderAccountTypeFields()}
-           
+                {renderAccountTypeFields()} 
               </div>
          
               );
@@ -272,7 +331,6 @@ function RegisterForm() {
             default:
               return null;
     
-      
         }
       };
       const renderAccountTypeFields = () => {
@@ -345,9 +403,14 @@ function RegisterForm() {
           <input type="tel" id="phone" {...register('mobile_number')} />
         </div>
       </div>
+      <div>
       <button type="submit" className='w-50 btn-tall mt-4'>
         Get Started <FaArrowRight color='white' />
       </button>
+      </div>
+      <div>
+      <button onClick={handleBack} className='w-50 btn-tall mt-4' style={{color:"#213555"}}>Back</button>
+      </div>
     </form>
             );
           case '2':
@@ -358,7 +421,7 @@ function RegisterForm() {
   <label htmlFor="talentType">Talent Type</label>
   <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
-      <option key={sport.id} value={sport.name}>
+      <option key={sport.id} value={sport.id}>
         {sport.name}
       </option>
     ))}
@@ -391,9 +454,17 @@ function RegisterForm() {
           <input type="tel" id="phone" {...register('mobile_number')} />
         </div>
       </div>
+      <div>
+        <div>
       <button type="submit" className='w-50 btn-tall mt-4'>
         Get Started <FaArrowRight color='white'/>
       </button>
+      </div>
+      <div>
+      <button onClick={handleBack} className='w-50 btn-tall mt-4 bg-white' style={{color:"#213555"}}>Back</button>
+      </div>
+      </div>
+
     </form>
             );
           case '4':
@@ -404,7 +475,7 @@ function RegisterForm() {
   <label htmlFor="talentType">Talent Type</label>
   <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
-      <option key={sport.id} value={sport.name}>
+      <option key={sport.id} value={sport.id}>
         {sport.name}
       </option>
     ))}
@@ -418,6 +489,15 @@ function RegisterForm() {
                   </select>
                 </div>
                 <div>
+          <label>Gender:</label>
+          <label htmlFor="male">Male</label>
+          <input type="radio" id="male" value="male" {...register('gender')} />
+          <label htmlFor="female">Female</label>
+          <input type="radio" id="female" value="female" {...register('gender')} />
+          <label htmlFor="other">Other</label>
+          <input type="radio" id="other" value="other" {...register('gender')} />
+        </div>
+                <div>
                   <label htmlFor="birthdate">Birthdate:</label>
                   <input type="date" id="birthdate" {...register('birth_date')} />
                   <label htmlFor="yearsOfExperience">Years of experience</label>
@@ -428,7 +508,7 @@ function RegisterForm() {
                     {...register('years_of_experience')}
                   />
                 </div>
-                <div>
+                {/* <div>
                   <label htmlFor="yearsFounded">Years founded:</label>
                   <input
                     type="number"
@@ -438,15 +518,20 @@ function RegisterForm() {
                     max="2023"
                     {...register('year_founded')}
                   />
-                </div>
+                </div> */}
                 <div>
                   <label htmlFor="phone">Phone:</label>
                   <input type="tel" id="phone" {...register('mobile_number')} />
                 </div>
               </div>
+              <div>
               <button type="submit" className='w-50 btn-tall mt-4'>
                 Get Started <FaArrowRight color='white' />
               </button>
+              </div>
+              <div>
+      <button onClick={handleBack} className='w-50 btn-tall mt-4' style={{color:"#213555"}}>Back</button>
+      </div>
             </form>
 
             );
@@ -454,11 +539,23 @@ function RegisterForm() {
             return (
               <form onSubmit={handleSubmit(onSubmit)}>
       <div className='form-container'>
+      <Form.Group className='mb-3' controlId='formFile'>
+                  <EditImage
+                  register={register}
+                  watch={watch}
+                  name={"club_logo"}
+                  label={"club logo"}
+                      />
+                  </Form.Group>
+            <div>
+          <label htmlFor="clubname">Club Name:</label>
+          <input type="tel" id="clube_name" {...register('club_name')} />
+        </div>
       <div>
   <label htmlFor="talentType">Talent Type</label>
   <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
-      <option key={sport.id} value={sport.name}>
+      <option key={sport.id} value={sport.id}>
         {sport.name}
       </option>
     ))}
@@ -490,9 +587,14 @@ function RegisterForm() {
           <input type="tel" id="phone" {...register('mobile_number')} />
         </div>
       </div>
+      <div>
       <button type="submit" className='w-50 btn-tall mt-4'>
         Get Started <FaArrowRight color='white' />
       </button>
+      </div>
+      <div>
+      <button onClick={handleBack} className='w-50 btn-tall mt-4 bg-white ' style={{color:"#213555"}}  >Back</button>
+      </div>
     </form>
             );
           default:

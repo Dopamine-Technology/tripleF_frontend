@@ -23,8 +23,8 @@ const Input = ({
         <Form.Control
           as="textarea"
           size="lg"
-          rows={rows || 3}
-          cols={23}
+          rows={rows || 7}
+          cols={16}
           {...register(name, validation)}
           className={`${className} ${
             errors && errors[name]?.message ? "border-danger" : ""
@@ -33,7 +33,7 @@ const Input = ({
             backgroundColor: "transparent",
             border: "1px solid white",
             color: "white",
-            width: "100%", // Adjust the width here
+            width: "25rem", // Adjust the width here
           }}
           placeholder={placeholder}
         />

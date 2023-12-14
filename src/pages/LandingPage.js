@@ -9,6 +9,7 @@ import Footer from '../components/Footer/Footer';
 import OurClients from '../components/OurClients/OurClients';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import PermissionsFetcher from '../components/Permissions/PermissionsFetcher';
 
 function LandingPage() {
   const [content,setContent]=useState([]);
@@ -48,6 +49,8 @@ function LandingPage() {
     <BecomeClient content={content} />
     <News content={content} />
     <Footer content={content} />
+    <PermissionsFetcher />
+
     </div>
   )
 }

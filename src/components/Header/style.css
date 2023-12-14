@@ -13,6 +13,11 @@
     border-radius: 0px 0px 100px 100px;
     background-color: #213555;
     opacity: 0.9;
+    height: 40rem;
+    border-radius: 0px 0px 0px 79px;
+/* -moz-border-radius: 0px 0px 0px 79px;
+-webkit-border-radius: 0px 0px 0px 79px;
+border: 0px solid #000000; */
    
 }
 .active {

@@ -48,7 +48,7 @@ const Input = ({
             backgroundColor: "transparent",
             border: "1px solid black",
             color: "black",
-            width: "30rem", // Adjust the width here
+            width: "30rem", 
           }}
           placeholder={placeholder}
           type={type}

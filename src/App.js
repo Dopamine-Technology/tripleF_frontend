@@ -5,7 +5,9 @@ import { Route, BrowserRouter as Router, Routes , Navigate} from "react-router-d
 import React from 'react';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import Test from './pages/test';
+import VerifyPage from './components/Register/VerifyPage';
+import Reset from './components/ResetPassword/Reset';
+import NewPassword from './components/ResetPassword/NewPassword';
 
 function App() {
   
@@ -16,7 +18,10 @@ function App() {
         <Route path='/' element={<LandingPage />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
-        {/* <Route path='/test' element={<Test />} /> */}
+        <Route path='/verify/:token' element={<VerifyPage />} />
+        <Route path='/reset-password/' element={<Reset />} />
+        <Route path='/reset-password/:user_token' element={<NewPassword />}
+              />
       </Routes>
       </Router>
     </div>

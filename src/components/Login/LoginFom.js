@@ -113,7 +113,7 @@ function LoginForm() {
     </Col>
     <Col xs={4} className=''>
       <Form.Text>
-        <a href='/forgotpassword' className='text-black'>Forgot Password?</a>
+        <a href='/reset-password/' className='text-black'>Forgot Password?</a>
       </Form.Text>
     </Col>
   </Row>

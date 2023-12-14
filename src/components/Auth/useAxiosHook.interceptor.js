@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext } from "react";
-import { UserDataContext } from "./UserContext/UserData.context";
+import { UserDataContext } from "../UserContext/UserData.context";
 import Cookies from "js-cookie";
 const defaultOptions = {
   baseURL: " http://172.104.243.57/api/",

@@ -7,7 +7,7 @@ import RegisterButton from '../Header/RegisterButton';
 
 
 const NavBar = () => {
-    return (    <Navbar collapseOnSelect expand="lg" className="bg-body-transparent">
+    return (    <Navbar collapseOnSelect expand="lg" className="bg-body-transparent shadow">
     <Container>
       <Navbar.Brand href="#home" className='fs-4 text-black'>TripleF</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
