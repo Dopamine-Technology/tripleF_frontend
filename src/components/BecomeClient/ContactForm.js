@@ -25,9 +25,13 @@ const ContactForm = () => {
 
   return (
     <div className='form-contact'>
-      <h2 className='text-white fw-bold'>Become a client </h2>
-      <h2 className='text-white fw-bold'>Do you have any questions?</h2>
-      <h2 className='text-white fw-bold mb-4'>Talk to our analysts</h2>
+      <h2 className='about-h1 text-white' style={{width:'25rem',marginLeft:'0',fontSize:'30px'}}>
+      Become a client Do you have any questions? Talk to our analysts
+
+      </h2>
+      {/* <h2 className='text-white fw-bold about-h1' style={{width:'14rem'}}>Become a client </h2>
+      <h2 className='text-white fw-bold about-h1' style={{width:'14rem'}}>Do you have any questions?</h2>
+      <h2 className='text-white fw-bold mb-4 about-h1' style={{width:'14rem'}}>Talk to our analysts</h2> */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Row>
           <Col>

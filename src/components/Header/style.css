@@ -1,25 +1,64 @@
+@font-face {
+    font-family: 'Quicksand-Bold';
+    src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Bold.ttf') format('truetype'); 
+    
+  }
+  
+
 .header-div {
     max-height: 10vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+
 }
 .header-row{
     margin-top: 10rem;
+    width: 74rem;
+
 }
-.whole-div{
+
+.whole-div {
+    position: relative; 
     background-image: url('../../assets/imgs/HeroImage.png');
-    border-radius: 0px 0px 100px 100px;
-    background-color: #213555;
-    opacity: 0.9;
+    background-repeat: repeat-x;
+    width: 100%;
     height: 40rem;
     border-radius: 0px 0px 0px 79px;
-/* -moz-border-radius: 0px 0px 0px 79px;
--webkit-border-radius: 0px 0px 0px 79px;
-border: 0px solid #000000; */
-   
-}
+    border-radius: 0px 10px 0px 161px;
+  -moz-border-radius: 0px 10px 0px 161px;
+   -webkit-border-radius: 0px 10px 0px 161px;
+  border: 0px solid #000000;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit; 
+       opacity: 0.8;
+      background-color: rgba(33,53,85, 0.8);
+
+    }
+    margin-left: 0.5rem;
+  }
+
+  .header-h1{
+    font-size: 3rem;
+    letter-spacing: 2px;
+    width: 30rem;
+    font-family: "Quicksand-Bold";
+    
+  }
+
+  .custom-dropdown .dropdown-toggle::after {
+    display:none;
+   }
+
 .active {
     color: #77DCBF !important; 
     text-decoration: underline; 

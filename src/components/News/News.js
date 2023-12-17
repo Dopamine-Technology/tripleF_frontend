@@ -44,8 +44,7 @@ const News = () => {
     },
 ]
     return ( <div className='p-4'>
-       {console.log(news)} {/* Add this line */}
-        <h2 className='who-h1'>Our Latest News </h2>
+        <h2 className='about-h1' style={{width:'20rem'}}>Our Latest News </h2>
         <Row className='m-5'>
            {news && news.length > 0 ? (
             news.map((item, index) => (

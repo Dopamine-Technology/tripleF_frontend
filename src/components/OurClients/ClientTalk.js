@@ -1,16 +1,18 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { FaLongArrowAltRight,FaLongArrowAltLeft } from "react-icons/fa";
+import { FaQuoteLeft } from "react-icons/fa";
+
 
 const ClientTalk = () => {
     return ( <div className='bg-gray mb-4' >
-        <h1 className='who-h1 p-5' >What people are saying</h1>
+        <h1 className='who-h1 mt-5 about-h1' style={{width:'36rem'}}>What people are saying</h1>
         <p className='m-3' style={{width:'30rem'}} >
-        <span style={{fontSize:'4rem',color:'#1A2A44'}} className='talkQ'>“</span>
+        <span style={{fontSize:'4rem',color:'#1A2A44'}} className='talkQ'><FaQuoteLeft size={38} /></span>
         <br/>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              Duis aute.
+        Leading an organization is incredibly rewarding and equally humbling. Confidence and humility. 
+        Every success is built on lessons from mistakes made is incredibly rewarding and equally humbling. 
+        It requires healthy.
                <br />
              
                -Mila Mila

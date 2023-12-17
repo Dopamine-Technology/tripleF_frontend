@@ -13,6 +13,7 @@
     background-color: #77DCBF;
     border-radius: 24px;
     border-color: #77DCBF;
+    color:black;
     float: right;
 }
 .submit-button:hover{

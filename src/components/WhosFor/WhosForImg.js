@@ -9,6 +9,7 @@ const WhosForImg = ({ img, title, desc }) => {
       className='whos-card'
       style={{
         width: 250,
+      
     
       }}
     >
@@ -18,7 +19,7 @@ const WhosForImg = ({ img, title, desc }) => {
         </div>
       </div>
       <Meta title={title} description={desc} />
-      <a href='#' className='mt-5'>Read More</a>
+      {/* <a href='#' className='mt-5'>Read More</a> */}
     </Card>
   );
 }

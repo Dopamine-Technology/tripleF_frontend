@@ -39,7 +39,7 @@ const Steps = () => {
         </Col>
         <Col md={6}>
           <div className='mt-5'>
-            <h1 className='text-white fw-bold'>How it works</h1>
+            <h1 className='text-white about-h1' style={{width:'24rem'}}>How it works</h1>
             <p style={{width:"30rem",color:"white"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.

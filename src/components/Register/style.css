@@ -73,3 +73,14 @@
     margin-right: 10px; /* Adjust margin between labels */
     padding: 5px;
   }
+  .verify-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .p-top{
+    color:#464646;
+    margin-left: 4rem;
+
+  }

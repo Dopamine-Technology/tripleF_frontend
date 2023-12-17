@@ -100,9 +100,6 @@ function RegisterForm() {
       
 
       useEffect(() => {
-        console.log('Sports:', sports);
-        console.log('Positions:', positions);
-        console.log('Countries:', countries);
       }, [sports, positions, countries,accountTypes]);
 
       const handleTermsCheckbox = (e) => {
@@ -159,7 +156,7 @@ function RegisterForm() {
  
             if (response.status === 200 ) {
   
-              message.success('Registration successful!');
+              message.success('Registration successful! please check your email to verify it.');
             } else {
      
               message.error(response.data.error);
