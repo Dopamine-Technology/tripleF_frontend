@@ -11,7 +11,7 @@ const WhosFor = () => {
   const types = [
     {
       img: svg,
-      title: "Talented",
+      title: "Talents",
       desc: "fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     },
     {
@@ -26,7 +26,7 @@ const WhosFor = () => {
     },
     {
       img: svg,
-      title: "Companies",
+      title: "Scouts",
       desc: "fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     }
   ];

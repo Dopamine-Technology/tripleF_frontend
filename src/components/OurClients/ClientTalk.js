@@ -14,10 +14,15 @@ const ClientTalk = () => {
         Every success is built on lessons from mistakes made is incredibly rewarding and equally humbling. 
         It requires healthy.
                <br />
-             
-               -Mila Mila
+               <div className='mt-3'>
+               <span style={{}}>
+               - Mila McSabbu
+               </span>
                <br />
-               -freelance design
+               <span style={{color:'#464646'}}>
+               Freelance Designer
+               </span>
+               </div>
                
 
                </p>

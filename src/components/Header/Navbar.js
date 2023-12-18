@@ -12,6 +12,7 @@ import Cookies from 'js-cookie';
 import LogoWhite from '../../assets/imgs/LogoWhite.svg'
 import { IoPerson } from "react-icons/io5";
 import './style.css'
+import { Link } from 'react-router-dom';
 
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'en';
@@ -28,7 +29,7 @@ const TopNavbar = ({content}) => {
 
   return (
     <Navbar collapseOnSelect expand="xl" className="bg-body-transparent">
-      <Container className="justify-content-start">
+      <Container className="justify-content-start " >
         <Navbar.Brand href="#home" className='fs-4 text-white'><img src={LogoWhite} width='70%' /></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -54,7 +55,7 @@ const TopNavbar = ({content}) => {
   ))}
 </DropdownButton>
 
-            <p className='text-white mt-2'> <IoPerson  />Login</p>
+            <p className='text-white mt-2'> <Link to='/login' style={{textDecoration:'none',color:'white'}}><IoPerson  />Login</Link></p>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -71,7 +72,7 @@ const BottomNavbar = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-transparent">
-      <Container>
+      <Container >
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#home" className='text-white' style={{textDecoration:'none'}}>  <p className={`text-white  ${activeLink === 1 ? 'active' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '1rem' }}>Home</p></Nav.Link>

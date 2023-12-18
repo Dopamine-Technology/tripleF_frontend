@@ -18,7 +18,7 @@ const News = () => {
   };
 
   useEffect(() => {
-    axios.post('http://172.104.243.57/api/app/latest_posts', axiosConfig)
+    axios.post('https://backendtriplef.dopaminetechnology.com/api/app/latest_posts', axiosConfig)
       .then((response) => {
         console.log('news',response.data); 
         setNews(response.data.result);

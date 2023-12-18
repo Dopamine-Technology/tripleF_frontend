@@ -30,7 +30,7 @@ const Input = ({
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
           style={{
-            backgroundColor: "transparent",
+            backgroundColor: "#1A2A44",
             border: "1px solid white",
             color: "white",
             width: "25rem", // Adjust the width here
@@ -45,7 +45,7 @@ const Input = ({
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
           style={{
-            backgroundColor: "transparent",
+            backgroundColor: "#1A2A44",
             border: "1px solid white",
             color: "white",
             width: "10rem", // Adjust the width here

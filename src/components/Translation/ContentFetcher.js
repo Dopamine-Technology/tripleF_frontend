@@ -15,7 +15,7 @@ const UseContentFetcher = (tag) => {
           },
         };
         const response = await axios.get(
-          `http://172.104.243.57/api/app/get_translations?tag=${tag}`,
+          `https://backendtriplef.dopaminetechnology.com/api/app/get_translations?tag=${tag}`,
           axiosConfig
         );
         setContent(response.data.result);

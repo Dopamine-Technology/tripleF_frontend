@@ -10,6 +10,7 @@ import loginPic from '../../assets/imgs/login.png'
 import { UserDataContext } from "../UserContext/UserData.context";
 import Cookies from "js-cookie";
 import axios from 'axios';
+import './style.css'
 
 
 function LoginForm() {
@@ -27,7 +28,7 @@ function LoginForm() {
     data.email = data.email.toLowerCase();
     setError();
     axios
-      .post(`http://172.104.243.57/api/user/auth/email_login`, data)
+      .post(`https://backendtriplef.dopaminetechnology.com/api/user/auth/email_login`, data)
       .then((response) => {
           Cookies.set(
             "token",
@@ -64,21 +65,28 @@ function LoginForm() {
       </Col>
       <Col md={6} className='mt-5'>
         <div>
-          <p className='fs-3 ' style={{ color: '#464646',marginLeft:'4rem' }}>Welcome Back</p>
-          <p  style={{ color: '#464646',marginLeft:'2rem' }}>Welcome Back, please enter your details</p>
+          <p className='login-welcome'>Welcome Back</p>
+          <p  className='login-p'>Welcome Back, please enter your details</p>
         </div>
 
         <Button variant='' className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px' }}>
                   <img src={search} alt='search' className='me-2' />
                   Sign up with Google
-                </Button>
+        </Button>
                 
-                <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px' }}>
+         <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px', marginLeft:'1rem' }}>
                   <img src={facebook} alt='search' className='me-2' />
                   Sign up with Facebook
-                </Button>
+          </Button>
                 
-                <hr className='w-50 mt-4' />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+  <hr className='mt-4' style={{width:'30%'}} />
+
+  <p style={{ margin: '0 10px' }}>OR</p>
+
+  <hr className=' mt-4' style={{width:'30%'}} />
+</div>
+
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className='mb-3' controlId='formFile'>
    
@@ -108,10 +116,10 @@ function LoginForm() {
  </Form.Group>
  <Form.Group className='mb-3' controlId='formRememberMe'>
   <Row>
-    <Col xs={8}>
+    <Col xs={6}>
       <Form.Check type='checkbox' label='Remember Me' />
     </Col>
-    <Col xs={4} className=''>
+    <Col xs={6}>
       <Form.Text>
         <a href='/reset-password/' className='text-black'>Forgot Password?</a>
       </Form.Text>

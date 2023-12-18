@@ -11,6 +11,9 @@ import { FaArrowRight } from "react-icons/fa6";
 import EditImage from './EditImg';
 import axios from 'axios';
 import { message } from 'antd';
+import { Link } from 'react-router-dom';
+import { GoogleLogin } from 'react-google-login';
+import { gapi } from 'gapi-script';
 
 function RegisterForm() {
     const {
@@ -21,20 +24,48 @@ function RegisterForm() {
         formState: { errors },
       } = useForm();
       const [currentStep, setCurrentStep] = useState(1);
+      const [accessToken, setAccessToken] = useState('');
       const [accountTypes,setAccountTypes]=useState();
       const [accountType, setAccountType] = useState('talent');
-      const [formData, setFormData] = useState();
+      const [formData, setFormData] = useState({});
       const [countries,setCountries]=useState();
       const [sports,setSports]=useState();
       const [positions,setPositions]=useState();
       const [subPositions,setSubPositions]=useState();
       const [termsAccepted, setTermsAccepted] = useState(false);
+      const clientId='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'
       
+      const onSuccess = (res) => {
+        const userData = {
+          first_name: res.profileObj.givenName,
+          last_name: res.profileObj.familyName,
+          user_name: res.profileObj.email,
+          email: res.profileObj.email,
+          social_image: res.profileObj.imageUrl, 
+          
+        };
+      
+        setFormData(userData);
+        setAccessToken(res.accessToken); 
+        console.log('aya',res.accessToken)
+        setCurrentStep(currentStep + 1);
+      };
 
+      useEffect(() => {
+        console.log('Updated formData:', formData);
+      }, [formData,accessToken]);
+
+      const onFailure =()=>{
+        console.log('O')
+      }
+
+        
+    
+      
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get('http://172.104.243.57/api/app/get_sports');
+            const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_sports');
             setSports(response.data.result);
           } catch (error) {
             console.error('Error fetching sports:', error);
@@ -47,7 +78,7 @@ function RegisterForm() {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get('http://172.104.243.57/api/app/get_user_types');
+            const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_user_types');
             setAccountType(response.data.result);
           } catch (error) {
             console.error('Error fetching sports:', error);
@@ -60,7 +91,7 @@ function RegisterForm() {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get('http://172.104.243.57/api/app/get_countries');
+            const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_countries');
             setCountries(response.data.result);
           } catch (error) {
             console.error('Error fetching countries:', error);
@@ -73,7 +104,7 @@ function RegisterForm() {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.post('http://172.104.243.57/api/app/get_sport_positions/1');
+            const response = await axios.post('https://backendtriplef.dopaminetechnology.com/api/app/get_sport_positions/1');
             setPositions(response.data.result);
           } catch (error) {
             console.error('Error fetching positions:', error);
@@ -86,7 +117,7 @@ function RegisterForm() {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get('http://172.104.243.57/api/app/get_user_types');
+            const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_user_types');
             setAccountTypes(response.data.result);
           } catch (error) {
             console.error('Error fetching positions:', error);
@@ -108,7 +139,7 @@ function RegisterForm() {
 
       const handlePositionSelect = async (selectedPositionId) => {
         try {
-          const response = await axios.post('http://172.104.243.57/api/app/get_sport_positions/1', {
+          const response = await axios.post('https://backendtriplef.dopaminetechnology.com/api/app/get_sport_positions/1', {
             parent_id: selectedPositionId,
             name: ''
           });
@@ -123,51 +154,56 @@ function RegisterForm() {
       const onSubmit = async (data) => {
         if (currentStep === 1) {
           setFormData(data);
-          console.log('1 Data', data);
           setCurrentStep(currentStep + 1);
         } else if (currentStep === 2) {
-          const mergedData = { ...formData, ...data };
-    
-          const imageFile = data.image[0];
+          const mergedData = {};
+          for (const key in formData) {
+            if (formData[key]) {
+              mergedData[key] = formData[key];
+            }
+          }
+          for (const key in data) {
+            if (data[key]) {
+              mergedData[key] = data[key];
+            }
+          }
+          const formDataWithImage = new FormData();
       
-          if(accountType=='3')
-          {
+          const imageFile = mergedData.image[0];
+      
+          if (accountType === '3') {
             const logo = data.club_logo[0];
             formDataWithImage.delete('club_logo');
-            formDataWithImage.append('clube_logo', logo);
+            formDataWithImage.append('club_logo', logo);
           }
       
-          
-
-          const formDataWithImage = new FormData();
-          
-
+         
+      
           for (const key in mergedData) {
             formDataWithImage.append(key, mergedData[key]);
           }
-          formDataWithImage.delete('image');
-          formDataWithImage.append('image', imageFile);
-          formDataWithImage.append('user_type', accountType);
-     
-
           
+          formDataWithImage.delete('image');
+          if (!accessToken) {
+            formDataWithImage.append('image', imageFile);
+          }
+          formDataWithImage.append('user_type', accountType);
+          formDataWithImage.append('google_identifier', accessToken);
+      
           try {
-            const response = await axios.post(`http://172.104.243.57/api/user/auth/register`, formDataWithImage);
- 
-            if (response.status === 200 ) {
-  
+            const response = await axios.post(`https://backendtriplef.dopaminetechnology.com/api/user/auth/register`, formDataWithImage);
+      
+            if (response.status === 200) {
               message.success('Registration successful! please check your email to verify it.');
             } else {
-     
               message.error(response.data.error);
             }
           } catch (error) {
-   
             message.error('An error occurred. Please try again later.');
           }
-       
-      };}
-    
+        }
+      };
+      
       const handleNextStep = (data) => {
         if (currentStep === 2) {
           onSubmit(data); 
@@ -194,18 +230,29 @@ function RegisterForm() {
               <Row>
            
               <Col md={12}>
-             
-                <Button variant='' className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px' }}>
-                  <img src={search} alt='search' className='me-2' />
-                  Sign up with Google
-                </Button>
+
+                 <GoogleLogin
+               clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
+               buttonText="Sign up with Google"
+               onSuccess={onSuccess}
+               onFailure={onFailure}
+               cookiePolicy={'single_host_origin'}
+               className="custom-google-login"
+                   />
                 
-                <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px' }}>
+                <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px',marginLeft:'1rem' }}>
                   <img src={facebook} alt='search' className='me-2' />
                   Sign up with Facebook
                 </Button>
                 
-                <hr className='w-50 mt-4' />
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+  <hr className='mt-4' style={{width:'30%'}} />
+
+  <p style={{ margin: '0 10px' }}>OR</p>
+
+  <hr className=' mt-4' style={{width:'30%'}} />
+</div>
+
                 
                 <Form onSubmit={handleSubmit(onSubmit)}>
                   <Form.Group className='mb-3' controlId='formFile'>
@@ -291,7 +338,9 @@ function RegisterForm() {
                   <Button variant="" className='w-50 btn-tall' type='submit' disabled={!termsAccepted}>
                     Next <FaArrowRight color='white'/>
                 </Button>
+                
                 </Form>
+                <p className='account-p'>Already have an account? <Link to='/login' style={{textDecoration:'none'}}>Sign in</Link> </p>
               </Col>
             </Row>
             );
@@ -505,17 +554,6 @@ function RegisterForm() {
                     {...register('years_of_experience')}
                   />
                 </div>
-                {/* <div>
-                  <label htmlFor="yearsFounded">Years founded:</label>
-                  <input
-                    type="number"
-                    id="yearsFounded"
-                    name="year_founded"
-                    min="1900"
-                    max="2023"
-                    {...register('year_founded')}
-                  />
-                </div> */}
                 <div>
                   <label htmlFor="phone">Phone:</label>
                   <input type="tel" id="phone" {...register('mobile_number')} />
@@ -527,7 +565,7 @@ function RegisterForm() {
               </button>
               </div>
               <div>
-      <button onClick={handleBack} className='w-50 btn-tall mt-4' style={{color:"#213555"}}>Back</button>
+      <button onClick={handleBack} className='w-50 btn-tall mt-4 bg-white' style={{color:"#213555"}}>Back</button>
       </div>
             </form>
 
@@ -568,6 +606,10 @@ function RegisterForm() {
     ))}
   </select>
 </div>
+  <div>
+          <label htmlFor="phone">Phone:</label>
+          <input type="tel" id="phone" {...register('mobile_number')} />
+  </div>
         <div>
           <label htmlFor="yearsFounded">Years founded:</label>
           <input

@@ -40,7 +40,9 @@ opacity: 0.8;
     border-radius: 45px;
     
   }
-  
+  .social-icons{
+    margin-right: 16rem;
+  }
   .logo {
     width: 100px;
     height: auto;

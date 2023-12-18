@@ -9,17 +9,33 @@ const WhosForImg = ({ img, title, desc }) => {
       className='whos-card'
       style={{
         width: 250,
-      
-    
       }}
     >
-      <div style={{ width: '100px', height: '100px', borderRadius: '50%', overflow: 'hidden', backgroundColor: '#E4F8F2' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
-          <img alt="example" src={img} style={{ maxWidth: '80%', maxHeight: '80%', objectFit: 'cover' }} />
-        </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '80px',
+          height: '80px',
+          borderRadius: '50%',
+          overflow: 'hidden',
+          backgroundColor: '#E4F8F2',
+          margin: '0 auto', 
+        }}
+      >
+        <img
+          alt="example"
+          src={img}
+          style={{
+            width: '50%',
+            height: '50%',
+            objectFit: 'cover',
+            borderRadius: '50%', 
+          }}
+        />
       </div>
-      <Meta title={title} description={desc} />
-      {/* <a href='#' className='mt-5'>Read More</a> */}
+      <Meta title={<div style={{ textAlign: 'center',marginTop:'1rem'}}>{title}</div>} description={desc} />
     </Card>
   );
 }

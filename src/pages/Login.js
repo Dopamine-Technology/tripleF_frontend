@@ -4,7 +4,7 @@ import LoginForm from '../components/Login/LoginFom';
 
 function Login() {
     return (
-      <div>
+      <div style={{overflowX:'hidden'}}>
        <NavBar />
        <LoginForm />
       </div>
