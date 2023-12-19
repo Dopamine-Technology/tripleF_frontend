@@ -46,10 +46,10 @@ const News = () => {
     return ( <div className='p-4'>
         <h2 className='about-h1' style={{width:'20rem'}}>Our Latest News </h2>
         <Row className='m-5'>
-           {news && news.length > 0 ? (
-            news.map((item, index) => (
+           {news2 && news2.length > 0 ? (
+            news2.map((item, index) => (
           <Col key={index} md={4}>
-            <SingleOne img={item.main_image} content={item.content} category={item.title} />
+            <SingleOne img={item.img} content={item.content} category={item.category} />
           </Col>
         ))
       ) : (

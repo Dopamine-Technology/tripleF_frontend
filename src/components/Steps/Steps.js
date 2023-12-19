@@ -9,17 +9,17 @@ const Steps = () => {
     {
       stepNum:'01',
       step: 'One',
-      content: "Some quick example text for Step One."
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
     },
     {
       stepNum:'02',
       step: 'Two',
-      content: "Some quick example text for Step Two."
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
     },
     {
       stepNum:'03',
       step: 'Three',
-      content: "Some quick example text for Step Three."
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
     },
   ];
 

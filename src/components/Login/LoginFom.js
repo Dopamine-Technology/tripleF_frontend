@@ -11,6 +11,8 @@ import { UserDataContext } from "../UserContext/UserData.context";
 import Cookies from "js-cookie";
 import axios from 'axios';
 import './style.css'
+import { GoogleLogin } from 'react-google-login';
+import { message } from 'antd';
 
 
 function LoginForm() {
@@ -23,6 +25,27 @@ function LoginForm() {
 
   const [error, setError] = useState();
   const { user, setUser } = useContext(UserDataContext);
+
+  const onSuccess = (res) => {
+    const { profileObj } = res;
+  const dataToSend = {
+    email: profileObj.email,
+    google_identifier: res.accessToken
+  };
+
+  axios.post('https://backendtriplef.dopaminetechnology.com/api/user/auth/google_login', dataToSend)
+    .then((response) => {
+      message.success('logged in successfullly')
+    })
+    .catch((error) => {
+      console.error('Error sending data to other API:', error);
+    });
+  }
+
+    const onFailure =()=>{
+      message.error('logged in failed, please try again')
+    }
+
 
   const onSubmit = async (data) => {
     data.email = data.email.toLowerCase();
@@ -41,26 +64,22 @@ function LoginForm() {
           ...response.data.result.user,
         });
 
-        // navigate("/test");
-
-       console.log('logged in successfullly');
-       console.log(response.data.result.user);
+             message.success('logged in successfullly')
       
     
       })
       .catch((error) => {
-        setError(error?.response?.data?.detail);
+            message.error('logged in failed, please try again')
       });
   };
   useEffect(() => {
     console.log('User updated:', user);
-    // You can perform additional actions here when user state changes
   }, [user]); 
 
   return (
     <Row className='mt-2'>
       <Col md={6}>
-        <img src={loginPic} alt="Your Image" style={{ width: '33rem', height: '33rem' }} />
+        <img src={loginPic} alt="Your Image" style={{ width: '46rem', height: '37rem' }} />
      
       </Col>
       <Col md={6} className='mt-5'>
@@ -68,11 +87,14 @@ function LoginForm() {
           <p className='login-welcome'>Welcome Back</p>
           <p  className='login-p'>Welcome Back, please enter your details</p>
         </div>
-
-        <Button variant='' className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px' }}>
-                  <img src={search} alt='search' className='me-2' />
-                  Sign up with Google
-        </Button>
+        <GoogleLogin
+               clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
+               buttonText="Login with Google"
+               onSuccess={onSuccess}
+               onFailure={onFailure}
+               cookiePolicy={'single_host_origin'}
+               className="custom-google-login"
+                   />
                 
          <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px', marginLeft:'1rem' }}>
                   <img src={facebook} alt='search' className='me-2' />
@@ -80,11 +102,11 @@ function LoginForm() {
           </Button>
                 
           <div style={{ display: 'flex', alignItems: 'center' }}>
-  <hr className='mt-4' style={{width:'30%'}} />
+  <hr className='mt-4' style={{width:'24%',color:'#DADADA'}} />
 
   <p style={{ margin: '0 10px' }}>OR</p>
 
-  <hr className=' mt-4' style={{width:'30%'}} />
+  <hr className=' mt-4' style={{width:'24%',color:'#DADADA'}} />
 </div>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -130,11 +152,11 @@ function LoginForm() {
 
           
 
-          <Button variant='' className='w-50 btn-tall' type='submit'>
+          <Button variant='' className='btn-tall' type='submit'>
             Sign in
           </Button>
         </Form>
-       <p className='m-3'> Don’t have an account? <Link to='/register'>Sign Up</Link>  </p>
+       <p className='m-3'> Don’t have an account? <Link to='/register'>Sign Up</Link></p>
       </Col>
     </Row>
   );

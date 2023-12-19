@@ -1,4 +1,5 @@
 .footer {
+    background-color: #EDF0F3;
     background-image: url('../../assets/imgs/footerBg.svg');
     color: black;
     text-align: center;
@@ -13,11 +14,13 @@
   .section {
     flex: 1;
     margin: 1rem;
+    margin-left: 3rem;
     
   }
   .footer-p{
     max-width: 20rem;
-    
+    text-align: left;
+     
   }
   h6{
 
@@ -36,12 +39,13 @@ opacity: 0.8;
   .icon{
     color:#003370;
     margin-left: 1rem;
-    border: black;
-    border-radius: 45px;
+    /* border: 2px solid #003370;
+    border-radius: 50%;
+    padding: 5px; */
     
   }
   .social-icons{
-    margin-right: 16rem;
+    margin-right: 18rem;
   }
   .logo {
     width: 100px;

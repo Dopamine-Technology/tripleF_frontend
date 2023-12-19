@@ -12,22 +12,22 @@ const WhosFor = () => {
     {
       img: svg,
       title: "Talents",
-      desc: "fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     },
     {
       img: coach,
       title: "Coaches",
-      desc: " fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     },
     {
       img: club,
       title: "Clubs",
-      desc: "fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     },
     {
       img: svg,
       title: "Scouts",
-      desc: "fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     }
   ];
 
@@ -38,10 +38,12 @@ const WhosFor = () => {
           <WhosForDesc />
         </Col>
       </Row>
-      <Row className="justify-content-center " style={{marginLeft:'3rem'}} >
+      <Row className="justify-content-center " style={{ marginLeft: '2rem' }} >
         {types.map((type, index) => (
-          <Col key={index} xs={6} sm={6} md={6} lg={3}>
+          <Col key={index} xs={6} sm={6} md={6} lg={3} >
+            
             <WhosForImg img={type.img} title={type.title} desc={type.desc} />
+           
           </Col>
         ))}
       </Row>

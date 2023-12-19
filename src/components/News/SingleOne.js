@@ -19,8 +19,8 @@ const SingleOne = ({img,content,category}) => {
     cover={<img alt={img} src={img} 
    />}
   >
-    <Meta title={category} 
-    description={content}
+    <Meta title={content} 
+    description={category}
     
      />
      <a href='#' className='mt-5'> <img src={single} /> </a>

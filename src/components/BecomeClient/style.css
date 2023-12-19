@@ -15,6 +15,7 @@
     border-color: #77DCBF;
     color:black;
     float: right;
+    margin-right: 2rem;
 }
 .submit-button:hover{
     background-color: #77DCBF;

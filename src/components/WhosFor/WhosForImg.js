@@ -9,6 +9,7 @@ const WhosForImg = ({ img, title, desc }) => {
       className='whos-card'
       style={{
         width: 250,
+        
       }}
     >
       <div
@@ -35,7 +36,7 @@ const WhosForImg = ({ img, title, desc }) => {
           }}
         />
       </div>
-      <Meta title={<div style={{ textAlign: 'center',marginTop:'1rem'}}>{title}</div>} description={desc} />
+      <Meta title={<div style={{ textAlign: 'center',marginTop:'1rem'}}>{title}</div>} description={<div style={{color:'#464646'}}>{desc}</div>} />
     </Card>
   );
 }

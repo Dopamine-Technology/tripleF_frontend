@@ -13,6 +13,8 @@ import LogoWhite from '../../assets/imgs/LogoWhite.svg'
 import { IoPerson } from "react-icons/io5";
 import './style.css'
 import { Link } from 'react-router-dom';
+import { RxDividerVertical } from "react-icons/rx";
+
 
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'en';
@@ -28,14 +30,14 @@ const TopNavbar = ({content}) => {
   ];
 
   return (
-    <Navbar collapseOnSelect expand="xl" className="bg-body-transparent">
-      <Container className="justify-content-start " >
+    <Navbar collapseOnSelect expand="xl" className="">
+      <Container className="justify-content-start " style={{marginRight:'3.5rem'}} >
         <Navbar.Brand href="#home" className='fs-4 text-white'><img src={LogoWhite} width='70%' /></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto" style={{marginRight:'-6rem'}}>
           </Nav>
-          <Nav>
+          <Nav style={{marginRight:'-6rem'}}>
       
           <DropdownButton
   title={
@@ -54,7 +56,7 @@ const TopNavbar = ({content}) => {
     </Dropdown.Item>
   ))}
 </DropdownButton>
-
+<RxDividerVertical color="gray" size={30} className='mt-1' />
             <p className='text-white mt-2'> <Link to='/login' style={{textDecoration:'none',color:'white'}}><IoPerson  />Login</Link></p>
           </Nav>
         </Navbar.Collapse>
@@ -72,7 +74,7 @@ const BottomNavbar = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-transparent">
-      <Container >
+      <Container style={{marginRight:'3.8rem'}} >
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#home" className='text-white' style={{textDecoration:'none'}}>  <p className={`text-white  ${activeLink === 1 ? 'active' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '1rem' }}>Home</p></Nav.Link>

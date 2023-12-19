@@ -56,7 +56,7 @@ const ContactForm = () => {
           </Col>
         </Row>
         <Input
-          label='message'
+          label='Message'
           name='message'
           type='textarea'
           placeholder=''

@@ -6,7 +6,7 @@ import RegisterForm from '../components/Register/RegisterForm'
 
 function Register() {
   return (
-    <div>
+    <div style={{overflowX:'hidden'}}>
       <NavBar />
        <RegisterForm />
       <Footer />

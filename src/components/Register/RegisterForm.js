@@ -24,9 +24,9 @@ function RegisterForm() {
         formState: { errors },
       } = useForm();
       const [currentStep, setCurrentStep] = useState(1);
-      const [accessToken, setAccessToken] = useState('');
+      const [accessToken, setAccessToken] = useState();
       const [accountTypes,setAccountTypes]=useState();
-      const [accountType, setAccountType] = useState('talent');
+      const [accountType, setAccountType] = useState(1);
       const [formData, setFormData] = useState({});
       const [countries,setCountries]=useState();
       const [sports,setSports]=useState();
@@ -49,6 +49,7 @@ function RegisterForm() {
         setAccessToken(res.accessToken); 
         console.log('aya',res.accessToken)
         setCurrentStep(currentStep + 1);
+        setAccountType('1');
       };
 
       useEffect(() => {
@@ -246,11 +247,11 @@ function RegisterForm() {
                 </Button>
                 
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-  <hr className='mt-4' style={{width:'30%'}} />
+  <hr className='mt-4' style={{width:'24%',color:'#DADADA'}} />
 
   <p style={{ margin: '0 10px' }}>OR</p>
 
-  <hr className=' mt-4' style={{width:'30%'}} />
+  <hr className=' mt-4' style={{width:'24%',color:'#DADADA'}} />
 </div>
 
                 
@@ -265,7 +266,7 @@ function RegisterForm() {
                   </Form.Group>
         
                   <div className='mb-3 d-flex '>
-                    <div className=' me-5 flex-fill'>
+                    <div className='flex-fill' >
                       <Input
                         register={register}
                         errors={errors}
@@ -278,7 +279,7 @@ function RegisterForm() {
                         
                       />
                     </div>
-                    <div className='flex-fill'>
+                    <div className='flex-fill' style={{marginRight:'18rem'}}>
                       <Input
                         register={register}
                         errors={errors}
@@ -349,22 +350,11 @@ function RegisterForm() {
                 <div>
                 <p>Accoount Type</p>
                 <div className="account-type-options" onChange={handleAccountTypeChange}>
-                  {/* <label className='talent-type-label'>
-                    <input type="radio" value="1" name="user_type" /> Talents
-                  </label>
-                  <label className='talent-type-label'>
-                    <input type="radio" value="2" name="user_type" /> Coaches
-                  </label>
-                  <label className='talent-type-label'>
-                    <input type="radio" value="3" name="user_type" /> Clubs
-                  </label>
-                  <label className='talent-type-label'>
-                    <input type="radio" value="4" name="user_type" /> Scouts
-                  </label> */}
+
                   {
-                    accountTypes?.map(account=>(
+                    accountTypes?.map((account, index)=>(
                       <label className='talent-type-label'>
-                    <input type="radio" value={account.id} name="user_type" /> {account.name}
+                    <input type="radio" value={account.id} name="user_type"/> {account.name}
                   </label>
                     ))
                   }
@@ -644,7 +634,7 @@ function RegisterForm() {
   return (
     <Row>
     <Col md={6}>
-      <img src={loginPic} alt="Your Image" style={{ width: '33rem', height: '33rem' }}  />
+      <img src={loginPic} alt="Your Image" style={{ width: '46rem', height: '37rem' }}  />
     </Col>
     <Col md={6}>
         <p className='fs-4'>Create an Account</p>

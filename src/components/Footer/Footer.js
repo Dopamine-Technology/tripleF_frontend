@@ -8,10 +8,10 @@ const Footer = () => {
   return (
     <footer className='footer'>
       <div className='section'>
-        <p className='logo-p'><img src={Logo} /></p>
+        <p className='logo-p'><img src={Logo} width='155' /></p>
         <p className='footer-p'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
         <div className='social-icons'>
-        <FaFacebookF  className='icon' size={20} />
+        <FaFacebookF  className='icon ' size={20} />
         <FaTwitter  className='icon' size={20} />
         <BsInstagram  className='icon'size={20}  />
         <FaSnapchatGhost  className='icon' size={20} />

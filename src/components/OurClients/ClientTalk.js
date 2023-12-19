@@ -7,7 +7,7 @@ import { FaQuoteLeft } from "react-icons/fa";
 const ClientTalk = () => {
     return ( <div className='bg-gray mb-4' >
         <h1 className='who-h1 mt-5 about-h1' style={{width:'36rem'}}>What people are saying</h1>
-        <p className='m-3' style={{width:'30rem'}} >
+        <p className='m-1' style={{width:'30rem'}} >
         <span style={{fontSize:'4rem',color:'#1A2A44'}} className='talkQ'><FaQuoteLeft size={38} /></span>
         <br/>
         Leading an organization is incredibly rewarding and equally humbling. Confidence and humility. 

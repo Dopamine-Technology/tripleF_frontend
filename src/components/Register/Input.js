@@ -47,7 +47,7 @@ const Input = ({
           style={{
             backgroundColor: "transparent",
             border: "1px solid rgba(144,144,144, 0.3)",
-            color: "rgba(255,255,255, 1)",
+            color: "black",
             width: "13rem", // Adjust the width here
           }}
           placeholder={placeholder}

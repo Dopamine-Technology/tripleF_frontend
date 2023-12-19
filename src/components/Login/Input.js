@@ -31,7 +31,7 @@ const Input = ({
           }`}
           style={{
             backgroundColor: "transparent",
-            border: "1px solid black",
+            border: "1px solid #EBEBEB",
             color: "black",
             width: "100%", // Adjust the width here
           }}
@@ -46,7 +46,7 @@ const Input = ({
           }`}
           style={{
             backgroundColor: "transparent",
-            border: "1px solid black",
+            border: "1px solid #EBEBEB",
             color: "black",
             width: "30rem", 
           }}
