@@ -13,7 +13,8 @@ const BecomeClient = () => {
           <ContactForm />
         </Col>
         <Col md={6}>
-         <img src={boy} alt="" border="0" height='100%' width='100%' />
+         {/* <img src={boy} alt="" border="0" height='82.6%' width='100%' /> */}
+         <img src={boy} alt="" border="0" height='89%' width='100%' />
         </Col>
       </Row>
     </div>

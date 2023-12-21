@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Col } from "react-bootstrap";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Input = ({
   register,
@@ -14,30 +15,17 @@ const Input = ({
   isDarkMode,
   rows,
 }) => {
-  const isTextarea = type === "textarea";
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <Form.Group as={Col} md={4} className="mb-4">
       <Form.Label className={`text-capitalize text-black`}>{label}</Form.Label>
-      {isTextarea ? (
-        <Form.Control
-          as="textarea"
-          size="lg"
-          rows={rows || 3}
-          cols={23}
-          {...register(name, validation)}
-          className={`${className} ${
-            errors && errors[name]?.message ? "border-danger" : ""
-          }`}
-          style={{
-            backgroundColor: "transparent",
-            border: "1px solid #EBEBEB",
-            color: "black",
-            width: "100%", // Adjust the width here
-          }}
-          placeholder={placeholder}
-        />
-      ) : (
+      <div className="position-relative me-3">
         <Form.Control
           size="lg"
           {...register(name, validation)}
@@ -51,10 +39,29 @@ const Input = ({
             width: "30rem", 
           }}
           placeholder={placeholder}
-          type={type}
+          type={showPassword ? "text" : type}
         />
-      )}
+          {type === "password" && (
+          <div
+            className="position-absolute top-50 end-0 translate-middle-y"
+            style={{marginRight:'-15rem'}}
+          >
+            {showPassword ? (
+              <FaEyeSlash
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
 
+              />
+            ) : (
+              <FaEye
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              />
+            )}
+          </div>
+        )}
+      
+      </div>
       {errors && (
         <div className="text-danger text-start">{errors[name]?.message}</div>
       )}

@@ -8,27 +8,50 @@ import { useForm } from "react-hook-form";
 import Input from './Input';
 import './style.css';
 import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa";
 import EditImage from './EditImg';
 import axios from 'axios';
 import { message } from 'antd';
 import { Link } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { gapi } from 'gapi-script';
+import PhoneInput from "react-phone-input-2";
 
 function RegisterForm() {
-    const {
+  
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .required("Email is required")
+          .email("wrong email")
+          .required("Email is required"),
+        first_name: Yup.string().required("First name is required"),
+        last_name: Yup.string().required("Last name is required"),
+        user_name: Yup.string().required("Username is required"),
+
+        password: Yup.string()
+          .required("New password is required")
+          .min(8, "Password must be at least 8 characters long"),
+      });
+
+      const {
         register,
         handleSubmit,
         reset,
         watch,
         formState: { errors },
-      } = useForm();
+      } = useForm( { mode: "onChange",
+      resolver: yupResolver(schema)});
+
+      
       const [currentStep, setCurrentStep] = useState(1);
       const [accessToken, setAccessToken] = useState();
       const [accountTypes,setAccountTypes]=useState();
       const [accountType, setAccountType] = useState(1);
       const [formData, setFormData] = useState({});
       const [countries,setCountries]=useState();
+      const [responseError, setResponseError] = useState({});
       const [sports,setSports]=useState();
       const [positions,setPositions]=useState();
       const [subPositions,setSubPositions]=useState();
@@ -42,6 +65,7 @@ function RegisterForm() {
           user_name: res.profileObj.email,
           email: res.profileObj.email,
           social_image: res.profileObj.imageUrl, 
+          google_identifier:res.accessToken
           
         };
       
@@ -60,9 +84,7 @@ function RegisterForm() {
         console.log('O')
       }
 
-        
     
-      
       useEffect(() => {
         const fetchData = async () => {
           try {
@@ -183,13 +205,14 @@ function RegisterForm() {
           for (const key in mergedData) {
             formDataWithImage.append(key, mergedData[key]);
           }
+ 
           
           formDataWithImage.delete('image');
           if (!accessToken) {
             formDataWithImage.append('image', imageFile);
           }
           formDataWithImage.append('user_type', accountType);
-          formDataWithImage.append('google_identifier', accessToken);
+          // formDataWithImage.append('google_identifier', accessToken);
       
           try {
             const response = await axios.post(`https://backendtriplef.dopaminetechnology.com/api/user/auth/register`, formDataWithImage);
@@ -197,10 +220,12 @@ function RegisterForm() {
             if (response.status === 200) {
               message.success('Registration successful! please check your email to verify it.');
             } else {
-              message.error(response.data.error);
+              message.error(response.data.errors);
             }
           } catch (error) {
-            message.error('An error occurred. Please try again later.');
+            message.error('An error occurred. Please try again.');
+            setResponseError(error.response.data);
+            message.error(responseError)
           }
         }
       };
@@ -302,6 +327,7 @@ function RegisterForm() {
               className="form-control form-control-sm rounded"
               validation={{}}
               type="text"
+              inputWidth='31rem'
             />
                   </Form.Group>
         
@@ -315,6 +341,7 @@ function RegisterForm() {
                       className="form-control form-control-sm rounded"
                       validation={{}}
                       type="text"
+                      inputWidth='31rem'
                     />
                   </Form.Group>
         
@@ -327,6 +354,7 @@ function RegisterForm() {
                     validation={{ required: true }}
                     className={"py-2 rounded-sm"}
                     errors=''
+                    inputWidth='31rem'
                   />
                   </Form.Group>
                   <Form.Group controlId="termsCheckbox" className="mb-3">
@@ -375,18 +403,19 @@ function RegisterForm() {
           case '1':
             return (
               <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='form-container'>
-      <div>
-  <label htmlFor="talentType">Talent Type</label>
-  <select id="talentType" {...register('talent_type')}>
+              <div className='form-container'>
+                <div className='form-group'>
+                  <label htmlFor="talentType">Talent Type</label>
+                  <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
       <option key={sport.id} value={sport.id}>
         {sport.name}
       </option>
     ))}
   </select>
-</div>
-<div>
+                </div>
+  
+                <div className='form-group'>
   <label htmlFor="position">Position:</label>
   <select id="position" {...register('parent_position')} onChange={(e) => handlePositionSelect(e.target.value)}>
     {positions?.map(position => (
@@ -396,8 +425,8 @@ function RegisterForm() {
     ))}
   </select>
 </div>
-{subPositions?.length > 0 && (
-        <div>
+                {subPositions?.length > 0 && (
+        <div className='form-group'>
           <label htmlFor="subPosition">Sub Positions:</label>
           <select id="subPosition" {...register('position')}>
             {subPositions?.map(subPosition => (
@@ -408,157 +437,184 @@ function RegisterForm() {
           </select>
         </div>
       )}
-        <div>
-          <label>Gender:</label>
-          <label htmlFor="male">Male</label>
-          <input type="radio" id="male" value="male" {...register('gender')} />
-          <label htmlFor="female">Female</label>
-          <input type="radio" id="female" value="female" {...register('gender')} />
-          <label htmlFor="other">Other</label>
-          <input type="radio" id="other" value="other" {...register('gender')} />
-        </div>
-        <div>
-          <label htmlFor="birthdate">Birthdate:</label>
-          <input type="date" id="birthdate" {...register('birth_date')} />
-        </div>
-        <div>
-          <label htmlFor="height">Height (cm):</label>
-          <input type="number" id="height" {...register('height')} />
-          <label htmlFor="weight">Weight (kg):</label>
-          <input type="number" id="weight" {...register('wight')} />
-        </div>
-        <div>
-          <label htmlFor="residence">Residence:</label>
+        <div className='form-group'>
+  <label>Gender:</label>
+  <div className="radio-buttons">
+    <label className='talent-type-label'>
+      <input type="radio" id="male" value="male" {...register('gender')} />
+      Male
+    </label>
+    <label className='talent-type-label'>
+      <input type="radio" id="female" value="female" {...register('gender')} />
+      Female
+    </label>
+    <label className='talent-type-label'>
+      <input type="radio" id="other" value="other" {...register('gender')} />
+      Other
+    </label>
+  </div>
+</div>
+
+                <div className='form-group'>
+                  <label htmlFor="birthdate">Birthdate:</label>
+                  <input type="date" id="birthdate" {...register('birth_date')} />
+                </div>
+                <div className='form-group'>
+                  <label htmlFor="height">Height (cm):</label>
+                  <input type="number" id="height" {...register('height')} />
+                  <label htmlFor="weight">Weight (kg):</label>
+                  <input type="number" id="weight" {...register('weight')} />
+                </div>
+                <div className='form-group'>
+          <label htmlFor="residence"> Place of Residence:</label>
           <select id="residence" {...register('residence_place')}>
             <option value="city1">City 1</option>
             <option value="city2">City 2</option>
           </select>
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor="phone">Phone:</label>
           <input type="tel" id="phone" {...register('mobile_number')} />
         </div>
-      </div>
-      <div>
-      <button type="submit" className='w-50 btn-tall mt-4'>
-        Get Started <FaArrowRight color='white' />
-      </button>
-      </div>
-      <div>
-      <button onClick={handleBack} className='w-50 btn-tall mt-4' style={{color:"#213555"}}>Back</button>
-      </div>
-    </form>
+              </div>
+              
+                
+    
+                <button onClick={handleBack} className=' btn-tall mt-4 bg-white border-none'
+                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem'}}>
+                  <FaArrowLeft color='black' />Back
+                </button>
+                <button type="submit" className='btn-tall mt-4' style={{width:'12rem'}}>
+                  Get Started <FaArrowRight color='white' />
+                </button>
+              
+              
+            </form>
+            
             );
           case '2':
             return (
               <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='form-container'>
-      <div>
-  <label htmlFor="talentType">Talent Type</label>
-  <select id="talentType" {...register('talent_type')}>
+              <div className='form-container'>
+                <div className='form-group'>
+                  <label htmlFor="talentType">Sport Type</label>
+                  <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
       <option key={sport.id} value={sport.id}>
         {sport.name}
       </option>
     ))}
   </select>
+                </div>
+  
+        <div className='form-group'>
+  <label>Gender:</label>
+  <div className="radio-buttons">
+    <label className='talent-type-label'>
+      <input type="radio" id="male" value="male" {...register('gender')} />
+      Male
+    </label>
+    <label className='talent-type-label'>
+      <input type="radio" id="female" value="female" {...register('gender')} />
+      Female
+    </label>
+    <label className='talent-type-label'>
+      <input type="radio" id="other" value="other" {...register('gender')} />
+      Other
+    </label>
+  </div>
 </div>
-        <div>
-          <label>Gender:</label>
-          <label htmlFor="male">Male</label>
-          <input type="radio" id="male" value="male" {...register('gender')} />
-          <label htmlFor="female">Female</label>
-          <input type="radio" id="female" value="female" {...register('gender')} />
-          <label htmlFor="other">Other</label>
-          <input type="radio" id="other" value="other" {...register('gender')} />
-        </div>
-        <div>
-          <label htmlFor="birthdate">Birthdate:</label>
-          <input type="date" id="birthdate" {...register('birth_date')} />
-          <label htmlFor="yearsOfExp">Years of experience:</label>
-          <input type="number" id="yearsOfExp" {...register('years_of_experience')} />
-        </div>
-        <div>
-          <label htmlFor="residence">Residence:</label>
+
+                <div className='form-group'>
+                  <label htmlFor="birthdate">Birthdate:</label>
+                  <input type="date" id="birthdate" {...register('birth_date')} />
+                </div>
+   
+                <div className='form-group'>
+          <label htmlFor="residence"> Place of Residence:</label>
           <select id="residence" {...register('residence_place')}>
             <option value="city1">City 1</option>
             <option value="city2">City 2</option>
           </select>
         </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor="phone">Phone:</label>
           <input type="tel" id="phone" {...register('mobile_number')} />
         </div>
-      </div>
-      <div>
-        <div>
-      <button type="submit" className='w-50 btn-tall mt-4'>
-        Get Started <FaArrowRight color='white'/>
-      </button>
-      </div>
-      <div>
-      <button onClick={handleBack} className='w-50 btn-tall mt-4 bg-white' style={{color:"#213555"}}>Back</button>
-      </div>
-      </div>
-
-    </form>
+              </div>
+                 
+              <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
+                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem'}}>
+                  <FaArrowLeft color='black' />Back
+                </button>
+                <button type="submit" className='btn-tall mt-4' style={{width:'12rem'}}>
+                  Get Started <FaArrowRight color='white' />
+                </button>
+            </form>
             );
           case '4':
             return (
               <form onSubmit={handleSubmit(onSubmit)}>
               <div className='form-container'>
-              <div>
-  <label htmlFor="talentType">Talent Type</label>
-  <select id="talentType" {...register('talent_type')}>
+                <div className='form-group'>
+                  <label htmlFor="talentType">Sport Type</label>
+                  <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
       <option key={sport.id} value={sport.id}>
         {sport.name}
       </option>
     ))}
   </select>
-</div>
-                <div>
-                  <label htmlFor="residence">Place of residence:</label>
-                  <select id="residence" {...register('residence_place')}>
-                    <option value="city1">City 1</option>
-                    <option value="city2">City 2</option>
-                  </select>
                 </div>
-                <div>
-          <label>Gender:</label>
-          <label htmlFor="male">Male</label>
-          <input type="radio" id="male" value="male" {...register('gender')} />
-          <label htmlFor="female">Female</label>
-          <input type="radio" id="female" value="female" {...register('gender')} />
-          <label htmlFor="other">Other</label>
-          <input type="radio" id="other" value="other" {...register('gender')} />
-        </div>
-                <div>
+  
+        <div className='form-group'>
+  <label>Gender:</label>
+  <div className="radio-buttons">
+    <label className='talent-type-label'>
+      <input type="radio" id="male" value="male" {...register('gender')} />
+      Male
+    </label>
+    <label className='talent-type-label'>
+      <input type="radio" id="female" value="female" {...register('gender')} />
+      Female
+    </label>
+    <label className='talent-type-label'>
+      <input type="radio" id="other" value="other" {...register('gender')} />
+      Other
+    </label>
+  </div>
+</div>
+<div className='form-group'>
+                  <label htmlFor="yearExp"> Years of experience </label>
+                  <input type="number" id="years_of_experience" {...register('years_of_experience')} />
+ </div>
+
+                <div className='form-group'>
                   <label htmlFor="birthdate">Birthdate:</label>
                   <input type="date" id="birthdate" {...register('birth_date')} />
-                  <label htmlFor="yearsOfExperience">Years of experience</label>
-                  <input
-                    type="number"
-                    id="yearsOfExperience"
-                    name="years_of_experience"
-                    {...register('years_of_experience')}
-                  />
                 </div>
-                <div>
-                  <label htmlFor="phone">Phone:</label>
-                  <input type="tel" id="phone" {...register('mobile_number')} />
-                </div>
+   
+                <div className='form-group'>
+          <label htmlFor="residence"> Place of Residence:</label>
+          <select id="residence" {...register('residence_place')}>
+            <option value="city1">City 1</option>
+            <option value="city2">City 2</option>
+          </select>
+        </div>
+        <div className='form-group'>
+          <label htmlFor="phone">Phone:</label>
+          <input type="tel" id="phone" {...register('mobile_number')} />
+        </div>
               </div>
-              <div>
-              <button type="submit" className='w-50 btn-tall mt-4'>
-                Get Started <FaArrowRight color='white' />
-              </button>
-              </div>
-              <div>
-      <button onClick={handleBack} className='w-50 btn-tall mt-4 bg-white' style={{color:"#213555"}}>Back</button>
-      </div>
+                  
+              <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
+                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem'}}>
+                  <FaArrowLeft color='black' />Back
+                </button>
+                <button type="submit" className='btn-tall mt-4' style={{width:'12rem'}}>
+                  Get Started <FaArrowRight color='white' />
+                </button>
             </form>
-
             );
           case '3':
             return (
@@ -569,15 +625,15 @@ function RegisterForm() {
                   register={register}
                   watch={watch}
                   name={"club_logo"}
-                  label={"club logo"}
+                  label={"Logo"}
                       />
                   </Form.Group>
-            <div>
+            <div className='form-group'> 
           <label htmlFor="clubname">Club Name:</label>
           <input type="tel" id="clube_name" {...register('club_name')} />
         </div>
-      <div>
-  <label htmlFor="talentType">Talent Type</label>
+      <div className='form-group'>
+  <label htmlFor="talentType">Sport Type</label>
   <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
       <option key={sport.id} value={sport.id}>
@@ -586,7 +642,7 @@ function RegisterForm() {
     ))}
   </select>
 </div>
-        <div>
+        <div className='form-group'>
   <label htmlFor="country">Country:</label>
   <select id="country" {...register('country_id')}>
     {countries.map(country => (
@@ -596,11 +652,13 @@ function RegisterForm() {
     ))}
   </select>
 </div>
-  <div>
-          <label htmlFor="phone">Phone:</label>
+  <div className='form-group'>
+          <label htmlFor="phone">Phone Number:</label>
           <input type="tel" id="phone" {...register('mobile_number')} />
+
+
   </div>
-        <div>
+        <div className='form-group'>
           <label htmlFor="yearsFounded">Years founded:</label>
           <input
             type="number"
@@ -611,19 +669,17 @@ function RegisterForm() {
             {...register('year_founded')}
           />
         </div>
-        <div>
-          <label htmlFor="phone">Phone:</label>
-          <input type="tel" id="phone" {...register('mobile_number')} />
-        </div>
-      </div>
-      <div>
-      <button type="submit" className='w-50 btn-tall mt-4'>
-        Get Started <FaArrowRight color='white' />
-      </button>
-      </div>
-      <div>
-      <button onClick={handleBack} className='w-50 btn-tall mt-4 bg-white ' style={{color:"#213555"}}  >Back</button>
-      </div>
+   
+      </div >
+        
+      <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
+                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem'}}>
+                  <FaArrowLeft color='black' />Back
+                </button>
+                <button type="submit" className='btn-tall mt-4' style={{width:'12rem'}}>
+                  Get Started <FaArrowRight color='white' />
+                </button>
+            
     </form>
             );
           default:
@@ -635,9 +691,10 @@ function RegisterForm() {
     <Row>
     <Col md={6}>
       <img src={loginPic} alt="Your Image" style={{ width: '46rem', height: '37rem' }}  />
+      {/* <img src={loginPic} alt="Your Image" style={{ width: '37rem', height: '30rem' }} />  */}
     </Col>
-    <Col md={6}>
-        <p className='fs-4'>Create an Account</p>
+    <Col md={6} className='mt-4'>
+        <p className='login-welcome fs-4' style={{marginBottom:'1rem'}}>Create an Account</p>
         {renderFormStep()}
       </Col>
     

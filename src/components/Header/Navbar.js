@@ -17,7 +17,7 @@ import { RxDividerVertical } from "react-icons/rx";
 
 
 const TopNavbar = ({content}) => {
-  const currentLanguage = Cookies.get('language') || 'en';
+  const currentLanguage = Cookies.get('language') || 'En';
   console.log('bbb',content)
 
   const changeLanguage = (lng) => {
@@ -25,25 +25,26 @@ const TopNavbar = ({content}) => {
     Cookies.set('language', lng);
   };
   const availableLanguages = [
-    { code: 'en', label: 'English' },
-    { code: 'ar', label: 'Arabic' },
+    { code: 'En', label: 'English' },
+    { code: 'Ar', label: 'Arabic' },
   ];
 
   return (
     <Navbar collapseOnSelect expand="xl" className="">
-      <Container className="justify-content-start " style={{marginRight:'3.5rem'}} >
+      {/* <Container className="justify-content-start " style={{marginLeft:'3.5rem'}} >  */}
+      <Container className="justify-content-start navbar-container " > 
         <Navbar.Brand href="#home" className='fs-4 text-white'><img src={LogoWhite} width='70%' /></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto" style={{marginRight:'-6rem'}}>
           </Nav>
-          <Nav style={{marginRight:'-6rem'}}>
+          <Nav className='right-nav' >
       
           <DropdownButton
   title={
     <div className='text-white d-flex align-items-center'>
-      <GrLanguage color='white' />
-      <span>{currentLanguage}</span>
+      <GrLanguage color='white' className='me-1' />
+      <span className=''>{currentLanguage}</span>
     </div>
   }
   id="language-dropdown"
@@ -74,7 +75,8 @@ const BottomNavbar = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-transparent">
-      <Container style={{marginRight:'3.8rem'}} >
+      {/* <Container style={{marginLeft:'3.8rem'}} > */}
+      <Container className='navbar-container' >
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#home" className='text-white' style={{textDecoration:'none'}}>  <p className={`text-white  ${activeLink === 1 ? 'active' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '1rem' }}>Home</p></Nav.Link>

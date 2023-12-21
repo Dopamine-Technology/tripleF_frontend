@@ -23,7 +23,7 @@ const SingleOne = ({img,content,category}) => {
     description={category}
     
      />
-     <a href='#' className='mt-5'> <img src={single} /> </a>
+     <a href='#' > <img src={single} style={{marginTop:'1rem'}} /> </a>
   </Card>
     );
 }

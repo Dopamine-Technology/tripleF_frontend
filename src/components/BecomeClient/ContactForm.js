@@ -62,7 +62,7 @@ const ContactForm = () => {
           placeholder=''
           className={`border rounded`}
           register={register}
-          rows={7}
+          rows={5}
          
         />
         <Button type='submit' className='submit-button'>

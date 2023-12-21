@@ -25,6 +25,7 @@ width: 14rem;
   margin-left: 3rem;
   
 }
+
 /* .image-container {
     position: relative;
   } */
@@ -46,3 +47,36 @@ width: 14rem;
     left: 0;
 
   } */
+
+  @media only screen and (min-width: 1920px) and (min-height: 1080px) {
+    .image-container{
+      margin-left: 14rem;
+    }
+    .about-p{
+      margin-left: 10rem;
+    }
+    .about-h1{
+      margin-left: 10rem;
+    }
+    .button-container{
+      margin-left: 10rem;
+    }
+  }
+  @media only screen and (min-width: 1024px) and (min-height: 768px) {
+   .image2{
+    /* marginRight:'1rem',width:'16rem',height:'38rem' */
+    /* margin-right:1rem ; */
+    width:15rem;
+    height:30rem
+   }
+   .image1{
+    width:15rem;
+    height:24rem
+   }
+  }
+  @media only screen and (min-width: 768px) and (min-height: 1024px) {
+    .image-container{
+      margin-top: 4rem;
+      margin-left:4rem
+    }
+  }

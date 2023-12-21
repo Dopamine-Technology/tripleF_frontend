@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Col } from "react-bootstrap";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Input = ({
   register,
@@ -10,34 +11,19 @@ const Input = ({
   className,
   validation,
   type,
-  options,
-  isDarkMode,
   rows,
+  inputWidth, 
 }) => {
-  const isTextarea = type === "textarea";
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <Form.Group as={Col} md={4} className="mb-4">
       <Form.Label className={`text-capitalize text-black`}>{label}</Form.Label>
-      {isTextarea ? (
-        <Form.Control
-          as="textarea"
-          size="lg"
-          rows={rows || 3}
-          cols={23}
-          {...register(name, validation)}
-          className={`${className} ${
-            errors && errors[name]?.message ? "border-danger" : ""
-          }`}
-          style={{
-            backgroundColor: "transparent",
-            border: "1px solid rgba(144,144,144, 0.3)",
-            color: "rgba(255,255,255, 1)",
-            width: "100%", // Adjust the width here
-          }}
-          placeholder={placeholder}
-        />
-      ) : (
+      <div className="position-relative me-3">
         <Form.Control
           size="lg"
           {...register(name, validation)}
@@ -48,13 +34,32 @@ const Input = ({
             backgroundColor: "transparent",
             border: "1px solid rgba(144,144,144, 0.3)",
             color: "black",
-            width: "13rem", // Adjust the width here
+            width: inputWidth || "15rem", // Use provided width or default to 15rem
+            paddingRight: "2.5rem", // Space for the toggle icon
           }}
           placeholder={placeholder}
-          type={type}
+          type={showPassword ? "text" : type}
         />
-      )}
-
+        {type === "password" && (
+          <div
+            className="position-absolute top-50 end-0 translate-middle-y"
+            // style={{marginRight:'-15rem'}}
+            style={{marginRight:'-19rem'}}
+          >
+            {showPassword ? (
+              <FaEyeSlash
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              />
+            ) : (
+              <FaEye
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              />
+            )}
+          </div>
+        )}
+      </div>
       {errors && (
         <div className="text-danger text-start">{errors[name]?.message}</div>
       )}

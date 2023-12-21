@@ -14,8 +14,8 @@ const EditImage = ({ register, name, label, image, watch }) => {
               : placeholder
           }
           style={{
-            width: "100px",
-            height: "100px",
+            width: "60px",
+            height: "60px",
             borderRadius:'4px'
           }}
           className=' border-4 border me-4'

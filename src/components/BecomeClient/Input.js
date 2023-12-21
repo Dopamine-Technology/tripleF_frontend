@@ -23,7 +23,7 @@ const Input = ({
         <Form.Control
           as="textarea"
           size="lg"
-          rows={rows || 7}
+          rows={rows || 4}
           cols={16}
           {...register(name, validation)}
           className={`${className} ${

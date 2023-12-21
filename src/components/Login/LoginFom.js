@@ -79,7 +79,8 @@ function LoginForm() {
   return (
     <Row className='mt-2'>
       <Col md={6}>
-        <img src={loginPic} alt="Your Image" style={{ width: '46rem', height: '37rem' }} />
+        {/* <img src={loginPic} alt="Your Image" style={{ width: '46rem', height: '37rem' }} /> */}
+        <img src={loginPic} alt="Your Image" style={{ width: '37rem', height: '30rem' }} /> 
      
       </Col>
       <Col md={6} className='mt-5'>
@@ -150,13 +151,12 @@ function LoginForm() {
 </Form.Group>
 
 
-          
-
+        
           <Button variant='' className='btn-tall' type='submit'>
             Sign in
           </Button>
         </Form>
-       <p className='m-3'> Don’t have an account? <Link to='/register'>Sign Up</Link></p>
+       <p className='m-3 ' style={{marginLeft:'3rem'}}> Don’t have an account? <Link to='/register'>Sign Up</Link></p>
       </Col>
     </Row>
   );

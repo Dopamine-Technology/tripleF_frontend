@@ -1,7 +1,9 @@
 .becomeClient-div{
     background-color: #213555;
-    width:70rem;
-    height: 45rem;
+    /* width:70rem;
+    height: 37rem; */
+    height: 40rem;
+    width: 70rem;
     margin: auto;
     margin-top: 3rem;
     border-radius: 12px;
