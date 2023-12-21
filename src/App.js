@@ -1,25 +1,29 @@
-import './App.scss';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from './components/Header/Header';
-import About from './components/About/About';
-import Steps from './components/Steps/Steps';
-import WhosFor from './components/WhosFor/WhosFor';
-import BecomeClient from './components/BecomeClient/BecomeClient';
-import News from './components/News/News';
-import Footer from './components/Footer/Footer';
-import OurClients from './components/OurClients/OurClients';
+import LandingPage from './pages/LandingPage';
+import { Route, BrowserRouter as Router, Routes , Navigate} from "react-router-dom";
+import React from 'react';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import VerifyPage from './components/Register/VerifyPage';
+import Reset from './components/ResetPassword/Reset';
+import NewPassword from './components/ResetPassword/NewPassword';
 
 function App() {
+  
   return (
     <div className="App">
-      <Header />
-      <About />
-      <WhosFor />
-      <Steps />
-      <OurClients />
-      <BecomeClient />
-      <News />
-      <Footer />
+       <Router>
+        <Routes>
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/verify/:token' element={<VerifyPage />} />
+        <Route path='/reset-password/' element={<Reset />} />
+        <Route path='/reset-password/:user_token' element={<NewPassword />}
+              />
+      </Routes>
+      </Router>
     </div>
   );
 }

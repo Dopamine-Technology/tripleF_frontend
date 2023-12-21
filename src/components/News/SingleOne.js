@@ -1,7 +1,9 @@
 import React from 'react';
 import './style.css';
 import { FaLongArrowAltRight,FaLongArrowAltLeft } from "react-icons/fa";
+import single from '../../assets/imgs/SingleRight.svg'
 import { Card } from 'antd';
+
 const { Meta } = Card;
 
 
@@ -11,16 +13,17 @@ const SingleOne = ({img,content,category}) => {
 <Card
     hoverable
     style={{
-      width: 400,
+      width: 330,
+      border:0
     }}
     cover={<img alt={img} src={img} 
    />}
   >
-    <Meta title={category} 
-    description={content}
+    <Meta title={content} 
+    description={category}
     
      />
-     <a href='#' className='mt-5'> <FaLongArrowAltRight size={27} color='black'/> </a>
+     <a href='#' > <img src={single} style={{marginTop:'1rem'}} /> </a>
   </Card>
     );
 }

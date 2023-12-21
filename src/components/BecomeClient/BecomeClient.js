@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import ContactForm from './ContactForm';
 import './style.css';
+import boy from '../../assets/imgs/boy.png'
 
 
 const BecomeClient = () => {
@@ -12,7 +13,8 @@ const BecomeClient = () => {
           <ContactForm />
         </Col>
         <Col md={6}>
-         <img src="" alt="undraw-Contact-us-re-8wjd" border="0" className="img-fluid" />
+         {/* <img src={boy} alt="" border="0" height='82.6%' width='100%' /> */}
+         <img src={boy} alt="" border="0" height='89%' width='100%' />
         </Col>
       </Row>
     </div>

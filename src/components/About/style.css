@@ -1,14 +1,31 @@
+@font-face {
+  font-family: 'Quicksand-Bold';
+  src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Bold.ttf') format('truetype'); 
+}
+
+
 .about-p{
-    width:30rem;
-    margin-left: 15rem;
+    width:28rem;
+    margin-left: 3rem;
 }
 .about-h1{
-  width: 13rem;
-  margin-left: 15rem;
+  opacity: 1;
+color: rgba(70,70,70,1);
+font-family: "Quicksand-Bold";
+font-size: 40px;
+font-weight: 700;
+font-style: normal;
+letter-spacing: 0px;
+text-align: left;
+margin-left: 3rem;
+width: 14rem; 
+
 }
 .button-container{
-  margin-left: 15rem;
+  margin-left: 3rem;
+  
 }
+
 /* .image-container {
     position: relative;
   } */
@@ -30,3 +47,36 @@
     left: 0;
 
   } */
+
+  @media only screen and (min-width: 1920px) and (min-height: 1080px) {
+    .image-container{
+      margin-left: 14rem;
+    }
+    .about-p{
+      margin-left: 10rem;
+    }
+    .about-h1{
+      margin-left: 10rem;
+    }
+    .button-container{
+      margin-left: 10rem;
+    }
+  }
+  @media only screen and (min-width: 1024px) and (min-height: 768px) {
+   .image2{
+    /* marginRight:'1rem',width:'16rem',height:'38rem' */
+    /* margin-right:1rem ; */
+    width:15rem;
+    height:30rem
+   }
+   .image1{
+    width:15rem;
+    height:24rem
+   }
+  }
+  @media only screen and (min-width: 768px) and (min-height: 1024px) {
+    .image-container{
+      margin-top: 4rem;
+      margin-left:4rem
+    }
+  }

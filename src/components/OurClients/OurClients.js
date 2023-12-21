@@ -5,7 +5,7 @@ import ClientImg from './ClientImg';
 import './style.css';
 
 const OurClients = () => {
-    return (  <div className='bg-gray'>
+    return (  <div className='OurClientsWhole' >
         <Row>
             <Col><ClientTalk /></Col>
             <Col><ClientImg /></Col>

@@ -6,7 +6,7 @@ import './style.css';
 
 const About = () => {
     return ( <div>
-        <Row>
+        <Row className='mt-5'>
             <Col><AboutDesc /></Col>
             <Col><AboutImg /></Col>
         </Row>

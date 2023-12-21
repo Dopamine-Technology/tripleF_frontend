@@ -1,5 +1,6 @@
 .footer {
-    background-color:#D1D1D1;
+    background-color: #EDF0F3;
+    background-image: url('../../assets/imgs/footerBg.svg');
     color: black;
     text-align: center;
     padding: 1rem;
@@ -13,13 +14,15 @@
   .section {
     flex: 1;
     margin: 1rem;
+    margin-left: 3rem;
     
   }
   .footer-p{
     max-width: 20rem;
-    
+    text-align: left;
+     
   }
-  h3{
+  h6{
 
 color: black;
 text-transform: capitalize;
@@ -28,22 +31,31 @@ margin-bottom: 2rem;
 text-decoration: underline;
   }
  .section p{
-    font: normal normal 300 18px/27px Poppins;
+    
 letter-spacing: 0px;
 color: black;
 opacity: 0.8;
   }
-  
+  .icon{
+    color:#003370;
+    margin-left: 1rem;
+    /* border: 2px solid #003370;
+    border-radius: 50%;
+    padding: 5px; */
+    
+  }
+  .social-icons{
+    margin-right: 18rem;
+  }
   .logo {
     width: 100px;
     height: auto;
   }
   .logo-p{
     margin-right: 18rem;
-    font: normal normal normal 30px/46px Poppins;
-letter-spacing: 0px;
-color: #FFFFFF;
-opacity: 1;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
   }
   .footer-hr {
     margin: 1rem 0;
@@ -60,6 +72,26 @@ font: normal normal 300 16px/27px Poppins;
 letter-spacing: 0px;
 color: #FFFFFF;
 opacity: 1;
+  }
+  .footer-hr {
+    margin: 1rem 0;
+    border: 0;
+    border-top: 1px solid #ccc;
+    color:#555
+  }
+  
+  /* Styles for the copyright notice */
+  .copyright-section {
+    width: 100%;
+    margin-top: 2rem; /* Adjust as needed */
+    padding-top: 1rem;
+    border-top: 1px solid #ccc; /* Optional: add a border above the copyright notice */
+  }
+  
+  .copyright-p {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
   }
   
   @media (max-width: 768px) {

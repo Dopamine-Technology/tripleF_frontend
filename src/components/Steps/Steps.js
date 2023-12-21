@@ -7,35 +7,39 @@ import RegisterButton from '../Header/RegisterButton';
 const Steps = () => {
   const stepsArray = [
     {
+      stepNum:'01',
       step: 'One',
-      content: "Some quick example text for Step One."
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
     },
     {
+      stepNum:'02',
       step: 'Two',
-      content: "Some quick example text for Step Two."
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
     },
     {
+      stepNum:'03',
       step: 'Three',
-      content: "Some quick example text for Step Three."
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
     },
   ];
 
   return (
     <div className='steps-div'>
-      <Row>
+   
+      <Row style={{marginTop:'2rem'}}>
         <Col md={6}>
         
-          <Row className='m-5'>
+          <Row className='mb-3'>
             {stepsArray.map((step, index) => (
-              <Col key={index} md={12}>
-                <Step step={step.step} content={step.content} />
+              <Col key={index} md={12} style={{ marginLeft: index % 2 == 0 ? '5rem' : '2rem' }}>
+                <Step step={step.step} content={step.content} stepNum={step.stepNum} />
               </Col>
             ))}
           </Row>
         </Col>
         <Col md={6}>
-          <div>
-            <h1 className='text-white'>How it works</h1>
+          <div >
+            <h1 className='text-white about-h1' style={{width:'24rem',marginLeft:'-0.4rem'}}>How it works</h1>
             <p style={{width:"30rem",color:"white"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.

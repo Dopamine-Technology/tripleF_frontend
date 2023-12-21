@@ -23,11 +23,18 @@ const Input = ({
         <Form.Control
           as="textarea"
           size="lg"
-          rows={rows || 3}
+          rows={rows || 4}
+          cols={16}
           {...register(name, validation)}
           className={`${className} ${
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
+          style={{
+            backgroundColor: "#1A2A44",
+            border: "1px solid white",
+            color: "white",
+            width: "26rem", // Adjust the width here
+          }}
           placeholder={placeholder}
         />
       ) : (
@@ -37,6 +44,12 @@ const Input = ({
           className={`${className} ${
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
+          style={{
+            backgroundColor: "#1A2A44",
+            border: "1px solid white",
+            color: "white",
+            width: "11rem", // Adjust the width here
+          }}
           placeholder={placeholder}
           type={type}
         />

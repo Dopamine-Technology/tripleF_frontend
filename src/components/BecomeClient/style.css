@@ -1,4 +1,27 @@
 .becomeClient-div{
-    background-color: black;
-    padding:3rem
+    background-color: #213555;
+    /* width:70rem;
+    height: 37rem; */
+    height: 40rem;
+    width: 70rem;
+    margin: auto;
+    margin-top: 3rem;
+    border-radius: 12px;
+}
+.form-contact{
+    padding:3rem;
+}
+.submit-button{
+    background-color: #77DCBF;
+    border-radius: 24px;
+    border-color: #77DCBF;
+    color:black;
+    float: right;
+    margin-right: 2rem;
+}
+.submit-button:hover{
+    background-color: #77DCBF;
+    border-radius: 24px;
+    border-color: #77DCBF;
+    color:white;
 }

@@ -8,3 +8,12 @@
     cursor: pointer;
     outline: none;
   }
+  .OurClientsWhole{
+    opacity: 1;
+    margin-left: 3rem;
+  }
+  .talkQ{
+    font-size:1rem;
+    color:#213555;
+
+  }
