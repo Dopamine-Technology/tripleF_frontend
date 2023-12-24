@@ -92,11 +92,107 @@ margin-top: 1rem;
     align-items: center;
     height: 100vh;
   }
+  .signup-img{
+    width:47rem;
+    height: 37rem;
+    margin-top: -0.1rem;
+  }
   .p-top{
     color:#464646;
     margin-left: 4rem;
 
   }
+  .navbar-register{
+    box-shadow: 0px 2px 12px rgba(218,218,218, 1);
+
+  }
+
+ /* input{
+  accent-color: #5fb099
+ } */
+
+ 
+.custom-radio-btn {
+  --size: 25px;
+  min-width: var(--size);
+  height: var(--size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid #E1E1E1; 
+  padding: 1rem;
+  margin: 2px 10px;
+  position: relative;
+  padding-left: var(--size);
+}
+
+.custom-radio-btn input {
+  display: none;
+}
+
+/* handle if you want label on the left of the checkmark instead */
+
+.custom-radio-btn.left {
+  padding-left: 0;
+  padding-right: var(--size);
+}
+
+/* label  */
+
+.custom-radio-btn .label {
+  margin-left: 5px;
+}
+
+.custom-radio-btn.left .label {
+  margin: 0 5px;
+}
+
+.custom-radio-btn[aria-label]::after {
+  content: attr(aria-label);
+  display: inline-block;
+  margin-left: 5px;
+}
+
+/* chekmark */
+
+.custom-radio-btn .checkmark {
+  --gap: 3px;
+  --border: 2px;
+  --check-color: #5fb099;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 8px;
+  margin-left: 3px;
+  border-radius: 50%;
+  display: inline-block;
+  transition: opacity 0.3s ease;
+  border: var(--border) solid #444;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.custom-radio-btn.left .checkmark {
+  left: auto;
+  right: 0;
+}
+
+.custom-radio-btn input:checked ~ .checkmark {
+  /* changes from the video  */
+
+  /*  content box origin will make sure the bg-image only stays inside content area in between padding  */
+  background-origin: content-box;
+  background-repeat: no-repeat;
+  background-image: radial-gradient(
+    circle at center, 
+    var(--check-color) 
+     /* the size of the check mark is determined by subtracting from the size of the circle
+     the border(both sides) and the gap(both sides) than dividing it by 2 to get the radius of the circle        */
+       calc((var(--size) - (var(--border) * 2) - (var(--gap) * 2)) / 2), 
+    rgba(255, 255, 255, 0) 0);
+}
+
   .form-container {
     display: flex;
     flex-direction: column;
@@ -107,8 +203,62 @@ margin-top: 1rem;
     display: flex;
     flex-direction: column;
   }
+
+  
   
   label {
     /* margin-bottom: 0.5rem; */
   }
-  
+  @media only screen and (width: 1920px) and (height: 1080px) {
+    .login-img{
+      width:57rem;
+      height: 50rem;
+    }
+    .eye-icon{
+      margin-right: -10rem;
+    }
+  }
+  @media only screen and (width: 1280px) and (height: 720px) {
+    .login-img{
+      width:40rem;
+      height: 33rem;
+    }
+    .eye-icon{
+      margin-right: -17rem;
+    }
+  }
+  @media only screen and (width: 1280px) and (height: 800px) {
+    .login-img{
+      width:40rem;
+      height: 33rem;
+    }
+    .eye-icon{
+      margin-right: -17rem;
+    }
+  }
+  @media only screen and (width: 1280px) and (height: 1024px) {
+    .login-img{
+      width:40rem;
+      height: 33rem;
+    }
+    .eye-icon{
+      margin-right: -17rem;
+    }
+  }
+
+  @media only screen and (max-width: 1024px) and (max-height: 768px) {
+    .login-img{
+      width:35rem;
+      height: 32rem;
+    }
+    .eye-icon{
+      margin-right: -19rem;
+    }
+  }
+
+  @media only screen and (max-width: 768px) and (max-height: 1024px) {
+    .login-img{
+      width:24rem;
+      height: 20rem;
+    }
+  }

@@ -38,7 +38,7 @@ const WhosFor = () => {
           <WhosForDesc />
         </Col>
       </Row>
-      <Row className="justify-content-center " style={{ marginLeft: '2rem' }} >
+      <Row className="justify-content-center card-container " >
         {types.map((type, index) => (
           <Col key={index} xs={6} sm={6} md={6} lg={3} >
             

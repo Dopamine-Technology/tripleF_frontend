@@ -2,7 +2,8 @@
   font-family: 'Quicksand-Bold';
   src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Bold.ttf') format('truetype'); 
 }
-
+.aboutDesc-div{
+}
 
 .about-p{
     width:28rem;
@@ -26,29 +27,8 @@ width: 14rem;
   
 }
 
-/* .image-container {
-    position: relative;
-  } */
 
-
-  
-  /* .image1 {
-    z-index: 1;
-    position: absolute;
-    top: 5rem;
-    left: 10rem;
-
-  }
-  
-  .image2 {
-    z-index: 2;
-    position: absolute;
-    top: 0;
-    left: 0;
-
-  } */
-
-  @media only screen and (min-width: 1920px) and (min-height: 1080px) {
+  @media only screen and (width: 1920px) and (height: 1080px) {
     .image-container{
       margin-left: 14rem;
     }
@@ -62,7 +42,7 @@ width: 14rem;
       margin-left: 10rem;
     }
   }
-  @media only screen and (min-width: 1024px) and (min-height: 768px) {
+  @media only screen and (width: 1024px) and (height: 768px) {
    .image2{
     /* marginRight:'1rem',width:'16rem',height:'38rem' */
     /* margin-right:1rem ; */
@@ -74,7 +54,7 @@ width: 14rem;
     height:24rem
    }
   }
-  @media only screen and (min-width: 768px) and (min-height: 1024px) {
+  @media only screen and (max-width: 768px) and (max-height: 1024px) {
     .image-container{
       margin-top: 4rem;
       margin-left:4rem

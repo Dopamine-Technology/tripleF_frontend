@@ -4,3 +4,9 @@
     padding: 2rem;
     position: relative;
 }
+
+@media only screen and (width: 1920px) and (height: 1080px) {
+  .about-h1{
+    font-size: 4rem;
+  }
+}

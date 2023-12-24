@@ -48,7 +48,7 @@ const News = () => {
         <Row className='m-5'>
            {news2 && news2.length > 0 ? (
             news2.map((item, index) => (
-          <Col key={index} md={4}>
+          <Col key={index} md={4} xs={6} sm={6} className='col-single'>
             <SingleOne img={item.img} content={item.content} category={item.category} />
           </Col>
         ))

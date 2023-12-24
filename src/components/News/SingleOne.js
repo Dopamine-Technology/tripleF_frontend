@@ -19,10 +19,10 @@ const SingleOne = ({img,content,category}) => {
     cover={<img alt={img} src={img} 
    />}
   >
-    <Meta title={content} 
-    description={category}
-    
-     />
+ <Meta
+        title={<p style={{color:'#C2C2C2'}}>{category}</p>}
+        description={<p style={{color:'#464646',fontSize:'19px'}}>{content}</p>}
+      />
      <a href='#' > <img src={single} style={{marginTop:'1rem'}} /> </a>
   </Card>
     );

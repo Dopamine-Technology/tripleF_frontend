@@ -8,18 +8,38 @@ const Step = ({ step, content ,stepNum}) => {
     <Card style={{ width: '27rem', borderRadius: '10px' }}>
       <Card.Body>
         <Row>
-          {/* First Column for Step Number */}
-          <Col xs={2} className="text-center">
-            <h4 style={{color:"#356255"}}>{stepNum}</h4>
+  
+        <Col xs={2} className="text-center" style={{ position: 'relative' }}>
+            {/* Number */}
+            <h4 style={{ color: "#356255",zIndex:'1',fontSize:'30px' }}>{stepNum}</h4>
+            <div style={{
+              width: '20px',
+              height: '20px',
+              borderRadius: '50%',
+              backgroundColor: '#84F4D4',
+              opacity:'0.305404',
+              position: 'absolute',
+              top: '0px',
+              left: '30%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#356255',
+              fontWeight: 'bold',
+              zIndex:'2'
+            }}>
+       
+            </div>
           </Col>
-          {/* Second Column for Step Number and Description */}
+
           <Col xs={10}>
             <Row>
               {/* Step Number Again */}
               <Col xs={12} className="mb-2">
                 <h5>Step {step}</h5>
               </Col>
-              {/* Description */}
+         
               <Col xs={12}>
                 <p>{content}</p>
               </Col>
