@@ -69,7 +69,7 @@ function LoginForm() {
     
       })
       .catch((error) => {
-            message.error('logged in failed, please try again')
+            message.error('Your email or password is incorrect')
       });
   };
   useEffect(() => {

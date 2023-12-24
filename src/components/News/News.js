@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import SingleOne from './SingleOne';
 import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { FaArrowRight } from "react-icons/fa";
 
 
 const News = () => {
@@ -44,7 +45,10 @@ const News = () => {
     },
 ]
     return ( <div className='p-4'>
-        <h2 className='about-h1' style={{width:'20rem'}}>Our Latest News </h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <h2 className='about-h1' style={{ width: '20rem', margin: 0 }}>Our Latest News</h2>
+    <p><a href="/read-more" className='read-more-link'>View More</a> <FaArrowRight /></p>
+  </div>
         <Row className='m-5'>
            {news2 && news2.length > 0 ? (
             news2.map((item, index) => (
