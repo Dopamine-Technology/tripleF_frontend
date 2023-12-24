@@ -17,7 +17,8 @@ import { GoogleLogin } from 'react-google-login';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { gapi } from 'gapi-script';
-import PhoneInput from "react-phone-input-2";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 function RegisterForm() {
   
@@ -40,6 +41,7 @@ function RegisterForm() {
         handleSubmit,
         reset,
         watch,
+        setValue,
         formState: { errors },
       } = useForm( { mode: "onChange",
       resolver: yupResolver(schema)});
@@ -48,7 +50,7 @@ function RegisterForm() {
       const [currentStep, setCurrentStep] = useState(1);
       const [accessToken, setAccessToken] = useState();
       const [accountTypes,setAccountTypes]=useState();
-      const [accountType, setAccountType] = useState(1);
+      const [accountType, setAccountType] = useState('1');
       const [formData, setFormData] = useState({});
       const [countries,setCountries]=useState();
       const [responseError, setResponseError] = useState({});
@@ -149,9 +151,7 @@ function RegisterForm() {
       
         fetchData();
       }, []);
-      
 
-      
 
       useEffect(() => {
       }, [sports, positions, countries,accountTypes]);
@@ -349,6 +349,7 @@ function RegisterForm() {
                   <Input
                     type="password"
                     name="password"
+                    placeholder='8+ Characters'
                     register={register}
                     label="create password"
                     validation={{ required: true }}
@@ -381,9 +382,15 @@ function RegisterForm() {
 
                   {
                     accountTypes?.map((account, index)=>(
-                      <label className='talent-type-label'>
-                    <input type="radio" value={account.id} name="user_type"/> {account.name}
-                  </label>
+                  //     <label className='talent-type-label'>
+                  //     <input type="radio"  value={account.id} name="user_type" /> {account.name}
+                  // </label>
+                  <label class="custom-radio-btn">
+  <span className="label">{account.name}</span>
+  <input type="radio" value={account.id} name="user_type"  />
+  <span className="checkmark"></span>
+</label>
+
                     ))
                   }
                 </div>
@@ -437,22 +444,26 @@ function RegisterForm() {
           </select>
         </div>
       )}
-        <div className='form-group'>
+            <div className='form-group'>
   <label>Gender:</label>
   <div className="radio-buttons">
-    <label className='talent-type-label'>
+    <label className='custom-radio-btn'>
+      <span className="label">Male</span>
       <input type="radio" id="male" value="male" {...register('gender')} />
-      Male
+      <span className="checkmark"></span>
     </label>
-    <label className='talent-type-label'>
-      <input type="radio" id="female" value="female" {...register('gender')} />
-      Female
+    <label className='custom-radio-btn'>
+      <span className="label">Female</span>
+      <input type="radio" id="male" value="male" {...register('gender')} />
+      <span className="checkmark"></span>
     </label>
-    <label className='talent-type-label'>
-      <input type="radio" id="other" value="other" {...register('gender')} />
-      Other
+    <label className='custom-radio-btn'>
+      <span className="label">Other</span>
+      <input type="radio" id="male" value="male" {...register('gender')} />
+      <span className="checkmark"></span>
     </label>
   </div>
+  
 </div>
 
                 <div className='form-group'>
@@ -473,8 +484,23 @@ function RegisterForm() {
           </select>
         </div>
         <div className='form-group'>
-          <label htmlFor="phone">Phone:</label>
-          <input type="tel" id="phone" {...register('mobile_number')} />
+          <label htmlFor="mobile_number">Phone:</label>
+          {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
+          <PhoneInput
+            className={`form-control  py-1 rounded-sm   ${errors && (errors["phone_number"]?.message ? " border-danger " : "")}`}
+            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none `}
+            buttonClass="border-0"
+            country={"jo"}
+            value={"mobile_number"}
+            inputProps={{
+              name: "mobile_number",
+              required: true,
+            }}
+            onChange={(e) => {
+              setValue("mobile_number",e)
+            }}
+            onCountryChange={() => {}}
+          />
         </div>
               </div>
               
@@ -507,28 +533,46 @@ function RegisterForm() {
   </select>
                 </div>
   
-        <div className='form-group'>
+                <div className='form-group'>
   <label>Gender:</label>
   <div className="radio-buttons">
-    <label className='talent-type-label'>
+    <label className='custom-radio-btn'>
+      <span className="label">Male</span>
       <input type="radio" id="male" value="male" {...register('gender')} />
-      Male
+      <span className="checkmark"></span>
     </label>
-    <label className='talent-type-label'>
-      <input type="radio" id="female" value="female" {...register('gender')} />
-      Female
+    <label className='custom-radio-btn'>
+      <span className="label">Female</span>
+      <input type="radio" id="male" value="male" {...register('gender')} />
+      <span className="checkmark"></span>
     </label>
-    <label className='talent-type-label'>
-      <input type="radio" id="other" value="other" {...register('gender')} />
-      Other
+    <label className='custom-radio-btn'>
+      <span className="label">Other</span>
+      <input type="radio" id="male" value="male" {...register('gender')} />
+      <span className="checkmark"></span>
     </label>
   </div>
+  
+</div>
+<div className='mb-3 d-flex '>
+                    <div className='flex-fill form-group' >
+                    <label htmlFor="birthdate">years of experience:</label>
+                  <input type="number" id="years_of_experience" {...register('years_of_experience')} />
+                    </div>
+                    <div className='flex-fill form-group'>
+                    <label htmlFor="birthdate">Birthdate:</label>
+                  <input type="date" id="birthdate" {...register('birth_date')} />
+                    </div>
+                  </div>
+{/* <div className='form-group'>
+                  <label htmlFor="birthdate">years of experience:</label>
+                  <input type="number" id="years_of_experience" {...register('years_of_experience')} />
 </div>
 
                 <div className='form-group'>
                   <label htmlFor="birthdate">Birthdate:</label>
                   <input type="date" id="birthdate" {...register('birth_date')} />
-                </div>
+                </div> */}
    
                 <div className='form-group'>
           <label htmlFor="residence"> Place of Residence:</label>
@@ -539,7 +583,22 @@ function RegisterForm() {
         </div>
         <div className='form-group'>
           <label htmlFor="phone">Phone:</label>
-          <input type="tel" id="phone" {...register('mobile_number')} />
+          {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
+          <PhoneInput
+            className={`form-control  py-1 rounded-sm   ${errors && (errors["phone_number"]?.message ? " border-danger " : "")}`}
+            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none `}
+            buttonClass="border-0"
+            country={"jo"}
+            value={"mobile_number"}
+            inputProps={{
+              name: "mobile_number",
+              required: true,
+            }}
+            onChange={(e) => {
+              setValue("mobile_number",e)
+            }}
+            onCountryChange={() => {}}
+          />
         </div>
               </div>
                  
@@ -567,32 +626,37 @@ function RegisterForm() {
   </select>
                 </div>
   
-        <div className='form-group'>
+                <div className='form-group'>
   <label>Gender:</label>
   <div className="radio-buttons">
-    <label className='talent-type-label'>
+    <label className='custom-radio-btn'>
+      <span className="label">Male</span>
       <input type="radio" id="male" value="male" {...register('gender')} />
-      Male
+      <span className="checkmark"></span>
     </label>
-    <label className='talent-type-label'>
-      <input type="radio" id="female" value="female" {...register('gender')} />
-      Female
+    <label className='custom-radio-btn'>
+      <span className="label">Female</span>
+      <input type="radio" id="male" value="male" {...register('gender')} />
+      <span className="checkmark"></span>
     </label>
-    <label className='talent-type-label'>
-      <input type="radio" id="other" value="other" {...register('gender')} />
-      Other
+    <label className='custom-radio-btn'>
+      <span className="label">Other</span>
+      <input type="radio" id="male" value="male" {...register('gender')} />
+      <span className="checkmark"></span>
     </label>
   </div>
+  
 </div>
-<div className='form-group'>
-                  <label htmlFor="yearExp"> Years of experience </label>
+<div className='mb-3 d-flex '>
+                    <div className='flex-fill form-group' >
+                    <label htmlFor="birthdate">years of experience:</label>
                   <input type="number" id="years_of_experience" {...register('years_of_experience')} />
- </div>
-
-                <div className='form-group'>
-                  <label htmlFor="birthdate">Birthdate:</label>
+                    </div>
+                    <div className='flex-fill form-group'>
+                    <label htmlFor="birthdate">Birthdate:</label>
                   <input type="date" id="birthdate" {...register('birth_date')} />
-                </div>
+                    </div>
+                  </div>
    
                 <div className='form-group'>
           <label htmlFor="residence"> Place of Residence:</label>
@@ -603,7 +667,22 @@ function RegisterForm() {
         </div>
         <div className='form-group'>
           <label htmlFor="phone">Phone:</label>
-          <input type="tel" id="phone" {...register('mobile_number')} />
+          {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
+          <PhoneInput
+            className={`form-control  py-1 rounded-sm   ${errors && (errors["phone_number"]?.message ? " border-danger " : "")}`}
+            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none `}
+            buttonClass="border-0"
+            country={"jo"}
+            value={"mobile_number"}
+            inputProps={{
+              name: "mobile_number",
+              required: true,
+            }}
+            onChange={(e) => {
+              setValue("mobile_number",e)
+            }}
+            onCountryChange={() => {}}
+          />
         </div>
               </div>
                   
@@ -654,7 +733,22 @@ function RegisterForm() {
 </div>
   <div className='form-group'>
           <label htmlFor="phone">Phone Number:</label>
-          <input type="tel" id="phone" {...register('mobile_number')} />
+          {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
+          <PhoneInput
+            className={`form-control  py-1 rounded-sm   ${errors && (errors["phone_number"]?.message ? " border-danger " : "")}`}
+            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none `}
+            buttonClass="border-0"
+            country={"jo"}
+            value={"mobile_number"}
+            inputProps={{
+              name: "mobile_number",
+              required: true,
+            }}
+            onChange={(e) => {
+              setValue("mobile_number",e)
+            }}
+            onCountryChange={() => {}}
+          />
 
 
   </div>
@@ -690,7 +784,7 @@ function RegisterForm() {
   return (
     <Row>
     <Col md={6}>
-      <img src={loginPic} alt="Your Image" style={{ width: '46rem', height: '37rem' }}  />
+      <img src={loginPic} alt="Your Image" className='signup-img'  />
       {/* <img src={loginPic} alt="Your Image" style={{ width: '37rem', height: '30rem' }} />  */}
     </Col>
     <Col md={6} className='mt-4'>

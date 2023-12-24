@@ -43,8 +43,8 @@ const Input = ({
         />
           {type === "password" && (
           <div
-            className="position-absolute top-50 end-0 translate-middle-y"
-            style={{marginRight:'-15rem'}}
+            className="position-absolute top-50 end-0 translate-middle-y eye-icon"
+       
           >
             {showPassword ? (
               <FaEyeSlash

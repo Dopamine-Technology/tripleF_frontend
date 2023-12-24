@@ -79,8 +79,8 @@ function LoginForm() {
   return (
     <Row className='mt-2'>
       <Col md={6}>
-        {/* <img src={loginPic} alt="Your Image" style={{ width: '46rem', height: '37rem' }} /> */}
-        <img src={loginPic} alt="Your Image" style={{ width: '37rem', height: '30rem' }} /> 
+        <img src={loginPic} alt="Your Image" className='login-img' />
+        {/* <img src={loginPic} alt="Your Image" style={{ width: '37rem', height: '30rem' }} />  */}
      
       </Col>
       <Col md={6} className='mt-5'>

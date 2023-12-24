@@ -25,3 +25,15 @@
     border-color: #77DCBF;
     color:white;
 }
+
+@media only screen and (max-width: 768px) and (max-height: 1024px) {
+  .contactForm-img{
+   visibility:hidden;
+  }
+ .form-contact{
+    margin-left: 5rem;
+ }
+ .submit-button{
+    margin-right: -3rem;
+ }
+}

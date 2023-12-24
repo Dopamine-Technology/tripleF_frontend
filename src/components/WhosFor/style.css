@@ -18,6 +18,9 @@
     opacity: 1;
     background-color: rgba(255,255,255, 1);
   }
+  .card-container {
+    margin-left:4rem
+  }
   .who-h1{
     opacity: 1;
     color: rgba(70,70,70,1);
@@ -27,4 +30,17 @@
     font-style: normal;
     letter-spacing: 0px;
     text-align: left;
+  }
+
+  @media only screen and (width: 1920px) and (height: 1080px) {
+    .card-container {
+      margin-left:10rem;
+    }
+
+  }
+  @media only screen and (width: 1024px) and (height: 768px) {
+    .card-container {
+      margin-left:0;
+    }
+
   }

@@ -11,9 +11,28 @@
   .OurClientsWhole{
     opacity: 1;
     margin-left: 3rem;
+    background-color: #FAFAFA;
   }
   .talkQ{
     font-size:1rem;
     color:#213555;
 
+  }
+  .clientTalk-container{
+    margin-left: 4rem;
+    background-color: #FAFAFA;
+  }
+  @media only screen and (width: 1920px) and (height: 1080px) {
+  .clients-img{
+    margin-left: 14rem;
+  }
+  .clientTalk-container{
+    margin-left: 6rem;
+  }
+  }
+
+  @media only screen and (width: 1024px) and (height: 768px) {
+    .clients-img{
+      width:23rem
+    }
   }
