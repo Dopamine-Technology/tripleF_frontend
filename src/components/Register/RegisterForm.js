@@ -19,19 +19,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { gapi } from 'gapi-script';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import FacebookLogin from 'react-facebook-login';
 
 function RegisterForm() {
-  
+  const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
       const schema = Yup.object().shape({
-        email: Yup.string()
+        email:signedUpWithGoogle ? Yup.string():Yup.string()
           .required("Email is required")
           .email("wrong email")
           .required("Email is required"),
-        first_name: Yup.string().required("First name is required"),
-        last_name: Yup.string().required("Last name is required"),
-        user_name: Yup.string().required("Username is required"),
+        first_name: signedUpWithGoogle ? Yup.string():Yup.string().required("First name is required"),
+        last_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Last name is required"),
+        user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required"),
 
-        password: Yup.string()
+        password: signedUpWithGoogle ? Yup.string():Yup.string()
           .required("New password is required")
           .min(8, "Password must be at least 8 characters long"),
       });
@@ -58,6 +59,7 @@ function RegisterForm() {
       const [positions,setPositions]=useState();
       const [subPositions,setSubPositions]=useState();
       const [termsAccepted, setTermsAccepted] = useState(false);
+  
       const clientId='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'
       
       const onSuccess = (res) => {
@@ -73,10 +75,15 @@ function RegisterForm() {
       
         setFormData(userData);
         setAccessToken(res.accessToken); 
-        console.log('aya',res.accessToken)
         setCurrentStep(currentStep + 1);
         setAccountType('1');
+        setSignedUpWithGoogle(true);
       };
+
+
+      const responseFacebook = (response) => {
+        console.log('face',response);
+      }
 
       useEffect(() => {
         console.log('Updated formData:', formData);
@@ -157,7 +164,7 @@ function RegisterForm() {
       }, [sports, positions, countries,accountTypes]);
 
       const handleTermsCheckbox = (e) => {
-        setTermsAccepted(e.target.checked); // Update the termsAccepted state based on checkbox status
+        setTermsAccepted(e.target.checked); 
       };
 
       const handlePositionSelect = async (selectedPositionId) => {
@@ -214,19 +221,35 @@ function RegisterForm() {
           formDataWithImage.append('user_type', accountType);
           // formDataWithImage.append('google_identifier', accessToken);
       
-          try {
-            const response = await axios.post(`https://backendtriplef.dopaminetechnology.com/api/user/auth/register`, formDataWithImage);
-      
+        
+          await axios.post(`https://backendtriplef.dopaminetechnology.com/api/user/auth/register`, formDataWithImage)
+          .then((response) => {
             if (response.status === 200) {
-              message.success('Registration successful! please check your email to verify it.');
+              message.success('Registration successful! Please check your email to verify it.');
             } else {
-              message.error(response.data.errors);
+              // Check for specific error status (422 Unprocessable Entity)
+              if (response.status === 422) {
+                const errors = response.data.errors;
+                if (errors && errors.email && Array.isArray(errors.email) && errors.email.length > 0) {
+                  const emailErrorMessage = errors.email[0]; // Extract email error message
+                  message.error(emailErrorMessage);
+                } else {
+                  message.error('Unknown validation error. Please try again.');
+                }
+              } else {
+                message.error('An error occurred. Please try again.');
+              }
             }
-          } catch (error) {
-            message.error('An error occurred. Please try again.');
-            setResponseError(error.response.data);
-            message.error(responseError)
-          }
+          })
+          .catch((error) => {
+            if (error.response) {
+              
+              const errorMessage = error.response.data.message || 'Unknown error occurred.';
+              message.error(errorMessage);
+            } else {
+              message.error('Something went wrong. Please try again.');
+            }
+          });
         }
       };
       
@@ -270,6 +293,12 @@ function RegisterForm() {
                   <img src={facebook} alt='search' className='me-2' />
                   Sign up with Facebook
                 </Button>
+                
+                {/* <FacebookLogin
+    appId="693137086287841"
+    autoLoad={true}
+    fields="name,email,picture"
+    callback={responseFacebook} /> */}
                 
                 <div style={{ display: 'flex', alignItems: 'center' }}>
   <hr className='mt-4' style={{width:'24%',color:'#DADADA'}} />
@@ -474,7 +503,7 @@ function RegisterForm() {
                   <label htmlFor="height">Height (cm):</label>
                   <input type="number" id="height" {...register('height')} />
                   <label htmlFor="weight">Weight (kg):</label>
-                  <input type="number" id="weight" {...register('weight')} />
+                  <input type="number" id="weight" {...register('wight')} />
                 </div>
                 <div className='form-group'>
           <label htmlFor="residence"> Place of Residence:</label>

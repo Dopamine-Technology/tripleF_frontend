@@ -26,6 +26,11 @@
     font-size: 16px;
     margin-bottom: 8px;
 }
+.read-more-link{
+    color:black;
+    font-size: 13px;
+    margin-top: 4px;
+}
 
 .description {
     font-size: 14px;
