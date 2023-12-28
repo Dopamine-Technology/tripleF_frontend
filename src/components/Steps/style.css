@@ -3,7 +3,21 @@
     margin-top: 3rem;
     padding: 2rem;
     position: relative;
+    
 }
+.Shape{
+  width: 150px;
+  height:150px;
+  background: #CEFBEE;
+  border-top-left-radius: 0%;
+  border-top-right-radius: 0%;
+  border-bottom-right-radius: 0%;
+  border-bottom-left-radius: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 
 @media only screen and (width: 1920px) and (height: 1080px) {
   .about-h1{

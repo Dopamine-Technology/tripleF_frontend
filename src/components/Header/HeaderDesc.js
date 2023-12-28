@@ -12,7 +12,7 @@ const HeaderDesc = () => {
   return (
     <div className='header-div'>
       <Row>
-        <Col md={6} className='mr-5'>
+        <Col md={6} className=''>
           <h1 className=' fw-bold fs-1 header-h1' style={{ fontSize: '56px', letterSpacing: '2px', width: "30rem",color:'#FFFFFF' }}>
             What We Do In Life Echoes In Eternity
           </h1>

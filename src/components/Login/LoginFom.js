@@ -5,7 +5,7 @@ import Input from './Input';
 import { useForm } from 'react-hook-form';
 import search from '../../assets/imgs/search.png';
 import facebook from '../../assets/imgs/facebook.png';
-import { Link,useNavigate  } from 'react-router-dom';
+import { Link,Navigate,useNavigate  } from 'react-router-dom';
 import loginPic from '../../assets/imgs/login.png'
 import { UserDataContext } from "../UserContext/UserData.context";
 import Cookies from "js-cookie";
@@ -35,7 +35,8 @@ function LoginForm() {
 
   axios.post('https://backendtriplef.dopaminetechnology.com/api/user/auth/google_login', dataToSend)
     .then((response) => {
-      message.success('logged in successfullly')
+      message.success('logged in successfullly');
+      navigate('/home');
     })
     .catch((error) => {
       console.error('Error sending data to other API:', error);
@@ -64,7 +65,8 @@ function LoginForm() {
           ...response.data.result.user,
         });
 
-             message.success('logged in successfullly')
+             message.success('logged in successfullly');
+             navigate('/home');
       
     
       })
@@ -156,7 +158,7 @@ function LoginForm() {
             Sign in
           </Button>
         </Form>
-       <p className='m-3 ' style={{marginLeft:'3rem'}}> Don’t have an account? <Link to='/register'>Sign Up</Link></p>
+       <p style={{marginLeft:'7rem',marginTop:'1rem'}}> Don’t have an account? <Link to='/register'>Sign Up</Link></p>
       </Col>
     </Row>
   );

@@ -1,12 +1,12 @@
 import React from 'react'
-import NavBar from '../components/Register/Navbar';
 import LoginForm from '../components/Login/LoginFom';
 import Footer from '../components/Footer/Footer'
+import CombinedNavbars from '../components/Register/Navbar';
 
 function Login() {
     return (
       <div style={{overflowX:'hidden'}}>
-       <NavBar />
+       <CombinedNavbars />
        <LoginForm />
        <Footer />
       </div>

@@ -54,6 +54,7 @@ function RegisterForm() {
       const [accountType, setAccountType] = useState('1');
       const [formData, setFormData] = useState({});
       const [countries,setCountries]=useState();
+      const [cities,setCities]=useState();
       const [responseError, setResponseError] = useState({});
       const [sports,setSports]=useState();
       const [positions,setPositions]=useState();
@@ -178,6 +179,15 @@ function RegisterForm() {
           console.error('Error fetching sub-positions:', error);
         }
       };
+
+      const handleCountrySelect = async (selectedPositionId) => {
+        try {
+          const response = await axios.get(`https://backendtriplef.dopaminetechnology.com/api/app/get_cities/${selectedPositionId}`);
+          setCities(response.data.result);
+        } catch (error) {
+          console.error('Error fetching sub-positions:', error);
+        }
+      };
       
     
 
@@ -227,11 +237,10 @@ function RegisterForm() {
             if (response.status === 200) {
               message.success('Registration successful! Please check your email to verify it.');
             } else {
-              // Check for specific error status (422 Unprocessable Entity)
               if (response.status === 422) {
                 const errors = response.data.errors;
                 if (errors && errors.email && Array.isArray(errors.email) && errors.email.length > 0) {
-                  const emailErrorMessage = errors.email[0]; // Extract email error message
+                  const emailErrorMessage = errors.email[0]; 
                   message.error(emailErrorMessage);
                 } else {
                   message.error('Unknown validation error. Please try again.');
@@ -394,9 +403,13 @@ function RegisterForm() {
                 onChange={handleTermsCheckbox}
               />
             </Form.Group>
-                  <Button variant="" className='w-50 btn-tall' type='submit' disabled={!termsAccepted}>
-                    Next <FaArrowRight color='white'/>
-                </Button>
+            <div className="d-flex justify-content-between align-items-center">
+
+<Button className='btn-tall' variant='' type='submit' disabled={!termsAccepted}>
+  Next <FaArrowRight color='white'/>
+</Button>
+<p style={{marginRight:'12rem',marginTop:'1rem'}}>Step 1/2</p>
+</div>
                 
                 </Form>
                 <p className='account-p'>Already have an account? <Link to='/login' style={{textDecoration:'none'}}>Sign in</Link> </p>
@@ -506,12 +519,28 @@ function RegisterForm() {
                   <input type="number" id="weight" {...register('wight')} />
                 </div>
                 <div className='form-group'>
-          <label htmlFor="residence"> Place of Residence:</label>
-          <select id="residence" {...register('residence_place')}>
-            <option value="city1">City 1</option>
-            <option value="city2">City 2</option>
+  <label htmlFor="country">Country:</label>
+  <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+    {countries.map(country => (
+      <option key={country.id} value={country.id}>
+        {country.name}
+      </option>
+    ))}
+  </select>
+</div>
+
+{cities?.length > 0 && (
+        <div className='form-group'>
+          <label htmlFor="subPosition">City:</label>
+          <select id="subPosition" {...register('city_id')}>
+            {cities?.map(city => (
+              <option key={city.id} value={city.id}>
+                {city.name}
+              </option>
+            ))}
           </select>
         </div>
+      )}
         <div className='form-group'>
           <label htmlFor="mobile_number">Phone:</label>
           {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
@@ -603,13 +632,28 @@ function RegisterForm() {
                   <input type="date" id="birthdate" {...register('birth_date')} />
                 </div> */}
    
-                <div className='form-group'>
-          <label htmlFor="residence"> Place of Residence:</label>
-          <select id="residence" {...register('residence_place')}>
-            <option value="city1">City 1</option>
-            <option value="city2">City 2</option>
+   <div className='form-group'>
+  <label htmlFor="country">Country:</label>
+  <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+    {countries.map(country => (
+      <option key={country.id} value={country.id}>
+        {country.name}
+      </option>
+    ))}
+  </select>
+</div>
+{cities?.length > 0 && (
+        <div className='form-group'>
+          <label htmlFor="subPosition">City:</label>
+          <select id="subPosition" {...register('city_id')}>
+            {cities?.map(city => (
+              <option key={city.id} value={city.id}>
+                {city.name}
+              </option>
+            ))}
           </select>
         </div>
+      )}
         <div className='form-group'>
           <label htmlFor="phone">Phone:</label>
           {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
@@ -687,13 +731,28 @@ function RegisterForm() {
                     </div>
                   </div>
    
-                <div className='form-group'>
-          <label htmlFor="residence"> Place of Residence:</label>
-          <select id="residence" {...register('residence_place')}>
-            <option value="city1">City 1</option>
-            <option value="city2">City 2</option>
+                  <div className='form-group'>
+  <label htmlFor="country">Country:</label>
+  <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+    {countries.map(country => (
+      <option key={country.id} value={country.id}>
+        {country.name}
+      </option>
+    ))}
+  </select>
+</div>
+{cities?.length > 0 && (
+        <div className='form-group'>
+          <label htmlFor="subPosition">City:</label>
+          <select id="subPosition" {...register('city_id')}>
+            {cities?.map(city => (
+              <option key={city.id} value={city.id}>
+                {city.name}
+              </option>
+            ))}
           </select>
         </div>
+      )}
         <div className='form-group'>
           <label htmlFor="phone">Phone:</label>
           {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
@@ -752,7 +811,7 @@ function RegisterForm() {
 </div>
         <div className='form-group'>
   <label htmlFor="country">Country:</label>
-  <select id="country" {...register('country_id')}>
+  <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
     {countries.map(country => (
       <option key={country.id} value={country.id}>
         {country.name}
@@ -760,6 +819,18 @@ function RegisterForm() {
     ))}
   </select>
 </div>
+{cities?.length > 0 && (
+        <div className='form-group'>
+          <label htmlFor="subPosition">City:</label>
+          <select id="subPosition" {...register('city_id')}>
+            {cities?.map(city => (
+              <option key={city.id} value={city.id}>
+                {city.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
   <div className='form-group'>
           <label htmlFor="phone">Phone Number:</label>
           {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}

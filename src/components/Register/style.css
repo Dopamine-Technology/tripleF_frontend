@@ -42,6 +42,9 @@
     width: auto;
     margin-right: 10px;
   }
+  .navbar2-container{
+    margin-left:1rem;
+  }
   
   .form-container div {
     display: flex;
@@ -93,8 +96,8 @@ margin-top: 1rem;
     height: 100vh;
   }
   .signup-img{
-    width:47rem;
-    height: 37rem;
+    width:45rem;
+    height: 33rem;
     margin-top: -0.1rem;
   }
   .p-top{
