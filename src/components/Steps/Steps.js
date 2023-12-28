@@ -25,7 +25,7 @@ const Steps = () => {
 
   return (
     <div className='steps-div'>
-   
+   <div className="Shape"></div>
       <Row style={{marginTop:'2rem'}}>
         <Col md={6}>
         
@@ -51,6 +51,7 @@ const Steps = () => {
           </div>
         </Col>
       </Row>
+   
     </div>
   );
 }

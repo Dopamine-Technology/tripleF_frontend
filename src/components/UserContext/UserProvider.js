@@ -12,7 +12,7 @@ const UserProvider = (props) => {
   
   const [user, setUser] = useState({
     token,
-    isAuthenticated: refresh && token ? true : false,
+    isAuthenticated:  token ? true : false,
   });
 
 

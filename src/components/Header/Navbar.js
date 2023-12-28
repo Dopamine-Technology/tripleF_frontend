@@ -14,6 +14,9 @@ import { IoPerson } from "react-icons/io5";
 import './style.css'
 import { Link } from 'react-router-dom';
 import { RxDividerVertical } from "react-icons/rx";
+import {BiChevronDown} from "react-icons/bi";
+import Ar from '../../assets/imgs/Ar.png';
+import En from '../../assets/imgs/en.jpg';
 
 
 const TopNavbar = ({content}) => {
@@ -25,8 +28,8 @@ const TopNavbar = ({content}) => {
     Cookies.set('language', lng);
   };
   const availableLanguages = [
-    { code: 'En', label: 'English' },
-    { code: 'Ar', label: 'Arabic' },
+    { code: 'En', label: 'English',img:En },
+    { code: 'Ar', label: 'Arabic' ,img:Ar },
   ];
 
   return (
@@ -42,9 +45,10 @@ const TopNavbar = ({content}) => {
       
           <DropdownButton
   title={
-    <div className='text-white d-flex align-items-center'>
+    <div className='d-flex align-items-center'>
       <GrLanguage color='white' className='me-1' />
-      <span className=''>{currentLanguage}</span>
+      <span className='text-white'>{currentLanguage}</span>
+      <BiChevronDown className='ml-1' style={{ color: 'white' }} />
     </div>
   }
   id="language-dropdown"
@@ -53,10 +57,12 @@ const TopNavbar = ({content}) => {
 >
   {availableLanguages.map((lang) => (
     <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
-      {lang.label}
+      <img src={lang.img} style={{height:'2rem',width:'2rem'}} />
+     {lang.label}
     </Dropdown.Item>
   ))}
 </DropdownButton>
+
 <RxDividerVertical color="gray" size={30} className='mt-1' />
             <p className='text-white mt-2'> <Link to='/login' style={{textDecoration:'none',color:'white'}}><IoPerson  />Login</Link></p>
           </Nav>
@@ -69,9 +75,14 @@ const TopNavbar = ({content}) => {
 const BottomNavbar = () => {
   const [activeLink, setActiveLink] = useState(null);
 
-  const handleNavLinkClick = (index) => {
+  const handleNavLinkClick = (index,sectionId) => {
     setActiveLink(index);
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
   };
+
 
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-transparent">
@@ -79,7 +90,7 @@ const BottomNavbar = () => {
       <Container className='navbar-container' >
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home" className='text-white' style={{textDecoration:'none'}}>  <p className={`text-white  ${activeLink === 1 ? 'active' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '1rem' }}>Home</p></Nav.Link>
+            <Nav.Link href="#home" className='text-white' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`text-white  ${activeLink === 1 ? 'active' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '1rem' }}>Home</p></Nav.Link>
             <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 2 ? 'active' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '1rem' }}>AboutUs</p></Nav.Link>
             <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 3 ? 'active' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '1rem' }} >Who is TripleF for</p></Nav.Link>
             <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 4 ? 'active' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '1rem' }}>How it works</p></Nav.Link>

@@ -46,7 +46,7 @@ const News = () => {
 ]
     return ( <div className='p-4'>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-    <h2 className='about-h1' style={{ width: '20rem', margin: 0 }}>Our Latest News</h2>
+    <h2 className='about-h1' style={{ width: '20rem', marginLeft: '3rem' }}>Our Latest News</h2>
     <p><a href="/read-more" className='read-more-link'>View More</a> <FaArrowRight /></p>
   </div>
         <Row className='m-5'>
