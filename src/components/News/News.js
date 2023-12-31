@@ -46,10 +46,10 @@ const News = () => {
 ]
     return ( <div className='p-4'>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-    <h2 className='about-h1' style={{ width: '20rem', marginLeft: '3rem' }}>Our Latest News</h2>
+    <h2 className='about-h1' style={{ width: '20rem', marginLeft: '5rem' }}>Our Latest News</h2>
     <p><a href="/read-more" className='read-more-link'>View More</a> <FaArrowRight /></p>
   </div>
-        <Row className='m-5'>
+        <Row className='mt-5' style={{marginLeft:'5rem'}}>
            {news2 && news2.length > 0 ? (
             news2.map((item, index) => (
           <Col key={index} md={4} xs={6} sm={6} className='col-single'>

@@ -1,4 +1,7 @@
-
+@font-face {
+    font-family: 'Quicksand-Bold';
+    src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Bold.ttf') format('truetype'); 
+  }
 .HomePage{
     display: grid;
 }
@@ -27,15 +30,22 @@
     margin: 28px 7px;
 
 }
+.profile-p{
+    color:#464646;
+    font-size: 16px;
+    margin: 1rem;
+}
+
 input[type=Search]{
-    width: 100%;
+    width: 43%;
     padding: 12px 27px;
     margin: 8px 0;
     align-items: center;
-    box-sizing: border-box;
-    outline-width: 50px;
+    /* box-sizing: border-box; */
+    outline-width: 5px;
     background-color: #F0F2F5;
-    border:none;
+    border-radius: 45px;
+    border-color: #E1E1E1;
 }
 input::placeholder{font-size: 1rem;}
 
@@ -43,9 +53,9 @@ input::placeholder{font-size: 1rem;}
     display: flex;
     align-items: center;
     flex: 0%;
-    justify-content: center;
+  
     width: 1%;
-    margin-left: 0;
+    margin-left: 7rem;
 }
 .Icon{
     display: flex;
@@ -75,10 +85,38 @@ input::placeholder{font-size: 1rem;}
     font-size: 1.2rem;
     padding: 0 10px;
     font-weight: 500;
-    border-radius: 50%;
+    border-radius: 20px;
     height: 3rem;
     margin-right: 20px;
+    /* border: 1px solid #E1E1E1; */
 }
+.search-container {
+    position: relative;
+    width: 47%; /* Adjust the width as needed */
+ 
+  }
+  
+  /* CSS for Search Input */
+  .search-input {
+    width: 100%;
+    padding: 8px 30px 8px 10px; /* Adjust padding to position text properly */
+    border-radius: 20px; /* Adjust border radius for the input field */
+    font-size: 16px;
+    border-radius: 18px;
+border: 1px solid rgba(225,225,225, 1);
+opacity: 1;
+background-color: rgba(225,225,225, 0.3);
+  }
+  
+  /* CSS for Search Icon */
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+  }
 .Pluss>div{
     padding-left: 10px;
 }
@@ -91,4 +129,14 @@ input::placeholder{font-size: 1rem;}
     align-items: center;
     cursor: pointer;
     padding: 0 50px;
+}
+.plus-p{
+    opacity: 1;
+color: rgba(70,70,70,1);
+font-family: "Poppins-Regular";
+font-size: 12px;
+font-weight: 400;
+font-style: normal;
+letter-spacing: 0px;
+text-align: left;
 }

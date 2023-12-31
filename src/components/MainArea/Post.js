@@ -7,7 +7,7 @@ import { BsSave } from "react-icons/bs";
 
 function Post(){
     return(
-        <div>
+        <div className='text'>
         <div className="poster">
         <div className="Simplilearn">
             <img src="https://www.shutterstock.com/image-photo/portrait-boy-child-football-player-260nw-2077543435.jpg" alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>

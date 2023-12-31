@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
+import cardBG from '../../assets/imgs/cardBG.png'
 const { Meta } = Card;
 
 const WhosForImg = ({ img, title, desc }) => {
@@ -9,7 +10,9 @@ const WhosForImg = ({ img, title, desc }) => {
       className='whos-card'
       style={{
         width: 250,
-        
+        backgroundImage:`url(${cardBG})`,
+        backgroundSize: '6rem',
+        backgroundRepeat: 'no-repeat',
       }}
     >
       <div
@@ -23,6 +26,7 @@ const WhosForImg = ({ img, title, desc }) => {
           overflow: 'hidden',
           backgroundColor: '#E4F8F2',
           margin: '0 auto', 
+        
         }}
       >
         <img

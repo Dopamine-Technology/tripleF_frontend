@@ -5,6 +5,7 @@ import WhosForImg from './WhosForImg';
 import svg from '../../assets/imgs/football-3.svg';
 import club from '../../assets/imgs/footballClub.svg';
 import coach from '../../assets/imgs/coach.svg'
+import icon from '../../assets/imgs/icon.png'
 import './style.css'
 
 const WhosFor = () => {
@@ -25,7 +26,7 @@ const WhosFor = () => {
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     },
     {
-      img: svg,
+      img: icon,
       title: "Scouts",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     }

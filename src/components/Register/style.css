@@ -43,7 +43,7 @@
     margin-right: 10px;
   }
   .navbar2-container{
-    margin-left:1rem;
+    margin-left:5rem;
   }
   
   .form-container div {
@@ -77,8 +77,10 @@ margin-top: 1rem;
     color:black !important;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) !important ;
     border-radius: 24px !important;
+    background-color: none !important;
+    padding: 2px 10px !important;
   }
-  
+
   .form-container button:hover {
     background-color: #0056b3;
   }
@@ -96,8 +98,8 @@ margin-top: 1rem;
     height: 100vh;
   }
   .signup-img{
-    width:45rem;
-    height: 33rem;
+    width:43rem;
+    height: 30rem;
     margin-top: -0.1rem;
   }
   .p-top{

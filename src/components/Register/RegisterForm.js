@@ -298,7 +298,7 @@ function RegisterForm() {
                className="custom-google-login"
                    />
                 
-                <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px',marginLeft:'1rem' }}>
+                <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px',marginLeft:'1rem', padding: '10px' }}>
                   <img src={facebook} alt='search' className='me-2' />
                   Sign up with Facebook
                 </Button>
@@ -310,11 +310,11 @@ function RegisterForm() {
     callback={responseFacebook} /> */}
                 
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-  <hr className='mt-4' style={{width:'24%',color:'#DADADA'}} />
+  <hr className='mt-4' style={{width:'24%',color:'#7C7C7C'}} />
 
   <p style={{ margin: '0 10px' }}>OR</p>
 
-  <hr className=' mt-4' style={{width:'24%',color:'#DADADA'}} />
+  <hr className=' mt-4' style={{width:'24%',color:'#7C7C7C'}} />
 </div>
 
                 
@@ -546,7 +546,7 @@ function RegisterForm() {
           {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
           <PhoneInput
             className={`form-control  py-1 rounded-sm   ${errors && (errors["phone_number"]?.message ? " border-danger " : "")}`}
-            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none `}
+            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
             buttonClass="border-0"
             country={"jo"}
             value={"mobile_number"}
