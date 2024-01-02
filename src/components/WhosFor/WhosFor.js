@@ -33,7 +33,7 @@ const WhosFor = () => {
   ];
 
   return (
-    <div className=' mt-5 whos-for-container mt-5  '>
+    <div className=' whos-for-container  '>
       <Row className="justify-content-center mb-3 who-h1" >
         <Col xs={12} sm={10} md={8} lg={6}>
           <WhosForDesc />

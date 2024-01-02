@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Quicksand-Bold';
+  src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Bold.ttf') format('truetype'); 
+}
+
 .customButton {
     background-color: #007bff;
     color: white;
@@ -11,6 +16,7 @@
   .OurClientsWhole{
     opacity: 1;
     margin-left: 3rem;
+    margin-top: 4rem;
 
   }
   .talkQ{
@@ -21,7 +27,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 7rem;
+    margin-top: 5rem;
     margin-bottom: 13rem;
     position: relative;
   }

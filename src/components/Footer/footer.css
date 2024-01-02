@@ -37,12 +37,7 @@ color: black;
 opacity: 0.8;
   }
   .icon{
-    color:#003370;
-    margin-left: 1rem;
-    border:1px solid #213555;
-    border-radius: 30px;
-    padding: 3px;
-    
+    padding: 4px;
   }
   .align-h6{
     text-align: left;

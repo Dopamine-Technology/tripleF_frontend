@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Quicksand-Bold';
+    src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Bold.ttf') format('truetype'); 
+  }
+
 .becomeClient-div{
     background-color: #213555;
     /* width:70rem;
@@ -17,7 +22,8 @@
     border-color: #77DCBF;
     color:black;
     float: right;
-    margin-right: 2rem;
+    margin-right: 1rem;
+    width:9rem
 }
 .submit-button:hover{
     background-color: #77DCBF;

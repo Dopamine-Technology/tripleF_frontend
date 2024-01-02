@@ -132,15 +132,15 @@
     position: absolute;
     bottom: 1rem;
     right: 5px;
-    background-color: #213555; /* Adjust background color and opacity */
-    width: 27px; /* Adjust width as needed */
-    height: 27px; /* Adjust height as needed */
-    border-radius: 50%; /* Creates a circle */
+    background-color: #213555; 
+    width: 27px; 
+    height: 27px; 
+    border-radius: 50%;
     text-align: center;
-    line-height: 30px; /* Centers the plus sign vertically */
+    line-height: 30px; 
     font-weight: bold;
-    font-size: 20px; /* Adjust font size */
-    color: white; /* Adjust text color */
+    font-size: 20px; 
+    color: white; 
   }
 .Post{
     display: flex;

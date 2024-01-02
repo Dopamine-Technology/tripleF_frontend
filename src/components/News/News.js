@@ -44,7 +44,7 @@ const News = () => {
         content:"Few benifits of group & personal training"
     },
 ]
-    return ( <div className='p-4'>
+    return ( <div className='p-4 mt-5'>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
     <h2 className='about-h1' style={{ width: '20rem', marginLeft: '5rem' }}>Our Latest News</h2>
     <p><a href="/read-more" className='read-more-link'>View More</a> <FaArrowRight /></p>

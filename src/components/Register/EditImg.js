@@ -18,7 +18,7 @@ const EditImage = ({ register, name, label, image, watch }) => {
             height: "60px",
             borderRadius:'4px'
           }}
-          className=' border-4 border me-4'
+          className=' border-4 border me-2'
         />
         {image}
       </div>

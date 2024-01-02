@@ -10,9 +10,9 @@ const WhosForImg = ({ img, title, desc }) => {
       className='whos-card'
       style={{
         width: 250,
-        backgroundImage:`url(${cardBG})`,
-        backgroundSize: '6rem',
-        backgroundRepeat: 'no-repeat',
+        // backgroundImage:`url(${cardBG})`,
+        // backgroundSize: '6rem',
+        // backgroundRepeat: 'no-repeat',
       }}
     >
       <div
@@ -33,8 +33,8 @@ const WhosForImg = ({ img, title, desc }) => {
           alt="example"
           src={img}
           style={{
-            width: '50%',
-            height: '50%',
+            width: '57%',
+            height: '57%',
             objectFit: 'cover',
             borderRadius: '50%', 
           }}

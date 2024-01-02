@@ -4,9 +4,10 @@
 }
 
 .whos-for-container {
-    background-image: url('../../assets/imgs/Artboard.svg'); 
+    background-image: url('../../assets/imgs/Artboard.svg');
     background-position: top right;
     background-repeat: no-repeat; 
+    margin-top: 6rem;
 
   }
   .whos-card{
