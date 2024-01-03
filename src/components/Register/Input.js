@@ -23,7 +23,7 @@ const Input = ({
 
   return (
     <Form.Group as={Col} md={4} className="mb-4">
-      <Form.Label className={`text-capitalize text-black`}>{label}</Form.Label>
+      <Form.Label className={`text-capitalize text-black label`} >{label}</Form.Label>
       <div className="position-relative me-3">
         <Form.Control
           size="lg"

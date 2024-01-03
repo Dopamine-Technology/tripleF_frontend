@@ -57,7 +57,7 @@ const TopNavbar = ({content}) => {
 >
   {availableLanguages.map((lang) => (
     <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
-      <img src={lang.img} style={{height:'2rem',width:'2rem'}} />
+      <img src={lang.img} style={{height:'1.5rem',width:'1.5rem'}} className='me-2'/>
      {lang.label}
     </Dropdown.Item>
   ))}

@@ -70,27 +70,19 @@ function Navbar(){
            </div>
             </div>
             <div className="third-header">
-            <div className="plus">
-                    <FiHome fontSize ="1.5rem"  color='#979797' className="mt-5 me-5" />
-                    <p className="plus-p">Home</p>
-                    
-                </div>
+           
 
-                <div className="plus">
-                    <RiFootballLine fontSize ="1.5rem"  color='#979797' className="mt-5 me-5 " />
-                    <p className="plus-p">Clubs</p>
-                    
-                </div>
+                
                 
                 <div className="plus">
-                    <AiOutlineMessage fontSize ="1.5rem"  color='#979797' className="mt-5 me-5 " />
-                    <p className="plus-p">Messages</p>
+                    <AiOutlineMessage fontSize ="1.5rem"  color='#979797' className="mt-3 me-3 " />
+                 
                     
                 </div>
         
                 <div className="plus">
-                    <IoIosNotificationsOutline fontSize ="1.5rem"   color='#979797' className="mt-5 me-5 " />
-                    <p className="plus-p">Notifications</p>
+                    <IoIosNotificationsOutline fontSize ="1.5rem"   color='#979797' className=" mt-3 me-3 " />
+                  
                     
                 </div>
                

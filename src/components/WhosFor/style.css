@@ -22,6 +22,13 @@
   .card-container {
     margin-left:4rem
   }
+  .card-title{
+    text-align: center;
+    margin-top: 1rem;
+    font-family:"Quicksand-Bold";
+   
+
+  }
   .who-h1{
     opacity: 1;
     color: rgba(70,70,70,1);

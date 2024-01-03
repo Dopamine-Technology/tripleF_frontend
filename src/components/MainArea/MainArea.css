@@ -2,6 +2,7 @@
 .Main{
     display: flex;
     justify-content: space-between;
+    background-color: #eff0f0;
     
     
 }
@@ -24,7 +25,7 @@
 .Pro{
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: no-wrap;
     font-size: 16px;
     font-weight: 400;
     padding: 0.2rem;
@@ -50,6 +51,11 @@
     font-weight: 550;
     padding: 5px;
 }
+.active{
+    color: #77DCBF !important; 
+  
+}
+
 .Profiles >img{
     border-radius: 10%;
     width: 30%;
@@ -64,7 +70,7 @@
 
 .Lside{
     height: 50rem;
-    width: 21%;
+    width: 26%;
     left:0;
     flex-wrap: wrap;
 }
@@ -92,6 +98,7 @@
     font-size: 1rem;
     font-weight: 550;
 }
+
 .Profilee >img{
     border-radius: 80%;
     width: 10%;
@@ -102,6 +109,7 @@
     width: 60%;
     height: 30rem;
     justify-content: center;
+    margin-top: 1.7rem;
 }
 .addStory{
     display: flex;
@@ -158,6 +166,11 @@
     width: 45px;
     margin: 15px;
     padding-top: 9px;
+}
+.leftside-container{
+    margin-left:5rem;
+    margin-top: 3rem;
+    position: fixed;
 }
 input[type=Mind]{
     width: 50%;
@@ -252,13 +265,13 @@ input[type=Mind]{
 
 .RightArea {
     margin-top: 2rem;
-    width: 247px;
+    width: 21rem;
     padding: 20px;
     border-radius: 16px;
-box-shadow: 0px 2px 12px rgba(218,218,218, 0.5);
-opacity: 1;
-background-color: rgba(255,255,255, 1);
-margin-left: 2.5rem;
+    box-shadow: 0px 2px 12px rgba(218,218,218, 0.5);
+    opacity: 1;
+    background-color: rgba(255,255,255, 1);
+    margin-left: 2.5rem;
     
   }
   

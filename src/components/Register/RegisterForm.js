@@ -430,7 +430,7 @@ function RegisterForm() {
                     accountTypes?.map((account, index)=>(
                   <label class="custom-radio-btn">
                   <span className="label">{account.name}</span>
-                  <input type="radio" value={account.id} name="user_type"   />
+                  <input type="radio" value={account.id} name="user_type"  />
                   <span className="checkmark"></span>
                   </label>
 
@@ -478,14 +478,14 @@ function RegisterForm() {
 </div>
 
 {/* <div className='form-group'>
-  <label>Position:</label>
+  <label htmlFor="position">Position:</label>
   <div className="radio-buttons">
   {positions?.map(position => (
        <label className='custom-radio-btn2'>
        <span className="label">{position.name}</span>
        <input
   type="radio"
-  id={position.id}
+  id="position" 
   value={position.id}
   onChange={(e) => {
     handlePositionSelect(e.target.value);
@@ -588,10 +588,10 @@ function RegisterForm() {
                 
     
                 <button onClick={handleBack} className=' btn-tall mt-4 bg-white border-none'
-                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem'}}>
+                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
                   <FaArrowLeft color='black' />Back
                 </button>
-                <button type="submit" className='btn-tall mt-4' style={{width:'12rem'}}>
+                <button type="submit" className='btn-tall mt-4 get-started' style={{width:'12rem',padding:'0.5rem'}}>
                   Get Started <FaArrowRight color='white' />
                 </button>
               
@@ -698,10 +698,10 @@ function RegisterForm() {
               </div>
                  
               <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
-                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem'}}>
+                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
                   <FaArrowLeft color='black' />Back
                 </button>
-                <button type="submit" className='btn-tall mt-4' style={{width:'12rem'}}>
+                <button type="submit" className='btn-tall mt-4' style={{width:'12rem',padding:'0.5rem'}}>
                   Get Started <FaArrowRight color='white' />
                 </button>
             </form>
@@ -797,10 +797,10 @@ function RegisterForm() {
               </div>
                   
               <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
-                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem'}}>
+                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
                   <FaArrowLeft color='black' />Back
                 </button>
-                <button type="submit" className='btn-tall mt-4' style={{width:'12rem'}}>
+                <button type="submit" className='btn-tall mt-4' style={{width:'12rem',padding:'0.5rem'}}>
                   Get Started <FaArrowRight color='white' />
                 </button>
             </form>
@@ -890,10 +890,10 @@ function RegisterForm() {
       </div >
         
       <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
-                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem'}}>
+                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
                   <FaArrowLeft color='black' />Back
                 </button>
-                <button type="submit" className='btn-tall mt-4' style={{width:'12rem'}}>
+                <button type="submit" className='btn-tall mt-4' style={{width:'12rem',padding:'0.5rem'}}>
                   Get Started <FaArrowRight color='white' />
                 </button>
             
@@ -1038,10 +1038,10 @@ function RegisterForm() {
                 
     
                 <button onClick={handleBack} className=' btn-tall mt-4 bg-white border-none'
-                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem'}}>
+                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
                   <FaArrowLeft color='black' />Back
                 </button>
-                <button type="submit" className='btn-tall mt-4' style={{width:'12rem'}}>
+                <button type="submit" className='btn-tall mt-4' style={{width:'12rem',padding:'0.5rem'}}>
                   Get Started <FaArrowRight color='white' />
                 </button>
               

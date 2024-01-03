@@ -98,6 +98,10 @@
 .Register-link{
   text-decoration: none;
   color:black;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.9rem 
+  
 }
 .Register-link:hover{
   color:white;

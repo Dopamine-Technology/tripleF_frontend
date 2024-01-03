@@ -7,7 +7,7 @@ import { SlPicture } from "react-icons/sl";
 function NewPost(){
     return(
         <div>
-            <div className="text">
+            {/* <div className="text">
                             <div className="Post">
                                 <img src="https://thumbs.dreamstime.com/b/portrait-father-son-football-54984814.jpg" alt="PIC"/>
                                 <input type="Mind" placeholder="Add New Challenge "/>
@@ -21,7 +21,7 @@ function NewPost(){
                             
                             </div>
                         </div>
-                    </div> 
+                    </div>  */}
         </div>
     )
 }

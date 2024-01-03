@@ -36,11 +36,11 @@ const Step = ({ step, content ,stepNum}) => {
           <Col xs={10}>
             <Row>
 
-              <Col xs={12} className="mb-2">
+              <Col xs={12} className="mb-2" style={{textAlign:'left'}}>
                 <h5>Step {step}</h5>
               </Col>
          
-              <Col xs={12}>
+              <Col xs={12}  style={{textAlign:'left'}}>
                 <p>{content}</p>
               </Col>
             </Row>

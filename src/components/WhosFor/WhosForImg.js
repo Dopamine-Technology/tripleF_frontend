@@ -40,7 +40,7 @@ const WhosForImg = ({ img, title, desc }) => {
           }}
         />
       </div>
-      <Meta title={<div style={{ textAlign: 'center',marginTop:'1rem'}}>{title}</div>} description={<div style={{color:'#464646'}}>{desc}</div>} />
+      <Meta title={<div className='card-title'>{title}</div>} description={<div style={{color:'#464646'}}>{desc}</div>} />
     </Card>
   );
 }
