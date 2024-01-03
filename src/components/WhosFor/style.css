@@ -4,9 +4,10 @@
 }
 
 .whos-for-container {
-    background-image: url('../../assets/imgs/Artboard.svg'); 
+    background-image: url('../../assets/imgs/Artboard.svg');
     background-position: top right;
     background-repeat: no-repeat; 
+    margin-top: 6rem;
 
   }
   .whos-card{
@@ -20,6 +21,13 @@
   }
   .card-container {
     margin-left:4rem
+  }
+  .card-title{
+    text-align: center;
+    margin-top: 1rem;
+    font-family:"Quicksand-Bold";
+   
+
   }
   .who-h1{
     opacity: 1;

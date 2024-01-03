@@ -5,6 +5,7 @@ import WhosForImg from './WhosForImg';
 import svg from '../../assets/imgs/football-3.svg';
 import club from '../../assets/imgs/footballClub.svg';
 import coach from '../../assets/imgs/coach.svg'
+import icon from '../../assets/imgs/icon.png'
 import './style.css'
 
 const WhosFor = () => {
@@ -25,14 +26,14 @@ const WhosFor = () => {
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     },
     {
-      img: svg,
+      img: icon,
       title: "Scouts",
       desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     }
   ];
 
   return (
-    <div className=' mt-5 whos-for-container mt-5  '>
+    <div className=' whos-for-container  '>
       <Row className="justify-content-center mb-3 who-h1" >
         <Col xs={12} sm={10} md={8} lg={6}>
           <WhosForDesc />

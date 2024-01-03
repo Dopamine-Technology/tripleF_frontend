@@ -4,7 +4,55 @@ import { RiMessage3Line } from "react-icons/ri";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import {FaRegFlag, FaUsers, FaPlusCircle, FaFacebookMessenger, FaBell} from 'react-icons/fa'
 import Logo from '../../assets/imgs/Logo.svg'
+import { AiOutlineSearch } from "react-icons/ai";
+import { FiHome } from "react-icons/fi";
+import { RiFootballLine } from "react-icons/ri";
+import { AiOutlineMessage } from "react-icons/ai";
+import { Avatar, Dropdown, Space, message } from "antd";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import {
+    AiFillEdit,
+    AiOutlineDown,
+    AiOutlineMenuFold,
+    AiOutlineMenuUnfold,
+  } from "react-icons/ai";
+
 function Navbar(){
+
+    const items = [
+        {
+          key: "1",
+          label: (
+            <Container>
+            </Container>
+          ),
+        },
+    
+        {
+          key: "2",
+          label: (
+            <Link
+              to='/profile'
+              className='fw-medium fs-2 d-flex justify-content-between'
+            >
+           
+            </Link>
+          ),
+        },
+        {
+          key: "3",
+          label: (
+            <Link
+              to='/profile'
+              className='fw-medium fs-2 d-flex justify-content-between'
+            >
+             
+            </Link>
+          ),
+        },
+      ];
+
     return(
         <div className="HomePage">
             <div className="header">
@@ -16,19 +64,44 @@ function Navbar(){
                
             </div>
             <div className="middle-header">
-
+            <div class="search-container">
+          <input type="text" placeholder="Search" class="search-input" />
+          <AiOutlineSearch className="search-icon" />
+           </div>
             </div>
             <div className="third-header">
+           
+
+                
                 
                 <div className="plus">
-                    <RiMessage3Line fontSize ="1.3rem"  color='#979797'/>
+                    <AiOutlineMessage fontSize ="1.5rem"  color='#979797' className="mt-3 me-3 " />
+                 
+                    
                 </div>
+        
                 <div className="plus">
-                    <IoIosNotificationsOutline fontSize ="1.3rem" color='#979797'/>
+                    <IoIosNotificationsOutline fontSize ="1.5rem"   color='#979797' className=" mt-3 me-3 " />
+                  
+                    
                 </div>
                
                 <div className="Pluss">
-                    <img src="https://thumbs.dreamstime.com/b/portrait-father-son-football-54984814.jpg" alt="dp" style={{height:"40px",width:'40px'}}/>
+                    {/* <img src="https://thumbs.dreamstime.com/b/portrait-father-son-football-54984814.jpg" alt="dp" style={{height:"40px",width:'40px'}}/>
+                    <p className="profile-p">Rafi Mazen</p> */}
+                     <Dropdown menu={{ items }} >
+              <Space>
+         
+                  <Card.Img
+                    variant='top'
+                    src="https://thumbs.dreamstime.com/b/portrait-father-son-football-54984814.jpg"
+                    style={{ width: "40px", height: "40px",marginTop:'1rem' }}
+                    className='rounded-circle text-center object-fit-cover border border-2'
+                  />
+
+                <AiOutlineDown />
+              </Space>
+            </Dropdown>
                 </div>
             </div>
             </div>

@@ -9,12 +9,11 @@ const BecomeClient = () => {
   return (
     <div className="becomeClient-div">
       <Row>
-        <Col md={6}>
+        <Col md={7}>
           <ContactForm />
         </Col>
-        <Col md={6}>
-         {/* <img src={boy} alt="" border="0" height='82.6%' width='100%' /> */}
-         <img src={boy} alt="" border="0" height='89%' width='100%' className='contactForm-img' />
+        <Col md={5}>
+         <img src={boy} alt="" border="0" height='678px' width='516px' className='contactForm-img' />
         </Col>
       </Row>
     </div>

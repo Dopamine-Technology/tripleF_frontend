@@ -5,12 +5,12 @@ import Col from 'react-bootstrap/Col';
 
 const Step = ({ step, content ,stepNum}) => {
   return (
-    <Card style={{ width: '27rem', borderRadius: '10px' }}>
+    <Card style={{ width: '30rem', borderRadius: '10px' }}>
       <Card.Body>
         <Row>
   
         <Col xs={2} className="text-center" style={{ position: 'relative' }}>
-            {/* Number */}
+
             <h4 style={{ color: "#356255",zIndex:'1',fontSize:'30px' }}>{stepNum}</h4>
             <div style={{
               width: '20px',
@@ -35,12 +35,12 @@ const Step = ({ step, content ,stepNum}) => {
 
           <Col xs={10}>
             <Row>
-              {/* Step Number Again */}
-              <Col xs={12} className="mb-2">
+
+              <Col xs={12} className="mb-2" style={{textAlign:'left'}}>
                 <h5>Step {step}</h5>
               </Col>
          
-              <Col xs={12}>
+              <Col xs={12}  style={{textAlign:'left'}}>
                 <p>{content}</p>
               </Col>
             </Row>

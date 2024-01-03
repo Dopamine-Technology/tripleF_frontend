@@ -6,14 +6,13 @@ import { useForm } from 'react-hook-form';
 import search from '../../assets/imgs/search.png';
 import facebook from '../../assets/imgs/facebook.png';
 import { Link,Navigate,useNavigate  } from 'react-router-dom';
-import loginPic from '../../assets/imgs/login.png'
+import loginPic from '../../assets/imgs/login.png';
 import { UserDataContext } from "../UserContext/UserData.context";
 import Cookies from "js-cookie";
 import axios from 'axios';
-import './style.css'
+import './style.css';
 import { GoogleLogin } from 'react-google-login';
 import { message } from 'antd';
-
 
 function LoginForm() {
   const {
@@ -57,7 +56,6 @@ function LoginForm() {
           Cookies.set(
             "token",
             response.data.result.token
-         
           );
         
         setUser({
@@ -67,8 +65,6 @@ function LoginForm() {
 
              message.success('logged in successfullly');
              navigate('/home');
-      
-    
       })
       .catch((error) => {
             message.error('Your email or password is incorrect')
@@ -99,17 +95,17 @@ function LoginForm() {
                className="custom-google-login"
                    />
                 
-         <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px', marginLeft:'1rem' }}>
+         <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px', marginLeft:'1rem',padding:'10px' }}>
                   <img src={facebook} alt='search' className='me-2' />
                   Sign up with Facebook
           </Button>
                 
           <div style={{ display: 'flex', alignItems: 'center' }}>
-  <hr className='mt-4' style={{width:'24%',color:'#DADADA'}} />
+  <hr className='mt-4' style={{width:'24%',color:'#7C7C7C'}} />
 
   <p style={{ margin: '0 10px' }}>OR</p>
 
-  <hr className=' mt-4' style={{width:'24%',color:'#DADADA'}} />
+  <hr className=' mt-4' style={{width:'24%',color:'#7C7C7C'}} />
 </div>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -152,8 +148,6 @@ function LoginForm() {
   </Row>
 </Form.Group>
 
-
-        
           <Button variant='' className='btn-tall' type='submit'>
             Sign in
           </Button>

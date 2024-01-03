@@ -23,16 +23,10 @@
   background-size: 220vh 110vh;
   background-repeat: repeat-x;
   width: 100%;
-  height: 40rem;
-  clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);
-  border-radius: 0px 0px 0px 79px;
-
-  /* clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%); 
-  border-radius: 0px 0px 0px 79px;
-  border-radius: 0px 10px 0px 161px;
-  -moz-border-radius: 0px 10px 0px 161px;
-  -webkit-border-radius: 0px 10px 0px 161px;
-  border: 0px solid #000000; */
+  height: 43rem;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 86%, 0% 100%);
+  border-radius: 0px 0px 0px 86px;
+ 
 
     &::before {
       content: '';
@@ -99,11 +93,15 @@
 
 }
 .right-nav{
-  margin-right: -7rem;
+  margin-right: -4rem;
 }
 .Register-link{
   text-decoration: none;
   color:black;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.9rem 
+  
 }
 .Register-link:hover{
   color:white;

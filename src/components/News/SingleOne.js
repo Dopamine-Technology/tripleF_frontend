@@ -16,8 +16,11 @@ const SingleOne = ({img,content,category}) => {
       width: 330,
       border:0
     }}
-    cover={<img alt={img} src={img} 
-   />}
+    cover={
+    <img alt={img} src={img} 
+   />
+   
+  }
   >
  <Meta
         title={<p style={{color:'#C2C2C2'}}>{category}</p>}

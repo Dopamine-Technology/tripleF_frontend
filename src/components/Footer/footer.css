@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Quicksand-Bold';
+  src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Bold.ttf') format('truetype'); 
+}
+
 .footer {
     background-color: #EDF0F3;
     background-image: url('../../assets/imgs/footerBg.svg');
@@ -37,12 +42,7 @@ color: black;
 opacity: 0.8;
   }
   .icon{
-    color:#003370;
-    margin-left: 1rem;
-    border:1px solid #213555;
-    border-radius: 30px;
-    padding: 3px;
-    
+    padding: 4px;
   }
   .align-h6{
     text-align: left;
@@ -71,11 +71,12 @@ opacity: 0.8;
     font-size: 14px; 
     color: #555; 
     text-align: center;
-font: normal normal 300 16px/27px Poppins;
-letter-spacing: 0px;
-color: #FFFFFF;
-opacity: 1;
+    font: normal normal 300 16px/27px Poppins;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
   }
+  
   .footer-hr {
     margin: 1rem 0;
     border: 0;
@@ -95,6 +96,7 @@ opacity: 1;
     font-size: 14px;
     color: #555;
     text-align: center;
+    font-family: Quicksand;
   }
   
   @media (max-width: 768px) {

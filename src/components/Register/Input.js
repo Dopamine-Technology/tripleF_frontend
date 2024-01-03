@@ -16,26 +16,27 @@ const Input = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
+
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
   return (
     <Form.Group as={Col} md={4} className="mb-4">
-      <Form.Label className={`text-capitalize text-black`}>{label}</Form.Label>
+      <Form.Label className={`text-capitalize text-black label`} >{label}</Form.Label>
       <div className="position-relative me-3">
         <Form.Control
           size="lg"
           {...register(name, validation)}
-          className={`${className} ${
+          className={`${className}  ${
             errors && errors[name]?.message ? "border-danger" : ""
-          }`}
+          } `}
           style={{
             backgroundColor: "transparent",
             border: "1px solid rgba(144,144,144, 0.3)",
             color: "black",
-            width: inputWidth || "15rem", // Use provided width or default to 15rem
-            paddingRight: "2.5rem", // Space for the toggle icon
+            width: inputWidth || "15rem",
+            paddingRight: "2.5rem", 
           }}
           placeholder={placeholder}
           type={showPassword ? "text" : type}

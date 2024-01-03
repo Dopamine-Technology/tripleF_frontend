@@ -57,7 +57,7 @@ const TopNavbar = ({content}) => {
 >
   {availableLanguages.map((lang) => (
     <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
-      <img src={lang.img} style={{height:'2rem',width:'2rem'}} />
+      <img src={lang.img} style={{height:'1.5rem',width:'1.5rem'}} className='me-2'/>
      {lang.label}
     </Dropdown.Item>
   ))}
@@ -90,13 +90,13 @@ const BottomNavbar = () => {
       <Container className='navbar-container' >
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home" className='text-white' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`text-white  ${activeLink === 1 ? 'active' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '1rem' }}>Home</p></Nav.Link>
-            <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 2 ? 'active' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '1rem' }}>AboutUs</p></Nav.Link>
-            <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 3 ? 'active' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '1rem' }} >Who is TripleF for</p></Nav.Link>
-            <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 4 ? 'active' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '1rem' }}>How it works</p></Nav.Link>
-            <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 5? 'active' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '1rem' }}>Testimonial</p></Nav.Link>
-            <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 6 ? 'active' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '1rem' }}>Contact Us</p></Nav.Link>
-            <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 7 ? 'active' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '1rem' }}>News</p></Nav.Link>
+            <Nav.Link href="#home" className='text-white' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`text-white  ${activeLink === 1 ? 'active' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</p></Nav.Link>
+            <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 2 ? 'active' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>AboutUs</p></Nav.Link>
+            <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 3 ? 'active' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >Who is TripleF for</p></Nav.Link>
+            <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 4 ? 'active' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>How it works</p></Nav.Link>
+            <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 5? 'active' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</p></Nav.Link>
+            <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 6 ? 'active' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</p></Nav.Link>
+            <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 7 ? 'active' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>News</p></Nav.Link>
           </Nav>
           <Nav>
           </Nav>

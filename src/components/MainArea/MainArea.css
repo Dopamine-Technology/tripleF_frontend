@@ -1,6 +1,10 @@
+
 .Main{
     display: flex;
     justify-content: space-between;
+    background-color: #eff0f0;
+    
+    
 }
 .Rside{
     height: 50rem;
@@ -21,11 +25,12 @@
 .Pro{
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    font-size: 1rem;
-    font-weight: 550;
-    padding: 1.2rem;
-    padding-left: 1rem;
+    flex-wrap: no-wrap;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 0.2rem;
+    /* padding: 1.2rem;
+    padding-left: 1rem; */
 }
 .Pro >div{
     margin: 10px;
@@ -46,6 +51,11 @@
     font-weight: 550;
     padding: 5px;
 }
+.active{
+    color: #77DCBF !important; 
+  
+}
+
 .Profiles >img{
     border-radius: 10%;
     width: 30%;
@@ -60,7 +70,7 @@
 
 .Lside{
     height: 50rem;
-    width: 21%;
+    width: 26%;
     left:0;
     flex-wrap: wrap;
 }
@@ -88,6 +98,7 @@
     font-size: 1rem;
     font-weight: 550;
 }
+
 .Profilee >img{
     border-radius: 80%;
     width: 10%;
@@ -98,6 +109,7 @@
     width: 60%;
     height: 30rem;
     justify-content: center;
+    margin-top: 1.7rem;
 }
 .addStory{
     display: flex;
@@ -105,9 +117,10 @@
     margin: 20px 0;
     color: black;
     font-size: 1rem;
-    
     justify-content: flex-start;
     padding-left: 5%;
+}
+.add-story{
 }
 .Story{
     margin: 0 10px;
@@ -115,13 +128,28 @@
     align-items: center;
     flex-direction: column;
     border-radius: .5rem;
+    
 }
 .message{
     display: grid;
     height: 25rem;
     width: 80%;
-    margin-left: 5%;
+    margin-left: 10%;
 }
+.plus-sign {
+    position: absolute;
+    bottom: 1rem;
+    right: 5px;
+    background-color: #213555; 
+    width: 27px; 
+    height: 27px; 
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px; 
+    font-weight: bold;
+    font-size: 20px; 
+    color: white; 
+  }
 .Post{
     display: flex;
     width: 80%;
@@ -139,12 +167,17 @@
     margin: 15px;
     padding-top: 9px;
 }
+.leftside-container{
+    margin-left:5rem;
+    margin-top: 3rem;
+    position: fixed;
+}
 input[type=Mind]{
     width: 50%;
     margin: 15px 0;
     height: 4rem;
     display: inline;
-    border: 1px solid #ccc;
+    border: 0px solid #ccc;
     border-radius: 12px;
     margin-left: 0;
     box-sizing: border-box;
@@ -157,7 +190,7 @@ input[type=Mind]{
 .Call{
     display: flex;
     align-items: center;
-    margin-left: 0;
+    margin-left: 40rem;
     height: 5rem;
     width: 80%;
     background-color: white;
@@ -178,10 +211,10 @@ input[type=Mind]{
 .Posted{
     display: grid;
     height: auto;
-    width: 80%;
+    width: 100%;
     align-items: flex-start;
     background-color: white;
-    margin-left: 0;
+    margin-left: 0%;
     margin-top: 29px;
     box-shadow: 0px 2px 12px rgba(218,218,218, 0.5);
 }
@@ -232,9 +265,13 @@ input[type=Mind]{
 
 .RightArea {
     margin-top: 2rem;
-    width: 300px;
+    width: 21rem;
     padding: 20px;
+    border-radius: 16px;
     box-shadow: 0px 2px 12px rgba(218,218,218, 0.5);
+    opacity: 1;
+    background-color: rgba(255,255,255, 1);
+    margin-left: 2.5rem;
     
   }
   
@@ -277,7 +314,6 @@ input[type=Mind]{
     opacity: 1;
   }
   .story-section {
-
     padding: 20px;
     border-radius: 10px;
     border-radius: 53.5px;
@@ -285,11 +321,15 @@ input[type=Mind]{
     opacity: 1;
    background-color: rgba(255,255,255, 1);
    margin-bottom: 3rem;
+   margin-left: 5rem;
+  
+   
 }
 
 .story-container {
     display: flex;
     justify-content: space-between;
+    
 }
 
 .story {
@@ -297,6 +337,7 @@ input[type=Mind]{
     flex-direction: column;
     align-items: center;
     text-align: center;
+    position: relative;
     
 }
 
@@ -305,11 +346,55 @@ input[type=Mind]{
     height: 60px;
     border-radius: 50%;
     margin-bottom: 5px;
-    border:3px solid #ff6347;
+    border:3px solid #77DCBF;
     
 }
 
 .story-section.added {
     border-color: #ff6347; /* Change to the desired color */
 }
-  
+
+.challenges-p{
+    opacity: 1;
+color: rgba(70,70,70,1);
+font-family: "Quicksand-Medium";
+font-size: 24px;
+font-weight: 500;
+font-style: normal;
+letter-spacing: 0px;
+text-align: center;
+width: 10rem;
+margin-left: 2rem;
+}
+.challenges-desc{
+    opacity: 1;
+color: rgba(151,151,151,1);
+font-family: "Poppins-Regular";
+font-size: 14px;
+font-weight: 400;
+font-style: normal;
+letter-spacing: 0px;
+text-align: center;
+width: 14rem;
+}
+.share-btn{
+    border-radius: 24px;
+box-shadow: 0px 2px 12px rgba(1,37,43, 0.3);
+opacity: 1;
+background-color: rgba(119,220,191, 1);
+border: none;
+opacity: 1;
+color: rgba(29,45,41,1);
+font-family: "Poppins-Medium";
+font-size: 16px;
+font-weight: 500;
+font-style: normal;
+letter-spacing: 0px;
+text-align: left;
+margin-left: 2rem;
+}
+.share-btn:hover{
+color:white;
+background-color:rgba(119,220,191, 1); ;
+
+}
