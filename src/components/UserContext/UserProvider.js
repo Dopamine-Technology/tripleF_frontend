@@ -1,18 +1,18 @@
 import { message } from "antd";
 import Cookies from "js-cookie";
-// import jwt_decode from "jwt-decode";
 import React, { useState } from "react";
-// import useAxios from "../useAxiosHook.interceptor";
 import { UserDataContext } from "./UserData.context";
 
 const UserProvider = (props) => {
-//   const axios = useAxios();
+
   const token = Cookies.get("token");
-  const refresh = Cookies.get("refresh");
+  const user_type=Cookies.get("profileType");
+
   
   const [user, setUser] = useState({
     token,
     isAuthenticated:  token ? true : false,
+    user_type
   });
 
 

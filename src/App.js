@@ -10,6 +10,7 @@ import Reset from './components/ResetPassword/Reset';
 import NewPassword from './components/ResetPassword/NewPassword';
 import { UserDataContext } from './components/UserContext/UserData.context';
 import Home from './pages/Home';
+import Layout from './components/Layout/Layout';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -19,7 +20,7 @@ function App() {
        <Router>
         <Routes>
         {user.isAuthenticated ? (
-          <Route>
+          <Route path='/' element={<Layout />}>
             <Route path='/home' element={<Home />}  />
           </Route>
         ):(

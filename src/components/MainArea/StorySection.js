@@ -1,8 +1,12 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { FaPlus } from "react-icons/fa6";
+import useAxios from "../Auth/useAxiosHook.interceptor";
 
 function StorySection() {
-    const stories = [
+    const [stories,setStories]=useState();
+    const axios=useAxios();
+
+    const stories2 = [
         { username: 'Username', imageUrl: 'https://a.storyblok.com/f/191576/1200x800/215e59568f/round_profil_picture_after_.webp' },
         { username: 'Username', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUKa8rdbebgLF1SzLQN71RnKi-vxiJrKCeSnvK3rxt-PNc732MAn6oSlgpNaB2hr2ppSw&usqp=CAU' },
         { username: 'Username', imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUUlS3GCOdYAk0kRZ-9Z7jy1WS8tzCLcyGZ82ZBtGylPA-Lz3v7dbuJpPDQyFZWIBp0tc&usqp=CAU' },
@@ -13,6 +17,19 @@ function StorySection() {
 
     ];
 
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(``);
+            setStories(response.data.result);
+          } catch (error) {
+            console.error('Error fetching Stories:', error);
+          }
+        };
+      
+        fetchData();
+      }, [stories]);
+
     return (
         <div className="story-section">
             <div className="story-container">
@@ -20,7 +37,7 @@ function StorySection() {
                         <img src='https://thumbs.dreamstime.com/b/portrait-father-son-football-54984814.jpg' alt="Story" style={{border:'white'}} />
                         <div className="plus-sign"><FaPlus style={{marginBottom:'8px'}} /></div>
                     </div>
-                {stories.map((story, index) => (
+                {stories2.map((story, index) => (
                     <div className="story" key={index}>
                         <img src={story.imageUrl} alt="Story" />
                         <span>{story.username}</span>

@@ -57,6 +57,10 @@ function LoginForm() {
             "token",
             response.data.result.token
           );
+          Cookies.set(
+            "profileType",
+            response.data.result.user.profile.type_name
+          );
         
         setUser({
           isAuthenticated: true,
