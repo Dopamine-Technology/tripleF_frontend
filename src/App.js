@@ -11,6 +11,8 @@ import NewPassword from './components/ResetPassword/NewPassword';
 import { UserDataContext } from './components/UserContext/UserData.context';
 import Home from './pages/Home';
 import Layout from './components/Layout/Layout';
+import PostView from './components/SharePost/PostView';
+import Blogs from './pages/Blogs';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -22,10 +24,12 @@ function App() {
         {user.isAuthenticated ? (
           <Route path='/' element={<Layout />}>
             <Route path='/home' element={<Home />}  />
+            <Route path='/view/post/:id' element={<PostView />}  />
           </Route>
         ):(
           <Route>
           <Route path='/' element={<LandingPage />} />
+          <Route path='/blogs' element={<Blogs />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/verify/:token' element={<VerifyPage />} />

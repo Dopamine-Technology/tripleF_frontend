@@ -44,6 +44,9 @@
     /* padding: 1.2rem;
     padding-left: 1rem; */
 }
+.Pro:hover{
+    cursor: pointer;
+}
 .Pro >div{
     margin: 10px;
 }
@@ -68,6 +71,7 @@
     color: #77DCBF !important; 
     border-left: 3px solid #77DCBF;
     padding-left: 1px;
+    cursor: pointer;
 
 }
 

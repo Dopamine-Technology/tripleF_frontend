@@ -6,28 +6,43 @@ import { LiaMedalSolid } from "react-icons/lia";
 import { Row,Col } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SocialPopup from '../SharePost/Popup';
+import { useParams } from 'react-router-dom';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 
-function Post(){
+
+function PostView() {
     const [show, setShow] = useState(false);
     const [selectedMedal, setSelectedMedal] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
-    const [posts,setPosts]=useState();
+    const {id}=useParams();
     const axios=useAxios();
+    const [post,setPost]=useState();
 
     useEffect(() => {
     
-        const fetchPostsData = async () => {
+        const fetchPostData = async () => {
           try {
-            const response = await axios.get('status/timeline');
-            setPosts(response.data.result);
+            const response = await axios.get(`status/get/${id}`);
+            setPost(response.data.result);
           } catch (error) {
             console.error('Error fetching data:', error);
           }
         };
-        fetchPostsData()
+        fetchPostData()
         
       }, []);
+
+      if (!post || Object.keys(post).length === 0) {
+        return <div className='text'>
+        <div className="poster">
+        <div className="Simplilearn">
+          404 image 
+            </div></div></div>;
+    }
+      const handleShare = () => {
+        axios.post(`status/toggle_save/${id}`);
+        console.log('post saved',id)
+     }
     
 
     const likeHandle = (event) => {
@@ -38,14 +53,8 @@ function Post(){
             setShow(true);
         }
     }
-    
-    const handleSelectMedal = async (id,medal) => {
-        const requestBody = {
-            status_id: id,
-            points: medal=='gold'?3:medal=='silver'?2:1
-          };
-          const response = await axios.post('status/react', requestBody);
-          setSelectedMedal(medal);
+    const handleSelectMedal = (medal) => {
+        setSelectedMedal(medal);
         setShow(false);
     };
 
@@ -53,20 +62,11 @@ function Post(){
         setShow(false);
     };
 
-    const handleShare = (id) => {
-       axios.post(`status/toggle_save/${id}`);
-       console.log('post saved',id)
-    }
-
     const handleClose = () => setShowPopup(false);
     const handleShow = () => setShowPopup(true);
 
-
     return(
-        <div>
-             {posts &&
-                posts.map((post, index) => (
-        <div className='text'>
+        <div className='text ' >
         <div className="poster">
         <div className="Simplilearn">
             <img src={post.user.image!=''?post.user.image:post.user.social_image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
@@ -150,14 +150,11 @@ function Post(){
         </div>
         {showPopup&& <SocialPopup handleClose={handleClose} show={showPopup} id={post.id}/>}
         <div className="Like">
-            <BsSave color="grey" className='me-2' size={20} onClick={() => handleShare(post.id)} />Save
+            <BsSave color="grey" className='me-2' size={20} onClick={() => handleShare()} />Save
         </div>
     
     </div> 
     </div>
-                ))}
-    </div>
     )
 }
-export default Post;
-
+export default PostView;

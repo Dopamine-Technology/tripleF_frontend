@@ -21,11 +21,23 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function NavBar(){
 
+
+
     const items = [
         {
           key: "1",
           label: (
             <Container>
+              <Col className='w-100 text-center'>
+              <Card.Img
+                variant='top'
+                src='https://thumbs.dreamstime.com/b/portrait-father-son-football-54984814.jpg'
+                style={{ width: "3.5rem", height: "3.5rem" }}
+                className='rounded-circle object-fit-cover border border-2 '
+              />
+              <p>@AyaJoudeh</p>
+          
+            </Col>
             </Container>
           ),
         },
@@ -34,22 +46,24 @@ function NavBar(){
           key: "2",
           label: (
             <Link
-              to='/profile'
-              className='fw-medium fs-2 d-flex justify-content-between'
-            >
-           
-            </Link>
+            to='/profile'
+            className=' d-flex justify-content-between' 
+            style={{textDecoration:'none'}}
+          >
+            All challanges <strong className='fw-semibold '>30</strong>
+          </Link>
           ),
         },
         {
           key: "3",
           label: (
             <Link
-              to='/profile'
-              className='fw-medium fs-2 d-flex justify-content-between'
-            >
-             
-            </Link>
+            to='/profile'
+            className='d-flex justify-content-between'
+            style={{textDecoration:'none'}}
+          >
+           Followers <strong className='fw-semibold '>90</strong>
+          </Link>
           ),
         },
       ];
