@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext,useState} from 'react'
 import { FaGrin, FaRegThumbsUp, FaCommentAlt, FaRegShareSquare} from 'react-icons/fa';
 import {MdVideoCall, MdMoreHoriz} from 'react-icons/md';
 import {AiFillFileImage} from 'react-icons/ai'
@@ -7,9 +7,15 @@ import { Row,Col,Container } from 'react-bootstrap';
 import asset2 from '../../assets/imgs/Asset2.svg'
 import {Button} from 'react-bootstrap';
 import { UserDataContext } from '../UserContext/UserData.context';
+import ChallengesList from '../CreateChallenge/ChallengesList';
 
 function NewPost(){
     const { user } = useContext(UserDataContext);
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     return(
       <Container className='new-post'>
         {user.user_type=="talent"?(
@@ -23,7 +29,8 @@ function NewPost(){
        
             </Col>
             <Col className='btn-col' xs={12} md={4}>
-            <Button className='share-btn'>Share</Button>
+            <Button className='share-btn' onClick={handleShow}>Share</Button>
+            {show&& <ChallengesList handleClose={handleClose} show={show} />}
     </Col>
         </Row>):(
           <p>No</p>

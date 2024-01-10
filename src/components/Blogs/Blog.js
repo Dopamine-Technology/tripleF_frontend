@@ -8,15 +8,15 @@ const Blog = ({img,title,categoryName,date,desc,tags}) => {
             <Card className='blog-card'>
                 <Card.Body>
                     <Row>
-                        <Col md={6}>
+                        <Col md={5}>
                             <img
                                 src={img}
                                 alt="Blog"
-                                className=" blog-img"
+                                className="blog-img"
                             />
                         </Col>
                       
-                        <Col md={6}>
+                        <Col md={7}>
                             <div>
                                 <p className='blog-title'>{title}</p>
                                 <div className='d-flex'>
@@ -26,7 +26,7 @@ const Blog = ({img,title,categoryName,date,desc,tags}) => {
                                 <p className='blog-desc'>{desc}</p>
                                 <div>
                                 {tags.map((tag, index) => (
-             <span className="badge bg-secondary me-2">{tag}</span>
+             <span className="badge  me-2">{tag}</span>
             
         ))}
                                    

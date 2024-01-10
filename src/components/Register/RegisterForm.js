@@ -3,7 +3,6 @@ import loginPic from '../../assets/imgs/login.png'
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import search from '../../assets/imgs/search.png';
 import facebook from '../../assets/imgs/facebook.png';
-import Card from "react-bootstrap/Card";
 import { useForm } from "react-hook-form";
 import Input from './Input';
 import './style.css';
@@ -16,10 +15,9 @@ import { Link } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { gapi } from 'gapi-script';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import FacebookLogin from 'react-facebook-login';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 
 function RegisterForm() {
@@ -62,6 +60,7 @@ function RegisterForm() {
       const [positions,setPositions]=useState();
       const [subPositions,setSubPositions]=useState();
       const [termsAccepted, setTermsAccepted] = useState(false);
+      const [loading, setLoading] = useState(true);
   
       const clientId='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'
       
@@ -97,19 +96,33 @@ function RegisterForm() {
       }
 
     
-      useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_sports');
-            setSports(response.data.result);
-          } catch (error) {
-            console.error('Error fetching sports:', error);
-          }
-        };
+      // useEffect(() => {
+      //   const fetchData = async () => {
+      //     try {
+      //       const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_sports');
+      //       setSports(response.data.result);
+      //     } catch (error) {
+      //       console.error('Error fetching sports:', error);
+      //     }
+      //   };
       
-        fetchData();
+      //   fetchData();
+      // }, []);
+      useEffect(() => {
+        axios
+          .get('https://backendtriplef.dopaminetechnology.com/api/app/get_sports')
+          .then((response) => {
+            setSports(response.data.result);
+          })
+          .catch((error) => {
+            console.error("Error fetching sports data:", error);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }, []);
 
+  
       useEffect(() => {
         if (isFirstRender) {
           setAccountType('1'); 
@@ -118,43 +131,85 @@ function RegisterForm() {
       }, [isFirstRender]);
     
 
+      // useEffect(() => {
+      //   const fetchData = async () => {
+      //     try {
+      //       const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_user_types');
+      //       setAccountType(response.data.result);
+      //     } catch (error) {
+      //       console.error('Error fetching sports:', error);
+      //     }
+      //   };
+      
+      //   fetchData();
+      // }, []);
+
       useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_user_types');
+        axios
+          .get('https://backendtriplef.dopaminetechnology.com/api/app/get_user_types')
+          .then((response) => {
             setAccountType(response.data.result);
-          } catch (error) {
-            console.error('Error fetching sports:', error);
-          }
-        };
-      
-        fetchData();
+          })
+          .catch((error) => {
+            console.error("Error fetching Accounts data:", error);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }, []);
       
+      // useEffect(() => {
+      //   const fetchData = async () => {
+      //     try {
+      //       const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_countries');
+      //       setCountries(response.data.result);
+      //     } catch (error) {
+      //       console.error('Error fetching countries:', error);
+      //     }
+      //   };
+      
+      //   fetchData();
+      // }, []);
+
       useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_countries');
+        axios
+          .get('https://backendtriplef.dopaminetechnology.com/api/app/get_countries')
+          .then((response) => {
             setCountries(response.data.result);
-          } catch (error) {
-            console.error('Error fetching countries:', error);
-          }
-        };
-      
-        fetchData();
+          })
+          .catch((error) => {
+            console.error("Error fetching countries data:", error);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }, []);
       
-      useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.post('https://backendtriplef.dopaminetechnology.com/api/app/get_sport_positions/1');
-            setPositions(response.data.result);
-          } catch (error) {
-            console.error('Error fetching positions:', error);
-          }
-        };
       
-        fetchData();
+      // useEffect(() => {
+      //   const fetchData = async () => {
+      //     try {
+      //       const response = await axios.post('https://backendtriplef.dopaminetechnology.com/api/app/get_sport_positions/1');
+      //       setPositions(response.data.result);
+      //     } catch (error) {
+      //       console.error('Error fetching positions:', error);
+      //     }
+      //   };
+      
+      //   fetchData();
+      // }, []);
+      useEffect(() => {
+        axios
+          .post('https://backendtriplef.dopaminetechnology.com/api/app/get_sport_positions/1')
+          .then((response) => {
+            setPositions(response.data.result);
+          })
+          .catch((error) => {
+            console.error("Error fetching countries data:", error);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }, []);
 
       useEffect(() => {
@@ -287,6 +342,10 @@ function RegisterForm() {
       const handleAccountTypeChange = (e) => {
         setAccountType(e.target.value);
       };
+
+      if (loading) {
+        return <LoadingScreen />;
+      }
 
       
 

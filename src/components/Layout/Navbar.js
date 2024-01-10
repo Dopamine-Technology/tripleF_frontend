@@ -5,23 +5,14 @@ import Logo from '../../assets/imgs/Logo.svg'
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdArrowDropDown } from "react-icons/md";
 import { AiOutlineMessage } from "react-icons/ai";
-import { Avatar, Dropdown, Space, message } from "antd";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import {  Dropdown, Space, message } from "antd";
+import {  Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {
-    AiFillEdit,
-    AiOutlineDown,
-    AiOutlineMenuFold,
-    AiOutlineMenuUnfold,
-  } from "react-icons/ai";
   import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function NavBar(){
-
-
 
     const items = [
         {
@@ -63,6 +54,18 @@ function NavBar(){
             style={{textDecoration:'none'}}
           >
            Followers <strong className='fw-semibold '>90</strong>
+          </Link>
+          ),
+        },
+        {
+          key: "3",
+          label: (
+            <Link
+            to='/profile'
+            className='d-flex justify-content-between'
+            style={{textDecoration:'none'}}
+          >
+           Following <strong className='fw-semibold '>120</strong>
           </Link>
           ),
         },

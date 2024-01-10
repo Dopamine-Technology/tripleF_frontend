@@ -7,30 +7,51 @@ import { Row,Col } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SocialPopup from '../SharePost/Popup';
 import { useParams } from 'react-router-dom';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import useAxios from '../Auth/useAxiosHook.interceptor';
+
 
 
 function PostView() {
     const [show, setShow] = useState(false);
     const [selectedMedal, setSelectedMedal] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
+    const [loading, setLoading] = useState(true);
     const {id}=useParams();
     const axios=useAxios();
     const [post,setPost]=useState();
 
-    useEffect(() => {
+    // useEffect(() => {
     
-        const fetchPostData = async () => {
-          try {
-            const response = await axios.get(`status/get/${id}`);
-            setPost(response.data.result);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-        fetchPostData()
+    //     const fetchPostData = async () => {
+    //       try {
+    //         const response = await axios.get(`status/get/${id}`);
+    //         setPost(response.data.result);
+    //       } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //       }
+       
+    //     };
+    //     fetchPostData()
         
+    //   }, []);
+    useEffect(() => {
+        axios
+          .get(`status/get/${id}`)
+          .then((response) => {
+            setPost(response.data.result);
+          })
+          .catch((error) => {
+            console.error("Error fetching status data:", error);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }, []);
+
+      if (loading) {
+        return <LoadingScreen />;
+      }
 
       if (!post || Object.keys(post).length === 0) {
         return <div className='text'>

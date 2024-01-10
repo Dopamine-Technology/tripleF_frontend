@@ -94,17 +94,20 @@ function RightArea(){
         {
           imageSrc: 'https://marketplace.canva.com/EAFn79D1vQ4/1/0/1600w/canva-red-white-and-black-modern-football-club-logo-cyuklMnKVrQ.jpg',
           clubName: 'Club Name here',
-          id:1
+          id:1,
+          isFollowed:true
         },
         {
           imageSrc: 'https://static.vecteezy.com/system/resources/previews/005/106/490/non_2x/soccer-logo-or-football-club-sign-badge-football-logo-with-shield-background-design-vector.jpg',
           clubName: 'Club Name here',
+          isFollowed:false,
           id:2
         },
         {
           imageSrc: 'https://img.freepik.com/free-vector/logo-template-design_1195-105.jpg',
           clubName: 'Club Name here',
-          id:3
+          id:3,
+          isFollowed:false
         },
       ];
       
@@ -128,8 +131,8 @@ function RightArea(){
                 <span className={isClub ? '' : 'username'}>{item.username || item.clubName}</span>
                 <br />
                 {isClub ? (
-                  <Button variant="outline-success" className="mt-2"  onClick={() => handleToggleFollow(item.id)} style={{ borderRadius: '18px' }}>
-                    + Follow
+                  <Button variant="outline-success" className={`mt-2 ${item.isFollowed ? 'followed' : 'unfollowed'}`}  onClick={() => handleToggleFollow(item.id)} style={{ borderRadius: '18px' }}>
+                 {item.isFollowed ? 'Unfollow' : '+ Follow'}
                   </Button>
                 ) : (
                   <span className="challenge-type">{item.challengeType}</span>

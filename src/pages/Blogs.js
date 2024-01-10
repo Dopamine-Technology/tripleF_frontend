@@ -10,10 +10,10 @@ const Blogs = () => {
         <div>
         <Navbar />
         <Row>
-            <Col sm={8} >
+            <Col sm={8}  >
                 <div >
                     <p className='Col-title'>News</p>
-                    <BlogsSet />
+                    <BlogsSet  />
                 </div>
             </Col>
 

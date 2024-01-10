@@ -7,12 +7,14 @@ import { Row,Col } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SocialPopup from '../SharePost/Popup';
 import useAxios from '../Auth/useAxiosHook.interceptor';
+import ReactionPopup from '../Post/ReactionPopup';
 
 function Post(){
     const [show, setShow] = useState(false);
     const [selectedMedal, setSelectedMedal] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [posts,setPosts]=useState();
+    const [showReactionPopup,setShowReactionPop]=useState();
     const axios=useAxios();
 
     useEffect(() => {
@@ -61,6 +63,9 @@ function Post(){
     const handleClose = () => setShowPopup(false);
     const handleShow = () => setShowPopup(true);
 
+    const handleClosePopup = () => setShowReactionPop(false);
+    const handleShowPopup = () => setShowReactionPop(true);
+
 
     return(
         <div>
@@ -88,7 +93,7 @@ function Post(){
     </div>
     {post.video ? (
                     <div className="FacebookVideo">
-                        <video controls style={{ height: "30rem", width: "93%", borderRadius: '30px', padding: '1rem' }}>
+                        <video controls className='post-video' >
                             <source src={post.video} type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
@@ -109,16 +114,16 @@ function Post(){
     <Row>
         <Col xs={6}>
             <div className="d-flex align-items-center" >
-                <LiaMedalSolid color="grey" className="me-1" />
+                <LiaMedalSolid color="grey" className="me-1" onClick={handleShowPopup}  />
 
-                <p className="share-time m-0">{post.reaction_count}</p>
+                <p className="share-time m-0" >{post.reaction_count}</p>
             </div>
         </Col>
         <Col xs={6}>
          
             <Row>
-                <Col className="share-time">{post.shares} Share</Col>
-                <Col className="share-time">{post.saves} Saved</Col>
+                <Col className="share-time"> {post.shares} Share</Col>
+                <Col className="share-time" >{post.saves} Saved</Col>
             </Row>
         </Col>
     </Row>
@@ -154,8 +159,13 @@ function Post(){
         </div>
     
     </div> 
+                {
+                   showReactionPopup&& <ReactionPopup  handleClose={handleClosePopup} show={showReactionPopup} id={post.id}/> 
+                }
     </div>
+    
                 ))}
+            
     </div>
     )
 }
