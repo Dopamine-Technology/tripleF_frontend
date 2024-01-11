@@ -5,7 +5,6 @@ import MainArea from '../components/MainArea/MainArea';
 const Home = () => {
     return(
     <div>
-     <Navbar />
      <MainArea />
     </div>
     )

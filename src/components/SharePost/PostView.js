@@ -6,34 +6,64 @@ import { LiaMedalSolid } from "react-icons/lia";
 import { Row,Col } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SocialPopup from '../SharePost/Popup';
+import { useParams } from 'react-router-dom';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import useAxios from '../Auth/useAxiosHook.interceptor';
-import ReactionPopup from '../Post/ReactionPopup';
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaRegCopy,FaRegEyeSlash } from "react-icons/fa";
-import { RiUserUnfollowLine } from "react-icons/ri";
-import { MdOutlineCancel } from "react-icons/md";
 
-function Post(){
+
+
+function PostView() {
     const [show, setShow] = useState(false);
     const [selectedMedal, setSelectedMedal] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
-    const [posts,setPosts]=useState();
-    const [showReactionPopup,setShowReactionPop]=useState();
+    const [loading, setLoading] = useState(true);
+    const {id}=useParams();
     const axios=useAxios();
+    const [post,setPost]=useState();
 
-    useEffect(() => {
+    // useEffect(() => {
     
-        const fetchPostsData = async () => {
-          try {
-            const response = await axios.get('status/timeline');
-            setPosts(response.data.result);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-        fetchPostsData()
+    //     const fetchPostData = async () => {
+    //       try {
+    //         const response = await axios.get(`status/get/${id}`);
+    //         setPost(response.data.result);
+    //       } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //       }
+       
+    //     };
+    //     fetchPostData()
         
+    //   }, []);
+    useEffect(() => {
+        axios
+          .get(`status/get/${id}`)
+          .then((response) => {
+            setPost(response.data.result);
+          })
+          .catch((error) => {
+            console.error("Error fetching status data:", error);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }, []);
+
+      if (loading) {
+        return <LoadingScreen />;
+      }
+
+      if (!post || Object.keys(post).length === 0) {
+        return <div className='text'>
+        <div className="poster">
+        <div className="Simplilearn">
+          404 image 
+            </div></div></div>;
+    }
+      const handleShare = () => {
+        axios.post(`status/toggle_save/${id}`);
+        console.log('post saved',id)
+     }
     
 
     const likeHandle = (event) => {
@@ -44,14 +74,8 @@ function Post(){
             setShow(true);
         }
     }
-    
-    const handleSelectMedal = async (id,medal) => {
-        const requestBody = {
-            status_id: id,
-            points: medal=='gold'?3:medal=='silver'?2:1
-          };
-          const response = await axios.post('status/react', requestBody);
-          setSelectedMedal(medal);
+    const handleSelectMedal = (medal) => {
+        setSelectedMedal(medal);
         setShow(false);
     };
 
@@ -59,23 +83,11 @@ function Post(){
         setShow(false);
     };
 
-    const handleShare = (id) => {
-       axios.post(`status/toggle_save/${id}`);
-       console.log('post saved',id)
-    }
-
     const handleClose = () => setShowPopup(false);
     const handleShow = () => setShowPopup(true);
 
-    const handleClosePopup = () => setShowReactionPop(false);
-    const handleShowPopup = () => setShowReactionPop(true);
-
-
     return(
-        <div>
-             {posts &&
-                posts.map((post, index) => (
-        <div className='text'>
+        <div className='text ' >
         <div className="poster">
         <div className="Simplilearn">
             <img src={post.user.image!=''?post.user.image:post.user.social_image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
@@ -84,20 +96,20 @@ function Post(){
         </div>
         <Dropdown>
       <Dropdown.Toggle variant=""  className="edit">
-         <BsThreeDotsVertical fontSize="1.5rem"  />
+         <MdMoreHoriz fontSize="1.5rem"  />
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="" className='p-2' ><FaRegCopy className='me-2' />Copy link to Post</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' />I don’t want to see this</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
+        <Dropdown.Item href="" className='p-2' >Copy link to Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'>I don’t want to see this</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'>Unfollow user</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'>Report Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>
     {post.video ? (
                     <div className="FacebookVideo">
-                        <video controls className='post-video' >
+                        <video controls style={{ height: "30rem", width: "93%", borderRadius: '30px', padding: '1rem' }}>
                             <source src={post.video} type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
@@ -118,16 +130,16 @@ function Post(){
     <Row>
         <Col xs={6}>
             <div className="d-flex align-items-center" >
-                <LiaMedalSolid color="grey" className="me-1" onClick={handleShowPopup}  />
+                <LiaMedalSolid color="grey" className="me-1" />
 
-                <p className="share-time m-0" >{post.reaction_count}</p>
+                <p className="share-time m-0">{post.reaction_count}</p>
             </div>
         </Col>
         <Col xs={6}>
          
             <Row>
-                <Col className="share-time"> {post.shares} Share</Col>
-                <Col className="share-time" >{post.saves} Saved</Col>
+                <Col className="share-time">{post.shares} Share</Col>
+                <Col className="share-time">{post.saves} Saved</Col>
             </Row>
         </Col>
     </Row>
@@ -159,19 +171,11 @@ function Post(){
         </div>
         {showPopup&& <SocialPopup handleClose={handleClose} show={showPopup} id={post.id}/>}
         <div className="Like">
-            <BsSave color="grey" className='me-2' size={20} onClick={() => handleShare(post.id)} />Save
+            <BsSave color="grey" className='me-2' size={20} onClick={() => handleShare()} />Save
         </div>
     
     </div> 
-                {
-                   showReactionPopup&& <ReactionPopup  handleClose={handleClosePopup} show={showReactionPopup} id={post.id}/> 
-                }
-    </div>
-    
-                ))}
-            
     </div>
     )
 }
-export default Post;
-
+export default PostView;

@@ -47,7 +47,7 @@ const News = () => {
     return ( <div className='p-4 mt-5'>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
     <h2 className='about-h1' style={{ width: '20rem', marginLeft: '5rem' }}>Our Latest News</h2>
-    <p><a href="/read-more" className='read-more-link'>View More</a> <FaArrowRight /></p>
+    <p><a href="/blogs" className='read-more-link'>View More</a> <FaArrowRight /></p>
   </div>
         <Row className='mt-5' style={{marginLeft:'5rem'}}>
            {news2 && news2.length > 0 ? (
