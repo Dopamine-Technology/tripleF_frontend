@@ -17,9 +17,12 @@ function Reaction({users}) {
             </div>
             <p className='user-name'>{user.user_name}</p>
           </div>
-          <Button variant="outline-success" className="mt-2" style={{ borderRadius: '18px' }}>
-                    + Follow
-            </Button>
+          {
+            user.isFollowed?null:<Button variant="outline-success" className="mt-2" style={{ borderRadius: '18px' }}>
+            + Follow
+    </Button>
+          }
+     
         </ListGroup.Item>
       
         </div>

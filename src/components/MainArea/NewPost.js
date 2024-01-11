@@ -21,14 +21,14 @@ function NewPost(){
         {user.user_type=="talent"?(
         <Row className='me-3'>
             <Col><img src={asset2} width='90px' height='70px' className='m-3' /></Col>
-            <Col>
+            <Col xs={12} md={5}>
             <Row className='content-container'>
             <p className='newPost-title'>Share your challenges</p>
             <p className='newPost-desc'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed</p>
             </Row>
        
             </Col>
-            <Col className='btn-col' xs={12} md={4}>
+            <Col className='btn-col' xs={12} md={2}>
             <Button className='share-btn' onClick={handleShow}>Share</Button>
             {show&& <ChallengesList handleClose={handleClose} show={show} />}
     </Col>

@@ -8,6 +8,10 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import SocialPopup from '../SharePost/Popup';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import ReactionPopup from '../Post/ReactionPopup';
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaRegCopy,FaRegEyeSlash } from "react-icons/fa";
+import { RiUserUnfollowLine } from "react-icons/ri";
+import { MdOutlineCancel } from "react-icons/md";
 
 function Post(){
     const [show, setShow] = useState(false);
@@ -80,14 +84,14 @@ function Post(){
         </div>
         <Dropdown>
       <Dropdown.Toggle variant=""  className="edit">
-         <MdMoreHoriz fontSize="1.5rem"  />
+         <BsThreeDotsVertical fontSize="1.5rem"  />
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="" className='p-2' >Copy link to Post</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'>I don’t want to see this</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'>Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'>Report Post</Dropdown.Item>
+        <Dropdown.Item href="" className='p-2' ><FaRegCopy className='me-2' />Copy link to Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' />I don’t want to see this</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>

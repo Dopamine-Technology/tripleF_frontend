@@ -27,7 +27,6 @@ input[type=Search]{
     padding: 12px 27px;
     margin: 8px 0;
     align-items: center;
-    /* box-sizing: border-box; */
     outline-width: 5px;
     background-color: #F0F2F5;
     border-radius: 45px;
@@ -122,6 +121,15 @@ input::placeholder{font-size: 1rem;}
     cursor: pointer;
     padding: 0 50px;
 }
+.activeLink{
+        color: #77DCBF !important; 
+        border-left: 3px solid #77DCBF;
+        padding-left: 1px;
+        cursor: pointer; 
+}
+.not-active{
+    color:#979797
+}
 .plus-p{
     opacity: 1;
 color: rgba(70,70,70,1);
@@ -132,3 +140,21 @@ font-style: normal;
 letter-spacing: 0px;
 text-align: left;
 }
+.rightSide-img{
+    
+}
+.leftside-container {
+    /* your existing styles for the sidebar */
+    transition: all 0.3s ease;
+  }
+  
+  .leftside-container.collapsed {
+    width: 0;
+    overflow: hidden;
+  }
+  
+  .burger-button {
+    /* add styles for your burger button */
+    cursor: pointer;
+  }
+

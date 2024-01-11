@@ -72,7 +72,7 @@ function NavBar(){
       ];
 
     return(
-<Navbar expand="lg" className="bg-body-tertiary">
+<Navbar expand="lg" className="bg-body-tertiary " style={{boxShadow:" 0px 1px 10px rgba(181,181,181, 1)"}}>
       <Container>
         <Navbar.Brand href="/home" ><img src={Logo} width='70%' /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -98,7 +98,7 @@ function NavBar(){
                     className='rounded-circle text-center object-fit-cover border border-2'
                   />
 
-                <MdArrowDropDown fontSize={30} className="mt-3" style={{color:'#979797'}} />
+                <MdArrowDropDown fontSize={38} className="mt-3" style={{color:'#979797'}} />
               </Space>
             </Dropdown>
          </Nav>

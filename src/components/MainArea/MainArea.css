@@ -1,26 +1,21 @@
 @font-face {
     font-family: 'Quicksand-Bold';
     src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Bold.ttf') format('truetype'); 
-    
   }
   @font-face {
     font-family: 'Quicksand-Medium';
     src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Medium.ttf') format('truetype'); 
-    
   }
   @font-face {
     font-family: 'Quicksand-Light';
     src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Light.ttf') format('truetype'); 
-    
   }
 .Main{
     background-color: #eff0f0;
     overflow-x: hidden;
-
 }
 .Rside{
     height: 50rem;
-    /* width: 10%; */
     left:0;
     flex-wrap: wrap;
 }
@@ -130,6 +125,10 @@
     background-color: rgba(255,255,255, 1);
     margin-top: 2rem;
     padding: 0.8rem;
+    border-radius: 45px;
+border: 1px solid rgba(226,226,234, 1);
+opacity: 1;
+background-color: rgba(255,255,255, 1);
 }
 
 .newPost-title{
@@ -339,7 +338,7 @@ input[type=Mind]{
     padding-left: 20px;
 }
 .edit{
-    margin: 12px;
+    margin: 1.8rem;
 }
 .caption{
     font-size: 1rem;
@@ -395,7 +394,7 @@ text-align: left;
   
   .RecommendedChallenges hr {
     border: none;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #939393;
   }
   .post-title{
     opacity: 1;
@@ -476,7 +475,7 @@ text-align: left;
     height: 60px;
     border-radius: 50%;
     margin-bottom: 5px;
-    border:3px solid #77DCBF;
+    border:4px solid #73CFB4;
     
 }
 
@@ -521,7 +520,7 @@ font-weight: 500;
 font-style: normal;
 letter-spacing: 0px;
 text-align: left;
-width:40%;
+width:100%;
 text-align: center;
 margin-top: 2rem;
 
@@ -533,7 +532,8 @@ background-color:rgba(119,220,191, 1); ;
 }
 
 .content-container{
-    margin-left: -9rem;
+    margin-left: -12rem;
+
 }
 .post {
     width: 100%;

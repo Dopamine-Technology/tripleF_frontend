@@ -90,7 +90,7 @@ function ReactionPopup({handleClose,show,id}) {
         {
             img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO17hg6KvLlweeZWN0LCEdi-OXM9qGpbQ9w&usqp=CAU',
             username:'username',
-            isFollowed:false
+            isFollowed:true
 
         },
         {
