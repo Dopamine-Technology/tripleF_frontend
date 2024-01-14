@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import Layout from './components/Layout/Layout';
 import PostView from './components/SharePost/PostView';
 import Blogs from './pages/Blogs';
+import ComingSoon from './components/ComingSoon/ComingSoon';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -25,6 +26,12 @@ function App() {
           <Route path='/' element={<Layout />}>
             <Route path='/home' element={<Home />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
+            <Route path='/clubs' element={<ComingSoon />}  />
+            <Route path='/Scouts' element={<ComingSoon />}  />
+            <Route path='/Opportunities' element={<ComingSoon />}  />
+            <Route path='/challenges' element={<ComingSoon />}  />
+            <Route path='/saved' element={<ComingSoon />}  />
+            <Route path='/view/post/:id' element={<PostView />}  />
           </Route>
         ):(
           <Route>
@@ -35,6 +42,7 @@ function App() {
           <Route path='/verify/:token' element={<VerifyPage />} />
           <Route path='/reset-password/' element={<Reset />} />
           <Route path='/reset-password/:user_token' element={<NewPassword />} />
+
           
           </Route>
         )}

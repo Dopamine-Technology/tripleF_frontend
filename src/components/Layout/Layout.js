@@ -7,14 +7,19 @@ import LeftArea from "./LeftArea";
 import RightArea from "./RightArea";
 
 const Layout = () => {
+  const [isLeftSidebarCollapsed, setIsLeftSidebarCollapsed] = useState(false);
+
+  const toggleLeftSidebar = () => {
+    setIsLeftSidebarCollapsed(!isLeftSidebarCollapsed);
+  };
     return(
         <div className="Main">
-            <NavBar />
+            <NavBar toggleLeftSidebar={toggleLeftSidebar}/>
         <Row>
-          <Col lg={3} md={4} sm={12}>
-            <LeftArea />
+          <Col lg={2} md={4} sm={12}>
+            <LeftArea isCollapsed={isLeftSidebarCollapsed} />
           </Col>
-          <Col lg={6} md={8} sm={12}>
+          <Col lg={7} md={8} sm={12}>
           <Outlet />
          
           </Col>

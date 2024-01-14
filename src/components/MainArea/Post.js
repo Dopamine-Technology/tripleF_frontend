@@ -14,6 +14,7 @@ import { RiUserUnfollowLine } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
 
 function Post(){
+    const [likedPosts, setLikedPosts] = useState({});
     const [show, setShow] = useState(false);
     const [selectedMedal, setSelectedMedal] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
@@ -52,7 +53,7 @@ function Post(){
           };
           const response = await axios.post('status/react', requestBody);
           setSelectedMedal(medal);
-        setShow(false);
+          setShow(false);
     };
 
     const clearSelection = () => {
@@ -72,7 +73,7 @@ function Post(){
 
 
     return(
-        <div>
+        <div className='post-continer'>
              {posts &&
                 posts.map((post, index) => (
         <div className='text'>
@@ -117,7 +118,7 @@ function Post(){
     <hr style={{ color: '#A3A3A3' }} />
     <Row>
         <Col xs={6}>
-            <div className="d-flex align-items-center" >
+            <div className="d-flex align-items-center  " style={{marginLeft:'2rem'}} >
                 <LiaMedalSolid color="grey" className="me-1" onClick={handleShowPopup}  />
 
                 <p className="share-time m-0" >{post.reaction_count}</p>
@@ -126,8 +127,10 @@ function Post(){
         <Col xs={6}>
          
             <Row>
-                <Col className="share-time"> {post.shares} Share</Col>
-                <Col className="share-time" >{post.saves} Saved</Col>
+                <Col></Col>
+    
+                <Col className="share-time"> <span className='me-3'>{post.shares} Share</span>
+                                             <span>{post.saves} Saved</span></Col>
             </Row>
         </Col>
     </Row>

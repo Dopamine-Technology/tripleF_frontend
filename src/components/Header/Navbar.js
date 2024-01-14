@@ -63,7 +63,7 @@ const TopNavbar = ({content}) => {
   ))}
 </DropdownButton>
 
-<RxDividerVertical color="gray" size={30} className='mt-1' />
+<RxDividerVertical color="gray" size={30} className='mt-1 me-3' />
             <p className='text-white mt-2'> <Link to='/login' style={{textDecoration:'none',color:'white'}}><IoPerson  />Login</Link></p>
           </Nav>
         </Navbar.Collapse>

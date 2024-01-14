@@ -74,7 +74,7 @@ const BottomNavbar = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-body-transparent">
-      <Container className='navbar2-container' >
+      <Container className='navbar3-container' >
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/"  style={{textDecoration:'none'}}>  <p className={`  ${activeLink === 1 ? 'active' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '1rem' }}>Home</p></Nav.Link>

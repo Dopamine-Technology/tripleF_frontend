@@ -11,8 +11,9 @@ import { Link } from "react-router-dom";
   import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { CiMenuBurger } from "react-icons/ci";
 
-function NavBar(){
+function NavBar({ toggleLeftSidebar }){
 
     const items = [
         {
@@ -74,6 +75,7 @@ function NavBar(){
     return(
 <Navbar expand="lg" className="bg-body-tertiary " style={{boxShadow:" 0px 1px 10px rgba(181,181,181, 1)"}}>
       <Container>
+      <CiMenuBurger fontSize="1.5rem" color='#979797' className="mt-3 me-5 burger-button" onClick={toggleLeftSidebar} />
         <Navbar.Brand href="/home" ><img src={Logo} width='70%' /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

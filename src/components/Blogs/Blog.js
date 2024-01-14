@@ -26,7 +26,7 @@ const Blog = ({img,title,categoryName,date,desc,tags}) => {
                                 <p className='blog-desc'>{desc}</p>
                                 <div>
                                 {tags.map((tag, index) => (
-             <span className="badge  me-2">{tag}</span>
+                           <span className="badge  me-2 p-2">{tag}</span>
             
         ))}
                                    

@@ -1,8 +1,4 @@
 import React,{useContext,useState} from 'react'
-import { FaGrin, FaRegThumbsUp, FaCommentAlt, FaRegShareSquare} from 'react-icons/fa';
-import {MdVideoCall, MdMoreHoriz} from 'react-icons/md';
-import {AiFillFileImage} from 'react-icons/ai'
-import { SlPicture } from "react-icons/sl";
 import { Row,Col,Container } from 'react-bootstrap';
 import asset2 from '../../assets/imgs/Asset2.svg'
 import {Button} from 'react-bootstrap';
@@ -26,7 +22,7 @@ function NewPost(){
             <p className='newPost-title'>Share your challenges</p>
             <p className='newPost-desc'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed</p>
             </Row>
-       
+
             </Col>
             <Col className='btn-col' xs={12} md={2}>
             <Button className='share-btn' onClick={handleShow}>Share</Button>
