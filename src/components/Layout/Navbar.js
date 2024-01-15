@@ -11,8 +11,54 @@ import { Link } from "react-router-dom";
   import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { CiMenuBurger } from "react-icons/ci";
+import {
+  AiFillEdit
+} from "react-icons/ai";
+import {Button} from "react-bootstrap";
+import Cookies from "js-cookie";
+import useAxios from "../Auth/useAxiosHook.interceptor";
+import { useNavigate } from "react-router-dom";
 
-function NavBar(){
+function NavBar({ toggleLeftSidebar }){
+  const axios=useAxios();
+  const navigate=useNavigate();
+  function logout() {
+    axios
+      .delete("auth/logout")
+      .then((response) => {
+        if (response.status === 200) {
+          Cookies.remove("token");
+          navigate('/');
+          window.location.reload();
+          
+          // setUser({
+          //   refresh: null,
+          //   token: null,
+          //   isAuthenticated: false,
+          // });
+ 
+          
+        } else {
+          console.error("Failed to log out server-side:", response.data);
+          message.error(
+            "There was an issue logging you out. Please try again later."
+          );
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.error("Failed to log out client-side:", error);
+          message.error(
+            "An error occurred while logging out. Please try again later."
+          );
+        } else {
+          message.error(
+            "Failed to log out. Please check your internet connection and try again later."
+          );
+        }
+      });
+  }
 
     const items = [
         {
@@ -69,11 +115,26 @@ function NavBar(){
           </Link>
           ),
         },
+        {
+          key: "4",
+          label: (
+            <Button
+            as={Link}
+            to={"/"}
+            className='logout w-100 text-danger border border-danger bg-white text-hover-success'
+            onClick={logout}
+            size='sm'
+          >
+            <AiFillEdit /> Logout
+          </Button>
+          ),
+        },
       ];
 
     return(
 <Navbar expand="lg" className="bg-body-tertiary " style={{boxShadow:" 0px 1px 10px rgba(181,181,181, 1)"}}>
       <Container>
+      <CiMenuBurger fontSize="1.5rem" color='#979797' className="mt-3 me-5 burger-button" onClick={toggleLeftSidebar} />
         <Navbar.Brand href="/home" ><img src={Logo} width='70%' /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

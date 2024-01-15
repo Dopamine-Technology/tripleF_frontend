@@ -9,9 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { CiMenuBurger } from "react-icons/ci";
 
 
-function LeftArea() {
+function LeftArea({ isCollapsed }) {
     const [activeLink, setActiveLink] = useState(1);
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    // const [isCollapsed, setIsCollapsed] = useState(false);
     const navigate=useNavigate();
 
     const handleNavLinkClick = (index,redirect) => {
@@ -19,48 +19,57 @@ function LeftArea() {
         navigate(redirect);
       };
 
-      const toggleSidebar = () => {
-        setIsCollapsed(!isCollapsed);
-      };
+    //   const toggleSidebar = () => {
+    //     setIsCollapsed(!isCollapsed);
+    //   };
 
 
     return(
         <div>
       
-      <CiMenuBurger onClick={toggleSidebar} className="burger-button" />
+      {/* <CiMenuBurger onClick={toggleSidebar} className="burger-button" /> */}
         <div className={`leftside-container ${isCollapsed ? 'collapsed' : ''}`}>
-
-
             
-            <div className="Pro">
+            <div className="Pro" onClick={() => handleNavLinkClick(1,'/home')} >
             <IoMdHome  fontSize="1.5rem" className={`${activeLink === 1 ? 'activeLink' : 'not-active'}`}/>
-            <div onClick={() => handleNavLinkClick(1,'/home')} >Home</div>
+            <div >
+            {!isCollapsed && <div>Home</div>}
+                </div>
             </div>
-            <hr style={{color:'#B0B0B0'}} />
-            <div className="Pro">
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+            <div className="Pro" onClick={() => handleNavLinkClick(2,'/clubs')}>
                 <RiFootballLine  fontSize="1.3rem" className={`${activeLink === 2 ? 'activeLink' : 'not-active'}`}/>
-                <div onClick={() => handleNavLinkClick(2,'/clubs')} >Clubs</div>
+                <div  >
+                {!isCollapsed && <div >Clubs</div>}
+                </div>
             </div>
-            <hr style={{color:'#B0B0B0'}} />
-            <div className="Pro">
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+            <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
                 <RiUserSearchLine  fontSize="1.3rem" className={`${activeLink === 3 ? 'activeLink' : 'not-active'}`}/>
-                <div onClick={() => handleNavLinkClick(3,'/scouts')} >Scouts</div>
+                <div >
+                {!isCollapsed && <div >Scouts</div>}
+                </div>
             </div>
-            <hr style={{color:'#B0B0B0'}} />
-            <div className="Pro">
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+            <div className="Pro" onClick={() => handleNavLinkClick(4,'/Opportunities')} >
                 <PiLightbulbFilamentLight  fontSize="1.3rem"  className={`${activeLink === 4 ? 'activeLink' : 'not-active'}`}/>
-                <div onClick={() => handleNavLinkClick(4,'/Opportunities')} style={{fontSize:'11px'}}>Opportunities</div>
+                <div style={{fontSize:'11px'}}>
+                {!isCollapsed && <div >Opportunities</div>}
+                </div>
             </div>
-            <hr style={{color:'#B0B0B0'}} />
-            <div className="Pro">
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+            <div className="Pro" onClick={() => handleNavLinkClick(5,'/challenges')}>
                 <FaFlagCheckered  fontSize="1.3rem" className={`${activeLink === 5 ? 'activeLink' : 'not-active'}`}/>
-                <div onClick={() => handleNavLinkClick(5,'/challenges')} >Challenges</div>
+                <div  >
+                {!isCollapsed && <div>Challenges</div>}
+                </div>
             </div>
             
-            <hr style={{color:'#B0B0B0'}} />
-            <div className="Pro">
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+            <div className="Pro" onClick={() => handleNavLinkClick(6,'/saved')}>
                 <CiSaveDown2  fontSize="1.3rem"  className={`${activeLink === 6 ? 'activeLink' : 'not-active'}`}/>
-                <div onClick={() => handleNavLinkClick(6,'/saved')}>saved</div>
+                <div >
+                    {!isCollapsed && <div >saved</div>}</div>
             </div>
            
             <br></br>

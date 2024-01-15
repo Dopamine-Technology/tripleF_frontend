@@ -18,23 +18,36 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import startsWith from 'lodash.startswith';
 
 
 function RegisterForm() {
   const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
-      const schema = Yup.object().shape({
-        email:signedUpWithGoogle ? Yup.string():Yup.string()
-          .required("Email is required")
-          .email("wrong email")
-          .required("Email is required"),
-        first_name: signedUpWithGoogle ? Yup.string():Yup.string().required("First name is required"),
-        last_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Last name is required"),
-        user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required"),
+  const schema = Yup.object().shape({
+    email: signedUpWithGoogle
+        ? Yup.string()
+        : Yup.string()
+              .required("Email is required")
+              .email("Wrong email format")
+              .transform((value) => value.trim())  // Trim whitespace from the email
+              .required("Email is required"),
+    first_name: signedUpWithGoogle
+        ? Yup.string()
+        : Yup.string().required("First name is required"),
+    last_name: signedUpWithGoogle
+        ? Yup.string()
+        : Yup.string().required("Last name is required"),
+        
+    user_name: signedUpWithGoogle
+        ? Yup.string()
+        : Yup.string().required("Username is required"),
+    password: signedUpWithGoogle
+        ? Yup.string()
+        : Yup.string()
+              .required("New password is required")
+              .min(8, "Password must be at least 8 characters long"),
+});
 
-        password: signedUpWithGoogle ? Yup.string():Yup.string()
-          .required("New password is required")
-          .min(8, "Password must be at least 8 characters long"),
-      });
 
       const {
         register,
@@ -46,7 +59,7 @@ function RegisterForm() {
       } = useForm( { mode: "onChange",
       resolver: yupResolver(schema)});
 
-      
+
       const [currentStep, setCurrentStep] = useState(1);
       const [accessToken, setAccessToken] = useState();
       const [isFirstRender, setIsFirstRender] = useState(true);
@@ -61,8 +74,13 @@ function RegisterForm() {
       const [subPositions,setSubPositions]=useState();
       const [termsAccepted, setTermsAccepted] = useState(false);
       const [loading, setLoading] = useState(true);
-  
+      const [isValidMobileNumber, setIsValidMobileNumber] = useState(true);
+      const [minAge] = useState(5);
+      const [maxDate, setMaxDate] = useState(calculateMaxDate());
+      
       const clientId='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'
+
+      const bothErrors = { ...responseError, ...errors };
       
       const onSuccess = (res) => {
         const userData = {
@@ -81,11 +99,21 @@ function RegisterForm() {
         setAccountType('1');
         setSignedUpWithGoogle(true);
       };
-
-
-      const responseFacebook = (response) => {
-        console.log('face',response);
+      function calculateMaxDate() {
+        const currentDate = new Date();
+        const maxDate = new Date(currentDate);
+        maxDate.setFullYear(currentDate.getFullYear() - 5);
+        
+        const year = maxDate.getFullYear();
+        const month = (maxDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = maxDate.getDate().toString().padStart(2, '0');
+        
+        return `${year}-${month}-${day}`;
       }
+      
+ 
+
+
 
       useEffect(() => {
         console.log('Updated formData:', formData);
@@ -244,9 +272,9 @@ function RegisterForm() {
         }
       };
 
-      const handleCountrySelect = async (selectedPositionId) => {
+      const handleCountrySelect = async (selectedCountryId) => {
         try {
-          const response = await axios.get(`https://backendtriplef.dopaminetechnology.com/api/app/get_cities/${selectedPositionId}`);
+          const response = await axios.get(`https://backendtriplef.dopaminetechnology.com/api/app/get_cities/${selectedCountryId}`);
           setCities(response.data.result);
         } catch (error) {
           console.error('Error fetching sub-positions:', error);
@@ -337,6 +365,8 @@ function RegisterForm() {
       };
       const handleBack = () => {
         setCurrentStep(currentStep - 1);
+        setTermsAccepted(false);
+
       };
 
       const handleAccountTypeChange = (e) => {
@@ -455,7 +485,7 @@ function RegisterForm() {
                     label="create password"
                     validation={{ required: true }}
                     className={"py-2 rounded-sm"}
-                    errors=''
+                    errors={bothErrors}
                     inputWidth='31rem'
                   />
                   </Form.Group>
@@ -568,7 +598,7 @@ function RegisterForm() {
           </select>
         </div>
       )}
-            <div className='form-group'>
+          <div className='form-group'>
   <label>Gender:</label>
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
@@ -578,12 +608,12 @@ function RegisterForm() {
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Female</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="female" value="female" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Other</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="other" value="other" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
   </div>
@@ -592,7 +622,7 @@ function RegisterForm() {
 
                 <div className='form-group'>
                   <label htmlFor="birthdate">Date of Birth:</label>
-                  <input type="date" id="birthdate" {...register('birth_date')} />
+                  <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}  />
                 </div>
                 <div className='form-group'>
                   <label htmlFor="height">Height (cm):</label>
@@ -603,6 +633,7 @@ function RegisterForm() {
                 <div className='form-group'>
   <label htmlFor="country">Country:</label>
   <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+    <option value=" ">Select Country</option>
     {countries.map(country => (
       <option key={country.id} value={country.id}>
         {country.name}
@@ -625,22 +656,35 @@ function RegisterForm() {
       )}
         <div className='form-group'>
           <label htmlFor="mobile_number">Phone:</label>
-          {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
           <PhoneInput
-            className={`form-control  py-1 rounded-sm   ${errors && (errors["phone_number"]?.message ? " border-danger " : "")}`}
-            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
-            buttonClass="border-0"
-            country={"jo"}
-            value={"mobile_number"}
-            inputProps={{
-              name: "mobile_number",
-              required: true,
-            }}
-            onChange={(e) => {
-              setValue("mobile_number",e)
-            }}
-            onCountryChange={() => {}}
-          />
+  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+  inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+  buttonClass="border-0"
+  country={"jo"}
+  value={"mobile_number"}
+  isValid={(inputNumber, country, countries) => {
+    const isValid = countries.some((country) => {
+      return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+    });
+
+    setIsValidMobileNumber(isValid);
+
+    return isValid;
+  }}
+  inputProps={{
+    name: "mobile_number",
+    required: true,
+  }}
+  onChange={(e) => {
+    setValue("mobile_number", e);
+  }}
+  onCountryChange={() => {}}
+/>
+{!isValidMobileNumber && (
+        <div className="text-danger">Please enter a valid mobile number.</div>
+      )}
+
+
         </div>
               </div>
               
@@ -683,12 +727,12 @@ function RegisterForm() {
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Female</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="female" value="female" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Other</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="other" value="other" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
   </div>
@@ -701,7 +745,7 @@ function RegisterForm() {
                     </div>
                     <div className='flex-fill form-group'>
                     <label htmlFor="birthdate">Date of Birth::</label>
-                  <input type="date" id="birthdate" {...register('birth_date')} />
+                  <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}   />
                     </div>
                   </div>
 {/* <div className='form-group'>
@@ -717,6 +761,7 @@ function RegisterForm() {
    <div className='form-group'>
   <label htmlFor="country">Country:</label>
   <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+    <option value=" ">Select Country</option>
     {countries.map(country => (
       <option key={country.id} value={country.id}>
         {country.name}
@@ -739,20 +784,33 @@ function RegisterForm() {
         <div className='form-group'>
           <label htmlFor="phone">Phone:</label>
           <PhoneInput
-            className={`form-control rounded-sm   ${errors && (errors["mobile_number"]?.message ? " border-danger " : "")}`}
-            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none `}
-            buttonClass="border-0"
-            country={"jo"}
-            value={"phone"}
-            inputProps={{
-              name: "mobile_number",
-              required: true,
-            }}
-            onChange={(e) => {
-              setValue("mobile_number",e)
-            }}
-            onCountryChange={() => {}}
-          />
+  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+  inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+  buttonClass="border-0"
+  country={"jo"}
+  value={"mobile_number"}
+  isValid={(inputNumber, country, countries) => {
+    const isValid = countries.some((country) => {
+      return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+    });
+
+    setIsValidMobileNumber(isValid);
+
+    return isValid;
+  }}
+  inputProps={{
+    name: "mobile_number",
+    required: true,
+  }}
+  onChange={(e) => {
+    setValue("mobile_number", e);
+  }}
+  onCountryChange={() => {}}
+/>
+{!isValidMobileNumber && (
+        <div className="text-danger">Please enter a valid mobile number.</div>
+      )}
+
         </div>
               </div>
                  
@@ -790,12 +848,12 @@ function RegisterForm() {
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Female</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="female" value="female" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Other</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="other" value="other" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
   </div>
@@ -808,13 +866,14 @@ function RegisterForm() {
                     </div>
                     <div className='flex-fill form-group'>
                     <label htmlFor="birthdate">Date of Birth::</label>
-                  <input type="date" id="birthdate" {...register('birth_date')} />
+                  <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}  />
                     </div>
                   </div>
    
                   <div className='form-group'>
   <label htmlFor="country">Country:</label>
   <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+    <option value=" ">Select Country</option>
     {countries.map(country => (
       <option key={country.id} value={country.id}>
         {country.name}
@@ -838,20 +897,33 @@ function RegisterForm() {
           <label htmlFor="phone">Phone:</label>
           {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
           <PhoneInput
-            className={`form-control  py-1 rounded-sm   ${errors && (errors["phone_number"]?.message ? " border-danger " : "")}`}
-            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none `}
-            buttonClass="border-0"
-            country={"jo"}
-            value={"mobile_number"}
-            inputProps={{
-              name: "mobile_number",
-              required: true,
-            }}
-            onChange={(e) => {
-              setValue("mobile_number",e)
-            }}
-            onCountryChange={() => {}}
-          />
+  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+  inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+  buttonClass="border-0"
+  country={"jo"}
+  value={"mobile_number"}
+  isValid={(inputNumber, country, countries) => {
+    const isValid = countries.some((country) => {
+      return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+    });
+
+    setIsValidMobileNumber(isValid);
+
+    return isValid;
+  }}
+  inputProps={{
+    name: "mobile_number",
+    required: true,
+  }}
+  onChange={(e) => {
+    setValue("mobile_number", e);
+  }}
+  onCountryChange={() => {}}
+/>
+{!isValidMobileNumber && (
+        <div className="text-danger">Please enter a valid mobile number.</div>
+      )}
+
         </div>
               </div>
                   
@@ -890,9 +962,10 @@ function RegisterForm() {
     ))}
   </select>
 </div>
-        <div className='form-group'>
+<div className='form-group'>
   <label htmlFor="country">Country:</label>
   <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+    <option value=" ">Select Country</option>
     {countries.map(country => (
       <option key={country.id} value={country.id}>
         {country.name}
@@ -916,20 +989,32 @@ function RegisterForm() {
           <label htmlFor="phone">Phone Number:</label>
           {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
           <PhoneInput
-            className={`form-control  py-1 rounded-sm   ${errors && (errors["phone_number"]?.message ? " border-danger " : "")}`}
-            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none `}
-            buttonClass="border-0"
-            country={"jo"}
-            value={"mobile_number"}
-            inputProps={{
-              name: "mobile_number",
-              required: true,
-            }}
-            onChange={(e) => {
-              setValue("mobile_number",e)
-            }}
-            onCountryChange={() => {}}
-          />
+  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+  inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+  buttonClass="border-0"
+  country={"jo"}
+  value={"mobile_number"}
+  isValid={(inputNumber, country, countries) => {
+    const isValid = countries.some((country) => {
+      return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+    });
+
+    setIsValidMobileNumber(isValid);
+
+    return isValid;
+  }}
+  inputProps={{
+    name: "mobile_number",
+    required: true,
+  }}
+  onChange={(e) => {
+    setValue("mobile_number", e);
+  }}
+  onCountryChange={() => {}}
+/>
+{!isValidMobileNumber && (
+        <div className="text-danger">Please enter a valid mobile number.</div>
+      )}
 
 
   </div>
@@ -986,26 +1071,6 @@ function RegisterForm() {
 </div>
 
 
-
-{/* <div className='form-group'>
-  <label>Position:</label>
-  {positions?.map(position => (
-       <label className='custom-radio-btn2'>
-       <span className="label">{position.name}</span>
-        <input
-          type="radio"
-          name="parent_position"
-          value={position.id}
-          {...register('parent_position')}
-          onChange={(e) => handlePositionSelect(e.target.value)}
-     
-        />
-        <input type="radio" id={position.id}   value={position.id}  {...register('parent_position')}  onChange={(e) => handlePositionSelect(e.target.value)}/>
-        <span className="checkmark"></span>
-      </label>
-    ))}
-</div> */}
-
                 {subPositions?.length > 0 && (
         <div className='form-group'>
           <label htmlFor="subPosition">Sub Positions:</label>
@@ -1018,7 +1083,7 @@ function RegisterForm() {
           </select>
         </div>
       )}
-            <div className='form-group'>
+           <div className='form-group'>
   <label>Gender:</label>
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
@@ -1028,12 +1093,12 @@ function RegisterForm() {
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Female</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="female" value="female" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Other</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="other" value="other" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
   </div>
@@ -1042,7 +1107,7 @@ function RegisterForm() {
 
                 <div className='form-group'>
                   <label htmlFor="birthdate">Date of Birth:</label>
-                  <input type="date" id="birthdate" {...register('birth_date')} />
+                  <input type="date" id="birthdate"  {...register('birth_date')} max={maxDate} />
                 </div>
                 <div className='form-group'>
                   <label htmlFor="height">Height (cm):</label>
@@ -1053,6 +1118,7 @@ function RegisterForm() {
                 <div className='form-group'>
   <label htmlFor="country">Country:</label>
   <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+    <option value=" ">Select Country</option>
     {countries.map(country => (
       <option key={country.id} value={country.id}>
         {country.name}
@@ -1077,20 +1143,33 @@ function RegisterForm() {
           <label htmlFor="mobile_number">Phone:</label>
           {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
           <PhoneInput
-            className={`form-control  py-1 rounded-sm   ${errors && (errors["phone_number"]?.message ? " border-danger " : "")}`}
-            inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
-            buttonClass="border-0"
-            country={"jo"}
-            value={"mobile_number"}
-            inputProps={{
-              name: "mobile_number",
-              required: true,
-            }}
-            onChange={(e) => {
-              setValue("mobile_number",e)
-            }}
-            onCountryChange={() => {}}
-          />
+  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+  inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+  buttonClass="border-0"
+  country={"jo"}
+  value={"mobile_number"}
+  isValid={(inputNumber, country, countries) => {
+    const isValid = countries.some((country) => {
+      return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+    });
+
+    setIsValidMobileNumber(isValid);
+
+    return isValid;
+  }}
+  inputProps={{
+    name: "mobile_number",
+    required: true,
+  }}
+  onChange={(e) => {
+    setValue("mobile_number", e);
+  }}
+  onCountryChange={() => {}}
+/>
+{!isValidMobileNumber && (
+        <div className="text-danger">Please enter a valid mobile number.</div>
+      )}
+
         </div>
               </div>
               
