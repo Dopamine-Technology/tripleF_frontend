@@ -14,9 +14,9 @@ import { RiUserUnfollowLine } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
 
 function Post(){
-    const [likedPosts, setLikedPosts] = useState({});
     const [show, setShow] = useState(false);
     const [selectedMedal, setSelectedMedal] = useState(null);
+    const [selectedMedalColor, setSelectedMedalColor] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [posts,setPosts]=useState();
     const [showReactionPopup,setShowReactionPop]=useState();
@@ -37,6 +37,7 @@ function Post(){
       }, []);
     
 
+
     const likeHandle = (event) => {
         event.preventDefault();
         if (show) {
@@ -46,16 +47,26 @@ function Post(){
         }
     }
     
-    const handleSelectMedal = async (id,medal) => {
+    const handleSelectMedal = async (id, medal, is_reacted) => {
+        const medalColors = {
+            gold: 'gold',
+            silver: 'silver',
+            saddlebrown: 'saddlebrown',
+        };
+    
         const requestBody = {
             status_id: id,
-            points: medal=='gold'?3:medal=='silver'?2:1
-          };
-          const response = await axios.post('status/react', requestBody);
-          setSelectedMedal(medal);
-          setShow(false);
+            points: medal === 'gold' ? 3 : medal === 'silver' ? 2 : 1,
+        };
+    
+        const response = await axios.post('status/react', requestBody);
+        
+        setSelectedMedal(medal);
+        setSelectedMedalColor(medalColors[medal]);
+    
+        setShow(false);
     };
-
+    
     const clearSelection = () => {
         setShow(false);
     };
@@ -70,6 +81,11 @@ function Post(){
 
     const handleClosePopup = () => setShowReactionPop(false);
     const handleShowPopup = () => setShowReactionPop(true);
+
+    const handleReport=({id,report})=>{
+        axios.post(`status/report/${id}`,report);
+     
+    }
 
 
     return(
@@ -92,7 +108,7 @@ function Post(){
         <Dropdown.Item href="" className='p-2' ><FaRegCopy className='me-2' />Copy link to Post</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' />I don’t want to see this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>
@@ -135,28 +151,27 @@ function Post(){
         </Col>
     </Row>
 </div>
-    
-         {show && (
-                <div className="MedalOptions" onMouseLeave={clearSelection}>
-                    <div className="MedalOption" onClick={() => handleSelectMedal(post.id,'gold')}>
-                        <LiaMedalSolid color="gold" className='me-2' size={40}/>
-                    </div>
-                    <div className="MedalOption" onClick={() => handleSelectMedal(post.id,'silver')}>
-                        <LiaMedalSolid color="silver" className='me-2' size={40}/>
-                    </div>
-                    <div className="MedalOption" onClick={() => handleSelectMedal(post.id,'saddlebrown')}>
-                        <LiaMedalSolid color="saddlebrown" className='me-2' size={40}/>
-                    </div>
-                </div>
-            )}
+
+{show && (
+    <div className="MedalOptions" onMouseLeave={clearSelection}>
+        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'gold', post.is_reacted)}>
+            <LiaMedalSolid color="gold" className='me-2' size={40}/>
+        </div>
+        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'silver', post.is_reacted)}>
+            <LiaMedalSolid color="silver" className='me-2' size={40}/>
+        </div>
+        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'saddlebrown', post.is_reacted)}>
+            <LiaMedalSolid color="saddlebrown" className='me-2' size={40}/>
+        </div>
+    </div>
+)}
         
     <div className="Comment">
-    
-        <div className="Like" onClick={likeHandle}>
-            <LiaMedalSolid color={selectedMedal} className='me-2 2' size={20}/>Medal 
-        </div>
+    <div className="Like" onClick={likeHandle}>
+    <LiaMedalSolid color={selectedMedalColor || (post.is_reacted=='1' ? 'saddlebrown' : post.is_reacted=='2' ? 'silver' : post.is_reacted=='3' ? 'gold' : 'none')} className='me-2 2' size={20}/>
+    Medal
+</div>
         
-       
         <div className="Like" onClick={handleShow}>
             <IoShareSocialOutline color="grey" className='me-2' size={20}/>Share
         </div>

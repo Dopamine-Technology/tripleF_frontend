@@ -12,8 +12,53 @@ import { Link } from "react-router-dom";
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { CiMenuBurger } from "react-icons/ci";
+import {
+  AiFillEdit
+} from "react-icons/ai";
+import {Button} from "react-bootstrap";
+import Cookies from "js-cookie";
+import useAxios from "../Auth/useAxiosHook.interceptor";
+import { useNavigate } from "react-router-dom";
 
 function NavBar({ toggleLeftSidebar }){
+  const axios=useAxios();
+  const navigate=useNavigate();
+  function logout() {
+    axios
+      .delete("auth/logout")
+      .then((response) => {
+        if (response.status === 200) {
+          Cookies.remove("token");
+          navigate('/');
+          window.location.reload();
+          
+          // setUser({
+          //   refresh: null,
+          //   token: null,
+          //   isAuthenticated: false,
+          // });
+ 
+          
+        } else {
+          console.error("Failed to log out server-side:", response.data);
+          message.error(
+            "There was an issue logging you out. Please try again later."
+          );
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.error("Failed to log out client-side:", error);
+          message.error(
+            "An error occurred while logging out. Please try again later."
+          );
+        } else {
+          message.error(
+            "Failed to log out. Please check your internet connection and try again later."
+          );
+        }
+      });
+  }
 
     const items = [
         {
@@ -68,6 +113,20 @@ function NavBar({ toggleLeftSidebar }){
           >
            Following <strong className='fw-semibold '>120</strong>
           </Link>
+          ),
+        },
+        {
+          key: "4",
+          label: (
+            <Button
+            as={Link}
+            to={"/"}
+            className='logout w-100 text-danger border border-danger bg-white text-hover-success'
+            onClick={logout}
+            size='sm'
+          >
+            <AiFillEdit /> Logout
+          </Button>
           ),
         },
       ];

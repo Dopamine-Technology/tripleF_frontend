@@ -3,7 +3,7 @@
     src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Bold.ttf') format('truetype'); 
     
   }
-  
+
 .header-div {
     max-height: 10vh;
     display: flex;
@@ -22,7 +22,7 @@
   position: relative;
   background-image: url('../../assets/imgs/HeroImage.png');
   background-size: 220vh 98vh;
-  /* background-size: 100% 100%; */
+  /* background-size: 106% 104.5%; */
   background-repeat: repeat-x;
   width: 100%;
   height: 43rem;
