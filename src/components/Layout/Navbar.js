@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import './Navbar.css'
 import { IoIosNotificationsOutline } from "react-icons/io";
 import Logo from '../../assets/imgs/Logo.svg'
@@ -19,8 +19,12 @@ import {Button} from "react-bootstrap";
 import Cookies from "js-cookie";
 import useAxios from "../Auth/useAxiosHook.interceptor";
 import { useNavigate } from "react-router-dom";
+import { UserDataContext } from "../UserContext/UserData.context";
 
 function NavBar({ toggleLeftSidebar }){
+
+  const { user } = useContext(UserDataContext);
+  console.log('useroneone',user)
   const axios=useAxios();
   const navigate=useNavigate();
   function logout() {
@@ -31,13 +35,6 @@ function NavBar({ toggleLeftSidebar }){
           Cookies.remove("token");
           navigate('/');
           window.location.reload();
-          
-          // setUser({
-          //   refresh: null,
-          //   token: null,
-          //   isAuthenticated: false,
-          // });
- 
           
         } else {
           console.error("Failed to log out server-side:", response.data);
@@ -68,11 +65,11 @@ function NavBar({ toggleLeftSidebar }){
               <Col className='w-100 text-center'>
               <Card.Img
                 variant='top'
-                src='https://thumbs.dreamstime.com/b/portrait-father-son-football-54984814.jpg'
+                src={user.userData.image}
                 style={{ width: "3.5rem", height: "3.5rem" }}
                 className='rounded-circle object-fit-cover border border-2 '
               />
-              <p>@AyaJoudeh</p>
+              <p>@{user.userData.user_name}</p>
           
             </Col>
             </Container>
@@ -154,14 +151,17 @@ function NavBar({ toggleLeftSidebar }){
          
                   <Card.Img
                     variant='top'
-                    src="https://thumbs.dreamstime.com/b/portrait-father-son-football-54984814.jpg"
+                    src={user.userData.image}
                     style={{ width: "43px", height: "43px",marginTop:'1rem' }}
                     className='rounded-circle text-center object-fit-cover border border-2'
                   />
+             
 
                 <MdArrowDropDown fontSize={38} className="mt-3" style={{color:'#979797'}} />
               </Space>
+   
             </Dropdown>
+         
          </Nav>
         </Navbar.Collapse>
       </Container>

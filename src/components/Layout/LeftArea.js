@@ -69,7 +69,7 @@ function LeftArea({ isCollapsed }) {
             <div className="Pro" onClick={() => handleNavLinkClick(6,'/saved')}>
                 <CiSaveDown2  fontSize="1.3rem"  className={`${activeLink === 6 ? 'activeLink' : 'not-active'}`}/>
                 <div >
-                    {!isCollapsed && <div >saved</div>}</div>
+                    {!isCollapsed && <div >Saved</div>}</div>
             </div>
            
             <br></br>

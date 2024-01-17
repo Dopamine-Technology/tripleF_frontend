@@ -21,8 +21,8 @@
 .whole-div {
   position: relative;
   background-image: url('../../assets/imgs/HeroImage.png');
-  background-size: 220vh 98vh;
-  /* background-size: 106% 104.5%; */
+  /* background-size: 220vh 98vh; */
+  background-size: 106% 104.5%;
   background-repeat: repeat-x;
   width: 100%;
   height: 43rem;
@@ -106,9 +106,9 @@
 }
 
 @media only screen and (min-width: 1920px) and (min-height: 1080px) {
-  .whole-div{
+  /* .whole-div{
     background-size: 190vh 65vh;
-  } 
+  }  */
   .navbar-container{
     margin-right:28rem
   }
@@ -119,9 +119,9 @@
 
 @media only screen and (min-width: 2560px) and (min-height: 1440px) {
 
-  .whole-div{
+  /* .whole-div{
     background-size: 190vh 49vh;
-  } 
+  }  */
   .navbar-container{
     margin-right:65rem
   }
@@ -132,9 +132,9 @@
 
 @media only screen and (min-width: 3840px) and (min-height: 2160px) {
 
-  .whole-div{
+  /* .whole-div{
     background-size: 190vh 33vh;
-  } 
+  }  */
   .navbar-container{
     margin-right:145rem
   }

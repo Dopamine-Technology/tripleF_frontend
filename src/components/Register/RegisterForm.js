@@ -23,6 +23,7 @@ import startsWith from 'lodash.startswith';
 
 function RegisterForm() {
   const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
+
   const schema = Yup.object().shape({
     email: signedUpWithGoogle
         ? Yup.string()
@@ -47,6 +48,8 @@ function RegisterForm() {
               .required("New password is required")
               .min(8, "Password must be at least 8 characters long"),
 });
+
+
 
 
       const {
@@ -77,10 +80,21 @@ function RegisterForm() {
       const [isValidMobileNumber, setIsValidMobileNumber] = useState(true);
       const [minAge] = useState(5);
       const [maxDate, setMaxDate] = useState(calculateMaxDate());
+      const [clubName, setClubName] = useState('');
       
       const clientId='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'
 
       const bothErrors = { ...responseError, ...errors };
+
+      const handleClubNameChange = (event) => {
+        const value = event.target.value;
+        const emojiPattern = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/;
+    
+        // Check if the input contains any unwanted characters
+        if (!emojiPattern.test(value)) {
+          setClubName(value);
+        }
+      };
       
       const onSuccess = (res) => {
         const userData = {
@@ -98,6 +112,7 @@ function RegisterForm() {
         setCurrentStep(currentStep + 1);
         setAccountType('1');
         setSignedUpWithGoogle(true);
+
       };
       function calculateMaxDate() {
         const currentDate = new Date();
@@ -946,11 +961,13 @@ function RegisterForm() {
                   watch={watch}
                   name={"club_logo"}
                   label={"Logo"}
+
                       />
                   </Form.Group>
             <div className='form-group'> 
           <label htmlFor="clubname">Club Name:</label>
-          <input type="text" id="clube_name" {...register('club_name')} style={{border:'1px solid #ccc',borderRadius:'5px',padding:'8px'}} />
+          <input type="text" id="clube_name" {...register('club_name')}  value={clubName}  onChange={handleClubNameChange} 
+          style={{border:'1px solid #ccc',borderRadius:'5px',padding:'8px'}} />
         </div>
       <div className='form-group'>
   <label htmlFor="talentType">Sport Type</label>

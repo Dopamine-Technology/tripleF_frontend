@@ -13,6 +13,7 @@ import axios from 'axios';
 import './style.css';
 import { GoogleLogin } from 'react-google-login';
 import { message } from 'antd';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 function LoginForm() {
   const {
@@ -24,22 +25,28 @@ function LoginForm() {
 
   const [error, setError] = useState();
   const { user, setUser } = useContext(UserDataContext);
+  const [loading, setLoading] = useState(true);
 
   const onSuccess = (res) => {
     const { profileObj } = res;
-  const dataToSend = {
-    email: profileObj.email,
-    google_identifier: res.accessToken
-  };
-
-  axios.post('https://backendtriplef.dopaminetechnology.com/api/user/auth/google_login', dataToSend)
-    .then((response) => {
-      message.success('logged in successfullly');
-      navigate('/home');
-    })
-    .catch((error) => {
-      console.error('Error sending data to other API:', error);
-    });
+    const dataToSend = {
+      email: profileObj.email,
+      google_identifier: res.accessToken,
+    };
+  
+    axios.post('https://backendtriplef.dopaminetechnology.com/api/user/auth/google_login', dataToSend)
+      .then((response) => {
+        if (response.data.result) {
+          message.success('Logged in successfully');
+          setUser(response.data.result.user);
+          navigate('/home');
+        } else {
+          message.error('Invalid response from server');
+        }
+      })
+      .catch((error) => {
+        console.error('Error sending data to other API:', error);
+      });
   }
 
     const onFailure =()=>{
@@ -47,36 +54,49 @@ function LoginForm() {
     }
 
 
-  const onSubmit = async (data) => {
-    data.email = data.email.toLowerCase();
-    setError();
-    axios
-      .post(`https://backendtriplef.dopaminetechnology.com/api/user/auth/email_login`, data)
-      .then((response) => {
-          Cookies.set(
-            "token",
-            response.data.result.token
-          );
-          Cookies.set(
-            "profileType",
-            response.data.result.user.profile.type_name
-          );
-        
-        setUser({
-          isAuthenticated: true,
-          ...response.data.result.user,
-        });
+    const onSubmit = async (data) => {
+      data.email = data.email.toLowerCase();
+      setError();
+    
+      try {
+        // Set loading state to true while waiting for the authentication response
+        setLoading(true);
+    
+        const response = await axios.post(
+          `https://backendtriplef.dopaminetechnology.com/api/user/auth/email_login`,
+          data
+        );
+    
+        if (response.data.result) {
+          Cookies.set("token", response.data.result.token);
+          Cookies.set("profileType", response.data.result.user.profile.type_name);
+    
+          // Set user data and isAuthenticated status
+          setUser({
+            isAuthenticated: true,
+            userData: response.data.result.user, // You might need to adjust this based on your response structure
+          });
+    
+          message.success('Logged in successfully');
+          navigate('/home');
+        } else {
+          message.error('Invalid response from server');
+        }
+      } catch (error) {
+        message.error('Your email or password is incorrect');
+      } finally {
+        // Set loading state to false after the authentication response is received
+        setLoading(false);
+      };
+    };
+    
 
-             message.success('logged in successfullly');
-             navigate('/home');
-      })
-      .catch((error) => {
-            message.error('Your email or password is incorrect')
-      });
-  };
   useEffect(() => {
     console.log('User updated:', user);
   }, [user]); 
+
+
+  
 
   return (
     <Row className='mt-2'>

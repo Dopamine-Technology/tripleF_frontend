@@ -11,7 +11,6 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 
 
-
 function PostView() {
     const [show, setShow] = useState(false);
     const [selectedMedal, setSelectedMedal] = useState(null);
@@ -58,7 +57,9 @@ function PostView() {
         <div className="poster">
         <div className="Simplilearn">
           404 image 
-            </div></div></div>;
+            </div>
+            </div>
+            </div>;
     }
       const handleShare = () => {
         axios.post(`status/toggle_save/${id}`);
@@ -87,7 +88,7 @@ function PostView() {
     const handleShow = () => setShowPopup(true);
 
     return(
-        <div className='text ' >
+        <div className='text'>
         <div className="poster">
         <div className="Simplilearn">
             <img src={post.user.image!=''?post.user.image:post.user.social_image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
@@ -130,7 +131,9 @@ function PostView() {
     <Row>
         <Col xs={6}>
             <div className="d-flex align-items-center" >
-                <LiaMedalSolid color="grey" className="me-1" />
+                <LiaMedalSolid color="gold" className="" />
+                <LiaMedalSolid color="saddlebrown" className="" />
+                <LiaMedalSolid color="silver" className="" />
 
                 <p className="share-time m-0">{post.reaction_count}</p>
             </div>

@@ -10,6 +10,7 @@ function ChallengesList({handleClose,show}){
   const [loading, setLoading] = useState(true);
   const axios=useAxios();
   const [challenges,setChallenges]=useState();
+  const [challengeContent,setChallengeContent]=useState();
 
   useEffect(() => {
     axios
@@ -24,6 +25,15 @@ function ChallengesList({handleClose,show}){
         setLoading(false);
       });
   }, []);
+
+  const handleChallengeSelect = async (selectedChallengeId) => {
+    try {
+      const response = await axios.get(`get_cities/${selectedChallengeId}`);
+      setChallengeContent(response.data.result);
+    } catch (error) {
+      console.error('Error fetching sub-positions:', error);
+    }
+  };
   // const challenges=[
   //   {
   //     id:'1',
@@ -56,9 +66,10 @@ function ChallengesList({handleClose,show}){
           <Modal.Title className='share-title'>Share your challenge</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <div>
         <div className='form-group'>
   <label htmlFor="challenge" className='challenge-label'>Select your challenge:</label>
-  <select id="challenge" {...register('challenge')} className='challenge-input'>
+  <select id="challenge" {...register('challenge')} className='challenge-input'  onChange={(e) => handleChallengeSelect(e.target.value)}>
     {challenges.map(challenge => (
       <option key={challenge.id} value={challenge.id}>
         {challenge.name}
@@ -66,13 +77,22 @@ function ChallengesList({handleClose,show}){
     ))}
   </select>
 </div>
+  <div className='p-4'>
+    <p className='what-p'>What should I do?</p>
+    <ul>
+      <li className='desc-p'>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</li>
+      <li className='desc-p'>Neque porro quisquam est qui dolorem ipsum</li>
+    </ul>
+    <div className='d-flex justify-content-center'>
+    <Button className='upload-btn'>Upload my challenge video</Button>
+    </div>
+  </div>
+  </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+       
+          <Button   className='submit-btn' onClick={handleClose}>
+            Submit
           </Button>
         </Modal.Footer>
       </Modal>

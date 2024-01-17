@@ -20,6 +20,7 @@ function Post(){
     const [showPopup, setShowPopup] = useState(false);
     const [posts,setPosts]=useState();
     const [showReactionPopup,setShowReactionPop]=useState();
+    const[reactionPopup,setReactionPopup]=useState();
     const axios=useAxios();
 
     useEffect(() => {
@@ -46,7 +47,8 @@ function Post(){
             setShow(true);
         }
     }
-    
+
+
     const handleSelectMedal = async (id, medal, is_reacted) => {
         const medalColors = {
             gold: 'gold',
@@ -60,7 +62,6 @@ function Post(){
         };
     
         const response = await axios.post('status/react', requestBody);
-        
         setSelectedMedal(medal);
         setSelectedMedalColor(medalColors[medal]);
     
@@ -108,7 +109,7 @@ function Post(){
         <Dropdown.Item href="" className='p-2' ><FaRegCopy className='me-2' />Copy link to Post</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' />I don’t want to see this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2' ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={handleReport(post.id)} ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>
