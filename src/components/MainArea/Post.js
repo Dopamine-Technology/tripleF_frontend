@@ -20,7 +20,9 @@ function Post(){
     const [showPopup, setShowPopup] = useState(false);
     const [posts,setPosts]=useState();
     const [showReactionPopup,setShowReactionPop]=useState();
-    const[reactionPopup,setReactionPopup]=useState();
+    const [showMedalPopups, setShowMedalPopups] = useState(Array(posts?.length).fill(false));
+    const [selectedPostId, setSelectedPostId] = useState(null);
+    
     const axios=useAxios();
 
     useEffect(() => {
@@ -39,16 +41,13 @@ function Post(){
     
 
 
-    const likeHandle = (event) => {
-        event.preventDefault();
-        if (show) {
-            setShow(false);
-        } else {
-            setShow(true);
-        }
-    }
-
-
+      const likeHandle = (index) => {
+        const newShowMedalPopups = [...showMedalPopups];
+        newShowMedalPopups[index] = !newShowMedalPopups[index];
+        setShowMedalPopups(newShowMedalPopups);
+      
+      };
+    
     const handleSelectMedal = async (id, medal, is_reacted) => {
         const medalColors = {
             gold: 'gold',
@@ -62,6 +61,7 @@ function Post(){
         };
     
         const response = await axios.post('status/react', requestBody);
+        
         setSelectedMedal(medal);
         setSelectedMedalColor(medalColors[medal]);
     
@@ -69,7 +69,7 @@ function Post(){
     };
     
     const clearSelection = () => {
-        setShow(false);
+        setShowMedalPopups(Array(posts.length).fill(false));
     };
 
     const handleShare = (id) => {
@@ -80,8 +80,15 @@ function Post(){
     const handleClose = () => setShowPopup(false);
     const handleShow = () => setShowPopup(true);
 
-    const handleClosePopup = () => setShowReactionPop(false);
-    const handleShowPopup = () => setShowReactionPop(true);
+    const handleShowPopup = (postId) => {
+        setSelectedPostId(postId);
+        setShowReactionPop(true);
+      };
+    
+      const handleClosePopup = () => {
+        setSelectedPostId(null);
+        setShowReactionPop(false);
+      };
 
     const handleReport=({id,report})=>{
         axios.post(`status/report/${id}`,report);
@@ -109,7 +116,7 @@ function Post(){
         <Dropdown.Item href="" className='p-2' ><FaRegCopy className='me-2' />Copy link to Post</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' />I don’t want to see this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2' onClick={handleReport(post.id)} ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>
@@ -135,8 +142,10 @@ function Post(){
     <hr style={{ color: '#A3A3A3' }} />
     <Row>
         <Col xs={6}>
-            <div className="d-flex align-items-center  " style={{marginLeft:'2rem'}} >
-                <LiaMedalSolid color="grey" className="me-1" onClick={handleShowPopup}  />
+            <div className="d-flex align-items-center  " style={{marginLeft:'2rem'}} onClick={() => handleShowPopup(post.id)}  >
+            <LiaMedalSolid color="gold" className="" />
+                <LiaMedalSolid color="saddlebrown" className="" />
+                <LiaMedalSolid color="silver" className="" />
 
                 <p className="share-time m-0" >{post.reaction_count}</p>
             </div>
@@ -153,7 +162,8 @@ function Post(){
     </Row>
 </div>
 
-{show && (
+{showMedalPopups[index] && (
+
     <div className="MedalOptions" onMouseLeave={clearSelection}>
         <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'gold', post.is_reacted)}>
             <LiaMedalSolid color="gold" className='me-2' size={40}/>
@@ -168,7 +178,7 @@ function Post(){
 )}
         
     <div className="Comment">
-    <div className="Like" onClick={likeHandle}>
+    <div className="Like" onClick={() => likeHandle(index)}>
     <LiaMedalSolid color={selectedMedalColor || (post.is_reacted=='1' ? 'saddlebrown' : post.is_reacted=='2' ? 'silver' : post.is_reacted=='3' ? 'gold' : 'none')} className='me-2 2' size={20}/>
     Medal
 </div>
@@ -182,9 +192,8 @@ function Post(){
         </div>
     
     </div> 
-                {
-                   showReactionPopup&& <ReactionPopup  handleClose={handleClosePopup} show={showReactionPopup} id={post.id}/> 
-                }
+           
+    {selectedPostId === post.id && showReactionPopup && <ReactionPopup handleClose={handleClosePopup} show={showReactionPopup} id={post.id} />}
     </div>
     
                 ))}
@@ -193,4 +202,3 @@ function Post(){
     )
 }
 export default Post;
-

@@ -14,6 +14,7 @@ import Layout from './components/Layout/Layout';
 import PostView from './components/SharePost/PostView';
 import Blogs from './pages/Blogs';
 import ComingSoon from './components/ComingSoon/ComingSoon';
+import BlogPage from './pages/Blog';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -37,6 +38,7 @@ function App() {
           <Route>
           <Route path='/' element={<LandingPage />} />
           <Route path='/blogs' element={<Blogs />} />
+          <Route path='/blogs/:id' element={<BlogPage />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/verify/:token' element={<VerifyPage />} />
