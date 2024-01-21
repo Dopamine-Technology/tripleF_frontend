@@ -4,7 +4,7 @@ import './style.css'
 
 const BlogsSet = () => {
     const blogs=[{
-        img:"https://media.istockphoto.com/id/510398566/photo/the-most-famous-sports.jpg?s=612x612&w=0&k=20&c=4luU-DrHEakY-5VL4TgAPgOAGzeN-l9IpmxpUriW2a4=",
+        img:"https://www.blazepod.com/cdn/shop/articles/BP_Article_Football_Endurance_Training_960x585_dedd2f08-a3e7-4c4b-be4b-d82cca607000_1024x.jpg?v=1654091122",
         title:"Blog title here, Neque porro quisquam est qui dolorem ipsum",
         categoryName:"Category Name",
         date:"21 Nov, 2023",
@@ -12,7 +12,7 @@ const BlogsSet = () => {
         tags:['#hashtag','#hashtag']
     },
     {
-        img:"https://media.istockphoto.com/id/510398566/photo/the-most-famous-sports.jpg?s=612x612&w=0&k=20&c=4luU-DrHEakY-5VL4TgAPgOAGzeN-l9IpmxpUriW2a4=",
+        img:"https://www.blazepod.com/cdn/shop/articles/BP_Article_Football_Endurance_Training_960x585_dedd2f08-a3e7-4c4b-be4b-d82cca607000_1024x.jpg?v=1654091122",
         title:"Blog title here, Neque porro quisquam est qui dolorem ipsum",
         categoryName:"Category Name",
         date:"21 Nov, 2023",
@@ -20,7 +20,7 @@ const BlogsSet = () => {
         tags:['#hashtag','#hashtag']
     },
     {
-        img:"https://media.istockphoto.com/id/510398566/photo/the-most-famous-sports.jpg?s=612x612&w=0&k=20&c=4luU-DrHEakY-5VL4TgAPgOAGzeN-l9IpmxpUriW2a4=",
+        img:"https://www.blazepod.com/cdn/shop/articles/BP_Article_Football_Endurance_Training_960x585_dedd2f08-a3e7-4c4b-be4b-d82cca607000_1024x.jpg?v=1654091122",
         title:"Blog title here, Neque porro quisquam est qui dolorem ipsum",
         categoryName:"Category Name",
         date:"21 Nov, 2023",

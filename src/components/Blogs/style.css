@@ -116,3 +116,39 @@ margin-right: 1rem;
     letter-spacing: normal;
     color: #464646;
 }
+.singleBlog-container{
+    width: 80%;
+    height: 100%;
+    margin: 48px 118px 58px 80px;
+    padding: 30px 41px 32px 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 24px 0 rgba(70, 70, 70, 0.12);
+    background-color: var(--white);
+  }
+
+.Blog-title-here-Neq{
+    width: 717px;
+  height: 80px;
+  margin: 0 0 16px;
+  font-family: Quicksand;
+  font-size: 32px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+}
+.Lorem-ipsum-dolor-si{
+    width: 80%;
+  height: 13%;
+  margin: 30px 20px 25px;
+  font-family: 'Quicksand-Medium';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+}

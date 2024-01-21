@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160px" height="53px" viewBox="0 0 160 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Asset 1</title>
+    <defs>
+        <linearGradient x1="53.403216%" y1="14.7800587%" x2="38.2397744%" y2="91.2609971%" id="linearGradient-1">
+            <stop stop-color="#213555" offset="25%"></stop>
+            <stop stop-color="#142033" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="63.3520201%" y1="2.25645814%" x2="33.7603896%" y2="99.2063492%" id="linearGradient-2">
+            <stop stop-color="#213555" offset="25%"></stop>
+            <stop stop-color="#142033" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="63.2578375%" y1="1.16861436%" x2="36.7421625%" y2="98.7896494%" id="linearGradient-3">
+            <stop stop-color="#213555" offset="25%"></stop>
+            <stop stop-color="#142033" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="62.9474986%" y1="48.0978788%" x2="34.7096575%" y2="51.8002846%" id="linearGradient-4">
+            <stop stop-color="#213555" offset="25%"></stop>
+            <stop stop-color="#142033" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Footer" transform="translate(-80, -54)" fill-rule="nonzero">
+            <g id="Asset-1" transform="translate(80, 54.5)">
+                <g id="CUSTOM-group" transform="translate(0, 3.5)">
+                    <path d="M35.4006238,24.5 C35.4006238,21.4041394 33.4033687,18.788671 30.6969432,17.9956427 L30.6969432,30.996732 C33.4033687,30.211329 35.4006238,27.5958606 35.4006238,24.4923747 L35.4006238,24.5 Z" id="Path" fill="url(#linearGradient-1)"></path>
+                    <path d="M22.5993762,24.5 C22.5993762,27.5958606 24.5966313,30.2189542 27.3030568,31.0043573 L27.3030568,17.9956427 C24.5966313,18.7810458 22.5993762,21.3965142 22.5993762,24.5 L22.5993762,24.5 Z" id="Path" fill="#77DCBF"></path>
+                    <polygon id="Path" fill="#77DCBF" points="0 33.6350763 0 15.3649237 9.03830318 15.3649237 9.03830318 33.627451 0 33.627451"></polygon>
+                    <path d="M30.6969432,14.3278867 C35.2920774,15.1819172 38.7945103,19.4139434 38.7945103,24.5 C38.7945103,29.5860566 35.2920774,33.8180828 30.6969432,34.6721133 L30.6969432,49 L52.8983157,49 C55.7060512,49 57.9927636,46.5904139 57.9927636,43.6318083 L57.9927636,37.2189542 L47.2321896,37.2189542 C46.2914535,37.2189542 45.5316282,36.4183007 45.5316282,35.4270153 L45.5316282,13.5729847 C45.5316282,12.5816993 46.2914535,11.7810458 47.2321896,11.7810458 L57.9927636,11.7810458 L57.9927636,5.36819172 C57.9927636,2.40958606 55.7060512,0 52.8983157,0 L30.6969432,0 L30.6969432,14.3278867 Z" id="Path" fill="url(#linearGradient-2)"></path>
+                    <path d="M27.3030568,34.6721133 C22.7079226,33.8257081 19.2054897,29.5860566 19.2054897,24.5 C19.2054897,19.4139434 22.7079226,15.1819172 27.3030568,14.3278867 L27.3030568,0 L5.09444791,0 C2.28671241,0 0,2.40958606 0,5.36819172 L0,11.7810458 L10.7388646,11.7810458 C11.6796007,11.7810458 12.3019339,11.4607843 12.3019339,12.4520697 C12.3019339,13.1129267 12.3477646,20.7687001 12.4394261,35.41939 C12.4394261,36.4106754 11.6796007,37.211329 10.7388646,37.211329 L0,37.211329 L0,43.624183 C0,46.5827887 2.28671241,48.9923747 5.09444791,48.9923747 L27.2958203,48.9923747 L27.2958203,34.664488 L27.3030568,34.6721133 Z" id="Path" fill="#77DCBF"></path>
+                    <polygon id="Path" fill="url(#linearGradient-3)" points="48.9399875 33.6350763 48.9399875 15.3649237 58 15.3649237 58 33.627451 48.9399875 33.627451"></polygon>
+                </g>
+                <path d="M157,43.5072314 C157,45.4380165 156.237764,47.1880165 155.008119,48.4535124 C153.778474,49.7190083 152.08142,50.5 150.211784,50.5 L64,50.5 L64,43.5 L157,43.5 L157,43.5072314 Z" id="CUSTOM" fill="url(#linearGradient-4)"></path>
+                <g id="Group" transform="translate(64.4246, 0)" fill="#213555" font-family="Quicksand-Bold, Quicksand" font-size="25.751925" font-weight="bold">
+                    <text id="T">
+                        <tspan x="0" y="26">T</tspan>
+                    </text>
+                    <text id="rip">
+                        <tspan x="15.6809798" y="26">rip</tspan>
+                    </text>
+                    <text id="l">
+                        <tspan x="49.9184836" y="26">l</tspan>
+                    </text>
+                    <text id="e-F">
+                        <tspan x="57.6513815" y="26">e F</tspan>
+                    </text>
+                </g>
+                <g id="Group" transform="translate(67, 31)" fill="#213555" font-family="Poppins-Regular, Poppins" font-size="6.75696486" font-weight="normal">
+                    <text id="Football-Future-Finder">
+                        <tspan x="0" y="7">Football Future Finder</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

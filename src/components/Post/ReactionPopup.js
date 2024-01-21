@@ -15,25 +15,37 @@ function ReactionPopup({handleClose,show,id}) {
     const [subReaction,setSubReaction]=useState();
     const [loading, setLoading] = useState(true);
 
-    const handleTabSelect = async(tab) => {
-        let points;
-        switch (tab) {
-          case 'Gold':
-            points = 3;
-            break;
-          case 'Silver':
-            points = 2;
-            break;
-          case 'Bronze':
-            points = 1;
-            break;
-          default:
-            points="";
-     
+    const handleTabSelect = async (tab) => {
+      let points;
+      switch (tab) {
+        case 'Gold':
+          points = 3;
+          break;
+        case 'Silver':
+          points = 2;
+          break;
+        case 'Bronze':
+          points = 1;
+          break;
+        default:
+          points = '';
       }
-      const response = await axios.post(`status/get_reactions/${id}`,{points});
-      setSubReaction(response.data.result);
-      setActiveTab(tab);}
+    
+      try {
+        const response = await axios.post(`/status/get_reactions/${id}`, { points });
+    
+        if (tab === 'All') {
+          setAllReaction(response.data.result);
+        } else {
+          setSubReaction(response.data.result);
+        }
+    
+        setActiveTab(tab);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    
 
       useEffect(() => {
     
@@ -49,21 +61,6 @@ function ReactionPopup({handleClose,show,id}) {
         fetchReactionsData()
         
       }, []);
-
-      // useEffect(() => {
-      //   const points='';
-      //   axios
-      //     .get(`/status/get_reactions/${id}`,{points})
-      //     .then((response) => {
-      //       setAllReaction(response.data.result);
-      //     })
-      //     .catch((error) => {
-      //       console.error("Error fetching get_reactions data:", error);
-      //     })
-      //     .finally(() => {
-      //       setLoading(false);
-      //     });
-      // }, []);
       
 
   
@@ -164,6 +161,7 @@ function ReactionPopup({handleClose,show,id}) {
                 
                     <div className='content-div'> {tabs[tabKey].content}</div>
               </Tab>
+            
             ))}
           </Tabs>
             </Modal.Title>

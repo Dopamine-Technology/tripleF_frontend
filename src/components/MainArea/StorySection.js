@@ -48,18 +48,18 @@ function StorySection() {
       },
     ];
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get(``);
-            setStories(response.data.result);
-          } catch (error) {
-            console.error('Error fetching Stories:', error);
-          }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //       try {
+    //         const response = await axios.get(``);
+    //         setStories(response.data.result);
+    //       } catch (error) {
+    //         console.error('Error fetching Stories:', error);
+    //       }
+    //     };
       
-        fetchData();
-      }, [stories]);
+    //     fetchData();
+    //   }, [stories]);
 
       const handleStoryClick = (index) => {
         setSelectedStory(index); 

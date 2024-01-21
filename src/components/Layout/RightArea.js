@@ -108,6 +108,12 @@ function RightArea(){
           id:2
         },
         {
+          imageSrc: 'https://static.vecteezy.com/system/resources/previews/005/106/490/non_2x/soccer-logo-or-football-club-sign-badge-football-logo-with-shield-background-design-vector.jpg',
+          clubName: 'Club Name here',
+          isFollowed:false,
+          id:4
+        },
+        {
           imageSrc: 'https://img.freepik.com/free-vector/logo-template-design_1195-105.jpg',
           clubName: 'Club Name here',
           id:3,
@@ -154,11 +160,10 @@ function RightArea(){
       
     
     return(
-      <div >
+      <div style={{marginLeft:'-3rem'}} >
       {renderDataSection('Recommended Challenges', profilesData,false)}
       {renderDataSection('Clubs to Follow', clubsData,true)}
       {renderDataSection('Scouts to Follow', clubsData,true)}
-
     </div>
     )
 }
