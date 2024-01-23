@@ -7,11 +7,11 @@ import ChallengesList from '../CreateChallenge/ChallengesList';
 
 function NewPost(){
     const { user } = useContext(UserDataContext);
-
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
     return(
       <Container className='new-post'>
         {user.user_type=="talent"?(
@@ -28,8 +28,23 @@ function NewPost(){
             <Button className='share-btn' onClick={handleShow}>Share</Button>
             {show&& <ChallengesList handleClose={handleClose} show={show} />}
     </Col>
-        </Row>):(
-          <p>No</p>
+        </Row>
+
+        ):(
+          <Row className='me-3'>
+    <Col></Col>
+    <Col xs={12} md={5}>
+    <Row className='newpost-container'>
+    <p className='newPost-title'>Post your Opportunities</p>
+    <p className='newPost-desc'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed</p>
+    </Row>
+
+    </Col>
+    <Col className='btn-col' xs={12} md={2}>
+    <Button className='share-btn' onClick={handleShow}>Add</Button>
+    {show&& <ChallengesList handleClose={handleClose} show={show} />}
+</Col>
+</Row>
         )}
         
       </Container>

@@ -403,7 +403,7 @@ text-align: left;
     border: none;
     border-top: 1px solid #939393;
   }
-  .post-title{
+  .postTimline-title{
     opacity: 1;
 color: rgba(70,70,70,1);
 font-family: "Quicksand-Bold";
@@ -541,6 +541,10 @@ background-color:rgba(119,220,191, 1); ;
 
 .content-container{
     margin-left: -12rem;
+
+}
+.newpost-container{
+    margin-left: -19rem;
 
 }
 .post {

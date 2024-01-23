@@ -7,7 +7,8 @@ import { PiLightbulbFilamentLight } from "react-icons/pi";
 import { FaFlagCheckered } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { CiMenuBurger } from "react-icons/ci";
-
+import savedIcon from '../../assets/imgs/Saved.svg';
+import scoutIcon from '../../assets/imgs/Scouts.svg';
 
 function LeftArea({ isCollapsed }) {
     const [activeLink, setActiveLink] = useState(1);
@@ -45,7 +46,7 @@ function LeftArea({ isCollapsed }) {
             </div>
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
-                <RiUserSearchLine  fontSize="1.3rem" className={`${activeLink === 3 ? 'activeLink' : 'not-active'}`}/>
+                <img src={scoutIcon} />
                 <div >
                 {!isCollapsed && <div >Scouts</div>}
                 </div>
@@ -67,8 +68,9 @@ function LeftArea({ isCollapsed }) {
             
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             <div className="Pro" onClick={() => handleNavLinkClick(6,'/saved')}>
-                <CiSaveDown2  fontSize="1.3rem"  className={`${activeLink === 6 ? 'activeLink' : 'not-active'}`}/>
-                <div >
+                {/* <CiSaveDown2  fontSize="1.3rem"  className={`${activeLink === 6 ? 'activeLink' : 'not-active'}`}/> */}
+                <img src={savedIcon} />
+                <div>
                     {!isCollapsed && <div >Saved</div>}</div>
             </div>
            

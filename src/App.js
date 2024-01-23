@@ -15,6 +15,7 @@ import PostView from './components/SharePost/PostView';
 import Blogs from './pages/Blogs';
 import ComingSoon from './components/ComingSoon/ComingSoon';
 import BlogPage from './pages/Blog';
+import NewOpportunity from './components/Opportunities/NewOpportunity';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -22,8 +23,10 @@ function App() {
   return (
     <div className="App">
        <Router>
+      
         <Routes>
         {user.isAuthenticated ? (
+            <>
           <Route path='/' element={<Layout />}>
             <Route path='/home' element={<Home />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
@@ -33,7 +36,9 @@ function App() {
             <Route path='/challenges' element={<ComingSoon />}  />
             <Route path='/saved' element={<ComingSoon />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
+            <Route path='/add/opportunity' element={<NewOpportunity />}  />
           </Route>
+          </>
         ):(
           <Route>
           <Route path='/' element={<LandingPage />} />

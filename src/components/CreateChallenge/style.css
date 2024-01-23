@@ -85,3 +85,29 @@ margin-top: 2rem;
   padding: 0.6rem;
   width: 23%;
 }
+ul {
+  list-style: none; /* Remove default list styles */
+  padding: 0; /* Remove default padding */
+}
+
+ul li {
+  position: relative;
+  padding-left: 30px; 
+  margin-bottom: 10px; 
+}
+
+.custom-list .desc-p::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px; 
+  height: 20px; 
+  background-color: rgba(228,248,242, 1); 
+  background-image: url('../../assets/imgs/listImg.svg'); 
+  background-size: contain; 
+  background-repeat: no-repeat;
+  margin-top: 2px;
+  border-radius: 15px;
+  padding: 0.7rem;
+}
