@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Layout as AntLayout, Menu } from "antd";
-import { Link, Outlet,useLocation, useParams } from "react-router-dom";
+import { Layout as AntLayout, Row, Col } from "antd";
 import NavBar from "./Navbar";
-import { Row, Col } from 'react-bootstrap';
 import LeftArea from "./LeftArea";
 import RightArea from "./RightArea";
+import { Outlet } from "react-router-dom";
+
+const { Header, Sider, Content } = AntLayout;
 
 const Layout = () => {
   const [isLeftSidebarCollapsed, setIsLeftSidebarCollapsed] = useState(false);
@@ -12,23 +13,34 @@ const Layout = () => {
   const toggleLeftSidebar = () => {
     setIsLeftSidebarCollapsed(!isLeftSidebarCollapsed);
   };
-    return(
-        <div className="Main">
-            <NavBar toggleLeftSidebar={toggleLeftSidebar}/>
-        <Row>
-          <Col lg={2} md={4} sm={12}>
-            <LeftArea isCollapsed={isLeftSidebarCollapsed} />
-          </Col>
-          <Col lg={7} md={8} sm={12}>
-          <Outlet />
-         
-          </Col>
-          <Col lg={3} md={12}>
-            <RightArea />
-          </Col>
-        </Row>
-      </div>
-    )
-}
+
+  return (
+    <AntLayout style={{ minHeight: "100vh", backgroundColor: "rgba(211, 215, 221, 0.2)" }}>
+      <NavBar toggleLeftSidebar={toggleLeftSidebar} />
+      <AntLayout>
+        <Sider
+          width={80}
+          className="bg-transparent"
+        
+          style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}
+        >
+          <LeftArea isCollapsed={isLeftSidebarCollapsed} />
+        </Sider>
+        <AntLayout style={{ marginLeft: isLeftSidebarCollapsed ? 80 : 200, transition: 'margin-left 0.3s' }}>
+          <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+            <Row justify="center">
+              <Col xs={24} md={16} lg={16}>
+                <Outlet />
+              </Col>
+              <Col xs={0} md={8} lg={8}>
+                <RightArea />
+              </Col>
+            </Row>
+          </Content>
+        </AntLayout>
+      </AntLayout>
+    </AntLayout>
+  );
+};
 
 export default Layout;

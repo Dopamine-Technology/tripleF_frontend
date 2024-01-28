@@ -59,7 +59,6 @@ input::placeholder{font-size: 1rem;}
     align-items: center;
     cursor: pointer;
     padding: 0px 50px;
-    /* margin-right: 10px; */
     border-radius: 50%;
     height: 2.7rem;
     background-color: #F0F2F5;
@@ -74,7 +73,7 @@ input::placeholder{font-size: 1rem;}
     border-radius: 20px;
     height: 3rem;
     margin-right: 20px;
-    /* border: 1px solid #E1E1E1; */
+
 }
 .search-container {
     position: relative;
@@ -92,10 +91,9 @@ input::placeholder{font-size: 1rem;}
     border: 1px solid rgba(225, 225, 225, 1);
     opacity: 1;
     background-color: rgba(225, 225, 225, 0.3);
-    position: relative; /* Positioning for the search icon */
+    position: relative; 
   }
-  
-  /* CSS for Search Icon */
+
   .search-icon {
     position: absolute;
     left: 10px;
@@ -130,6 +128,16 @@ input::placeholder{font-size: 1rem;}
 .not-active{
     color:#979797
 }
+.activeSubLink{
+    color: #77DCBF !important; 
+    border-left: 3px solid #77DCBF;
+    padding-left: 1px;
+    cursor: pointer; 
+    background-color:#E5F0EE ;
+}
+.not-activeSub{
+color:#979797
+}
 .plus-p{
     opacity: 1;
 color: rgba(70,70,70,1);
@@ -144,17 +152,14 @@ text-align: left;
     
 }
 .leftside-container {
-    /* your existing styles for the sidebar */
+
     transition: all 0.3s ease;
   }
   
-  /* .leftside-container.collapsed {
- 
-    visibility: hidden;;
-  }
-   */
+
   .burger-button {
-    /* add styles for your burger button */
+
     cursor: pointer;
   }
+  
 

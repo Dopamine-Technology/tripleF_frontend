@@ -5,12 +5,14 @@ import { useForm } from 'react-hook-form';
 import './style.css';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import useAxios from '../Auth/useAxiosHook.interceptor';
+import { message } from 'antd';
 
 function ChallengesList({ handleClose, show }) {
   const [loading, setLoading] = useState(true);
   const [challenges, setChallenges] = useState([]);
   const [selectedChallenge, setSelectedChallenge] = useState(null);
   const [challengeContent, setChallengeContent] = useState(null);
+  const [videoUploaded, setVideoUploaded] = useState(false);
   const axios=useAxios();
 
   const fileInputRef = useRef(null);
@@ -24,13 +26,25 @@ function ChallengesList({ handleClose, show }) {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       uploadVideo(selectedFile);
+      setVideoUploaded(true);
+      console.log('file2',selectedFile)
     }
   };
 
   const uploadVideo = (file) => {
-    axios.post(`status/create/${selectedChallenge}`,file)
+    const formData = new FormData();
+    formData.append('challenge_id', selectedChallenge);
+    formData.append('video', file);
+  
+    axios.post(`status/create`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((response) => {
+      message.success('file uploded successfully');
+    })
   };
-
 
 
   useEffect(() => {
@@ -57,34 +71,43 @@ function ChallengesList({ handleClose, show }) {
 
 
   const renderSteps = () => {
-
-    if (selectedChallenge == '1') {
-      return (
-        <div className='p-4 tips-container'>
-          <p className='what-p'>What should I do?</p>
-        <ul className='custom-list'>
-          <li className='desc-p'>Step 1 for someChallengeType</li>
-          <li className='desc-p'>Step 2 for someChallengeType</li>
-        </ul>
-        <div className='d-flex justify-content-center'>
-      <Button className='upload-btn' onClick={handleButtonClick}>
-        Upload my challenge video
-      </Button>
-      {/* Hidden file input */}
-      <input
-        type="file"
-        accept="video/*"
-        style={{ display: 'none' }}
-        ref={fileInputRef}
-        onChange={handleFileChange}
-      />
-    </div>
-        </div>
+    if (selectedChallenge) {
+      const selectedChallengeDetails = challenges.find(
+        (challenge) => challenge.id === Number(selectedChallenge)
       );
-    } else {
-      return null;
+
+      if (selectedChallengeDetails) {
+        return (
+          <div className='p-4 tips-container'>
+            <p className='what-p'>What should I do?</p>
+            <ul className='custom-list'>
+              {selectedChallengeDetails.tips.map((tip, index) => (
+                <li key={index} className='desc-p'>
+                  {tip}
+                </li>
+              ))}
+            </ul>
+            <div className='d-flex justify-content-center'>
+              <Button className='upload-btn' onClick={handleButtonClick}>
+                Upload my challenge video
+              </Button>
+              <input
+                type='file'
+                accept='video/*'
+                style={{ display: 'none' }}
+                ref={fileInputRef}
+                onChange={handleFileChange}
+              />
+            </div>
+          </div>
+        );
+      }
     }
+
+    return null;
   };
+
+  
 
   const {
     register,
@@ -100,12 +123,12 @@ function ChallengesList({ handleClose, show }) {
   }
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} centered >
       <Modal.Header closeButton>
-        <Modal.Title className='share-title'>Share your challenge</Modal.Title>
+        <Modal.Title className='share-title'>Share your challenges</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div>
+        <div className='challenge-container'>
           <div className='form-group'>
             <label htmlFor='challenge' className='challenge-label'>
               Select your challenge:
@@ -116,12 +139,9 @@ function ChallengesList({ handleClose, show }) {
               className='challenge-input'
               onChange={(e) => {
                 setSelectedChallenge(e.target.value);
-                handleChallengeSelect(e.target.value);
               }}
             >
-              <option value=" ">
-                {/* Select Challenge */}
-                </option>
+              <option value=' '></option>
               {challenges.map((challenge) => (
                 <option key={challenge.id} value={challenge.id}>
                   {challenge.name}
@@ -129,20 +149,17 @@ function ChallengesList({ handleClose, show }) {
               ))}
             </select>
           </div>
-          
-            
-            {renderSteps()}
-           
-         
+          {renderSteps()}
         </div>
       </Modal.Body>
-      <Modal.Footer>
-        <Button className='submit-btn' onClick={handleClose}>
-          Submit
+      <Modal.Footer className='challenge-footer'>
+      <Button className={` ${videoUploaded ? 'afterSubmit-btn' : 'submit-btn'}`} onClick={handleClose}>
+      Submit
         </Button>
       </Modal.Footer>
     </Modal>
   );
+  
 }
 
 export default ChallengesList;

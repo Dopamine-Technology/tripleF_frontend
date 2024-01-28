@@ -10,8 +10,8 @@
     font-family: 'Quicksand-Light';
     src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Light.ttf') format('truetype'); 
   }
-.Main{
-    background-color: #eff0f0;
+.Main{ 
+background-color: #F2F3F4;
     overflow-x: hidden;
     margin: 0;
 }
@@ -129,9 +129,10 @@
     border-radius: 45px;
    border: 1px solid rgba(226,226,234, 1);
    opacity: 1;
-   background-color: rgba(255,255,255, 1);
+   background-color: white;
    width: 90%;
    margin-left: 4rem;
+   
 }
 
 .newPost-title{

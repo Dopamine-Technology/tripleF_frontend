@@ -160,7 +160,7 @@ function RightArea(){
       
     
     return(
-      <div style={{marginLeft:'-3rem'}} >
+      <div  >
       {renderDataSection('Recommended Challenges', profilesData,false)}
       {renderDataSection('Clubs to Follow', clubsData,true)}
       {renderDataSection('Scouts to Follow', clubsData,true)}

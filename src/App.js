@@ -16,6 +16,8 @@ import Blogs from './pages/Blogs';
 import ComingSoon from './components/ComingSoon/ComingSoon';
 import BlogPage from './pages/Blog';
 import NewOpportunity from './components/Opportunities/NewOpportunity';
+import NavBar from './components/Layout/Navbar';
+import OpportunityList from './components/Opportunities/OpportunityList';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -36,8 +38,11 @@ function App() {
             <Route path='/challenges' element={<ComingSoon />}  />
             <Route path='/saved' element={<ComingSoon />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
-            <Route path='/add/opportunity' element={<NewOpportunity />}  />
+            <Route path='/opportunity/list' element={<OpportunityList />} />
           </Route>
+       
+          <Route path='home/add/opportunity' element={<NewOpportunity />}  />
+
           </>
         ):(
           <Route>
@@ -49,6 +54,7 @@ function App() {
           <Route path='/verify/:token' element={<VerifyPage />} />
           <Route path='/reset-password/' element={<Reset />} />
           <Route path='/reset-password/:user_token' element={<NewPassword />} />
+  
 
           
           </Route>
