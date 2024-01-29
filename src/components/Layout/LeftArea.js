@@ -42,7 +42,7 @@ function LeftArea({ isCollapsed }) {
         <div>
       
       {/* <CiMenuBurger onClick={toggleSidebar} className="burger-button" /> */}
-        <div className={`leftside-container ${isCollapsed ? 'collapsed' : ''}`}>
+        <div className={`leftside-container  ${isCollapsed ? 'collapsed' : ''}`}>
             
             <div className="Pro" onClick={() => handleNavLinkClick(1,'/home')} >
             <IoMdHome  fontSize="1.5rem" className={`${activeLink === 1 ? 'activeLink' : 'not-active'}`}/>

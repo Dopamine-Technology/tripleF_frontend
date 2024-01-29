@@ -40,9 +40,7 @@ function App() {
             <Route path='/view/post/:id' element={<PostView />}  />
             <Route path='/opportunity/list' element={<OpportunityList />} />
           </Route>
-       
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />
-
           </>
         ):(
           <Route>
@@ -54,9 +52,6 @@ function App() {
           <Route path='/verify/:token' element={<VerifyPage />} />
           <Route path='/reset-password/' element={<Reset />} />
           <Route path='/reset-password/:user_token' element={<NewPassword />} />
-  
-
-          
           </Route>
         )}
       

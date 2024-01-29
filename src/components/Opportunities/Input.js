@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Col } from "react-bootstrap";
+import './style.css'
 
 const Input = ({
   register,
@@ -12,9 +13,10 @@ const Input = ({
   type,
   rows,
   inputWidth,
-  radioOptions, // New prop for radio buttons
-  selectOptions, // New prop for dropdown list
+  radioOptions,
+  selectOptions, 
   onChange,
+  borderRadius
 }) => {
   return (
     <Form.Group as={Col} md={4} className="mb-4">
@@ -37,7 +39,7 @@ const Input = ({
       
             }}
             placeholder={placeholder}
-            type={type} // Set the type dynamically
+            type={type}
           />
         ) : type === 'radio' ? (
           <div className="radio-buttons d-flex" style={{width:'20rem'}}>
@@ -72,10 +74,11 @@ const Input = ({
               border: "1px solid rgba(144,144,144, 0.3)",
               color: "black",
               width: inputWidth || "15rem",
+              borderRadius:borderRadius|| "10px",
             }}
             onChange={onChange}
           >
-                        <option vlaue=""></option>
+                        <option vlaue="">{placeholder}</option>
             {selectOptions &&
               selectOptions.map((option) => (
                 <option key={option.id} value={option.id} >
