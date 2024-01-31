@@ -13,6 +13,8 @@ import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { UserDataContext } from '../../components/UserContext/UserData.context';
+import { message } from 'antd';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 function NewOpportunity(){
     const {
@@ -112,11 +114,13 @@ EditorState.createEmpty()
           const response = await axios.post('opportunities/create', formData);
 
           console.log(response.data);
+          message.success('opportunity uploded successfully');
     
           // You can also handle other logic based on the API response, e.g., show a success message, redirect, etc.
         } catch (error) {
           // Handle errors from the Axios request
           console.error('Error submitting data:', error);
+          message.error('there is something wrong , please make sure that there is filed empty');
         }
       };
 
@@ -153,7 +157,7 @@ EditorState.createEmpty()
         <Col md={4} lg={4}></Col>
         <Col md={8} lg={8}>
       
-      {user.userData.profile.type_name=="club"?(
+      {user.userData.profile.type_name=="scout"?(
         <Row>
                   <Col md={12} lg={8}>
       <Input
@@ -206,6 +210,7 @@ EditorState.createEmpty()
                  selectOptions={positions} 
                    />
       </Col>
+      
       <Col md={4} lg={4}>
       <Input
     register={register}
@@ -393,9 +398,9 @@ EditorState.createEmpty()
         
       <Editor
   editorState={editorState2}
-  toolbarClassName="toolbarClassName"
-  wrapperClassName=""
-  editorClassName="editorClassName"
+  wrapperClassName="wrapper"
+  editorClassName="editor"
+  toolbarClassName="toolbar"
   onEditorStateChange={onEditorStateChange2}
   
 />

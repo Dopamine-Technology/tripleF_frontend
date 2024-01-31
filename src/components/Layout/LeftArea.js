@@ -76,7 +76,7 @@ function LeftArea({ isCollapsed }) {
 
             
             {isNavLinkVisible && (
-        <div style={{marginLeft:'0.5rem'}}>
+        <div style={{marginLeft:'0.5rem'}} className='mt-3'>
        <div onClick={() => handleNavLinkClick(7,'/opportunity/list')} className={`Pro ${activeLink === 7 ? 'activeSubLink' : 'not-activeSub'}`}>
             
                 <div >
@@ -84,7 +84,7 @@ function LeftArea({ isCollapsed }) {
                 </div>
             </div>
             <hr style={{color:'#B0B0B0',width:'130%'}} />
-            <div  onClick={() => handleNavLinkClick(8, '/scouts')} className={`Pro ${activeLink === 8 ? 'activeSubLink' : 'not-activeSub'}`}>
+            <div  onClick={() => handleNavLinkClick(8, '/applied/list')} className={`Pro ${activeLink === 8 ? 'activeSubLink' : 'not-activeSub'}`}>
                 
                 <div  >
                 {!isCollapsed && <div >My Opportunities</div>}

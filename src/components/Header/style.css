@@ -8,28 +8,28 @@
     max-height: 10vh;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     justify-content: center;
     margin-left: 6rem;
 }
 
 .header-row{
-    margin-top: 10rem;
-    width: 74rem;
+  margin-top: 10rem;
+  width: 80%;
 }
 
 .whole-div {
   position: relative;
   background-image: url('../../assets/imgs/HeroImage.png');
-  background-size: 220vh 98vh;
-  /* background-size: 106% 104.5%; */
-  background-repeat: repeat-x;
-  width: 100%;
-  height: 43rem;
+  /* background-size: 220vh 98vh; */
+  background-size:cover ;
+ background-position: bottom;
+  background-repeat: no-repeat;
+  /* width: 210vh; */
+  height: 100vh;
   clip-path: polygon(0% 0%, 100% 0%, 100% 86%, 0% 100%);
   border-radius: 0px 0px 0px 86px;
 
-    &::before {
+    /* &::before {
       content: '';
       position: absolute;
       top: 0;
@@ -39,14 +39,14 @@
       border-radius: inherit; 
        opacity: 0.8;
        background-color: rgba(33,53,85, 0.8);
-    }
+    } */
     /* margin-left: 0.2rem; */
   }
 
 .navbar-container{
   margin-right: 0.5rem;
 }
-.background-overlay {
+/* .background-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -55,7 +55,7 @@
     border-radius: 0px 0px 0px 79px;
     background-color: rgba(33, 53, 85, 0.4);
     z-index: 1; 
-}
+} */
   .header-h1{
     font-size: 3rem;
     letter-spacing: 2px;
@@ -104,7 +104,7 @@
 .Register-link:hover{
   color:white;
 }
-
+/* 
 @media only screen and (min-width: 1920px) and (min-height: 1080px) {
   .whole-div{
     background-size: 190vh 65vh;
@@ -143,6 +143,19 @@
   }
 }
 
+@media only screen and (min-width: 1821px) and (min-height: 846px) {
+  .whole-div{
+    background-size: 227vh 98vh;
+    width: 240vh;
+    height: 90vh;
+  } 
+  .navbar-container{
+    margin-right:33rem
+  }
+  .right-nav{
+    margin-right: 30rem;
+  }
+} */
   
 
   

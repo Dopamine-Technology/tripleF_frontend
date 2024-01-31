@@ -83,7 +83,6 @@ const Input = ({
               selectOptions.map((option) => (
                 <option key={option.id} value={option.id} >
                   {option.name}
-                  
                 </option>
               ))}
           </Form.Control>

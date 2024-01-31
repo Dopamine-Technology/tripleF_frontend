@@ -39,6 +39,7 @@ function App() {
             <Route path='/saved' element={<ComingSoon />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
             <Route path='/opportunity/list' element={<OpportunityList />} />
+            <Route path='/applied/list' element={<OpportunityList />} />
           </Route>
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />
           </>

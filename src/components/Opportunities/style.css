@@ -204,6 +204,7 @@ text-align: left;
 }
 
 
+
 .custom-radio-btn3 input:checked ~ .checkmark {
   background-origin: content-box;
   background-repeat: no-repeat;
@@ -285,7 +286,7 @@ margin:3rem
 .placeholder-select{
 opacity: 1;
 color: rgba(107, 107, 107, 1);
-font-family: "Quicksand-Regularr";
+font-family: "Quicksand-Regular";
 font-size: 12px;
 font-weight: 400;
 letter-spacing: 0px;
@@ -321,6 +322,34 @@ background-color: rgba(119, 220, 191, 1);
   border-top-left-radius: 15px;
   border-bottom-left-radius:15px;
 }
-.collapse-icon{
-  
+.four-span-name{
+  opacity: 1;
+color: rgba(107, 107, 107, 1);
+font-family: "Quicksand-Regular";
+font-size: 14px;
+font-weight: 400;
+font-style: Regular;
+letter-spacing: 0px;
+text-align: left;
 }
+.four-div-container{
+margin-left: 1rem;
+border-radius: 6px;
+opacity: 1;
+background-color: rgba(211, 215, 221, 0.15);
+padding: 0.3rem;
+margin-bottom: 1rem;
+}
+.time-applied{
+  opacity: 1;
+color: rgba(107, 107, 107, 1);
+font-family: "Quicksand-Regular";
+font-size: 14px;
+font-weight: 400;
+font-style: Regular;
+letter-spacing: 0px;
+text-align: left;
+margin-top: 1.5rem;
+}
+
+

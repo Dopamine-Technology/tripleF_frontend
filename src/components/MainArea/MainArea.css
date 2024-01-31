@@ -120,13 +120,13 @@ background-color: #F2F3F4;
     font-weight: 550;
 }
 .new-post{
-    border-radius: 26px;
+    border-radius: 16px;
     border: 1px solid rgba(226,226,234, 1);
     opacity: 1;
     background-color: rgba(255,255,255, 1);
     margin-top: 2rem;
     padding: 0.8rem;
-    border-radius: 45px;
+    border-radius: 20px;
    border: 1px solid rgba(226,226,234, 1);
    opacity: 1;
    background-color: white;
