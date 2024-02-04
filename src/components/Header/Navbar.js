@@ -9,14 +9,16 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { GoPerson } from "react-icons/go";
 import Cookies from 'js-cookie';
-import LogoWhite from '../../assets/imgs/LogoWhite.svg'
+import LogoWhite from '../../assets/imgs/LogoWhite.svg';
 import { IoPerson } from "react-icons/io5";
-import './style.css'
+import './style.css';
 import { Link } from 'react-router-dom';
 import { RxDividerVertical } from "react-icons/rx";
 import {BiChevronDown} from "react-icons/bi";
 import Ar from '../../assets/imgs/Ar.png';
 import En from '../../assets/imgs/en.jpg';
+import LanguageIcon from '../../assets/imgs/langauge-icon.png';
+import profileIcon from '../../assets/imgs/profile-icon.svg';
 
 
 const TopNavbar = ({content}) => {
@@ -46,7 +48,8 @@ const TopNavbar = ({content}) => {
           <DropdownButton
   title={
     <div className='d-flex align-items-center'>
-      <GrLanguage color='white' className='me-1' />
+      {/* <GrLanguage color='white' className='me-1' /> */}
+      <img src={LanguageIcon} width='24px' height= '24px' className='me-1' />
       <span className='text-white'>{currentLanguage}</span>
       <BiChevronDown className='ml-1' style={{ color: 'white' }} />
     </div>
@@ -64,7 +67,9 @@ const TopNavbar = ({content}) => {
 </DropdownButton>
 
 <RxDividerVertical color="gray" size={30} className='mt-1 me-3' />
-            <p className='text-white mt-2'> <Link to='/login' style={{textDecoration:'none',color:'white'}}><IoPerson  />Login</Link></p>
+            <p className='text-white mt-2'> <Link to='/login' style={{textDecoration:'none',color:'white'}}>
+            <img src={profileIcon} width='24px' height= '24px' className='me-1' />
+              Login</Link></p>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -8,7 +8,7 @@ const UserProvider = (props) => {
   const [user, setUser] = useState({
     token: Cookies.get('token'),
     isAuthenticated: Cookies.get('token') ? true : false,
-    user_type: Cookies.get('profileType'),
+    // user_type: Cookies.get('profileType'),
     userData: {},
     loading: true,
   });

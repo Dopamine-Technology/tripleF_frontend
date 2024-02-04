@@ -12,10 +12,10 @@ const Input = ({
   label,
   placeholder,
   className,
-  validation, // assuming you have validation rules passed as a prop
+  validation, 
   type,
   rows,
-  inputWidth, 
+  inputWidth,
 }) => {
   const [showPassword, setShowPassword] = useState('');
   const [inputValue, setInputValue] = useState('');

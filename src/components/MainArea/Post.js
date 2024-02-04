@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect} from 'react';
 import { MdMoreHoriz} from 'react-icons/md';
 import { IoShareSocialOutline } from "react-icons/io5";
 import { BsSave } from "react-icons/bs";
@@ -12,6 +12,11 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegCopy,FaRegEyeSlash } from "react-icons/fa";
 import { RiUserUnfollowLine } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
+import savedIcon from '../../assets/imgs/Saved.svg';
+import ShareIcon from '../../assets/imgs/Share.svg';
+import OpportunityPost from '../Opportunities/OpportunityPost';
+import TimlinePost from '../Post/TimlinePost';
+
 
 function Post(){
     const [show, setShow] = useState(false);
@@ -64,7 +69,6 @@ function Post(){
         
         setSelectedMedal(medal);
         setSelectedMedalColor(medalColors[medal]);
-    
         setShow(false);
     };
     
@@ -120,23 +124,12 @@ function Post(){
       </Dropdown.Menu>
     </Dropdown>
     </div>
-    {post.video ? (
-                    <div className="FacebookVideo">
-                        <video controls className='post-video' >
-                            <source src={post.video} type="video/mp4" />
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                ) : post.image ? (
-                    <div className="FacebookImg">
-                        <img src={post.image} alt="dp" style={{ height: "30rem", width: "100%", borderRadius: '30px', padding: '1rem' }} />
-                    </div>
-                ) : null}
-    <br></br>
-    <div className="caption">
-        <h5 className='post-title'>{post.title!=''?post.title:post.challenge.name}</h5>
-        <p style={{color:'#6B6B6B'}}>{post.description}</p>
-    </div>
+
+    {post.is_opp?   <TimlinePost post={post}/>:<OpportunityPost post={post} />}
+
+
+    
+  
 
     <div>
     <hr style={{ color: '#A3A3A3' }} />
@@ -184,11 +177,13 @@ function Post(){
 </div>
         
         <div className="Like" onClick={handleShow}>
-            <IoShareSocialOutline color="grey" className='me-2' size={20}/>Share
+        <img src={ShareIcon} className='me-2'/>
+            Share
         </div>
         {showPopup&& <SocialPopup handleClose={handleClose} show={showPopup} id={post.id}/>}
-        <div className="Like">
-            <BsSave color="grey" className='me-2' size={20} onClick={() => handleShare(post.id)} />Save
+        <div className="Like" onClick={() => handleShare(post.id)}>
+            <img src={savedIcon} className='me-2'/>
+            Save
         </div>
     
     </div> 

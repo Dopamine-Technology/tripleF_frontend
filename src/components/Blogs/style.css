@@ -36,6 +36,11 @@ letter-spacing: 0px;
 text-align: left;
 max-width: 24rem;
 }
+.blog-title:hover{
+    text-decoration: underline;
+    color:blue;
+    cursor: pointer;
+}
 .blog-desc{
     opacity: 1;
 color: rgba(107,107,107,1);
@@ -102,6 +107,11 @@ margin-right: 1rem;
 }
 .post-title{
     max-width: 13rem;
+}
+.post-title:hover{
+    text-decoration: underline;
+    color:blue;
+    cursor: pointer;
 }
 .category-name{
 

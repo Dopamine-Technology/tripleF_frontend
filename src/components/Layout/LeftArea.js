@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import { CiSaveDown2 } from "react-icons/ci";
 import { IoMdHome } from "react-icons/io";
 import { RiFootballLine } from "react-icons/ri";
@@ -7,17 +7,31 @@ import { PiLightbulbFilamentLight } from "react-icons/pi";
 import { FaFlagCheckered } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { CiMenuBurger } from "react-icons/ci";
-
+import savedIcon from '../../assets/imgs/Saved.svg';
+import scoutIcon from '../../assets/imgs/Scouts.svg';
+import OpportunitiesIcon from '../../assets/imgs/OpportunitiesIcon.svg';
+import './Navbar.css';
+import { UserDataContext } from '../../components/UserContext/UserData.context';
+import { NavLink } from 'react-bootstrap';
 
 function LeftArea({ isCollapsed }) {
     const [activeLink, setActiveLink] = useState(1);
-    // const [isCollapsed, setIsCollapsed] = useState(false);
     const navigate=useNavigate();
+    const { user } = useContext(UserDataContext);
+    const [isNavLinkVisible, setIsNavLinkVisible] = useState(false);
 
     const handleNavLinkClick = (index,redirect) => {
         setActiveLink(index);
+        
         navigate(redirect);
       };
+
+      const handleOppClick = (index) => {
+        setActiveLink(index);
+        setIsNavLinkVisible(!isNavLinkVisible);
+      };
+
+      
 
     //   const toggleSidebar = () => {
     //     setIsCollapsed(!isCollapsed);
@@ -28,7 +42,7 @@ function LeftArea({ isCollapsed }) {
         <div>
       
       {/* <CiMenuBurger onClick={toggleSidebar} className="burger-button" /> */}
-        <div className={`leftside-container ${isCollapsed ? 'collapsed' : ''}`}>
+        <div className={`leftside-container  ${isCollapsed ? 'collapsed' : ''}`}>
             
             <div className="Pro" onClick={() => handleNavLinkClick(1,'/home')} >
             <IoMdHome  fontSize="1.5rem" className={`${activeLink === 1 ? 'activeLink' : 'not-active'}`}/>
@@ -45,18 +59,39 @@ function LeftArea({ isCollapsed }) {
             </div>
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
-                <RiUserSearchLine  fontSize="1.3rem" className={`${activeLink === 3 ? 'activeLink' : 'not-active'}`}/>
+                <img src={scoutIcon} />
                 <div >
                 {!isCollapsed && <div >Scouts</div>}
                 </div>
             </div>
             <hr style={{color:'#B0B0B0',width:'130%'}} />
-            <div className="Pro" onClick={() => handleNavLinkClick(4,'/Opportunities')} >
-                <PiLightbulbFilamentLight  fontSize="1.3rem"  className={`${activeLink === 4 ? 'activeLink' : 'not-active'}`}/>
+            <div className="Pro" onClick={() => handleOppClick(4,'/Opportunities')} >
+            <img src={OpportunitiesIcon} />
                 <div style={{fontSize:'11px'}}>
-                {!isCollapsed && <div >Opportunities</div>}
+                {user.userData.profile.type_name=="talent"?(!isCollapsed && <div >Opportunities</div>):(!isCollapsed && <div >My Opportunities</div>)}
+                
+                </div>
+
+            </div>
+
+            
+            {isNavLinkVisible && (
+        <div style={{marginLeft:'0.5rem'}} className='mt-3'>
+       <div onClick={() => handleNavLinkClick(7,'/opportunity/list')} className={`Pro ${activeLink === 7 ? 'activeSubLink' : 'not-activeSub'}`}>
+            
+                <div >
+                {!isCollapsed && <div >Find Opportunity</div>}
                 </div>
             </div>
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+            <div  onClick={() => handleNavLinkClick(8, '/applied/list')} className={`Pro ${activeLink === 8 ? 'activeSubLink' : 'not-activeSub'}`}>
+                
+                <div  >
+                {!isCollapsed && <div >My Opportunities</div>}
+                </div>
+            </div>
+        </div>
+      )}
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             <div className="Pro" onClick={() => handleNavLinkClick(5,'/challenges')}>
                 <FaFlagCheckered  fontSize="1.3rem" className={`${activeLink === 5 ? 'activeLink' : 'not-active'}`}/>
@@ -67,8 +102,9 @@ function LeftArea({ isCollapsed }) {
             
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             <div className="Pro" onClick={() => handleNavLinkClick(6,'/saved')}>
-                <CiSaveDown2  fontSize="1.3rem"  className={`${activeLink === 6 ? 'activeLink' : 'not-active'}`}/>
-                <div >
+                {/* <CiSaveDown2  fontSize="1.3rem"  className={`${activeLink === 6 ? 'activeLink' : 'not-active'}`}/> */}
+                <img src={savedIcon} />
+                <div>
                     {!isCollapsed && <div >Saved</div>}</div>
             </div>
            

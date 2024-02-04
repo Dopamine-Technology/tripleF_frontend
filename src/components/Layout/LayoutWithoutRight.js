@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom";
 
 const { Header, Sider, Content } = AntLayout;
 
-const Layout = () => {
+const LayoutWithoutRight = () => {
   const [isLeftSidebarCollapsed, setIsLeftSidebarCollapsed] = useState(false);
 
   const toggleLeftSidebar = () => {
@@ -29,11 +29,11 @@ const Layout = () => {
         <AntLayout style={{ marginLeft: isLeftSidebarCollapsed ? 80 : 200, transition: 'margin-left 0.3s' }}>
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
             <Row justify="center">
-              <Col xs={24} md={16} lg={16}>
+              <Col xs={24} md={20} lg={20}>
                 <Outlet />
               </Col>
-              <Col xs={0} md={8} lg={8}>
-                <RightArea />
+              <Col xs={0} md={4} lg={4}>
+       
               </Col>
             </Row>
           </Content>
@@ -43,4 +43,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default LayoutWithoutRight;

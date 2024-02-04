@@ -15,15 +15,24 @@ import PostView from './components/SharePost/PostView';
 import Blogs from './pages/Blogs';
 import ComingSoon from './components/ComingSoon/ComingSoon';
 import BlogPage from './pages/Blog';
+import NewOpportunity from './components/Opportunities/NewOpportunity';
+import NavBar from './components/Layout/Navbar';
+import OpportunityList from './components/Opportunities/OpportunityList';
+import MyOpportunities from './components/Opportunities/MyOpportunities';
+import LayoutWithoutRight from './components/Layout/LayoutWithoutRight';
+import { useRoleCheck } from './components/Auth/useRoleCheck';
 
 function App() {
   const { user } = useContext(UserDataContext);
+  const checkRole = useRoleCheck();
 
   return (
     <div className="App">
        <Router>
+      
         <Routes>
         {user.isAuthenticated ? (
+            <>
           <Route path='/' element={<Layout />}>
             <Route path='/home' element={<Home />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
@@ -33,7 +42,16 @@ function App() {
             <Route path='/challenges' element={<ComingSoon />}  />
             <Route path='/saved' element={<ComingSoon />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
+      
           </Route>
+          <Route path='/' element={<LayoutWithoutRight />}>
+          <Route path='/opportunity/list' element={<OpportunityList />} />
+            <Route path='/applied/list' element={<MyOpportunities />} />
+           </Route>
+           {checkRole(["scout","coach","club"]) && (
+          <Route path='home/add/opportunity' element={<NewOpportunity />}  />
+          )}
+          </>
         ):(
           <Route>
           <Route path='/' element={<LandingPage />} />
@@ -44,8 +62,6 @@ function App() {
           <Route path='/verify/:token' element={<VerifyPage />} />
           <Route path='/reset-password/' element={<Reset />} />
           <Route path='/reset-password/:user_token' element={<NewPassword />} />
-
-          
           </Route>
         )}
       
