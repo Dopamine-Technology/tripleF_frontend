@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import Input from './Input';
 import { useForm } from 'react-hook-form';
 import useAxios from '../Auth/useAxiosHook.interceptor';
+import { UserDataContext } from '../UserContext/UserData.context';
 
 function FiliterOption(props) {
   const {
@@ -16,6 +17,7 @@ function FiliterOption(props) {
 
   const [positions, setPositions] = useState([]);
   const axios = useAxios();
+  const { user } = useContext(UserDataContext);
   const [loading, setLoading] = useState(true);
   const [countries, setCountries] = useState([]);
   const genderOptions = [
@@ -27,6 +29,12 @@ function FiliterOption(props) {
     { id: 'right', name: 'right' },
     { id: 'left', name: 'left' },
     { id: 'both', name: 'both' },
+  ];
+  const expYears = [
+    { id: '0-1', name: '0-1 years' },
+    { id: '2-4', name: '2-4 years' },
+    { id: '5-8', name: '5-8 years' },
+    { id: '+9', name: 'more than 9 years' },
   ];
 
   useEffect(() => {
@@ -97,7 +105,7 @@ function onFilterLocationChanged(event) {
           onChange={onFilterLocationChanged}
         />
       </Col>
-      <Col md={6} lg={3}>
+      {user.userData.profile.type_name=='talent'?(<><Col md={6} lg={3}>
         <Input
           type='select'
           label=''
@@ -139,6 +147,38 @@ function onFilterLocationChanged(event) {
           onChange={onFilterValueChanged}
         />
       </Col>
+      </> ):(
+        <>    <Col md={6} lg={3}>
+        <Input
+          type='select'
+          label=''
+          name='gender'
+          register={register}
+          errors={errors}
+          selectOptions={genderOptions}
+          inputWidth='10rem'
+          placeholder='Gender'
+          borderRadius='18px'
+          onChange={onFilterGenderChanged}
+        />
+      </Col> 
+      <Col md={6} lg={3}>
+      <Input
+          type='select'
+          label=''
+          name='exp_year'
+          register={register}
+          errors={errors}
+          selectOptions={expYears}
+          inputWidth='10rem'
+          placeholder='experience years'
+          borderRadius='18px'
+          onChange={onFilterGenderChanged}
+        />
+      </Col>
+      </>
+      )}
+     
       
     </Row>
   );

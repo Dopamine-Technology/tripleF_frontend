@@ -1,14 +1,16 @@
-import React,{useState,useEffect,useContext} from 'react';
+import React,{useState,useEffect,useContext,useMemo } from 'react';
 import Opportunity from './Opportunity';
 import './style.css';
-import { Row,Col, Tab, Tabs } from 'react-bootstrap';
+import { Row,Col} from 'react-bootstrap';
 import { AiOutlineSearch } from "react-icons/ai";
 import FiliterOption from './FiliterOption';
 import Pagination from "react-bootstrap/Pagination";
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { useLocation,useNavigate } from 'react-router-dom';
 import {Button} from 'react-bootstrap';
-import { UserDataContext } from '../../components/UserContext/UserData.context';
+import { UserDataContext } from '../UserContext/UserData.context';
+import ScoutOppFilter from './ScoutOppFilter';
+
 
 function OpportunityList(){
 
@@ -17,26 +19,8 @@ function OpportunityList(){
   const isAppliedPath = location.pathname != '/applied/list';
   const { user } = useContext(UserDataContext);
 
-  const tabs = {
-    All: {
-      title: (<p className='reaction-p'> Published </p>),
-      content: (
-        <>
-    {/* <Reaction users={allReaction} /> */}
-        </>
-      ),
-    },
-    Gold: {
-      title: (<p className='reaction-p'> Applied </p>),
-      content: (
-        <>
-        {/* <Reaction users={subReaction}/> */}
-        </>
-      ),
-    },
-   
-  }
 
+  
 
     const data=[
       {
@@ -51,7 +35,9 @@ function OpportunityList(){
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
         "applyNowButtonText": "Apply Now",
         "gender": "male",
-        "preferredFoot": "right"
+        "preferredFoot": "right",
+        "is_owned":'applied',
+        "oppStatus":'closed'
       },
       {
           "id": 2,
@@ -65,7 +51,9 @@ function OpportunityList(){
           "description": "Another opportunity description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
           "applyNowButtonText": "Apply Now",
           "gender": "female",
-          "preferredFoot": "left"
+          "preferredFoot": "left",
+          "is_owned":'published',
+          "oppStatus":'opened'
         },
         {
           "id": 3,
@@ -80,7 +68,9 @@ function OpportunityList(){
           "description": "Yet another opportunity description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
           "applyNowButtonText": "Apply Now",
           "gender": "female",
-          "preferredFoot": "left"
+          "preferredFoot": "left",
+          "is_owned":'published',
+          "oppStatus":'closed'
         },     
          {
             "id": 4,
@@ -94,7 +84,10 @@ function OpportunityList(){
             "description": "Yet another opportunity description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             "applyNowButtonText": "Apply Now",
             "gender": "male",
-            "preferredFoot": "right"
+            "preferredFoot": "right",
+            "is_owned":'applied',
+            "oppStatus":'opened'
+
           }
           ,   
          {
@@ -109,7 +102,9 @@ function OpportunityList(){
             "description": "Yet another opportunity description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             "applyNowButtonText": "Apply Now",
             "gender": "male",
-            "preferredFoot": "right"
+            "preferredFoot": "right",
+            "is_owned":'applied',
+            "oppStatus":'opened'
           },
           {
             "id": 6,
@@ -123,30 +118,38 @@ function OpportunityList(){
             "description": "Yet another opportunity description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             "applyNowButtonText": "Apply Now",
             "gender": "male",
-            "preferredFoot": "right"
+            "is_owned":'published',
+            "oppStatus":'opened'
           }
       ]
+
+       
+
+     
 
       const axios=useAxios();
       const [opportunities,setOpportunities]=useState();
       const[newDataList,setNewDataList]=useState(data);
       const [filterTextValue,setFilterTextValue]=useState('preferredFoot');
       const [filterTextGender,setFilterTextGender]=useState('gender');
+      const [filterTextType,setFilterTextType]=useState('');
       const [filterTextPosition,setFilterTextPosition]=useState('position');
       const [filteredListPosition,setFilteredListPosition]=useState(data);
       const [filterTextCountry, setFilterTextCountry] = useState('');
       const itemsPerPage = 5;
       const [currentPage, setCurrentPage] = useState(1);
+      const prevLocation = useMemo(() => location, [location]);
     
       const indexOfLastItem = currentPage * itemsPerPage;
       const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-      const currentItems = filteredListPosition.slice(indexOfFirstItem, indexOfLastItem);
+      const currentItems = filteredListPosition?.slice(indexOfFirstItem, indexOfLastItem);
     
       const paginate = (pageNumber) => setCurrentPage(pageNumber);
-     
+
+
 
       const applyFilters = () => {
-        let filteredList = newDataList.filter((singleData) => {
+        let filteredList = newDataList?.filter((singleData) => {
           if (filterTextValue === 'right' && singleData.preferredFoot !== 'right') {
             return false;
           }
@@ -160,8 +163,13 @@ function OpportunityList(){
           if (filterTextGender === 'female' && singleData.gender !== 'female') {
             return false;
           }
-    
-          // Apply filter based on position
+
+          if (filterTextType === 'applied' && singleData.is_owned !== 'applied') {
+            return false;
+          }
+          if (filterTextType === 'published' && singleData.is_owned !== 'published') {
+            return false;
+          }
           if (
             (filterTextPosition === '1' && singleData.position !== '1') ||
             (filterTextPosition === '2' && singleData.position !== '2') ||
@@ -188,7 +196,7 @@ function OpportunityList(){
         // Apply filters when filterTextValue, filterTextGender, filterTextPosition, or any other relevant filters change
         const filteredList = applyFilters();
         setFilteredListPosition(filteredList); // Update state with the filtered list
-      }, [filterTextValue, filterTextGender, filterTextPosition,filterTextCountry]);
+      }, [filterTextValue, filterTextGender, filterTextPosition,filterTextCountry,filterTextType]);
       
    
 
@@ -198,6 +206,9 @@ function OpportunityList(){
 
       const onFilterGenderSelected =(filterValue)=>{
         setFilterTextGender(filterValue);
+      }
+      const onFilterTypeSelected =(filterValue)=>{
+        setFilterTextType(filterValue);
       }
       const onFilterPositionSelected =(filterValue)=>{
         setFilterTextPosition(filterValue);
@@ -212,6 +223,7 @@ function OpportunityList(){
           try {
             const response = await axios.get('opportunities/get');
             setOpportunities(response.data.result);
+           
           } catch (error) {
             console.error('Error fetching data:', error);
           }
@@ -219,7 +231,8 @@ function OpportunityList(){
         fetchOppData()
         
       }, []);
-    
+
+
 
     return(
         <div style={{backgroundColor:'white',marginLeft:'3rem'}}>
@@ -247,34 +260,26 @@ function OpportunityList(){
 
         {isAppliedPath?( <Row>
             <FiliterOption filterValueSelected={onFilterValueSelected} filterGenderSelected={onFilterGenderSelected} 
-                           filterPositionSelected={onFilterPositionSelected} filterCountrySelected={onFilterCountrySelected}/>
-        </Row>):(  
-        <Tabs  justify >
-            {Object.keys(tabs).map((tabKey) => (
-              <Tab
-                key={tabKey}
-                eventKey={tabKey}
-                title={tabs[tabKey].title}
-              >
-                
-                    <div className='content-div'> {tabs[tabKey].content}</div>
-              </Tab>
-            
-            ))}
-          </Tabs>)}
+                           filterPositionSelected={onFilterPositionSelected} filterCountrySelected={onFilterCountrySelected}
+                           />
+        </Row>):(
+          <Row>
+       <ScoutOppFilter filterTypeSelected={onFilterTypeSelected} />
+       </Row>
+          )}
        
         <Row>
-        {currentItems.map((opportunity) => (
+        {currentItems?.map((opportunity) => (
           <Opportunity key={opportunity.id} data={opportunity} />
         ))}
         </Row>
         <Row>
         <Pagination className="center-icon mt-4">
-          {Array.from({ length: Math.ceil(filteredListPosition.length / itemsPerPage) }).map((_, index) => (
+           {Array.from({ length: Math.ceil(filteredListPosition.length / itemsPerPage) }).map((_, index) => (
             <Pagination.Item key={index + 1} onClick={() => paginate(index + 1)}>
               {index + 1}
             </Pagination.Item>
-          ))}
+          ))} 
         </Pagination>
         </Row>
         </div>

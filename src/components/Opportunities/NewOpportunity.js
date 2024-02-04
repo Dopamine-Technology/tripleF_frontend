@@ -15,6 +15,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { UserDataContext } from '../../components/UserContext/UserData.context';
 import { message } from 'antd';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import TextArea from 'antd/es/input/TextArea';
 
 function NewOpportunity(){
     const {
@@ -47,6 +48,7 @@ function NewOpportunity(){
       const Types = [
         { label: "Talent", value: "1" },
         { label: "Scout", value: "4" },
+        { label: "Coach", value: "6" },
       
       ];
       const [editorState, setEditorState] = useState(() =>
@@ -177,7 +179,7 @@ EditorState.createEmpty()
                               <Input
                  type="select"
                  label="Position"
-                 name="position_id"
+                 name="parent_position"
                  register={register} 
                  errors={{}}
                  selectOptions={positions} 
@@ -381,7 +383,7 @@ EditorState.createEmpty()
   wrapperClassName="wrapperClassName"
   editorClassName="editorClassName"
   onEditorStateChange={onEditorStateChange}
-
+  
 />
 </div>
 </Col>
@@ -394,17 +396,20 @@ EditorState.createEmpty()
       <Form.Label className={`text-capitalize text-black label2`}>
       Additional Information
       </Form.Label>
-      <div style={{marginBottom:'4rem',border:'1px solid rgba(144,144,144, 0.3)',height:'223px',background:'white'}}>
+     
         
+      <div style={{marginBottom:'4rem',border:'1px solid rgba(144,144,144, 0.3)',height:'223px',background:'white'}}>
       <Editor
-  editorState={editorState2}
-  wrapperClassName="wrapper"
-  editorClassName="editor"
-  toolbarClassName="toolbar"
-  onEditorStateChange={onEditorStateChange2}
+  editorState={editorState}
+  toolbarClassName="toolbarClassName"
+  wrapperClassName="wrapperClassName"
+  editorClassName="editorClassName"
+  onEditorStateChange={onEditorStateChange}
   
 />
 </div>
+{/* <TextArea rows={10} cols={30} /> */}
+
 </Col>
 <Col md={4} col={4}></Col>
       </Row>

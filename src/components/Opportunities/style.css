@@ -351,5 +351,20 @@ letter-spacing: 0px;
 text-align: left;
 margin-top: 1.5rem;
 }
-
-
+.nav-tabs{
+  border-bottom: none;
+}
+.title-p{
+  width: 60px;
+  height: 17px;
+  font-size: 15px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6b6b6b;
+}
+.toolbar,.editor .wrapper{
+  background-color: white;
+}

@@ -478,6 +478,53 @@ text-align: left;
     
 }
 
+.profiles-stories{
+
+
+}
+
+.profiles-stories img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 2rem;
+    border:4px solid #73CFB4;
+
+}
+.time{
+    width: 84px;
+    height: 20px;
+    margin: 1px 87px 3px 8px;
+    font-family: 'Quicksand-Medium';
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: rgba(70, 70, 70, 0.5);
+}
+.username{
+    width: 73px;
+    height: 20px;
+    margin: 0 98px 1px 8px;
+    font-family: 'Quicksand-Bold';
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #464646;
+}
+.time-username{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
 .story img {
     width: 60px;
     height: 60px;
