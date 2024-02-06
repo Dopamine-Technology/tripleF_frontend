@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useContext} from 'react';
+import React,{useState,useEffect,useContext,useRef, useMemo} from 'react';
 import { useForm } from "react-hook-form";
 import Input from './Input';
 import useAxios from '../Auth/useAxiosHook.interceptor';
@@ -14,8 +14,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { UserDataContext } from '../../components/UserContext/UserData.context';
 import { message } from 'antd';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import TextArea from 'antd/es/input/TextArea';
+import JoditEditor from "jodit-react";
 
 function NewOpportunity(){
     const {
@@ -34,7 +33,9 @@ function NewOpportunity(){
       const [countries,setCountries]=useState();
       const [cities,setCities]=useState();
       const [loading, setLoading] = useState(true);
-      
+      const [accountType, setAccountType] = useState('1')
+
+
       const genderOptions = [
         { label: "Male", value: "male" },
         { label: "Female", value: "female" },
@@ -47,8 +48,8 @@ function NewOpportunity(){
       ];
       const Types = [
         { label: "Talent", value: "1" },
-        { label: "Scout", value: "4" },
-        { label: "Coach", value: "6" },
+        { label: "Scout", value: "2" },
+        { label: "Coach", value: "3" },
       
       ];
       const [editorState, setEditorState] = useState(() =>
@@ -57,7 +58,10 @@ function NewOpportunity(){
 const [editorState2, setEditorState2] = useState(() =>
 EditorState.createEmpty()
 );
-      
+
+const [editorContent, setEditorContent] = useState('');
+const [editorContent2,setEditorContent2]=useState('');
+
       
 
       useEffect(() => {
@@ -99,6 +103,10 @@ EditorState.createEmpty()
           console.error('Error fetching sub-positions:', error);
         }
       };
+
+      const handleAccountTypeChange = (e) => {
+        setAccountType(e.target.value);
+      };
       
 
       const onSubmit = async (data) => {
@@ -108,12 +116,29 @@ EditorState.createEmpty()
         try {
           const formData = {
             ...data,
-            requirements: requirementsText.blocks.map(block => block.text).join('\n'),
-            additional_info: additionalInfoText.blocks.map(block => block.text).join('\n'),
+            requirements: editorContent,
+            additional_info: editorContent2
           };
     
       
-          const response = await axios.post('opportunities/create', formData);
+          const response = await axios.post('opportunities/create', formData)
+          .then((response) => {
+            if (response.status === 200) {
+              message.success('New Opportunity uploded successfully!');
+            } else {
+              if (response.status === 422) {
+                const errors = response.data.errors;
+                if (errors && errors.email && Array.isArray(errors.email) && errors.email.length > 0) {
+                  const emailErrorMessage = errors.email[0]; 
+                  message.error(emailErrorMessage);
+                } else {
+                  message.error('Unknown validation error. Please try again.');
+                }
+              } else {
+         
+              }
+            }
+          })
 
           console.log(response.data);
           message.success('opportunity uploded successfully');
@@ -122,16 +147,217 @@ EditorState.createEmpty()
         } catch (error) {
           // Handle errors from the Axios request
           console.error('Error submitting data:', error);
-          message.error('there is something wrong , please make sure that there is filed empty');
+    
         }
       };
-
+      const onEditorChange = (newContent) => {
+        setEditorContent(newContent);
+      };
+      const onEditorChange2 = (newContent) => {
+        setEditorContent2(newContent);
+      };
       const validateToGreaterThanFrom = (fieldName) => (value) => {
         const fromValue = watch(`from_${fieldName}`);
         return fromValue !== '' && +value <= +fromValue
           ? `Must be greater than ${fieldName}`
           : true;
       };
+
+      const renderAccountTypeFields = () => {
+        
+        switch (accountType) {
+          case '1':
+            return (
+                <>
+                <Row> 
+        
+        <Col md={2} lg={2}>
+        <Input
+                      register={register}
+                      errors={errors}
+                      name="from_age"
+                      label="Age from"
+                      placeholder=""
+                      className="form-control form-control-sm rounded"
+                      validation={{ validate: validateToGreaterThanFrom('age') }}
+                      type="number"
+                      inputWidth="6rem"
+                    />
+                    {errors.from_age && (
+                      <p className="error-message">{errors.from_age.message}</p>
+                    )}
+        </Col>
+        <Col md={2} lg={2}>
+        <Input
+                      register={register}
+                      errors={errors}
+                      name="to_age"
+                      label="to"
+                      placeholder=""
+                      className="form-control form-control-sm rounded"
+                      validation={{
+                        validate: validateToGreaterThanFrom('age'),
+                      }}
+                      type="number"
+                      inputWidth="6rem"
+                    />
+                    {errors.to_age && (
+                      <p className="error-message">{errors.to_age.message}</p>
+                    )}
+        </Col>
+      
+        <Col md={8} lg={8}>
+        <Input
+          register={register}
+          errors={errors}
+          name="gender"
+          label="Gender"
+          className="form-control form-control-sm rounded me-3"
+          type="radio"
+          radioOptions={genderOptions}
+      
+        />
+      </Col>
+      
+      </Row>
+      
+            <Row >
+            <Col md={2} lg={2}>
+              <Input
+                register={register}
+                errors={errors}
+                name="from_height"
+                label="Height from"
+                placeholder=""
+                className="form-control form-control-sm rounded"
+                validation={{}}
+                type="number"
+                inputWidth="6rem"
+              />
+            </Col>
+            <Col md={2} lg={2}>
+              <Input
+                register={register}
+                errors={errors}
+                name="to_height"
+                label="to"
+                placeholder=""
+                className="form-control form-control-sm rounded"
+                validation={{}}
+                type="number"
+                inputWidth="6rem"
+              />
+            </Col>
+            <Col md={2} lg={2}>
+              <Input
+                register={register}
+                errors={errors}
+                name="from_weight"
+                label="Weight from"
+                placeholder=""
+                className="form-control form-control-sm rounded"
+                validation={{}}
+                type="number"
+                inputWidth="6rem"
+              />
+            </Col>
+            <Col md={2} lg={2}>
+              <Input
+                register={register}
+                errors={errors}
+                name="to_weight"
+                label="to"
+                placeholder=""
+                className="form-control form-control-sm rounded"
+                validation={{}}
+                type="number"
+                inputWidth="6rem"
+              />
+            </Col>
+            <Col md={2} lg={2}></Col>
+        <Col md={2} lg={2}></Col>
+      
+            </Row>
+            <Row>
+            <Input
+                register={register}
+                errors={errors}
+                name="foot"
+                label="preferredFoot"
+                className="form-control form-control-sm rounded me-3"
+                type="radio"
+                radioOptions={preferredFoot}
+              />
+            </Row>
+            <Row>
+            <Input
+              type="select"
+              label="Country"
+              name="country_id"
+              register={register}
+              errors={{}} 
+              selectOptions={countries}
+              onChange={(e) => handleCountrySelect(e.target.value)}
+            />
+            
+                                      <Input
+              type="select"
+              label="City"
+              name="city_id"
+              register={register}
+              errors={{}}
+              selectOptions={cities}
+             
+            />
+            </Row>
+            <Row>
+            <Col md={8} col={8}>
+            <Form.Label className={`text-capitalize text-black label2`}>
+            Requirements
+            </Form.Label>
+           
+            <JoditEditor value={editorContent} onChange={onEditorChange} />
+      
+      </Col>
+      <Col md={4} col={4}></Col>
+      
+            </Row>
+            <Row>
+             
+              <Col md={8} col={8}>
+            <Form.Label className={`text-capitalize text-black label2`}>
+            Additional Information
+            </Form.Label>
+           
+              
+            
+            <JoditEditor value={editorContent2} onChange={onEditorChange2} />
+      
+      
+      
+      </Col>
+      <Col md={4} col={4}></Col>
+            </Row>
+      
+                </>
+            );
+            case '2':
+              return (
+                <>
+                <p>Scout info</p>
+              
+                </>
+  
+              );
+              case '3':
+                return (
+                  <>
+                       <p>Coach info</p>
+                  
+                  </>
+    
+                );
+        }}
       
     
 
@@ -159,34 +385,8 @@ EditorState.createEmpty()
         <Col md={4} lg={4}></Col>
         <Col md={8} lg={8}>
       
-      {user.userData.profile.type_name=="scout"?(
-        <Row>
-                  <Col md={12} lg={8}>
-      <Input
-                        register={register}
-                        errors={errors}
-                        name="title"
-                        label="Opportunitie Title"
-                        placeholder=''
-                        className="form-control form-control-sm rounded me-4"
-                        validation={{}}
-                        type="text"
-                        inputWidth='35rem'
-                        
-                      />
-                      </Col>
-                      <Col md={12} lg={4}>
-                              <Input
-                 type="select"
-                 label="Position"
-                 name="parent_position"
-                 register={register} 
-                 errors={{}}
-                 selectOptions={positions} 
-                   />
-      </Col>
-          </Row>
-      ):(
+                  
+ 
         <Row>
           <Col md={4} lg={4}>
       <Input
@@ -222,198 +422,16 @@ EditorState.createEmpty()
     className="form-control form-control-sm rounded me-3"
     type="radio"
     radioOptions={Types}
+    onChange={handleAccountTypeChange}
 
   />
       </Col>
         </Row>
-      )}
+        {renderAccountTypeFields()} 
 
       
      
-      <Row> 
-        
-  <Col md={2} lg={2}>
-  <Input
-                register={register}
-                errors={errors}
-                name="from_age"
-                label="Age from"
-                placeholder=""
-                className="form-control form-control-sm rounded"
-                validation={{ validate: validateToGreaterThanFrom('age') }}
-                type="number"
-                inputWidth="6rem"
-              />
-              {errors.from_age && (
-                <p className="error-message">{errors.from_age.message}</p>
-              )}
-  </Col>
-  <Col md={2} lg={2}>
-  <Input
-                register={register}
-                errors={errors}
-                name="to_age"
-                label="to"
-                placeholder=""
-                className="form-control form-control-sm rounded"
-                validation={{
-                  validate: validateToGreaterThanFrom('age'),
-                }}
-                type="number"
-                inputWidth="6rem"
-              />
-              {errors.to_age && (
-                <p className="error-message">{errors.to_age.message}</p>
-              )}
-  </Col>
-
-  <Col md={8} lg={8}>
-  <Input
-    register={register}
-    errors={errors}
-    name="gender"
-    label="Gender"
-    className="form-control form-control-sm rounded me-3"
-    type="radio"
-    radioOptions={genderOptions}
-
-  />
-</Col>
-
-</Row>
-
-      <Row >
-      <Col md={2} lg={2}>
-        <Input
-          register={register}
-          errors={errors}
-          name="from_height"
-          label="Height from"
-          placeholder=""
-          className="form-control form-control-sm rounded"
-          validation={{}}
-          type="number"
-          inputWidth="6rem"
-        />
-      </Col>
-      <Col md={2} lg={2}>
-        <Input
-          register={register}
-          errors={errors}
-          name="to_height"
-          label="to"
-          placeholder=""
-          className="form-control form-control-sm rounded"
-          validation={{}}
-          type="number"
-          inputWidth="6rem"
-        />
-      </Col>
-      <Col md={2} lg={2}>
-        <Input
-          register={register}
-          errors={errors}
-          name="from_weight"
-          label="Weight from"
-          placeholder=""
-          className="form-control form-control-sm rounded"
-          validation={{}}
-          type="number"
-          inputWidth="6rem"
-        />
-      </Col>
-      <Col md={2} lg={2}>
-        <Input
-          register={register}
-          errors={errors}
-          name="to_weight"
-          label="to"
-          placeholder=""
-          className="form-control form-control-sm rounded"
-          validation={{}}
-          type="number"
-          inputWidth="6rem"
-        />
-      </Col>
-      <Col md={2} lg={2}></Col>
-  <Col md={2} lg={2}></Col>
-
-      </Row>
-      <Row>
-      <Input
-          register={register}
-          errors={errors}
-          name="foot"
-          label="preferredFoot"
-          className="form-control form-control-sm rounded me-3"
-          type="radio"
-          radioOptions={preferredFoot}
-        />
-      </Row>
-      <Row>
-      <Input
-        type="select"
-        label="Country"
-        name="country_id"
-        register={register} // Pass your register function
-        errors={{}} // Pass your errors object
-        selectOptions={countries} // Pass the options for the dropdown list
-        onChange={(e) => handleCountrySelect(e.target.value)}
-      />
       
-                                <Input
-        type="select"
-        label="City"
-        name="city_id"
-        register={register} // Pass your register function
-        errors={{}} // Pass your errors object
-        selectOptions={cities}
-       
-      />
-      </Row>
-      <Row>
-      <Col md={8} col={8}>
-      <Form.Label className={`text-capitalize text-black label2`}>
-      Requirements
-      </Form.Label>
-      <div style={{marginBottom:'4rem',border:'1px solid rgba(144,144,144, 0.3)',height:'223px',background:'white'}}>
-      <Editor
-  editorState={editorState}
-  toolbarClassName="toolbarClassName"
-  wrapperClassName="wrapperClassName"
-  editorClassName="editorClassName"
-  onEditorStateChange={onEditorStateChange}
-  
-/>
-</div>
-</Col>
-<Col md={4} col={4}></Col>
-
-      </Row>
-      <Row>
-       
-        <Col md={8} col={8}>
-      <Form.Label className={`text-capitalize text-black label2`}>
-      Additional Information
-      </Form.Label>
-     
-        
-      <div style={{marginBottom:'4rem',border:'1px solid rgba(144,144,144, 0.3)',height:'223px',background:'white'}}>
-      <Editor
-  editorState={editorState}
-  toolbarClassName="toolbarClassName"
-  wrapperClassName="wrapperClassName"
-  editorClassName="editorClassName"
-  onEditorStateChange={onEditorStateChange}
-  
-/>
-</div>
-{/* <TextArea rows={10} cols={30} /> */}
-
-</Col>
-<Col md={4} col={4}></Col>
-      </Row>
-
       <Row>
         <Col></Col>
         <Col>

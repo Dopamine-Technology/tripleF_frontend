@@ -16,7 +16,7 @@ import { GoogleLogin } from 'react-google-login';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
+import 'react-phone-input-2/lib/style.css';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import startsWith from 'lodash.startswith';
 
@@ -125,9 +125,6 @@ function RegisterForm() {
         
         return `${year}-${month}-${day}`;
       }
-      
- 
-
 
 
       useEffect(() => {
@@ -580,26 +577,6 @@ function RegisterForm() {
   </select>
 
 </div>
-
-{/* <div className='form-group'>
-  <label htmlFor="position">Position:</label>
-  <div className="radio-buttons">
-  {positions?.map(position => (
-       <label className='custom-radio-btn2'>
-       <span className="label">{position.name}</span>
-       <input
-  type="radio"
-  id="position" 
-  value={position.id}
-  onChange={(e) => {
-    handlePositionSelect(e.target.value);
-  }}
-/>
-        <span className="checkmark"></span>
-      </label>
-    ))}
-      </div>
-</div> */}
 
                 {subPositions?.length > 0 && (
         <div className='form-group'>

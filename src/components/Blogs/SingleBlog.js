@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { RxDividerVertical } from "react-icons/rx";
-
+import Rectangle from '../../assets/imgs/rectangle.png'
 const SingleBlog = () => {
     const tags=['#hashtag','#hashtag'];
     return(

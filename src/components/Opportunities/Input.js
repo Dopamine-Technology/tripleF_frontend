@@ -42,7 +42,7 @@ const Input = ({
             type={type}
           />
         ) : type === 'radio' ? (
-          <div className="radio-buttons d-flex" style={{width:'20rem'}}>
+          <div className="radio-buttons d-flex" style={{width:'20rem'}}  onChange={onChange}>
             {radioOptions &&
               radioOptions.map((option) => (
                 <label
@@ -64,7 +64,7 @@ const Input = ({
         ) : type === 'select' ? (
           <Form.Control
             as="select"
-            size="lg"
+            size="md"
             {...register(name)}
             className={`${className}  ${
               errors && errors[name]?.message ? "border-danger" : ""

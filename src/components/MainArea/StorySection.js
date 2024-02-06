@@ -86,9 +86,9 @@ function StorySection() {
             </div>
       <Modal show={show} onHide={handleClose} size="lg">
   
-        <Modal.Body style={{backgroundColor:'white'}} >
+        <Modal.Body style={{backgroundColor:'black'}}  >
         <Row>
-  <Col sm={6} lg={4}>
+  <Col sm={6} lg={4} style={{backgroundColor:'white'}} >
    
     {stories2.map((story, index) => (
       <div className="profiles-stories d-flex" key={index} onClick={() => handleStoryClick(index)}>
@@ -100,12 +100,13 @@ function StorySection() {
       </div>
     ))}
   </Col>
-  <Col sm={6} lg={8}>
+  <Col sm={6} lg={8}  style={{backgroundColor:'black'}}>
 
     <Stories
       width="450px"
       height="600px"
       stories={selectedStory !== null ? [stories2[selectedStory], ...stories3] : timlineStories}
+   
     />
   </Col>
 </Row>

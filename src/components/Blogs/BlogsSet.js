@@ -1,10 +1,11 @@
 import React from 'react'
 import Blog from './Blog';
-import './style.css'
+import './style.css';
+import Rectangle from '../../assets/imgs/rectangle.png'
 
 const BlogsSet = () => {
     const blogs=[{
-        img:"https://www.blazepod.com/cdn/shop/articles/BP_Article_Football_Endurance_Training_960x585_dedd2f08-a3e7-4c4b-be4b-d82cca607000_1024x.jpg?v=1654091122",
+        img:Rectangle,
         title:"Blog title here, Neque porro quisquam est qui dolorem ipsum",
         categoryName:"Category Name",
         date:"21 Nov, 2023",
@@ -12,7 +13,7 @@ const BlogsSet = () => {
         tags:['#hashtag','#hashtag']
     },
     {
-        img:"https://www.blazepod.com/cdn/shop/articles/BP_Article_Football_Endurance_Training_960x585_dedd2f08-a3e7-4c4b-be4b-d82cca607000_1024x.jpg?v=1654091122",
+        img:Rectangle,
         title:"Blog title here, Neque porro quisquam est qui dolorem ipsum",
         categoryName:"Category Name",
         date:"21 Nov, 2023",
@@ -20,7 +21,7 @@ const BlogsSet = () => {
         tags:['#hashtag','#hashtag']
     },
     {
-        img:"https://www.blazepod.com/cdn/shop/articles/BP_Article_Football_Endurance_Training_960x585_dedd2f08-a3e7-4c4b-be4b-d82cca607000_1024x.jpg?v=1654091122",
+        img:Rectangle,
         title:"Blog title here, Neque porro quisquam est qui dolorem ipsum",
         categoryName:"Category Name",
         date:"21 Nov, 2023",

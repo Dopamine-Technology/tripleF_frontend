@@ -287,6 +287,7 @@ input[type=Mind]{
     background-color: white;
     margin-top: 2rem;
     border-radius: 10px;
+    padding: 1rem;
 
 }
 .Call{
@@ -329,6 +330,7 @@ input[type=Mind]{
     border-radius: 8px;
     opacity: 1;
     background-color: rgba(255,255,255, 1);
+
     
 }
 .Simplilearn{
@@ -479,7 +481,7 @@ text-align: left;
 }
 
 .profiles-stories{
-
+margin-top: 1rem;
 
 }
 
