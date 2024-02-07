@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useContext,useMemo } from 'react';
+import React,{useState,useEffect,useContext } from 'react';
 import Opportunity from './Opportunity';
 import './style.css';
 import { Row,Col} from 'react-bootstrap';
@@ -22,29 +22,33 @@ function OpportunityList(){
 
       const axios=useAxios();
       const [opportunities,setOpportunities]=useState();
-      const[newDataList,setNewDataList]=useState(opportunities);
-      const [filterTextValue,setFilterTextValue]=useState('preferredFoot');
-      const [filterTextGender,setFilterTextGender]=useState('gender');
+      const [newDataList,setNewDataList] = useState([]);
+      const [filterTextValue,setFilterTextValue]=useState('');
+      const [filterTextGender,setFilterTextGender]=useState('');
       const [filterTextType,setFilterTextType]=useState('');
       const [filterTextPosition,setFilterTextPosition]=useState('position');
       const [filteredListPosition,setFilteredListPosition]=useState(opportunities);
       const [filterTextCountry, setFilterTextCountry] = useState('');
       const itemsPerPage = 5;
       const [currentPage, setCurrentPage] = useState(1);
-      const prevLocation = useMemo(() => location, [location]);
+  
     
       const indexOfLastItem = currentPage * itemsPerPage;
       const indexOfFirstItem = indexOfLastItem - itemsPerPage;
       const currentItems = filteredListPosition?.slice(indexOfFirstItem, indexOfLastItem);
     
       const paginate = (pageNumber) => setCurrentPage(pageNumber);
+ 
 
-      const applyFilters = () => {
+  const applyFilters = () => {
         let filteredList = newDataList?.filter((singleData) => {
-          if (filterTextValue === 'right' && singleData.preferredFoot !== 'right') {
+          if (filterTextValue === 'right' && singleData.foot !== 'right') {
             return false;
           }
-          if (filterTextValue === 'left' && singleData.preferredFoot !== 'left') {
+          if (filterTextValue === 'left' && singleData.foot !== 'left') {
+            return false;
+          }
+          if (filterTextValue === 'both' && singleData.preferredFoot !== 'both') {
             return false;
           }
     
@@ -54,29 +58,19 @@ function OpportunityList(){
           if (filterTextGender === 'female' && singleData.gender !== 'female') {
             return false;
           }
-
-          if (filterTextType === 'applied' && singleData.is_owned !== 'applied') {
-            return false;
-          }
-          if (filterTextType === 'published' && singleData.is_owned !== 'published') {
-            return false;
-          }
           if (
-            (filterTextPosition === '1' && singleData.position !== '1') ||
-            (filterTextPosition === '2' && singleData.position !== '2') ||
-            (filterTextPosition === '3' && singleData.position !== '3') ||
-            (filterTextPosition === '4' && singleData.position !== '4')
+            (filterTextPosition == '1' && singleData.position.id != '1') ||
+            (filterTextPosition == '2' && singleData.position.id != '2') ||
+            (filterTextPosition == '3' && singleData.position.id != '3') ||
+            (filterTextPosition == '4' && singleData.position.id != '4')
           )
           return false;
-          if (filterTextCountry && singleData.location.toLowerCase() !== filterTextCountry.toLowerCase()) {
+          if (filterTextCountry && singleData.country.id != filterTextCountry) {
             return false;
           }
-   
           {
             return singleData;
           }
-        
-    
           return true;
         });
     
@@ -84,18 +78,20 @@ function OpportunityList(){
       };
 
       useEffect(() => {
-        // Apply filters when filterTextValue, filterTextGender, filterTextPosition, or any other relevant filters change
+        
         const filteredList = applyFilters();
-        setFilteredListPosition(filteredList); // Update state with the filtered list
+        setFilteredListPosition(filteredList); 
       }, [filterTextValue, filterTextGender, filterTextPosition,filterTextCountry,filterTextType]);
       
    
 
       const onFilterValueSelected =(filterValue)=>{
+        console.log('filtervalue',filterValue);
         setFilterTextValue(filterValue);
       }
 
       const onFilterGenderSelected =(filterValue)=>{
+        console.log('filtervalue',filterValue);
         setFilterTextGender(filterValue);
       }
       const onFilterTypeSelected =(filterValue)=>{
@@ -108,12 +104,15 @@ function OpportunityList(){
         setFilterTextCountry(filterValue);
       };
 
+      
+
       useEffect(() => {
     
         const fetchOppData = async () => {
           try {
             const response = await axios.get('opportunities/find');
             setOpportunities(response.data.result);
+            setNewDataList(response.data.result);
            
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -122,6 +121,12 @@ function OpportunityList(){
         fetchOppData()
         
       }, []);
+
+      useEffect(() => {
+        // Set filteredListPosition to the full list of opportunities when component mounts
+        setFilteredListPosition(opportunities || []);
+      }, [opportunities]);
+
 
 
 
@@ -159,7 +164,8 @@ function OpportunityList(){
           )}
        
         <Row>
-        {opportunities?.map((opportunity) => (
+          {console.log('cuure',currentItems)}
+        {currentItems?.map((opportunity) => (
           <Opportunity key={opportunity.id} data={opportunity} />
         ))}
         </Row>
@@ -179,3 +185,4 @@ function OpportunityList(){
 }
 
 export default OpportunityList;
+

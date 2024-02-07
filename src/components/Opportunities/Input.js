@@ -78,7 +78,7 @@ const Input = ({
             }}
             onChange={onChange}
           >
-                        <option vlaue="">{placeholder}</option>
+                        <option value="gender">{placeholder}</option>
             {selectOptions &&
               selectOptions.map((option) => (
                 <option key={option.id} value={option.id} >

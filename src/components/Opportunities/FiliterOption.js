@@ -23,6 +23,7 @@ function FiliterOption(props) {
   const genderOptions = [
     { id: 'female', name: 'female' },
     { id: 'male', name: 'male' },
+    // { id: 'both', name: 'both' },
   ];
   const preferredFoot = [
     { id: 'right', name: 'right' },
@@ -64,30 +65,28 @@ function FiliterOption(props) {
       });
   }, []);
 
-  function onFilterPreferredFootChanged(event){
-    console.log(event.target.value);
-    props.filterPreferredFootSelected(event.target.value);
+  function onFilterValueChanged(event){
+        console.log(event.target.value);
+        props.filterValueSelected(event.target.value)
   }
 
   function onFilterGenderChanged(event){
     console.log(event.target.value);
-    props.filterGenderSelected(event.target.value);
-  }
+    props.filterGenderSelected(event.target.value)
+}
 
-  function onFilterIsOwnedChanged(event){
-    console.log(event.target.value);
-    props.filterIsOwnedSelected(event.target.value);
-  }
+function onFilterPositionChanged(event){
+  console.log(event.target.value);
+  props.filterPositionSelected(event.target.value)
+}
 
-  function onFilterPositionChanged(event){
-    console.log(event.target.value);
-    props.filterPositionSelected(event.target.value);
-  }
 
-  function onFilterCountryChanged(event) {
-    console.log(event.target.value);
-    props.filterCountrySelected(event.target.value);
-  }
+function onFilterLocationChanged(event) {
+  console.log(event.target.value);
+  props.filterCountrySelected(event.target.value);
+}
+
+
  
 
   return (
@@ -96,26 +95,26 @@ function FiliterOption(props) {
         <Input
           type='select'
           label=''
-          name='country_id'
+          name='country'
           register={register} 
           errors={errors} 
           selectOptions={countries}
           inputWidth='10rem'
-          placeholder='Location'
+          placeholder='country'
           borderRadius='18px'
-          onChange={onFilterCountryChanged}
+          onChange={onFilterLocationChanged}
         />
       </Col>
-    <><Col md={6} lg={3}>
+      {user.userData.profile.type_name=='talent'?(<><Col md={6} lg={3}>
         <Input
           type='select'
           label=''
-          name='position_id'
+          name='position'
           register={register}
           errors={errors}
           selectOptions={positions}
           inputWidth='10rem'
-          placeholder='Position'
+          placeholder='position'
           borderRadius='18px'
           onChange={onFilterPositionChanged}
         />
@@ -145,11 +144,41 @@ function FiliterOption(props) {
           inputWidth='10rem'
           placeholder='Preferred Foot'
           borderRadius='18px'
-          onChange={onFilterPreferredFootChanged}
+          onChange={onFilterValueChanged}
         />
       </Col>
-      </> 
-        
+      </> ):(
+        <>    <Col md={6} lg={3}>
+        <Input
+          type='select'
+          label=''
+          name='gender'
+          register={register}
+          errors={errors}
+          selectOptions={genderOptions}
+          inputWidth='10rem'
+          placeholder='Gender'
+          borderRadius='18px'
+          onChange={onFilterGenderChanged}
+        />
+      </Col> 
+      <Col md={6} lg={3}>
+      <Input
+          type='select'
+          label=''
+          name='exp_year'
+          register={register}
+          errors={errors}
+          selectOptions={expYears}
+          inputWidth='10rem'
+          placeholder='experience years'
+          borderRadius='18px'
+          onChange={onFilterGenderChanged}
+        />
+      </Col>
+      </>
+      )}
+     
       
     </Row>
   );

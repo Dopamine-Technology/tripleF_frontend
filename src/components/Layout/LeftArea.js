@@ -13,6 +13,7 @@ import OpportunitiesIcon from '../../assets/imgs/OpportunitiesIcon.svg';
 import './Navbar.css';
 import { UserDataContext } from '../../components/UserContext/UserData.context';
 import { NavLink } from 'react-bootstrap';
+import HomeIcon from '../../assets/imgs/home.svg';
 
 function LeftArea({ isCollapsed }) {
     const [activeLink, setActiveLink] = useState(1);
@@ -31,21 +32,14 @@ function LeftArea({ isCollapsed }) {
         setIsNavLinkVisible(!isNavLinkVisible);
       };
 
-      
-
-    //   const toggleSidebar = () => {
-    //     setIsCollapsed(!isCollapsed);
-    //   };
-
 
     return(
         <div>
       
-      {/* <CiMenuBurger onClick={toggleSidebar} className="burger-button" /> */}
         <div className={`leftside-container  ${isCollapsed ? 'collapsed' : ''}`}>
             
             <div className="Pro" onClick={() => handleNavLinkClick(1,'/home')} >
-            <IoMdHome  fontSize="1.5rem" className={`${activeLink === 1 ? 'activeLink' : 'not-active'}`}/>
+            <img src={HomeIcon} />
             <div >
             {!isCollapsed && <div>Home</div>}
                 </div>
@@ -60,7 +54,7 @@ function LeftArea({ isCollapsed }) {
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
                 <img src={scoutIcon} />
-                <div >
+                <div>
                 {!isCollapsed && <div >Scouts</div>}
                 </div>
             </div>
@@ -79,7 +73,7 @@ function LeftArea({ isCollapsed }) {
         <div style={{marginLeft:'0.5rem'}} className='mt-3'>
        <div onClick={() => handleNavLinkClick(7,'/opportunity/list')} className={`Pro ${activeLink === 7 ? 'activeSubLink' : 'not-activeSub'}`}>
             
-                <div >
+                <div>
                 {!isCollapsed && <div >Find Opportunity</div>}
                 </div>
             </div>
@@ -110,7 +104,6 @@ function LeftArea({ isCollapsed }) {
            
             <br></br>
             
-
         </div>
         </div>
     )

@@ -20,7 +20,7 @@ function Opportunity({data }){
         {title:'Height',name:`${data.from_height}-${data.to_height}`},
         {title:'Weight',name:`${data.from_weight}-${data.to_weight}`},
         {title:'gender',name:data.gender},
-        {title:'Preferred Foot',name:data.preferredFoot},
+        {title:'Preferred Foot',name:data.foot},
     ]
  
     const handleExpandClick = () => {
@@ -44,9 +44,10 @@ function Opportunity({data }){
        <img src={data.user.image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
        <p className='post-username'>{data.user.user_name}<br /> 
        <div className='d-flex'>
-                                    <p className='me-5 blog-sub'>{data.country}
+                                    <p className='me-5 blog-sub'>{data.country.name}
                                     <RxDividerVertical color="gray" size={30} className='' />
-                                    {data.position}</p>
+                                     {data.position.name}
+                                    </p>
         </div>
        </p> 
     
