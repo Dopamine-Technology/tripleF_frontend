@@ -97,25 +97,51 @@ function RightArea(){
       const clubsData = [
         {
           imageSrc: 'https://marketplace.canva.com/EAFn79D1vQ4/1/0/1600w/canva-red-white-and-black-modern-football-club-logo-cyuklMnKVrQ.jpg',
-          clubName: 'Club Name here',
+          clubName: 'Club Name ',
           id:1,
           isFollowed:false
         },
         {
           imageSrc: 'https://static.vecteezy.com/system/resources/previews/005/106/490/non_2x/soccer-logo-or-football-club-sign-badge-football-logo-with-shield-background-design-vector.jpg',
-          clubName: 'Club Name here',
+          clubName: 'Club Name ',
           isFollowed:false,
           id:2
         },
         {
           imageSrc: 'https://static.vecteezy.com/system/resources/previews/005/106/490/non_2x/soccer-logo-or-football-club-sign-badge-football-logo-with-shield-background-design-vector.jpg',
-          clubName: 'Club Name here',
+          clubName: 'Club Name ',
           isFollowed:false,
           id:4
         },
         {
           imageSrc: 'https://img.freepik.com/free-vector/logo-template-design_1195-105.jpg',
-          clubName: 'Club Name here',
+          clubName: 'Club Name ',
+          id:3,
+          isFollowed:true
+        },
+      ];
+      const scoutData2 = [
+        {
+          imageSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv608YcU3z4oPtBsdEL4Pm3kpFLR98sZBtQg&usqp=CAU',
+          clubName: 'Scout Name ',
+          id:1,
+          isFollowed:false
+        },
+        {
+          imageSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRue5VRdL19XyjM8xrWGW_Pe_avRMuuvOkZtA&usqp=CAU',
+          clubName: 'Scout Name ',
+          isFollowed:false,
+          id:2
+        },
+        {
+          imageSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYzDV9oMHp7mVm2XIKVfgIoVBUrIcNnBgzgw&usqp=CAU',
+          clubName: 'Scout Name ',
+          isFollowed:false,
+          id:4
+        },
+        {
+          imageSrc: 'https://img.freepik.com/free-photo/portrait-young-man-with-glasses_641386-302.jpg',
+          clubName: 'Scout Name ',
           id:3,
           isFollowed:true
         },
@@ -135,14 +161,14 @@ function RightArea(){
                     <img
                 src={item.imageSrc}
                 alt="Profile Pic"
-                className='rightSide-img'
-                style={{ height: '3rem', width: '3rem', borderRadius: '60%', border: isClub ?'none':'4px solid #77DCBF' }}
+                className={!isClub?`rightSide-img`:''}
+                style={{ height: '3rem', width: '3rem', borderRadius: '60%' }}
               />
               <div>
-                <span className={isClub ? '' : 'username'}>{item.username || item.clubName}</span>
+                <span className={isClub ? 'username' : 'username'}>{item.username || item.clubName}</span>
                 <br />
                 {isClub ? (
-                  <Button variant="outline-success" className={`mt-2 ${item.isFollowed ? 'unfollowed' : 'followed'}`}  onClick={() => handleToggleFollow(item.id)} style={{ borderRadius: '18px' }}>
+                  <Button variant="outline-success" className={`mt-2  ${item.isFollowed ? 'unfollowed' : 'followed'}`}  onClick={() => handleToggleFollow(item.id)} style={{ borderRadius: '18px' }}>
                  {item.isFollowed ? 'Unfollow' : '+ Follow'}
                   </Button>
                 ) : (
@@ -163,7 +189,7 @@ function RightArea(){
       <div  >
       {renderDataSection('Recommended Challenges', profilesData,false)}
       {renderDataSection('Clubs to Follow', clubsData,true)}
-      {renderDataSection('Scouts to Follow', clubsData,true)}
+      {renderDataSection('Scouts to Follow', scoutData2,true)}
     </div>
     )
 }

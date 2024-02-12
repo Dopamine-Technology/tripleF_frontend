@@ -5,7 +5,7 @@ const TimlinePost=({post})=>{
    return(
     <div>
      {post.video ? (
-                    <div className="FacebookVideo">
+                    <div className="FacebookVideo" >
                         <video controls className='post-video' >
                             <source src={post.video} type="video/mp4" />
                             Your browser does not support the video tag.

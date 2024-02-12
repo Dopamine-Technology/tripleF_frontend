@@ -125,7 +125,7 @@ function Post(){
     </Dropdown>
     </div>
 
-    {post.is_opp?   <TimlinePost post={post}/>:<OpportunityPost post={post} />}
+    {post.is_opp?   <OpportunityPost post={post} />:<TimlinePost post={post}/>}
 
 
     

@@ -2,7 +2,7 @@ import React from 'react';
 import './footer.css';
 import { FaFacebookF,FaTwitter,FaSnapchatGhost  } from "react-icons/fa";
 import { BsInstagram } from "react-icons/bs";
-import Logo from '../../assets/imgs/Logo.svg'
+import Logo from '../../assets/imgs/Logo.png'
 import { RiTwitterXLine } from "react-icons/ri";
 import facebook2 from '../../assets/imgs/facebook2.png'
 import twitter from '../../assets/imgs/twitter.png';

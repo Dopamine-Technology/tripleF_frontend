@@ -21,6 +21,7 @@ import OpportunityList from './components/Opportunities/OpportunityList';
 import MyOpportunities from './components/Opportunities/MyOpportunities';
 import LayoutWithoutRight from './components/Layout/LayoutWithoutRight';
 import { useRoleCheck } from './components/Auth/useRoleCheck';
+import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -42,6 +43,7 @@ function App() {
             <Route path='/challenges' element={<ComingSoon />}  />
             <Route path='/saved' element={<ComingSoon />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
+            <Route path='/loading' element={<LoadingScreen />}  />
       
           </Route>
           <Route path='/' element={<LayoutWithoutRight />}>

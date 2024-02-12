@@ -9,7 +9,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { GoPerson } from "react-icons/go";
 import Cookies from 'js-cookie';
-import LogoWhite from '../../assets/imgs/LogoWhite.svg';
+import LogoWhite from '../../assets/imgs/LogoWhite.png';
 import { IoPerson } from "react-icons/io5";
 import './style.css';
 import { Link } from 'react-router-dom';
@@ -38,7 +38,7 @@ const TopNavbar = ({content}) => {
     <Navbar collapseOnSelect expand="xl" className="">
       {/* <Container className="justify-content-start " style={{marginLeft:'3.5rem'}} >  */}
       <Container className="justify-content-start navbar-container " > 
-        <Navbar.Brand href="#home" className='fs-4 text-white'><img src={LogoWhite} width='70%' /></Navbar.Brand>
+        <Navbar.Brand href="#home" className='fs-4 text-white'><img src={LogoWhite} width='18%' /></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto" style={{marginRight:'-6rem'}}>

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { Tab, Tabs } from 'react-bootstrap';
 import Input from './Input';
@@ -9,6 +9,8 @@ function ScoutOppFilter(props) {
     register,
     errors,
   } = useForm();
+
+  
 
   const types = [
     { id: 'applied', name: 'applied', label: 'Applied' },
@@ -22,31 +24,33 @@ function ScoutOppFilter(props) {
     setActiveTab(eventKey);
   }
 
-
-
   return (
     <Row className=''>
+      <Tabs
+        defaultActiveKey="applied"
+        transition={false}
+        id="filter-type-tabs"
+        onSelect={onFilterTypeChanged}
+      >
+        {types.map((type) => (
+          <Tab key={type.id} eventKey={type.name} title={type.label}
+            // tabClassName={
+            //   "btn btn-sm " + 
+            //   (activeTab === type.name
+            //     ? "btn-success text-black"
+            //     : "btn-outline-secondary")
+            // }
+            style={{
+              backgroundColor: activeTab == type.name ? 'transparent' : 'gray',
+              color: activeTab == type.name ? '#77DCBF' : 'black',
+            }}
+            >
 
-        <Tabs
-          defaultActiveKey="applied"
-          transition={false}
-          id="filter-type-tabs"
-          onSelect={onFilterTypeChanged}
-        
-        >
-          {types.map((type) => (
-            <Tab key={type.id} eventKey={type.name} title={type.label}
-            tabClassName={
-                "fw-bold    " +
-                (activeTab === type.name
-                  ? "text-success bg-transparent border border-3 border-success border-end-0 border-top-0 border-start-0 "
-                  : "text-muted")
-              }>
-        
-            </Tab>
-          ))}
-        </Tabs>
-      
+              
+           
+          </Tab>
+        ))}
+      </Tabs>
     </Row>
   );
 }

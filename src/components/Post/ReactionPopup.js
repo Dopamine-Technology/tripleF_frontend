@@ -115,7 +115,7 @@ function ReactionPopup({handleClose,show,id}) {
           ),
         },
         Gold: {
-          title: (<div className='d-flex'><LiaMedalSolid color="gold" className='me-2' size={20}/><p className='reaction-p'> 322 </p></div>),
+          title: (<div className='d-flex'><div className='rectangle me-2'><LiaMedalSolid color="gold" className='me-2' size={25}/></div><p className='reaction-p'> 322 </p></div>),
           content: (
             <>
             <Reaction users={subReaction}/>
@@ -123,7 +123,7 @@ function ReactionPopup({handleClose,show,id}) {
           ),
         },
         Silver: {
-          title: (<div className='d-flex'><LiaMedalSolid color="silver" className='me-2' size={20}/> <p className='reaction-p'> 322 </p></div>),
+          title: (<div className='d-flex'><div className='rectangle me-2'><LiaMedalSolid color="silver" className='me-2' size={25}/></div> <p className='reaction-p'> 322 </p></div>),
           content: (
             <>
               <Reaction users={subReaction}/>
@@ -131,7 +131,7 @@ function ReactionPopup({handleClose,show,id}) {
           ),
         },
         Bronze: {
-            title: (<div className='d-flex'><LiaMedalSolid color="saddlebrown" className='me-2' size={20}/> <p className='reaction-p'> 322 </p></div>),
+            title: (<div className='d-flex'><div className='rectangle me-2'><LiaMedalSolid color="saddlebrown" className='me-2' size={25}/></div> <p className='reaction-p'> 322 </p></div>),
             content: (
               <>
                  <Reaction users={subReaction}/>
@@ -143,7 +143,7 @@ function ReactionPopup({handleClose,show,id}) {
     return(
         <>
   
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} size='lg'>
           <Modal.Header>
             <Modal.Title>
                    <Tabs activeKey={activeTab} onSelect={(selectedTabKey) => handleTabSelect(selectedTabKey)} justify>

@@ -131,8 +131,8 @@ function NavBar({ toggleLeftSidebar }){
     return(
 <Navbar expand="lg" className="bg-body-tertiary " style={{boxShadow:" 0px 1px 10px rgba(181,181,181, 1)"}}>
       <Container>
-      <CiMenuBurger fontSize="1.5rem" color='#979797' className="mt-3 me-5 burger-button" onClick={toggleLeftSidebar} />
-        <Navbar.Brand href="/home" ><img src={Logo} width='70%' /></Navbar.Brand>
+      {/* <CiMenuBurger fontSize="1.5rem" color='#979797' className="mt-3 me-5 burger-button" onClick={toggleLeftSidebar} /> */}
+        <Navbar.Brand href="/home" ><img src={Logo} width='70%'  /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -144,24 +144,26 @@ function NavBar({ toggleLeftSidebar }){
          
           </Nav>
          <Nav>
-         <Nav.Link href=""> <AiOutlineMessage fontSize ="1.5rem"  color='#979797' className="mt-3 me-2 " /> </Nav.Link>
-         <Nav.Link href=""> <IoIosNotificationsOutline fontSize ="1.5rem"   color='#979797' className=" mt-3 me-4" /></Nav.Link>
+     <AiOutlineMessage fontSize ="1.5rem"  color='#979797' className="mt-3 me-4 " /> 
+        <IoIosNotificationsOutline fontSize ="1.5rem"   color='#979797' className=" mt-3 me-5" />
          <Dropdown menu={{ items }} >
               <Space>
-         
-                  <Card.Img
-                    variant='top'
-                    src={user.userData.image}
-                    style={{ width: "43px", height: "43px",marginTop:'1rem' }}
-                    className='rounded-circle text-center object-fit-cover border border-2'
-                  />
-             
+                 
+              <div class="image-container">
+    <img
+        variant='top'
+        src={user.userData.image}
+        style={{ width: "36px", height: "36px" }}
+        className='rounded-circle text-center object-fit-cover'
+    />
+    <p className="me">Me</p>
+</div>
 
                 <MdArrowDropDown fontSize={38} className="mt-3" style={{color:'#979797'}} />
               </Space>
-   
+  
             </Dropdown>
-         
+      
          </Nav>
         </Navbar.Collapse>
       </Container>

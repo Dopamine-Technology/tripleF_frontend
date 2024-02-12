@@ -8,11 +8,17 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { CiLink } from "react-icons/ci";
 import { MdOutlineCancel } from "react-icons/md";
+import cancel from '../../assets/imgs/cancel.png';
+import { AiOutlineReload } from "react-icons/ai";
+import useAxios from '../Auth/useAxiosHook.interceptor';
+import { message } from 'antd';
 
 
 function Opportunity({data }){
+
     const location = useLocation();
     const isAppliedPath = location.pathname === '/applied/list';
+    const axios=useAxios();
     const [isExpanded, setIsExpanded] = useState(false);
     const opportunityData='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi  ut aliquip ex ea commodo consequat. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
     const titles=[
@@ -20,8 +26,9 @@ function Opportunity({data }){
         {title:'Height',name:`${data.from_height}-${data.to_height}`},
         {title:'Weight',name:`${data.from_weight}-${data.to_weight}`},
         {title:'gender',name:data.gender},
-        {title:'Preferred Foot',name:data.foot},
+        {title:'Preferred Foot',name:data.foot}
     ]
+   
  
     const handleExpandClick = () => {
         setIsExpanded(!isExpanded);
@@ -30,6 +37,14 @@ function Opportunity({data }){
     const displayDescription = isExpanded
     ? opportunityData
     : opportunityData.slice(0, 230);
+
+    const handleChangeState=(id)=>{
+        axios.get(`opportunities/toggle_status/${id}`)
+        .then((response) => {
+            message.success(response.data.message);
+            window.location.reload();
+        })
+    }
 
     return(
         <div>
@@ -42,7 +57,7 @@ function Opportunity({data }){
    <div className="poster">
    <div className="Simplilearn">
        <img src={data.user.image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
-       <p className='post-username'>{data.user.user_name}<br /> 
+       <p className='post-username'>{data.user.user_name} <br /> 
        <div className='d-flex'>
                                     <p className='me-5 blog-sub'>{data.country.name}
                                     <RxDividerVertical color="gray" size={30} className='' />
@@ -61,11 +76,15 @@ function Opportunity({data }){
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="" className='p-2' ><CiLink className='me-2' />Copy link to Post</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'> <MdOutlineCancel className='me-2' />Discard Opportunity</Dropdown.Item>
+        <Dropdown.Item href="" className='p-2' ><CiLink className='me-2' color='#9D9C9D'/>Copy link to Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleChangeState(data.id)}> 
+        {data.status=='open'?   <><MdOutlineCancel className='me-2' color='#9D9C9D' />Discard Opportunity</>:
+        <><AiOutlineReload className='me-2' color='#9D9C9D' />Reopen Opportunity</>}
+
+        </Dropdown.Item>
        
       </Dropdown.Menu>
-    </Dropdown>):(     <Button className='apply-btn'>Apply Now</Button>  )}
+    </Dropdown>):(<Button className='apply-btn'>Apply Now</Button>  )}
    
 
 </div>

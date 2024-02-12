@@ -14,6 +14,7 @@ import './Navbar.css';
 import { UserDataContext } from '../../components/UserContext/UserData.context';
 import { NavLink } from 'react-bootstrap';
 import HomeIcon from '../../assets/imgs/home.svg';
+import dropdownImg from '../../assets/imgs/dropdown.svg'
 
 function LeftArea({ isCollapsed }) {
     const [activeLink, setActiveLink] = useState(1);
@@ -40,7 +41,7 @@ function LeftArea({ isCollapsed }) {
             
             <div className="Pro" onClick={() => handleNavLinkClick(1,'/home')} >
             <img src={HomeIcon} />
-            <div >
+            <div>
             {!isCollapsed && <div>Home</div>}
                 </div>
             </div>
@@ -61,8 +62,9 @@ function LeftArea({ isCollapsed }) {
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             <div className="Pro" onClick={() => handleOppClick(4,'/Opportunities')} >
             <img src={OpportunitiesIcon} />
-                <div style={{fontSize:'11px'}}>
-                {user.userData.profile.type_name=="talent"?(!isCollapsed && <div >Opportunities</div>):(!isCollapsed && <div >My Opportunities</div>)}
+                <div style={{fontSize:'15px'}}>
+                {user.userData.profile.type_name=="talent"?(!isCollapsed && <div > <span className='me-3'>Opportunities</span> <img src={dropdownImg} /></div>):(!isCollapsed && <div >My Opportunities </div>)}
+    
                 
                 </div>
 

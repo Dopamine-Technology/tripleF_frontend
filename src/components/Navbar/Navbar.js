@@ -1,7 +1,7 @@
 import React from "react";
 import './Navbar.css'
 import { IoIosNotificationsOutline } from "react-icons/io";
-import Logo from '../../assets/imgs/Logo.svg'
+import Logo from '../../assets/imgs/Logo.png'
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdArrowDropDown } from "react-icons/md";
 import { AiOutlineMessage } from "react-icons/ai";
@@ -57,7 +57,7 @@ function NavBar(){
     return(
 <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/home"><img src={Logo} width='70%' /></Navbar.Brand>
+        <Navbar.Brand href="/home"><img src={Logo} width='13%' /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
