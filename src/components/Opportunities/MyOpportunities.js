@@ -105,7 +105,6 @@ function OpportunityList(){
 
       const axios=useAxios();
       const [opportunities,setOpportunities]=useState();
-
       const[newDataList,setNewDataList]=useState(opportunities);
       const [filterTextValue,setFilterTextValue]=useState('preferredFoot');
       const [filterTextGender,setFilterTextGender]=useState('gender');
@@ -121,8 +120,6 @@ function OpportunityList(){
       // const currentItems = filteredListPosition?.slice(indexOfFirstItem, indexOfLastItem);
     
       const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-
 
       const applyFilters = () => {
         let filteredList = newDataList?.filter((singleData) => {

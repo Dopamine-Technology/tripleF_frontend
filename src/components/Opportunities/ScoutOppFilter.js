@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
+import { Tab } from 'react-bootstrap';
 import Input from './Input';
 import { useForm } from 'react-hook-form';
+
 
 function ScoutOppFilter(props) {
   const {
@@ -10,11 +11,9 @@ function ScoutOppFilter(props) {
     errors,
   } = useForm();
 
-  
-
   const types = [
-    { id: 'applied', name: 'applied', label: 'Applied' },
     { id: 'published', name: 'published', label: 'Published' },
+    { id: 'applied', name: 'applied', label: 'Applied' },
   ];
   const [activeTab, setActiveTab] = useState("applied");
 
@@ -25,33 +24,30 @@ function ScoutOppFilter(props) {
   }
 
   return (
-    <Row className=''>
-      <Tabs
-        defaultActiveKey="applied"
-        transition={false}
-        id="filter-type-tabs"
-        onSelect={onFilterTypeChanged}
-      >
-        {types.map((type) => (
-          <Tab key={type.id} eventKey={type.name} title={type.label}
-            // tabClassName={
-            //   "btn btn-sm " + 
-            //   (activeTab === type.name
-            //     ? "btn-success text-black"
-            //     : "btn-outline-secondary")
-            // }
-            style={{
-              backgroundColor: activeTab == type.name ? 'transparent' : 'gray',
-              color: activeTab == type.name ? '#77DCBF' : 'black',
-            }}
-            >
+      <>
+      <Row className='m-4'>
+        <Col >
+      {types.map((type) => (
+         
+        <Button 
+          key={type.id} 
+          onClick={() => onFilterTypeChanged(type.name)}
+          style={{
+            backgroundColor: activeTab === type.name ? 'transparent' : '#F9F9F9',
+            color: activeTab === type.name ? '#5fb099' : '#A6A6A6',
+            border:'solid 1px #e1e1e1',
+            borderRadius:'0px'
+         
 
-              
-           
-          </Tab>
-        ))}
-      </Tabs>
-    </Row>
+          }}
+        >
+          {type.label}
+        </Button>
+    
+      ))}
+      </Col>
+      </Row>
+</>
   );
 }
 

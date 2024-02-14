@@ -110,11 +110,10 @@ function Opportunity({data }){
             isExpanded?(
                 <div className='mt-4'>
                 <p className='postOpp-title'>Requirements</p>
-                <ul>
-                 <li>{data.requirements}</li>
-                </ul>
+                <ul dangerouslySetInnerHTML={{ __html: data.requirements }}></ul>
+
                 <p className='postOpp-title'>Additional Information</p>
-                <p>{data.additional_info}</p>
+                <ul dangerouslySetInnerHTML={{ __html: data.requirements }}></ul>
                 </div>
             ):(null)
         }

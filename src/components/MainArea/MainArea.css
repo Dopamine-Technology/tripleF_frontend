@@ -1015,7 +1015,7 @@ user-select: none;
 @media only screen and (min-width: 1920px) and (min-height: 1080px) {
    .new-post{
     width:85%;
-    margin-left: 0rem;
+ 
    }
 }
 @media only screen and (min-width: 1366px) and (min-height: 768px) {

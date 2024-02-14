@@ -3,6 +3,7 @@ import { Layout as AntLayout, Row, Col } from "antd";
 import NavBar from "./Navbar";
 import LeftArea from "./LeftArea";
 import RightArea from "./RightArea";
+import './Navbar.css'
 import { Outlet } from "react-router-dom";
 
 const { Header, Sider, Content } = AntLayout;
@@ -26,13 +27,13 @@ const Layout = () => {
         >
           <LeftArea isCollapsed={isLeftSidebarCollapsed} />
         </Sider>
-        <AntLayout style={{ marginLeft: isLeftSidebarCollapsed ? 80 : 200, transition: 'margin-left 0.3s' }}>
+        <AntLayout style={{ transition: 'margin-left 0.3s' }} className="AntLayout">
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
             <Row justify="center">
               <Col xs={24} md={24} lg={16}>
                 <Outlet />
               </Col>
-              <Col xs={0} md={24} lg={8}>
+              <Col xs={24} md={24} lg={8}>
                 <RightArea />
               </Col>
             </Row>
