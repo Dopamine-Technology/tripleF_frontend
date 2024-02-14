@@ -15,6 +15,10 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { UserDataContext } from '../../components/UserContext/UserData.context';
 import { message } from 'antd';
 import JoditEditor from "jodit-react";
+import makeAnimated from 'react-select/animated';
+
+import Test from './Test';
+
 
 function NewOpportunity(){
     const {
@@ -27,13 +31,46 @@ function NewOpportunity(){
       } = useForm();
     
       const { user } = useContext(UserDataContext);
+
+      
       
       const axios=useAxios();
       const [positions,setPositions]=useState();
       const [countries,setCountries]=useState();
       const [cities,setCities]=useState();
       const [loading, setLoading] = useState(true);
-      const [accountType, setAccountType] = useState('1')
+      const [accountType, setAccountType] = useState('1');
+      const MAX_COUNT = 3;
+    
+      const options=
+      [
+        { value: 'option1', label: 'Option 1' },
+        { value: 'option2', label: 'Option 2' },
+        { value: 'option3', label: 'Option 3' },
+      ];
+    const colourOptions = [
+        { value: "German", label: "Deutsch  (German)" },
+        { value: "English", label: "English" },
+        { value: "Spanish", label: "español  (Spanish)" },
+        { value: "French", label: "français  (French)" },
+        { value: "Croatian", label: "hrvatski  (Croatian)" },
+        { value: "Italian", label: "italiano  (Italian)" },
+        { value: "Dutch", label: "Nederlands  (Dutch)" },
+        { value: "Polish", label: "polski  (Polish)" },
+
+      ];
+      const animatedComponents = makeAnimated();
+      
+    
+      const [selectedOptions, setSelectedOptions] = useState([]);
+
+      
+    
+      const handleMultiSelectChange = (selectedOptions) => {
+        setSelectedOptions(selectedOptions);
+      };
+    
+    const [selectedItems, setSelectedItems] = useState([]);
 
 
       const genderOptions = [
@@ -52,12 +89,25 @@ function NewOpportunity(){
         { label: "Coach", value: "3" },
       
       ];
+      
       const [editorState, setEditorState] = useState(() =>
   EditorState.createEmpty()
 );
 const [editorState2, setEditorState2] = useState(() =>
 EditorState.createEmpty()
 );
+
+const customStyles = {
+  // option: (provided, state) => ({
+  //   ...provided,
+  //   backgroundColor: state.isSelected ? '#007bff' : 'transparent',
+  //   color: state.isSelected ? 'white' : 'black',
+  //   '&:hover': {
+  //     backgroundColor: '#007bff',
+  //     color: 'white',
+  //   },
+  // }),
+};
 
 const [editorContent, setEditorContent] = useState('');
 const [editorContent2,setEditorContent2]=useState('');
@@ -93,6 +143,7 @@ const [editorContent2,setEditorContent2]=useState('');
 
       useEffect(() => {
     }, [positions, countries]);
+  
 
 
       const handleCountrySelect = async (selectedCountryId) => {
@@ -352,8 +403,110 @@ const [editorContent2,setEditorContent2]=useState('');
               case '3':
                 return (
                   <>
-                       <p>Coach info</p>
-                  
+                       <Row> 
+        
+        <Col md={2} lg={2}>
+        <Input
+                      register={register}
+                      errors={errors}
+                      name="from_exp"
+                      label="Experience from"
+                      placeholder=""
+                      className="form-control form-control-sm rounded"
+                      validation={{ validate: validateToGreaterThanFrom('age') }}
+                      type="number"
+                      inputWidth="6rem"
+                    />
+                    {errors.from_age && (
+                      <p className="error-message">{errors.from_age.message}</p>
+                    )}
+        </Col>
+        <Col md={2} lg={2}>
+        <Input
+                      register={register}
+                      errors={errors}
+                      name="to_exp"
+                      label="to"
+                      placeholder=""
+                      className="form-control form-control-sm rounded"
+                      validation={{
+                        validate: validateToGreaterThanFrom('age'),
+                      }}
+                      type="number"
+                      inputWidth="6rem"
+                    />
+                    {errors.to_age && (
+                      <p className="error-message">{errors.to_age.message}</p>
+                    )}
+        </Col>
+        <Col md={8} lg={8}>
+        <Input
+          register={register}
+          errors={errors}
+          name="gender"
+          label="Gender"
+          className="form-control form-control-sm rounded me-3"
+          type="radio"
+          radioOptions={genderOptions}
+      
+        />
+      </Col>
+      
+        </Row>
+        <Row>
+          <Col md={4} lg={4} >
+            <label>Langauge</label>
+    <Test />
+    </Col>
+        </Row>
+        <Row>
+            <Input
+              type="select"
+              label="Country"
+              name="country_id"
+              register={register}
+              errors={{}} 
+              selectOptions={countries}
+              onChange={(e) => handleCountrySelect(e.target.value)}
+            />
+            
+              <Input
+              type="select"
+              label="City"
+              name="city_id"
+              register={register}
+              errors={{}}
+              selectOptions={cities}
+            />
+            </Row>
+            <Row>
+            <Col md={8} col={8}>
+            <Form.Label className={`text-capitalize text-black label2`}>
+            Requirements
+            </Form.Label>
+           
+            <JoditEditor value={editorContent} onChange={onEditorChange} />
+      
+      </Col>
+      <Col md={4} col={4}></Col>
+      
+            </Row>
+            <Row>
+             
+              <Col md={8} col={8}>
+            <Form.Label className={`text-capitalize text-black label2`}>
+            Additional Information
+            </Form.Label>
+           
+              
+            
+            <JoditEditor value={editorContent2} onChange={onEditorChange2} />
+      
+      
+      
+      </Col>
+      <Col md={4} col={4}></Col>
+            </Row>
                   </>
     
                 );
@@ -365,15 +518,6 @@ const [editorContent2,setEditorContent2]=useState('');
         return <LoadingScreen />;
       }
 
-      const onEditorStateChange = (newEditorState) => {
-        setEditorState(newEditorState);
-    
-      };
-
-      const onEditorStateChange2 = (newEditorState) => {
-        setEditorState2(newEditorState);
-
-      };
 
 
     return(
@@ -402,16 +546,7 @@ const [editorContent2,setEditorContent2]=useState('');
                         
                       />
                       </Col>
-                      <Col md={4} lg={4}>
-                              <Input
-                 type="select"
-                 label="Position"
-                 name="position_id"
-                 register={register} 
-                 errors={{}}
-                 selectOptions={positions} 
-                   />
-      </Col>
+                     
       
       <Col md={4} lg={4}>
       <Input
@@ -426,6 +561,17 @@ const [editorContent2,setEditorContent2]=useState('');
 
   />
       </Col>
+      {accountType=='1'?  <Col md={4} lg={4}>
+                              <Input
+                 type="select"
+                 label="Position"
+                 name="position_id"
+                 register={register} 
+                 errors={{}}
+                 selectOptions={positions} 
+                   />
+      </Col>:null}
+    
         </Row>
         {renderAccountTypeFields()} 
 

@@ -22,6 +22,7 @@ import MyOpportunities from './components/Opportunities/MyOpportunities';
 import LayoutWithoutRight from './components/Layout/LayoutWithoutRight';
 import { useRoleCheck } from './components/Auth/useRoleCheck';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
+import Test from './components/Opportunities/Test';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -52,7 +53,9 @@ function App() {
            </Route>
            {checkRole(["scout","coach","club"]) && (
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />
+          
           )}
+          <Route path='/test' element={<Test />}  />
           </>
         ):(
           <Route>

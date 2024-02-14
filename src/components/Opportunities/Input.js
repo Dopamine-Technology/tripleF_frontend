@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Col } from "react-bootstrap";
 import './style.css'
+import { Checkbox } from "antd";
 
 const Input = ({
   register,
@@ -16,7 +17,8 @@ const Input = ({
   radioOptions,
   selectOptions, 
   onChange,
-  borderRadius
+  borderRadius,
+  multiple
 }) => {
   return (
     <Form.Group as={Col} md={4} className="mb-4">
@@ -64,6 +66,7 @@ const Input = ({
         ) : type === 'select' ? (
           <Form.Control
             as="select"
+            multiple={multiple}
             size="md"
             {...register(name)}
             className={`${className}  ${
@@ -81,6 +84,7 @@ const Input = ({
                         <option value="gender">{placeholder}</option>
             {selectOptions &&
               selectOptions.map((option) => (
+                
                 <option key={option.id} value={option.id} >
                   {option.name}
                 </option>

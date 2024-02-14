@@ -135,6 +135,7 @@ function ReactionPopup({handleClose,show,id}) {
             content: (
               <>
                  <Reaction users={subReaction}/>
+ 
               </>
             ),
           },
