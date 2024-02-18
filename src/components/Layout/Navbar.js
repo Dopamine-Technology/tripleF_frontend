@@ -20,6 +20,10 @@ import Cookies from "js-cookie";
 import useAxios from "../Auth/useAxiosHook.interceptor";
 import { useNavigate } from "react-router-dom";
 import { UserDataContext } from "../UserContext/UserData.context";
+import Profile from '../../assets/imgs/profile.svg';
+import Settings from '../../assets/imgs/settings.svg';
+import Language from '../../assets/imgs/LangaugeIcon.svg';
+import signOut from '../../assets/imgs/signout.svg'
 
 function NavBar({ toggleLeftSidebar }){
 
@@ -61,18 +65,16 @@ function NavBar({ toggleLeftSidebar }){
         {
           key: "1",
           label: (
-            <Container>
-              <Col className='w-100 text-center'>
-              <Card.Img
-                variant='top'
-                src={user.userData.image}
-                style={{ width: "3.5rem", height: "3.5rem" }}
-                className='rounded-circle object-fit-cover border border-2 '
-              />
-              <p>@{user.userData.user_name}</p>
-          
-            </Col>
-            </Container>
+            <>
+            <Link
+            to='/profile'
+            className='d-flex' 
+            style={{textDecoration:'none',width:'13rem'}}
+          >
+            <img src={Profile} />
+            <p className='mt-3'>My Profile</p>
+          </Link>
+          </>
           ),
         },
     
@@ -81,10 +83,11 @@ function NavBar({ toggleLeftSidebar }){
           label: (
             <Link
             to='/profile'
-            className=' d-flex justify-content-between' 
+            className=' d-flex ' 
             style={{textDecoration:'none'}}
           >
-            All challanges <strong className='fw-semibold '>30</strong>
+            <img src={Settings} />
+            <p className='mt-3'>Settings</p>
           </Link>
           ),
         },
@@ -93,45 +96,33 @@ function NavBar({ toggleLeftSidebar }){
           label: (
             <Link
             to='/profile'
-            className='d-flex justify-content-between'
+            className=' d-flex ' 
             style={{textDecoration:'none'}}
           >
-           Followers <strong className='fw-semibold '>90</strong>
-          </Link>
-          ),
-        },
-        {
-          key: "3",
-          label: (
-            <Link
-            to='/profile'
-            className='d-flex justify-content-between'
-            style={{textDecoration:'none'}}
-          >
-           Following <strong className='fw-semibold '>120</strong>
+            <img src={Language} />
+            <p className='mt-3'>Language</p>
           </Link>
           ),
         },
         {
           key: "4",
           label: (
-            <Button
-            as={Link}
-            to={"/"}
-            className='logout w-100 text-danger border border-danger bg-white text-hover-success'
-            onClick={logout}
-            size='sm'
+            <Link
+            to='/profile'
+            className=' d-flex' 
+            style={{textDecoration:'none'}}
           >
-            <AiFillEdit /> Logout
-          </Button>
+            <img src={signOut} />
+            <p className='mt-3'>Sing Out </p>
+          </Link>
           ),
         },
+       
       ];
 
     return(
 <Navbar expand="lg" className="bg-body-tertiary " style={{boxShadow:" 0px 1px 10px rgba(181,181,181, 1)"}}>
       <Container>
-      {/* <CiMenuBurger fontSize="1.5rem" color='#979797' className="mt-3 me-5 burger-button" onClick={toggleLeftSidebar} /> */}
         <Navbar.Brand href="/home" ><img src={Logo} width='70%'  /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -146,8 +137,8 @@ function NavBar({ toggleLeftSidebar }){
          <Nav>
      <AiOutlineMessage fontSize ="1.5rem"  color='#979797' className="mt-3 me-4 " /> 
         <IoIosNotificationsOutline fontSize ="1.5rem"   color='#979797' className=" mt-3 me-5" />
-         <Dropdown menu={{ items }} >
-              <Space>
+         <Dropdown menu={{ items }}  >
+              <Space >
                  
               <div class="image-container">
     <img

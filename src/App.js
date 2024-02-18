@@ -23,6 +23,7 @@ import LayoutWithoutRight from './components/Layout/LayoutWithoutRight';
 import { useRoleCheck } from './components/Auth/useRoleCheck';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import Test from './components/Opportunities/Test';
+import TalentProfile from './components/Profile/TalentProfile/TalentProfile';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -50,11 +51,13 @@ function App() {
           <Route path='/' element={<LayoutWithoutRight />}>
           <Route path='/opportunity/list' element={<OpportunityList />} />
             <Route path='/applied/list' element={<MyOpportunities />} />
+          
            </Route>
            {checkRole(["scout","coach","club"]) && (
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />
           
           )}
+            <Route path='/profile' element={<TalentProfile />} />
           <Route path='/test' element={<Test />}  />
           </>
         ):(

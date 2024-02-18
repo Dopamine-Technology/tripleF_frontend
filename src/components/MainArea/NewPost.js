@@ -5,17 +5,21 @@ import {Button} from 'react-bootstrap';
 import { UserDataContext } from '../UserContext/UserData.context';
 import ChallengesList from '../CreateChallenge/ChallengesList';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function NewPost(){
+  
     const { user } = useContext(UserDataContext);
     const [show, setShow] = useState(false);
+    const location=useLocation();
     const navigate=useNavigate();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const profilePath = location.pathname === '/profile';
 
 return(
-<Container className='new-post '>
+<Container className='new-post ' style={{marginLeft:profilePath?'0rem':'4rem'}}>
 {user.userData.profile.type_name=="talent"?(
 <Row >
   <Col xs={12} md={6} lg={10}>

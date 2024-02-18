@@ -23,8 +23,9 @@ const Layout = () => {
           width={80}
           className="bg-transparent"
         
-          style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}
+          style={{ overflow: 'auto', height: '100vh', position: '', left: 0 }}
         >
+          
           <LeftArea isCollapsed={isLeftSidebarCollapsed} />
         </Sider>
         <AntLayout style={{ transition: 'margin-left 0.3s' }} className="AntLayout">

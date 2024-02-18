@@ -79,6 +79,11 @@ function RightArea(){
           challengeType: 'Challenge Type',
         },
         {
+          imageSrc: 'https://media.istockphoto.com/id/544358500/photo/soccer-player-man-isolated.jpg?s=612x612&w=0&k=20&c=oSE09fJUpl0H1XMgK8J9NNpwmcYAoEFfNxm-mthM1-w=',
+          username: 'Username',
+          challengeType: 'Challenge Type',
+        },
+        {
           imageSrc: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaN8kksOwben7WyX6Pws4AdKvcbho7wqgIzlIc8yrTGehS7aAJd6fPJGoSRbY6HxMphfA&usqp=CAU',
           username: 'Username',
           challengeType: 'Challenge Type',

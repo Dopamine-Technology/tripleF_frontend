@@ -1,59 +1,59 @@
-import React,{useState,useEffect} from 'react';
-import { DownOutlined } from '@ant-design/icons';
-import { Select } from 'antd';
-import useAxios from '../Auth/useAxiosHook.interceptor';
-import './style.css';
+import React, { useState, useEffect } from 'react';
+import $ from 'jquery';
+import 'select2'; 
+import 'select2/dist/css/select2.min.css'; 
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
-const MAX_COUNT = 3;
-const Test = () => {
-  const axios=useAxios();
-  const [value, setValue] = React.useState([]);
-  const [Langauge,setLanguage]=useState();
-  const [loading,setLoading]=useState(true)
-  const suffix = (
-    <>
-      <DownOutlined />
-    </>
-  );
+const SelectComponent = ({ onSelectLanguages }) => {
+  const [languages, setLanguages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get('app/languages')
-      .then((response) => {
-        setLanguage(response.data.result);
-      })
-      .catch((error) => {
-        console.error("Error fetching countries data:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    setTimeout(() => {
+      const fetchedLanguages = [
+        { id: 1, name: 'English' },
+        { id: 2, name: 'Spanish' },
+        { id: 3, name: 'French' }
+      ];
+      setLanguages(fetchedLanguages);
+      setLoading(false);
+    }, 1000);
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      $('.js-select2').select2({
+        closeOnSelect: false,
+        placeholder: '',
+        allowHtml: true,
+        allowClear: true,
+        tags: true 
+      });
+
+      // Attach onChange event listener to the select element
+      $('.js-select2').on('change', handleSelectChange);
+    }
+  }, [loading]); // Depend on loading state only
+
+  const handleSelectChange = () => {
+    const selectedLanguages = $('.js-select2').val(); // Get selected values directly from Select2
+    console.log('aya', selectedLanguages);
+    onSelectLanguages(selectedLanguages || []); // Ensure selectedLanguages is an array
+  };
 
   if (loading) {
     return <LoadingScreen />;
   }
 
   return (
-    <Select
-      mode="multiple"
-      maxCount={MAX_COUNT}
-      value={value}
-      optionActiveBg='rgba(0, 0, 0, 0.09)'
-      style={{
-        width: '83%',
-        marginTop:'0.7rem',
-        marginBottom:'0.7rem',
-      }}
-      onChange={setValue}
-      suffixIcon={suffix}
-      placeholder=""
-      options={Langauge.map((item) => ({
-        value: item.id,
-        label: item.name,
-      }))}
-    />
+    <select className="js-select2" multiple="multiple">
+      {languages.map((language) => (
+        <option key={language.id} value={language.id}>
+          {language.name}
+        </option>
+      ))}
+    </select>
   );
 };
-export default Test;
+
+export default SelectComponent;

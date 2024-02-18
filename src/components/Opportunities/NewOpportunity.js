@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useContext,useRef, useMemo} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import { useForm } from "react-hook-form";
 import Input from './Input';
 import useAxios from '../Auth/useAxiosHook.interceptor';
@@ -18,8 +18,7 @@ import JoditEditor from "jodit-react";
 import makeAnimated from 'react-select/animated';
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from 'react-router-dom';
-
-import Test from './Test';
+import SelectComponent from './Test';
 
 
 function NewOpportunity(){
@@ -33,8 +32,6 @@ function NewOpportunity(){
       } = useForm();
     
       const { user } = useContext(UserDataContext);
-
-      
       
       const axios=useAxios();
       const [positions,setPositions]=useState();
@@ -91,6 +88,17 @@ function NewOpportunity(){
         { label: "Coach", value: "3" },
       
       ];
+
+      const [receivedData, setReceivedData] = useState(null);
+      const [selectedLanguages, setSelectedLanguages] = useState([]);
+
+      const handleSelectLanguages = (languages) => {
+        setSelectedLanguages(languages); 
+      };
+  const receiveDataFromChild = (dataFromChild) => {
+    setReceivedData(dataFromChild);
+  };
+
  
 
 
@@ -156,16 +164,26 @@ const [editorContent2,setEditorContent2]=useState('');
       
 
       const onSubmit = async (data) => {
-
-        const requirementsText = convertToRaw(editorState.getCurrentContent());
-        const additionalInfoText = convertToRaw(editorState2.getCurrentContent());
         try {
           const formData = {
             ...data,
             requirements: editorContent,
-            additional_info: editorContent2
+            additional_info: editorContent2,
+            languages: selectedLanguages 
           };
-    
+          if (accountType !== '1') {
+            delete formData.position_id;
+            delete formData.foot;
+            delete formData.from_age;
+            delete formData.to_age;
+            delete formData.from_height;
+            delete formData.to_height;
+            delete formData.from_weight;
+            delete formData.to_weight;
+
+
+
+        }
       
           const response = await axios.post('opportunities/create', formData)
           .then((response) => {
@@ -441,8 +459,8 @@ const [editorContent2,setEditorContent2]=useState('');
  </Row>
  <Row>
    <Col md={4} lg={4} >
-     <label>Langauge</label>
-     <Test />
+   <label>Langauge</label>
+            <SelectComponent onSelectLanguages={handleSelectLanguages} />
 </Col>
  </Row>
  <Row>
@@ -553,7 +571,7 @@ const [editorContent2,setEditorContent2]=useState('');
         <Row>
           <Col md={4} lg={4} >
             <label>Langauge</label>
-            <Test />
+            <SelectComponent onSelectLanguages={handleSelectLanguages} />
     </Col>
         </Row>
         <Row>
@@ -672,9 +690,6 @@ const [editorContent2,setEditorContent2]=useState('');
         </Row>
         {renderAccountTypeFields()} 
 
-      
-     
-      
       <Row>
         <Col></Col>
         <Col>
