@@ -95,12 +95,12 @@ function onFilterLocationChanged(event) {
         <Input
           type='select'
           label=''
-          name='country_id'
+          name='country'
           register={register} 
           errors={errors} 
           selectOptions={countries}
           inputWidth='10rem'
-          placeholder='Location'
+          placeholder='country'
           borderRadius='18px'
           onChange={onFilterLocationChanged}
         />
@@ -109,12 +109,12 @@ function onFilterLocationChanged(event) {
         <Input
           type='select'
           label=''
-          name='position_id'
+          name='position'
           register={register}
           errors={errors}
           selectOptions={positions}
           inputWidth='10rem'
-          placeholder='Position'
+          placeholder='position'
           borderRadius='18px'
           onChange={onFilterPositionChanged}
         />

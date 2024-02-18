@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Style=Filled, Type=Default</title>
+    <g id="Profile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Profile-/-Club" transform="translate(-102, -617)" fill="#979797" fill-rule="nonzero">
+            <g id="Group-9" transform="translate(92, 476)">
+                <g id="Group-15" transform="translate(0, 135)">
+                    <g id="Style=Filled,-Type=Default" transform="translate(11.6667, 9.3333)">
+                        <path d="M16.6666667,3.83999983 L16.6666667,10.625 C16.6666667,12.0691929 15.5362873,13.2493722 14.1120195,13.3290466 L13.9583333,13.3333333 L2.70833333,13.3333333 C1.26414041,13.3333333 0.08396176,12.202954 0.0042873621,10.7786862 L-1.77635684e-15,10.625 L-1.77635684e-15,3.83999983 L8.04332892,8.0536445 C8.2249605,8.14878483 8.44170616,8.14878483 8.62333775,8.0536445 L16.6666667,3.83999983 Z M13.9583333,0 C14.8943003,0 11.1443003,0 2.70833333,0 C11.9139303,0.71217378 16.5622104,1.52426971 16.6531738,2.4362878 L8.33333333,6.7944479 L0.0134931008,2.4362878 C0.144884561,1.11892829 1.22026483,0.0795416348 2.55340457,0.00435709953" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

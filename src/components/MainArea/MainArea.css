@@ -36,9 +36,8 @@ background-color: #F2F3F4;
     flex-wrap: no-wrap;
     font-size: 16px;
     font-weight: 400;
-    padding: 0.2rem;
-    /* padding: 1.2rem;
-    padding-left: 1rem; */
+    /* padding: 0.2rem; */
+
 }
 .Pro:hover{
     cursor: pointer;
@@ -66,16 +65,10 @@ background-color: #F2F3F4;
     height: 30rem;
     width: 93%;
     border-radius: 30px;
-    padding: 1rem ;
+    margin-left: 2rem;
+    /* padding: 1rem ; */
 }
 
-.active{
-    /* color: #77DCBF !important; 
-    border-left: 3px solid #77DCBF;
-    padding-left: 1px;
-    cursor: pointer; */
-
-}
 
 .Profiles >img{
     border-radius: 10%;
@@ -206,6 +199,7 @@ font-weight: 400;
 font-style: normal;
 letter-spacing: 0px;
 text-align: left;
+margin-left: 0.6rem;
 }
 .message{
     display: grid;
@@ -267,7 +261,7 @@ text-align: left;
     padding-top: 9px;
 }
 .leftside-container{
-    margin-left:4rem;
+    margin-left:2.7rem;
     margin-top: 3rem;
     position: fixed;
 }
@@ -287,6 +281,7 @@ input[type=Mind]{
     background-color: white;
     margin-top: 2rem;
     border-radius: 10px;
+    padding: 1rem;
 
 }
 .Call{
@@ -329,6 +324,7 @@ input[type=Mind]{
     border-radius: 8px;
     opacity: 1;
     background-color: rgba(255,255,255, 1);
+
     
 }
 .Simplilearn{
@@ -479,7 +475,7 @@ text-align: left;
 }
 
 .profiles-stories{
-
+margin-top: 1rem;
 
 }
 
@@ -530,7 +526,9 @@ text-align: left;
     height: 60px;
     border-radius: 50%;
     margin-bottom: 5px;
-    border:4px solid #73CFB4;
+    box-shadow: 
+    0 0 0 3px black,
+    0 0 0 6px #73CFB4;
     
 }
 
@@ -1017,12 +1015,18 @@ user-select: none;
 @media only screen and (min-width: 1920px) and (min-height: 1080px) {
    .new-post{
     width:85%;
-    margin-left: 0rem;
+ 
    }
 }
 @media only screen and (min-width: 1366px) and (min-height: 768px) {
     .content-container{
-        margin-left: -5rem;
+        margin-left: -10rem;
+    }
+ }
+
+ @media only screen and (min-width: 1545px) and (min-height: 920px) {
+    .content-container{
+        margin-left: -13rem;
     }
  }
  @media only screen and (max-width: 1280px) and (max-height: 720px) {
@@ -1038,3 +1042,4 @@ user-select: none;
       
     }
  }
+

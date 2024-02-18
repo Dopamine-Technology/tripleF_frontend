@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Col } from "react-bootstrap";
 import './style.css'
+import { Checkbox } from "antd";
 
 const Input = ({
   register,
@@ -16,7 +17,8 @@ const Input = ({
   radioOptions,
   selectOptions, 
   onChange,
-  borderRadius
+  borderRadius,
+  multiple
 }) => {
   return (
     <Form.Group as={Col} md={4} className="mb-4">
@@ -42,7 +44,7 @@ const Input = ({
             type={type}
           />
         ) : type === 'radio' ? (
-          <div className="radio-buttons d-flex" style={{width:'20rem'}}>
+          <div className="radio-buttons d-flex" style={{width:'20rem'}}  onChange={onChange}>
             {radioOptions &&
               radioOptions.map((option) => (
                 <label
@@ -64,7 +66,8 @@ const Input = ({
         ) : type === 'select' ? (
           <Form.Control
             as="select"
-            size="lg"
+            multiple={multiple}
+            size="md"
             {...register(name)}
             className={`${className}  ${
               errors && errors[name]?.message ? "border-danger" : ""
@@ -78,9 +81,10 @@ const Input = ({
             }}
             onChange={onChange}
           >
-                        <option vlaue="">{placeholder}</option>
+                        <option value="gender">{placeholder}</option>
             {selectOptions &&
               selectOptions.map((option) => (
+                
                 <option key={option.id} value={option.id} >
                   {option.name}
                 </option>

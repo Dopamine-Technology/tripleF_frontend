@@ -13,6 +13,8 @@ import OpportunitiesIcon from '../../assets/imgs/OpportunitiesIcon.svg';
 import './Navbar.css';
 import { UserDataContext } from '../../components/UserContext/UserData.context';
 import { NavLink } from 'react-bootstrap';
+import HomeIcon from '../../assets/imgs/home.svg';
+import dropdownImg from '../../assets/imgs/dropdown.svg'
 
 function LeftArea({ isCollapsed }) {
     const [activeLink, setActiveLink] = useState(1);
@@ -31,22 +33,14 @@ function LeftArea({ isCollapsed }) {
         setIsNavLinkVisible(!isNavLinkVisible);
       };
 
-      
-
-    //   const toggleSidebar = () => {
-    //     setIsCollapsed(!isCollapsed);
-    //   };
-
 
     return(
         <div>
-      
-      {/* <CiMenuBurger onClick={toggleSidebar} className="burger-button" /> */}
         <div className={`leftside-container  ${isCollapsed ? 'collapsed' : ''}`}>
             
             <div className="Pro" onClick={() => handleNavLinkClick(1,'/home')} >
-            <IoMdHome  fontSize="1.5rem" className={`${activeLink === 1 ? 'activeLink' : 'not-active'}`}/>
-            <div >
+            <img src={HomeIcon} />
+            <div>
             {!isCollapsed && <div>Home</div>}
                 </div>
             </div>
@@ -60,26 +54,22 @@ function LeftArea({ isCollapsed }) {
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
                 <img src={scoutIcon} />
-                <div >
+                <div>
                 {!isCollapsed && <div >Scouts</div>}
                 </div>
             </div>
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             <div className="Pro" onClick={() => handleOppClick(4,'/Opportunities')} >
             <img src={OpportunitiesIcon} />
-                <div style={{fontSize:'11px'}}>
-                {user.userData.profile.type_name=="talent"?(!isCollapsed && <div >Opportunities</div>):(!isCollapsed && <div >My Opportunities</div>)}
-                
+            <div style={{fontSize:'15px'}}>
+                {user.userData.profile.type_name=="talent"?(!isCollapsed && <div > <span className='me-3'>Opportunities</span> <img src={dropdownImg} /></div>):(!isCollapsed && <div >My Opportunities <img src={dropdownImg} /> </div>)}  
                 </div>
-
             </div>
-
-            
             {isNavLinkVisible && (
         <div style={{marginLeft:'0.5rem'}} className='mt-3'>
        <div onClick={() => handleNavLinkClick(7,'/opportunity/list')} className={`Pro ${activeLink === 7 ? 'activeSubLink' : 'not-activeSub'}`}>
             
-                <div >
+                <div>
                 {!isCollapsed && <div >Find Opportunity</div>}
                 </div>
             </div>
@@ -110,7 +100,6 @@ function LeftArea({ isCollapsed }) {
            
             <br></br>
             
-
         </div>
         </div>
     )

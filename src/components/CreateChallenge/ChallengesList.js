@@ -6,6 +6,7 @@ import './style.css';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { message } from 'antd';
+import dropdownImg from '../../assets/imgs/dropdown.svg'
 
 function ChallengesList({ handleClose, show }) {
   const [loading, setLoading] = useState(true);
@@ -134,20 +135,22 @@ function ChallengesList({ handleClose, show }) {
               Select your challenge:
             </label>
             <select
-              id='challenge'
-              {...register('challenge')}
-              className='challenge-input'
-              onChange={(e) => {
-                setSelectedChallenge(e.target.value);
-              }}
-            >
-              <option value=' '></option>
-              {challenges.map((challenge) => (
-                <option key={challenge.id} value={challenge.id}>
-                  {challenge.name}
-                </option>
-              ))}
-            </select>
+    id='challenge'
+    {...register('challenge')}
+    className='challenge-input e-caret-hide'
+    arrow={false}
+    onChange={(e) => {
+        setSelectedChallenge(e.target.value);
+    }}
+
+>
+    <option value=' '></option>
+    {challenges.map((challenge) => (
+        <option key={challenge.id} value={challenge.id}>
+            {challenge.name}
+        </option>
+    ))}
+</select>
           </div>
           {renderSteps()}
         </div>

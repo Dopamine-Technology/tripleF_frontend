@@ -1,8 +1,9 @@
-import React,{useState} from 'react';
-import { Row, Col } from 'react-bootstrap';
-import { Tab, Tabs } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Row, Col, Button } from 'react-bootstrap';
+import { Tab } from 'react-bootstrap';
 import Input from './Input';
 import { useForm } from 'react-hook-form';
+
 
 function ScoutOppFilter(props) {
   const {
@@ -11,8 +12,8 @@ function ScoutOppFilter(props) {
   } = useForm();
 
   const types = [
-    { id: 'applied', name: 'applied', label: 'Applied' },
     { id: 'published', name: 'published', label: 'Published' },
+    { id: 'applied', name: 'applied', label: 'Applied' },
   ];
   const [activeTab, setActiveTab] = useState("applied");
 
@@ -22,32 +23,31 @@ function ScoutOppFilter(props) {
     setActiveTab(eventKey);
   }
 
-
-
   return (
-    <Row className=''>
+      <>
+      <Row className='m-4'>
+        <Col >
+      {types.map((type) => (
+         
+        <Button 
+          key={type.id} 
+          onClick={() => onFilterTypeChanged(type.name)}
+          style={{
+            backgroundColor: activeTab === type.name ? 'transparent' : '#F9F9F9',
+            color: activeTab === type.name ? '#5fb099' : '#A6A6A6',
+            border:'solid 1px #e1e1e1',
+            borderRadius:'0px'
+         
 
-        <Tabs
-          defaultActiveKey="applied"
-          transition={false}
-          id="filter-type-tabs"
-          onSelect={onFilterTypeChanged}
-        
+          }}
         >
-          {types.map((type) => (
-            <Tab key={type.id} eventKey={type.name} title={type.label}
-            tabClassName={
-                "fw-bold    " +
-                (activeTab === type.name
-                  ? "text-success bg-transparent border border-3 border-success border-end-0 border-top-0 border-start-0 "
-                  : "text-muted")
-              }>
-        
-            </Tab>
-          ))}
-        </Tabs>
-      
-    </Row>
+          {type.label}
+        </Button>
+    
+      ))}
+      </Col>
+      </Row>
+</>
   );
 }
 

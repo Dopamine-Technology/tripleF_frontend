@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useContext,useMemo } from 'react';
+import React,{useState,useEffect,useContext } from 'react';
 import Opportunity from './Opportunity';
 import './style.css';
 import { Row,Col} from 'react-bootstrap';
@@ -20,140 +20,35 @@ function OpportunityList(){
   const { user } = useContext(UserDataContext);
 
 
-  
-
-    const data=[
-      {
-        "id": 1,
-        "clubName": "Club Name 1",
-        "clubLogo": "https://marketplace.canva.com/EAFn79D1vQ4/1/0/1600w/canva-red-white-and-black-modern-football-club-logo-cyuklMnKVrQ.jpg",
-        "location": "1",
-        "locationName":'Afghanistan',
-        "position": "4",
-        "positionName":'Attacker',
-        "title": "Opportunity Title 1",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        "applyNowButtonText": "Apply Now",
-        "gender": "male",
-        "preferredFoot": "right",
-        "is_owned":'applied',
-        "oppStatus":'closed'
-      },
-      {
-          "id": 2,
-          "clubName": "Club Name 2",
-          "clubLogo": "https://marketplace.canva.com/EAFn79D1vQ4/1/0/1600w/canva-red-white-and-black-modern-football-club-logo-cyuklMnKVrQ.jpg",
-          "location": "3",
-        "locationName":'Albania',
-          "position": "Mid Fielder",
-          "positionName":'Mid Fielder',
-          "title": "Opportunity Title 2",
-          "description": "Another opportunity description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-          "applyNowButtonText": "Apply Now",
-          "gender": "female",
-          "preferredFoot": "left",
-          "is_owned":'published',
-          "oppStatus":'opened'
-        },
-        {
-          "id": 3,
-          "clubName": "Club Name 3",
-          "clubLogo": "https://marketplace.canva.com/EAFn79D1vQ4/1/0/1600w/canva-red-white-and-black-modern-football-club-logo-cyuklMnKVrQ.jpg",
-          "location": "3",
-          "locationName":'Algeria',
-          "position": "2",
-          "positionName":'Defender',
-          "positionName":'',
-          "title": "Opportunity Title 3",
-          "description": "Yet another opportunity description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-          "applyNowButtonText": "Apply Now",
-          "gender": "female",
-          "preferredFoot": "left",
-          "is_owned":'published',
-          "oppStatus":'closed'
-        },     
-         {
-            "id": 4,
-            "clubName": "Club Name 4",
-            "clubLogo": "https://marketplace.canva.com/EAFn79D1vQ4/1/0/1600w/canva-red-white-and-black-modern-football-club-logo-cyuklMnKVrQ.jpg",
-            "location": "4",
-            "locationName":'Andorra',
-            "position": "1",
-            "positionName":'Goalkeeper',
-            "title": "Opportunity Title 4",
-            "description": "Yet another opportunity description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            "applyNowButtonText": "Apply Now",
-            "gender": "male",
-            "preferredFoot": "right",
-            "is_owned":'applied',
-            "oppStatus":'opened'
-
-          }
-          ,   
-         {
-            "id": 5,
-            "clubName": "Club Name 5",
-            "clubLogo": "https://marketplace.canva.com/EAFn79D1vQ4/1/0/1600w/canva-red-white-and-black-modern-football-club-logo-cyuklMnKVrQ.jpg",
-            "location": "4",
-            "locationName":'Andorra',
-            "position": "1",
-            "positionName":'Goalkeeper',
-            "title": "Opportunity Title 4",
-            "description": "Yet another opportunity description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            "applyNowButtonText": "Apply Now",
-            "gender": "male",
-            "preferredFoot": "right",
-            "is_owned":'applied',
-            "oppStatus":'opened'
-          },
-          {
-            "id": 6,
-            "clubName": "Club Name 6",
-            "clubLogo": "https://marketplace.canva.com/EAFn79D1vQ4/1/0/1600w/canva-red-white-and-black-modern-football-club-logo-cyuklMnKVrQ.jpg",
-            "location": "4",
-            "locationName":'Andorra',
-            "position": "1",
-            "positionName":'Goalkeeper',
-            "title": "Opportunity Title 4",
-            "description": "Yet another opportunity description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            "applyNowButtonText": "Apply Now",
-            "gender": "male",
-            "is_owned":'published',
-            "oppStatus":'opened'
-          }
-      ]
-
-       
-
-     
-
       const axios=useAxios();
       const [opportunities,setOpportunities]=useState();
-      const[newDataList,setNewDataList]=useState(data);
-      const [filterTextValue,setFilterTextValue]=useState('preferredFoot');
-      const [filterTextGender,setFilterTextGender]=useState('gender');
+      const [newDataList,setNewDataList] = useState([]);
+      const [filterTextValue,setFilterTextValue]=useState('');
+      const [filterTextGender,setFilterTextGender]=useState('');
       const [filterTextType,setFilterTextType]=useState('');
       const [filterTextPosition,setFilterTextPosition]=useState('position');
-      const [filteredListPosition,setFilteredListPosition]=useState(data);
+      const [filteredListPosition,setFilteredListPosition]=useState(opportunities);
       const [filterTextCountry, setFilterTextCountry] = useState('');
       const itemsPerPage = 5;
       const [currentPage, setCurrentPage] = useState(1);
-      const prevLocation = useMemo(() => location, [location]);
+  
     
       const indexOfLastItem = currentPage * itemsPerPage;
       const indexOfFirstItem = indexOfLastItem - itemsPerPage;
       const currentItems = filteredListPosition?.slice(indexOfFirstItem, indexOfLastItem);
     
       const paginate = (pageNumber) => setCurrentPage(pageNumber);
+ 
 
-
-
-      const applyFilters = () => {
+  const applyFilters = () => {
         let filteredList = newDataList?.filter((singleData) => {
-          if (filterTextValue === 'right' && singleData.preferredFoot !== 'right') {
+          if (filterTextValue === 'right' && singleData.foot !== 'right') {
             return false;
           }
-          if (filterTextValue === 'left' && singleData.preferredFoot !== 'left') {
+          if (filterTextValue === 'left' && singleData.foot !== 'left') {
+            return false;
+          }
+          if (filterTextValue === 'both' && singleData.preferredFoot !== 'both') {
             return false;
           }
     
@@ -163,29 +58,19 @@ function OpportunityList(){
           if (filterTextGender === 'female' && singleData.gender !== 'female') {
             return false;
           }
-
-          if (filterTextType === 'applied' && singleData.is_owned !== 'applied') {
-            return false;
-          }
-          if (filterTextType === 'published' && singleData.is_owned !== 'published') {
-            return false;
-          }
           if (
-            (filterTextPosition === '1' && singleData.position !== '1') ||
-            (filterTextPosition === '2' && singleData.position !== '2') ||
-            (filterTextPosition === '3' && singleData.position !== '3') ||
-            (filterTextPosition === '4' && singleData.position !== '4')
+            (filterTextPosition == '1' && singleData.position.id != '1') ||
+            (filterTextPosition == '2' && singleData.position.id != '2') ||
+            (filterTextPosition == '3' && singleData.position.id != '3') ||
+            (filterTextPosition == '4' && singleData.position.id != '4')
           )
           return false;
-          if (filterTextCountry && singleData.location.toLowerCase() !== filterTextCountry.toLowerCase()) {
+          if (filterTextCountry && singleData.country.id != filterTextCountry) {
             return false;
           }
-   
           {
             return singleData;
           }
-        
-    
           return true;
         });
     
@@ -193,18 +78,20 @@ function OpportunityList(){
       };
 
       useEffect(() => {
-        // Apply filters when filterTextValue, filterTextGender, filterTextPosition, or any other relevant filters change
+        
         const filteredList = applyFilters();
-        setFilteredListPosition(filteredList); // Update state with the filtered list
+        setFilteredListPosition(filteredList); 
       }, [filterTextValue, filterTextGender, filterTextPosition,filterTextCountry,filterTextType]);
       
    
 
       const onFilterValueSelected =(filterValue)=>{
+        console.log('filtervalue',filterValue);
         setFilterTextValue(filterValue);
       }
 
       const onFilterGenderSelected =(filterValue)=>{
+        console.log('filtervalue',filterValue);
         setFilterTextGender(filterValue);
       }
       const onFilterTypeSelected =(filterValue)=>{
@@ -217,12 +104,15 @@ function OpportunityList(){
         setFilterTextCountry(filterValue);
       };
 
+      
+
       useEffect(() => {
     
         const fetchOppData = async () => {
           try {
-            const response = await axios.get('opportunities/get');
+            const response = await axios.get('opportunities/find');
             setOpportunities(response.data.result);
+            setNewDataList(response.data.result);
            
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -231,6 +121,12 @@ function OpportunityList(){
         fetchOppData()
         
       }, []);
+
+      useEffect(() => {
+        // Set filteredListPosition to the full list of opportunities when component mounts
+        setFilteredListPosition(opportunities || []);
+      }, [opportunities]);
+
 
 
 
@@ -248,8 +144,7 @@ function OpportunityList(){
 </Col>
 
 <Col lg={1}></Col>
-
-{user.userData.profile.type_name=="talent"?(null):(<Col lg={3} ><Button className='share-btn' onClick={() => {navigate('/add/opportunity')}}>Add Opportunity</Button>
+{user.userData.profile.type_name=="talent"?(null):(<Col lg={3} ><Button className='share-btn' onClick={() => {navigate('/home/add/opportunity')}}>Add Opportunity</Button>
 </Col>)}
 
 
@@ -269,21 +164,25 @@ function OpportunityList(){
           )}
        
         <Row>
+          {console.log('cuure',currentItems)}
         {currentItems?.map((opportunity) => (
           <Opportunity key={opportunity.id} data={opportunity} />
         ))}
         </Row>
         <Row>
-        <Pagination className="center-icon mt-4">
-           {Array.from({ length: Math.ceil(filteredListPosition.length / itemsPerPage) }).map((_, index) => (
-            <Pagination.Item key={index + 1} onClick={() => paginate(index + 1)}>
-              {index + 1}
-            </Pagination.Item>
-          ))} 
-        </Pagination>
+        {filteredListPosition && filteredListPosition.length > 0 && (
+  <Pagination className="center-icon mt-4">
+    {Array.from({ length: Math.ceil(filteredListPosition.length / itemsPerPage) }).map((_, index) => (
+      <Pagination.Item key={index + 1} onClick={() => paginate(index + 1)}>
+        {index + 1}
+      </Pagination.Item>
+    ))} 
+  </Pagination>
+)}
         </Row>
         </div>
     )
 }
 
 export default OpportunityList;
+
