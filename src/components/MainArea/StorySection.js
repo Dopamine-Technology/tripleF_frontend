@@ -27,7 +27,6 @@ function StorySection() {
         { user_name: 'Username', image: 'https://media.istockphoto.com/id/1134378235/photo/side-view-of-one-young-woman.jpg?s=612x612&w=0&k=20&c=LT7aIbWRK7-rlDq7O4_7kZBw6m5YzvyTkc8NRwqh2Lc=' },
         { user_name: 'Username', image: 'https://i2-prod.leicestermercury.co.uk/sport/football/football-news/article4555526.ece/ALTERNATES/s1200c/0_Daniel-Amartey-22.jpg' },
         { user_name: 'Username', image: 'https://www.cricwindow.com/images/australia/michael-clarke.jpg' },
-
     ];
     const stories3 = [
       {
