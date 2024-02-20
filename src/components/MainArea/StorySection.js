@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import { FaPlus } from "react-icons/fa6";
 import useAxios from "../Auth/useAxiosHook.interceptor";
 import Stories from 'stories-react';
@@ -7,13 +7,15 @@ import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import {Col,Row} from 'react-bootstrap';
 import close from '../../assets/imgs/close.svg';
-
+import { UserDataContext } from '../UserContext/UserData.context';
 
 function StorySection() {
     const [timlineStories,setTimelineStories]=useState();
     const [selectedStory, setSelectedStory] = useState(null);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
+    const [showUserList, setShowUserList] = useState(true);
+    const { user } = useContext(UserDataContext);
 
     const axios=useAxios();
 
@@ -70,53 +72,58 @@ function StorySection() {
         setSelectedStory(index); 
         setShow(true)
       };
+      const handleCloseList = () => {
+        setShowUserList(false);
+    };
     
     return (
-        <div className="story-section">
-            <div className="story-container">
-            <div className="story" onClick={() => handleStoryClick(null)}>
-                        <img src='https://thumbs.dreamstime.com/b/portrait-father-son-football-54984814.jpg' alt="Story" style={{border:'white'}} />
-                        <div className="plus-sign"><FaPlus style={{marginBottom:'8px'}} /></div>
-            </div>
-                {stories2?.map((story, index) => (
-                    <div className="story" key={index} onClick={() => handleStoryClick(index)}>
-                        <img src={story.image!=''?story.image:story.social_image} alt="Story" />
-                        <span>{story.user_name}</span>
-                    </div>
-                ))}
-            </div>
-            <Modal show={show} onHide={handleClose} size="xl">
-
-            <Modal.Body style={{ backgroundColor: 'black' }}>
-  <Row className='row-profiles'>
-    <Col sm={6} lg={4} className='bg-white h-100 m-0 p-0'>
-      <div className="user-list" >
-        <img src={close} className='mb-4' style={{marginLeft:'1.5rem',marginTop:'2rem'}} onClick={handleClose}/>
-        <p className='all-challenges'>All Challenges</p>
-        {stories2.map((story, index) => (
-          <div className="profiles-stories d-flex" key={index}>
-            <img src={story.image} alt="Story" />
-            <div className='time-username'>
-              <span className='username'>{story.user_name}</span>
-              <span className='time'>2 Hours ago</span>
-            </div>
+      <div className="story-section">
+      <div className="story-container">
+          <div className="story" onClick={() => handleStoryClick(null)}>
+              <img src={user.userData.image} alt="Story" style={{ border: 'white' }} />
+              <span>Me</span>
           </div>
-        ))}
+          {stories2?.map((story, index) => (
+              <div className="story" key={index} onClick={() => handleStoryClick(index)}>
+                  <img src={story.image != '' ? story.image : story.social_image} alt="Story" />
+                  <span>{story.user_name}</span>
+              </div>
+          ))}
       </div>
-    </Col>
-    <Col sm={6} lg={8} style={{ backgroundColor: 'black', display: 'flex', justifyContent: 'center',marginTop:'2rem' }}>
-      <Stories
-        width="400px"
-        height="600px"
-        stories={selectedStory !== null ? [stories2[selectedStory], ...stories3] : timlineStories}
-      />
-    </Col>
-  </Row>
-</Modal.Body>
-</Modal>
-
-        </div>
+      <Modal show={show} onHide={() => setShow(false)} size={showUserList ? "xl" : "md"}>
+          <Modal.Body style={{ backgroundColor: 'black' }}>
+              <Row className='row-profiles'>
+                  {showUserList && (
+                      <Col sm={6} lg={4} className='bg-white h-100 m-0 p-0'>
+                          <div className="user-list" >
+                              <img src={close} className='mb-4' style={{ marginLeft: '1.5rem', marginTop: '2rem' }} onClick={handleCloseList} />
+                              <p className='all-challenges'>All Challenges</p>
+                              {stories2.map((story, index) => (
+                                  <div className="profiles-stories d-flex" key={index}>
+                                      <img src={story.image} alt="Story" />
+                                      <div className='time-username'>
+                                          <span className='username'>{story.user_name}</span>
+                                          <span className='time'>2 Hours ago</span>
+                                      </div>
+                                  </div>
+                              ))}
+                          </div>
+                      </Col>
+                  )}
+                  <Col sm={6} lg={8} style={{ backgroundColor: 'black', display: 'flex', justifyContent: 'center', marginTop: '2rem',marginLeft:showUserList ? "" : "5rem" }}>
+                      <Stories
+                          width="500px"
+                          height="700px"
+                          stories={selectedStory !== null ? [stories2[selectedStory], ...stories3] : timlineStories}
+                
+                      />
+                  </Col>
+              </Row>
+          </Modal.Body>
+      </Modal>
+  </div>
     );
 }
 
 export default StorySection;
+
