@@ -58,6 +58,9 @@ function OpportunityList(){
           if (filterTextGender === 'female' && singleData.gender !== 'female') {
             return false;
           }
+          if (filterTextGender === 'other' && singleData.gender !== 'other') {
+            return false;
+          }
           if (
             (filterTextPosition == '1' && singleData.position.id != '1') ||
             (filterTextPosition == '2' && singleData.position.id != '2') ||

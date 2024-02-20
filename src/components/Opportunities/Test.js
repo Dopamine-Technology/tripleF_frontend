@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import $ from 'jquery';
 import 'select2'; 
 import 'select2/dist/css/select2.min.css'; 
@@ -7,6 +7,8 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen';
 const SelectComponent = ({ onSelectLanguages }) => {
   const [languages, setLanguages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const selectRef = useRef(null); // Ref for the select element
+  const select2InstanceRef = useRef(null); // Ref for the select2 instance
 
   useEffect(() => {
     setTimeout(() => {
@@ -22,23 +24,28 @@ const SelectComponent = ({ onSelectLanguages }) => {
 
   useEffect(() => {
     if (!loading) {
-      $('.js-select2').select2({
+      const selectElement = $(selectRef.current);
+      select2InstanceRef.current = selectElement.select2({
         closeOnSelect: false,
         placeholder: '',
         allowHtml: true,
         allowClear: true,
         tags: true 
-      });
-
-      // Attach onChange event listener to the select element
-      $('.js-select2').on('change', handleSelectChange);
+      }).on('change', handleSelectChange);
     }
-  }, [loading]); // Depend on loading state only
+
+    // Cleanup Select2 instance when component unmounts
+    return () => {
+      if (select2InstanceRef.current) {
+        select2InstanceRef.current.select2('destroy');
+      }
+    };
+  }, [loading]);
 
   const handleSelectChange = () => {
-    const selectedLanguages = $('.js-select2').val(); // Get selected values directly from Select2
+    const selectedLanguages = $(selectRef.current).val(); 
     console.log('aya', selectedLanguages);
-    onSelectLanguages(selectedLanguages || []); // Ensure selectedLanguages is an array
+    onSelectLanguages(selectedLanguages || []); 
   };
 
   if (loading) {
@@ -46,7 +53,7 @@ const SelectComponent = ({ onSelectLanguages }) => {
   }
 
   return (
-    <select className="js-select2" multiple="multiple">
+    <select ref={selectRef} className="js-select2" multiple="multiple">
       {languages.map((language) => (
         <option key={language.id} value={language.id}>
           {language.name}

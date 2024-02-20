@@ -14,7 +14,7 @@ import useAxios from '../Auth/useAxiosHook.interceptor';
 import { message } from 'antd';
 
 
-function Opportunity({data }){
+function Opportunity({data}){
 
     const location = useLocation();
     const isAppliedPath = location.pathname === '/applied/list';
@@ -61,7 +61,7 @@ function Opportunity({data }){
        <div className='d-flex'>
                                     <p className='me-5 blog-sub'>{data.country.name}
                                     <RxDividerVertical color="gray" size={30} className='' />
-                                     {data.position.name}
+                                    {data.position && data.position.name}
                                     </p>
         </div>
        </p> 
@@ -105,7 +105,7 @@ function Opportunity({data }){
 <div className="opp-container ">
        <h5 className='postOpp-title'>{data.title}</h5>
    
-        <p className='postOpp-desc' > {displayDescription}
+        <p className='postOpp-desc'> {displayDescription}
         {
             isExpanded?(
                 <div className='mt-4'>

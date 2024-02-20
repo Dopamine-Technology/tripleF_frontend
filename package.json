@@ -37,6 +37,7 @@
     "react-scripts": "^3.0.1",
     "react-select": "^5.8.0",
     "react-share": "^5.0.3",
+    "react-spinners": "^0.13.8",
     "select2": "^4.1.0-rc.0",
     "stories-react": "^1.1.2",
     "web-vitals": "^2.1.4",

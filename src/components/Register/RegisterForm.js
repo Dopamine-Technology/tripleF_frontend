@@ -568,7 +568,7 @@ function RegisterForm() {
   
                 <div className='form-group'>
   <label htmlFor="position">Position:</label>
-  <select id="position" {...register('parent_position')} onChange={(e) => handlePositionSelect(e.target.value)}>
+  <select id="position" {...register('parent_position')} onChange={(e) => handlePositionSelect(e.target.value)} >
     {positions?.map(position => (
       <option key={position.id} value={position.id}>
         {position.name}
@@ -578,18 +578,18 @@ function RegisterForm() {
 
 </div>
 
-                {subPositions?.length > 0 && (
-        <div className='form-group'>
-          <label htmlFor="subPosition">Sub Positions:</label>
-          <select id="subPosition" {...register('position')}>
-            {subPositions?.map(subPosition => (
-              <option key={subPosition.id} value={subPosition.id}>
-                {subPosition.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+{subPositions?.length > 0 && (
+  <div className='form-group'>
+    <label htmlFor="subPosition">Sub Positions:</label>
+    <select id="subPosition" {...register('position')} multiple>
+      {subPositions?.map(subPosition => (
+        <option key={subPosition.id} value={subPosition.id}>
+          {subPosition.name}
+        </option>
+      ))}
+    </select>
+  </div>
+)}
           <div className='form-group'>
   <label>Gender:</label>
   <div className="radio-buttons">
@@ -604,7 +604,7 @@ function RegisterForm() {
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">Other</span>
+      <span className="label">rather not to say</span>
       <input type="radio" id="other" value="other" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
@@ -723,7 +723,7 @@ function RegisterForm() {
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">Other</span>
+      <span className="label">rather not to say</span>
       <input type="radio" id="other" value="other" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
@@ -844,7 +844,7 @@ function RegisterForm() {
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">Other</span>
+      <span className="label">rather not to say</span>
       <input type="radio" id="other" value="other" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
@@ -1091,8 +1091,8 @@ function RegisterForm() {
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">Other</span>
-      <input type="radio" id="other" value="other" {...register('gender')} />
+      <span className="label">rather not to say</span>
+      <input type="radio" id="other" value="other" {...register('gender')} className='w-100' />
       <span className="checkmark"></span>
     </label>
   </div>

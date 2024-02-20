@@ -33,7 +33,7 @@ const Input = ({
             backgroundColor: "#1A2A44",
             border: "1px solid white",
             color: "white",
-            width: "33rem", // Adjust the width here
+            width: "33rem", 
           }}
           placeholder={placeholder}
         />
@@ -48,7 +48,7 @@ const Input = ({
             backgroundColor: "#1A2A44",
             border: "1px solid white",
             color: "white",
-            width: "15rem", // Adjust the width here
+            width: "15rem", 
           }}
           placeholder={placeholder}
           type={type}

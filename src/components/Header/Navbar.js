@@ -19,6 +19,8 @@ import Ar from '../../assets/imgs/Ar.png';
 import En from '../../assets/imgs/en.jpg';
 import LanguageIcon from '../../assets/imgs/langauge-icon.png';
 import profileIcon from '../../assets/imgs/profile-icon.svg';
+import ArrowDownImage from '../../assets/imgs/dropdownWhite.svg';
+
 
 
 const TopNavbar = ({content}) => {
@@ -43,15 +45,14 @@ const TopNavbar = ({content}) => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto" style={{marginRight:'-6rem'}}>
           </Nav>
-          <Nav className='right-nav' >
+          <Nav className='right-nav'>
       
           <DropdownButton
   title={
     <div className='d-flex align-items-center'>
-      {/* <GrLanguage color='white' className='me-1' /> */}
       <img src={LanguageIcon} width='24px' height= '24px' className='me-1' />
       <span className='text-white'>{currentLanguage}</span>
-      <BiChevronDown className='ml-1' style={{ color: 'white' }} />
+      <img src={ArrowDownImage} width='24px' height= '24px' className='ms-1 mt-1' />
     </div>
   }
   id="language-dropdown"

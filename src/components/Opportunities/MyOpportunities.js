@@ -211,7 +211,8 @@ function OpportunityList(){
 
 
           <Row>
-       <ScoutOppFilter filterTypeSelected={onFilterTypeSelected} />
+            {user.userData.profile.type_name=="scout"?( <ScoutOppFilter filterTypeSelected={onFilterTypeSelected} />):null}
+      
        </Row>
   
        

@@ -23,8 +23,7 @@ function TalentProfile(){
             <Col md={6} lg={8} xs={12}>
                 <NewPost />
                 {
-
-user.userData.profile.type_name=='talent'? <Post />:null
+                user.userData.profile.type_name=='talent'? <Post />:<Post />
                 }
             
                 </Col>

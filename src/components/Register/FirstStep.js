@@ -90,13 +90,7 @@ function FirstStep({onSubmit}) {
             <img src={facebook} alt='search' className='me-2' />
             Sign up with Facebook
           </Button>
-          
-          {/* <FacebookLogin
-appId="693137086287841"
-autoLoad={true}
-fields="name,email,picture"
-callback={responseFacebook} /> */}
-          
+
           <div style={{ display: 'flex', alignItems: 'center' }}>
 <hr className='mt-4' style={{width:'24%',color:'#DADADA'}} />
 

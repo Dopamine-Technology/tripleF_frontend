@@ -28,7 +28,7 @@ const Input = ({
       <div className="position-relative me-2">
         {type === 'text' || type === 'number' ? (
           <Form.Control
-            size="lg"
+            size="md"
             {...register(name)}
             className={`${className}  ${
               errors && errors[name]?.message ? "border-danger" : ""
@@ -52,14 +52,16 @@ const Input = ({
                   className="custom-radio-btn3 bg-white"
                  
                 >
-                  <span className="label2">{option.label}</span>
+                  <span className="label2 " style={{marginLeft:'0.6rem'}}>{option.label}</span>
                   <input
                     type="radio"
                     id={option.value}
                     value={option.value}
                     {...register(name)}
+                 
+               
                   />
-                  <span className="checkmark"></span>
+                  <span className="checkmark" style={{marginLeft:'0.4rem'}} ></span>
                 </label>
               ))}
           </div>
@@ -67,7 +69,7 @@ const Input = ({
           <Form.Control
             as="select"
             multiple={multiple}
-            size="md"
+            size="sm"
             {...register(name)}
             className={`${className}  ${
               errors && errors[name]?.message ? "border-danger" : ""

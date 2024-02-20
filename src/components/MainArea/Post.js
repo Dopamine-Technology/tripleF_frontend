@@ -16,6 +16,9 @@ import savedIcon from '../../assets/imgs/Saved.svg';
 import ShareIcon from '../../assets/imgs/Share.svg';
 import OpportunityPost from '../Opportunities/OpportunityPost';
 import TimlinePost from '../Post/TimlinePost';
+import copyLink from '../../assets/imgs/copyLink.svg';
+import notInterested from '../../assets/imgs/notInterested.svg';
+import report from '../../assets/imgs/Report.svg';
 
 
 function Post(){
@@ -111,21 +114,22 @@ function Post(){
             <p className='post-username'>{post.user.user_name} <br /> <p className='post-time'>{post.created_at}</p></p> 
          
         </div>
-        <Dropdown>
+        <Dropdown >
       <Dropdown.Toggle variant=""  className="edit">
          <BsThreeDotsVertical fontSize="1.5rem"  />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="" className='p-2' ><FaRegCopy className='me-2' />Copy link to Post</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' />I don’t want to see this</Dropdown.Item>
+      <Dropdown.Menu style={{width:'14rem'}}>
+        <Dropdown.Item href="" className='p-2' ><img src={copyLink} className='me-2' />Copy link to Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'> <img src={notInterested} className='me-2' />I don’t want to see <br /> this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2' ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' ><img src={report} className='me-2' />Report Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>
 
     {post.is_opp?   <OpportunityPost post={post} />:<TimlinePost post={post}/>}
+
 
 
     

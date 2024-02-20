@@ -21,9 +21,9 @@ function FiliterOption(props) {
   const [loading, setLoading] = useState(true);
   const [countries, setCountries] = useState([]);
   const genderOptions = [
-    { id: 'female', name: 'female' },
-    { id: 'male', name: 'male' },
-    // { id: 'both', name: 'both' },
+    { id: 'female', name: 'female'},
+    { id: 'male', name: 'male'},
+    { id: 'other', name: 'rather not to say'},
   ];
   const preferredFoot = [
     { id: 'right', name: 'right' },
@@ -87,7 +87,6 @@ function onFilterLocationChanged(event) {
 }
 
 
- 
 
   return (
     <Row className='' style={{ marginLeft: '1rem' }}>

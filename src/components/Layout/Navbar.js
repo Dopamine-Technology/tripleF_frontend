@@ -1,7 +1,7 @@
 import React,{useContext} from "react";
 // import './Navbar.css'
 import { IoIosNotificationsOutline } from "react-icons/io";
-import Logo from '../../assets/imgs/Logo.svg'
+import Logo from '../../assets/imgs/Logo.png'
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdArrowDropDown } from "react-icons/md";
 import { AiOutlineMessage } from "react-icons/ai";
@@ -23,7 +23,8 @@ import { UserDataContext } from "../UserContext/UserData.context";
 import Profile from '../../assets/imgs/profile.svg';
 import Settings from '../../assets/imgs/settings.svg';
 import Language from '../../assets/imgs/LangaugeIcon.svg';
-import signOut from '../../assets/imgs/signout.svg'
+import signOut from '../../assets/imgs/signout.svg';
+import ChatIcon from '../../assets/imgs/chatIcon.png'
 
 function NavBar({ toggleLeftSidebar }){
 
@@ -123,7 +124,7 @@ function NavBar({ toggleLeftSidebar }){
     return(
 <Navbar expand="lg" className="bg-body-tertiary " style={{boxShadow:" 0px 1px 10px rgba(181,181,181, 1)"}}>
       <Container>
-        <Navbar.Brand href="/home" ><img src={Logo} width='70%'  /></Navbar.Brand>
+        <Navbar.Brand href="/home" ><img src={Logo} width='40%'  /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -135,8 +136,9 @@ function NavBar({ toggleLeftSidebar }){
          
           </Nav>
          <Nav>
-     <AiOutlineMessage fontSize ="1.5rem"  color='#979797' className="mt-3 me-4 " /> 
-        <IoIosNotificationsOutline fontSize ="1.5rem"   color='#979797' className=" mt-3 me-5" />
+          {/* <img src={ChatIcon} /> */}
+     <AiOutlineMessage style={{width: '24px',height: '24px'}}  color='#979797' className="mt-3 me-4 " /> 
+        <IoIosNotificationsOutline style={{width: '24px',height: '24px'}}  color='#979797' className=" mt-3 me-4" />
          <Dropdown menu={{ items }}  >
               <Space >
                  

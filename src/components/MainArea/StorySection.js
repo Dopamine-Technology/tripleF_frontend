@@ -6,12 +6,13 @@ import 'stories-react/dist/index.css';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import {Col,Row} from 'react-bootstrap';
+import close from '../../assets/imgs/close.svg';
+
 
 function StorySection() {
     const [timlineStories,setTimelineStories]=useState();
     const [selectedStory, setSelectedStory] = useState(null);
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
 
     const axios=useAxios();
@@ -84,35 +85,36 @@ function StorySection() {
                     </div>
                 ))}
             </div>
-      <Modal show={show} onHide={handleClose} size="lg">
-  
-        <Modal.Body style={{backgroundColor:'black'}}  >
-        <Row>
-  <Col sm={6} lg={4} style={{backgroundColor:'white'}} >
-   
-    {stories2.map((story, index) => (
-      <div className="profiles-stories d-flex" key={index} onClick={() => handleStoryClick(index)}>
-        <img src={story.image} alt="Story" />
-        <div className='time-username'>
-        <span className='username'>{story.user_name}</span>
-        <span className='time'>2 Hours ago</span>
-        </div>
-      </div>
-    ))}
-  </Col>
-  <Col sm={6} lg={8}  style={{backgroundColor:'black'}}>
+            <Modal show={show} onHide={handleClose} size="xl">
 
-    <Stories
-      width="450px"
-      height="600px"
-      stories={selectedStory !== null ? [stories2[selectedStory], ...stories3] : timlineStories}
-   
-    />
-  </Col>
-</Row>
-        </Modal.Body>
-    
-      </Modal>
+            <Modal.Body style={{ backgroundColor: 'black' }}>
+  <Row className='row-profiles'>
+    <Col sm={6} lg={4} className='bg-white h-100 m-0 p-0'>
+      <div className="user-list" >
+        <img src={close} className='mb-4' style={{marginLeft:'1.5rem',marginTop:'2rem'}} onClick={handleClose}/>
+        <p className='all-challenges'>All Challenges</p>
+        {stories2.map((story, index) => (
+          <div className="profiles-stories d-flex" key={index}>
+            <img src={story.image} alt="Story" />
+            <div className='time-username'>
+              <span className='username'>{story.user_name}</span>
+              <span className='time'>2 Hours ago</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Col>
+    <Col sm={6} lg={8} style={{ backgroundColor: 'black', display: 'flex', justifyContent: 'center',marginTop:'2rem' }}>
+      <Stories
+        width="400px"
+        height="600px"
+        stories={selectedStory !== null ? [stories2[selectedStory], ...stories3] : timlineStories}
+      />
+    </Col>
+  </Row>
+</Modal.Body>
+</Modal>
+
         </div>
     );
 }

@@ -19,6 +19,7 @@ import makeAnimated from 'react-select/animated';
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import SelectComponent from './Test';
+import { BounceLoader } from 'react-spinners';
 
 
 function NewOpportunity(){
@@ -75,7 +76,7 @@ function NewOpportunity(){
       const genderOptions = [
         { label: "Male", value: "male" },
         { label: "Female", value: "female" },
-        { label: "Other", value: "other" },
+        { label: "rather not to say", value: "other" },
       ];
       const preferredFoot = [
         { label: "Right", value: "Right" },
@@ -241,7 +242,7 @@ const [editorContent2,setEditorContent2]=useState('');
                       name="from_age"
                       label="Age from"
                       placeholder=""
-                      className="form-control form-control-sm rounded"
+                      className="form-control form-control-sm rounded mt-1"
                       validation={{ validate: validateToGreaterThanFrom('age') }}
                       type="number"
                       inputWidth="6rem"
@@ -257,7 +258,7 @@ const [editorContent2,setEditorContent2]=useState('');
                       name="to_age"
                       label="to"
                       placeholder=""
-                      className="form-control form-control-sm rounded"
+                      className="form-control form-control-sm rounded mt-1"
                       validation={{
                         validate: validateToGreaterThanFrom('age'),
                       }}
@@ -383,12 +384,12 @@ const [editorContent2,setEditorContent2]=useState('');
       
       </Col>
       <Col md={4} col={4}></Col>
-      
+
             </Row>
             <Row>
              
               <Col md={8} col={8}>
-            <Form.Label className={`text-capitalize text-black label2`}>
+            <Form.Label className={`text-capitalize text-black label2 mt-3`}>
             Additional Information
             </Form.Label>
            
@@ -630,7 +631,7 @@ const [editorContent2,setEditorContent2]=useState('');
     
 
       if (loading) {
-        return <LoadingScreen />;
+        return  <LoadingScreen  />;
       }
 
 
@@ -654,7 +655,7 @@ const [editorContent2,setEditorContent2]=useState('');
                         name="title"
                         label="Opportunitie Title"
                         placeholder=''
-                        className="form-control form-control-sm rounded me-4"
+                        className="form-control form-control-sm rounded me-4 mt-1"
                         validation={{}}
                         type="text"
           
@@ -684,6 +685,7 @@ const [editorContent2,setEditorContent2]=useState('');
                  register={register} 
                  errors={{}}
                  selectOptions={positions} 
+                 className='mt-1'
                    />
       </Col>:null}
     

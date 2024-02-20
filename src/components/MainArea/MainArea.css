@@ -276,7 +276,7 @@ input[type=Mind]{
     box-sizing: border-box;
 }
 .text{
-    width: 88%;
+    width: 93%;
     box-shadow: 0px 2px 12px rgba(218,218,218, 0.5);
     background-color: white;
     margin-top: 2rem;
@@ -316,7 +316,7 @@ input[type=Mind]{
     box-shadow: 0px 2px 12px rgba(218,218,218, 0.5);
 }
 .post-continer{
-    margin-left: 4rem;
+    margin-left: 3.2rem;
 }
 .poster{
     display: flex;
@@ -342,7 +342,7 @@ input[type=Mind]{
     padding-left: 20px;
 }
 .edit{
-    margin: 1.8rem;
+    margin: 1rem;
 }
 .caption{
     font-size: 1rem;
@@ -475,7 +475,8 @@ text-align: left;
 }
 
 .profiles-stories{
-margin-top: 1rem;
+/* margin-top: 1rem; */
+margin-left: 2rem;
 
 }
 
@@ -841,6 +842,20 @@ user-select: none;
     
     border-radius: 5px;
 }
+.all-challenges{
+    width: 116px;
+    height: 23px;
+    /* margin: 24px 163px 13px 71px; */
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #464646;
+}
 
 .like > h3 {
     font-size: 13px;
@@ -965,7 +980,10 @@ user-select: none;
     background-color: #3A3B3C;
     border-radius: 5px;
 }
-
+.row-profiles{
+    --bs-gutter-x: 2rem;
+    --bs-gutter-y:1rem
+}
 .transparent__submit {
     display: none;
 }
