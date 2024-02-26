@@ -34,7 +34,7 @@ function LoginForm() {
       google_identifier: res.accessToken,
     };
   
-    axios.post('https://backendtriplef.dopaminetechnology.com/api/user/auth/google_login', dataToSend)
+    axios.post('https://backend.triplef.group/api/user/auth/google_login', dataToSend)
       .then((response) => {
         if (response.data.result) {
           message.success('Logged in successfully');
@@ -63,7 +63,7 @@ function LoginForm() {
         setLoading(true);
     
         const response = await axios.post(
-          `https://backendtriplef.dopaminetechnology.com/api/user/auth/email_login`,
+          `https://backend.triplef.group/api/user/auth/email_login`,
           data
         );
     

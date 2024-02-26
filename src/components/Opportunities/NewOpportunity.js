@@ -119,7 +119,7 @@ const [editorContent2,setEditorContent2]=useState('');
 
       useEffect(() => {
         axios
-          .post('https://backendtriplef.dopaminetechnology.com/api/app/get_sport_positions/1')
+          .post('https://backend.triplef.group/api/app/get_sport_positions/1')
           .then((response) => {
             setPositions(response.data.result);
           })
@@ -132,7 +132,7 @@ const [editorContent2,setEditorContent2]=useState('');
       }, []);
       useEffect(() => {
         axios
-          .get('https://backendtriplef.dopaminetechnology.com/api/app/get_countries')
+          .get('https://backend.triplef.group/api/app/get_countries')
           .then((response) => {
             setCountries(response.data.result);
           })
@@ -152,7 +152,7 @@ const [editorContent2,setEditorContent2]=useState('');
 
       const handleCountrySelect = async (selectedCountryId) => {
         try {
-          const response = await axios.get(`https://backendtriplef.dopaminetechnology.com/api/app/get_cities/${selectedCountryId}`);
+          const response = await axios.get(`https://backend.triplef.group/api/app/get_cities/${selectedCountryId}`);
           setCities(response.data.result);
         } catch (error) {
           console.error('Error fetching sub-positions:', error);

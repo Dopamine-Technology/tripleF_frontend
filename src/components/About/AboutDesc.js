@@ -3,8 +3,8 @@ import RegisterButton from '../Header/RegisterButton';
 
 
 const AboutDesc = () => {
-    return ( <div className='aboutDesc-div'>
-        <h1 className='about-h1' >We Unlock Potential</h1>
+    return ( <div className='aboutDesc-div' id='about'>
+        <p className='about-h1' >We Unlock Potential</p>
         <p className='about-p'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
           ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in

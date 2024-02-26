@@ -38,6 +38,19 @@
     letter-spacing: 0px;
     text-align: left;
   }
+  .who2-h1{
+    width: 500px;
+    height: 60px;
+    margin: 0 93px 53px 112px;
+    font-family: Quicksand;
+    font-size: 48px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #464646;
+  }
 
   @media only screen and (width: 1920px) and (height: 1080px) {
     .card-container {

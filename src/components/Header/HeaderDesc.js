@@ -10,14 +10,14 @@ const HeaderDesc = () => {
 
   console.log('perm123',permData)
   return (
-    <div className='header-div'>
+    <div className='header-div' id='#homeSection'>
       <Row>
-        <Col md={6} className=''>
-          <h1 className=' fw-bold fs-1 header-h1' style={{ fontSize: '56px', letterSpacing: '2px', width: "30rem",color:'#FFFFFF' }}>
+        <Col md={6} className='mt-5'>
+          <p className='header-h1'>
             What We Do In Life Echoes In Eternity
-          </h1>
-          <p className='' style={{ width: '30rem',color:'white' }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua incididunt ut labore et dolore magna aliqua
+          </p>
+          <p className='mt-4 mb-4 header-p2' >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
           </p>
           <RegisterButton />
         </Col>

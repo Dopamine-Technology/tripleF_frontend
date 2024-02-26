@@ -150,7 +150,7 @@ function RegisterForm() {
       // }, []);
       useEffect(() => {
         axios
-          .get('https://backendtriplef.dopaminetechnology.com/api/app/get_sports')
+          .get('https://backend.triplef.group/api/app/get_sports')
           .then((response) => {
             setSports(response.data.result);
           })
@@ -186,7 +186,7 @@ function RegisterForm() {
 
       useEffect(() => {
         axios
-          .get('https://backendtriplef.dopaminetechnology.com/api/app/get_user_types')
+          .get('https://backend.triplef.group/api/app/get_user_types')
           .then((response) => {
             setAccountType(response.data.result);
           })
@@ -213,7 +213,7 @@ function RegisterForm() {
 
       useEffect(() => {
         axios
-          .get('https://backendtriplef.dopaminetechnology.com/api/app/get_countries')
+          .get('https://backend.triplef.group/api/app/get_countries')
           .then((response) => {
             setCountries(response.data.result);
           })
@@ -224,23 +224,10 @@ function RegisterForm() {
             setLoading(false);
           });
       }, []);
-      
-      
-      // useEffect(() => {
-      //   const fetchData = async () => {
-      //     try {
-      //       const response = await axios.post('https://backendtriplef.dopaminetechnology.com/api/app/get_sport_positions/1');
-      //       setPositions(response.data.result);
-      //     } catch (error) {
-      //       console.error('Error fetching positions:', error);
-      //     }
-      //   };
-      
-      //   fetchData();
-      // }, []);
+
       useEffect(() => {
         axios
-          .post('https://backendtriplef.dopaminetechnology.com/api/app/get_sport_positions/1')
+          .post('https://backend.triplef.group/api/app/get_sport_positions/1')
           .then((response) => {
             setPositions(response.data.result);
           })
@@ -255,7 +242,7 @@ function RegisterForm() {
       useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_user_types');
+            const response = await axios.get('https://backend.triplef.group/api/app/get_user_types');
             setAccountTypes(response.data.result);
           } catch (error) {
             console.error('Error fetching positions:', error);
@@ -274,7 +261,7 @@ function RegisterForm() {
 
       const handlePositionSelect = async (selectedPositionId) => {
         try {
-          const response = await axios.post('https://backendtriplef.dopaminetechnology.com/api/app/get_sport_positions/1', {
+          const response = await axios.post('https://backend.triplef.group/api/app/get_sport_positions/1', {
             parent_id: selectedPositionId,
             name: ''
           });
@@ -286,7 +273,7 @@ function RegisterForm() {
 
       const handleCountrySelect = async (selectedCountryId) => {
         try {
-          const response = await axios.get(`https://backendtriplef.dopaminetechnology.com/api/app/get_cities/${selectedCountryId}`);
+          const response = await axios.get(`https://backend.triplef.group/api/app/get_cities/${selectedCountryId}`);
           setCities(response.data.result);
         } catch (error) {
           console.error('Error fetching sub-positions:', error);
@@ -336,7 +323,7 @@ function RegisterForm() {
           // formDataWithImage.append('google_identifier', accessToken);
       
         
-          await axios.post(`https://backendtriplef.dopaminetechnology.com/api/user/auth/register`, formDataWithImage)
+          await axios.post(`https://backend.triplef.group/api/user/auth/register`, formDataWithImage)
           .then((response) => {
             if (response.status === 200) {
               message.success('Registration successful! Please check your email to verify it.');

@@ -39,7 +39,7 @@ function FiliterOption(props) {
 
   useEffect(() => {
     axios
-      .post('https://backendtriplef.dopaminetechnology.com/api/app/get_sport_positions/1')
+      .post('https://backend.triplef.group/api/app/get_sport_positions/1')
       .then((response) => {
         setPositions(response.data.result);
       })
@@ -53,7 +53,7 @@ function FiliterOption(props) {
 
   useEffect(() => {
     axios
-      .get('https://backendtriplef.dopaminetechnology.com/api/app/get_countries')
+      .get('https://backend.triplef.group/api/app/get_countries')
       .then((response) => {
         setCountries(response.data.result);
       })

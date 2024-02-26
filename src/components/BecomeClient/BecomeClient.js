@@ -7,7 +7,7 @@ import boy from '../../assets/imgs/boy.png'
 
 const BecomeClient = () => {
   return (
-    <div className="becomeClient-div">
+    <div className="becomeClient-div" id='Contact'>
       <Row>
         <Col md={7}>
           <ContactForm />

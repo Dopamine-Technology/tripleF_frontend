@@ -5,7 +5,7 @@ import { BsInstagram } from "react-icons/bs";
 import Logo from '../../assets/imgs/Logo.png'
 import { RiTwitterXLine } from "react-icons/ri";
 import facebook2 from '../../assets/imgs/facebook2.png'
-import twitter from '../../assets/imgs/twitter.png';
+import twitter from '../../assets/imgs/twitter.svg';
 import instagram from '../../assets/imgs/instagram.png';
 import snapchat from '../../assets/imgs/snapchat.png';
 

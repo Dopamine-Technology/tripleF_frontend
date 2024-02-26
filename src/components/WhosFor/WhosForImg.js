@@ -3,6 +3,7 @@ import { Card } from 'antd';
 import cardBG from '../../assets/imgs/cardBG.png'
 const { Meta } = Card;
 
+
 const WhosForImg = ({ img, title, desc }) => {
   return (
     <Card
@@ -10,9 +11,6 @@ const WhosForImg = ({ img, title, desc }) => {
       className='whos-card'
       style={{
         width: 250,
-        // backgroundImage:`url(${cardBG})`,
-        // backgroundSize: '6rem',
-        // backgroundRepeat: 'no-repeat',
       }}
     >
       <div
@@ -33,11 +31,13 @@ const WhosForImg = ({ img, title, desc }) => {
           alt="example"
           src={img}
           style={{
-            width: '57%',
-            height: '57%',
-            objectFit: 'cover',
-            borderRadius: '50%', 
-          }}
+            // borderRadius: '50%', 
+            width: '48px',
+            height: '48px',
+            padding: '3px',
+            objectFit: 'contain'
+}
+          }
         />
       </div>
       <Meta title={<div className='card-title'>{title}</div>} description={<div style={{color:'#464646'}}>{desc}</div>} />

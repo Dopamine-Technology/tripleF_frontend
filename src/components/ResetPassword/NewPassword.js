@@ -16,7 +16,7 @@ const NewPassword = () => {
 
     const onSubmitNewPassword = (data) => {
         axios
-          .post(`https://backendtriplef.dopaminetechnology.com/api/user/auth/reset_password`, { ...data, user_token: params.user_token, })
+          .post(`https://backend.triplef.group/api/user/auth/reset_password`, { ...data, user_token: params.user_token, })
           .then((response) => {
             message.success('password reset successfully')
             

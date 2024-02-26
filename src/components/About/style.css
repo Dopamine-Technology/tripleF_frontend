@@ -7,29 +7,36 @@
 
 }
 
-
 .about-p{
     width:28rem;
     margin-left: 3rem;
     margin-top: 2rem;
+    color:#464646;
 }
 .about-h1{
-  opacity: 1;
-color: rgba(70,70,70,1);
-font-family: "Quicksand-Bold";
-font-size: 40px;
-font-weight: 700;
-font-style: normal;
-letter-spacing: 0px;
-text-align: left;
+  width: 493px;
+  /* height: 140px; */
+  margin: 0 12px 24px 4px;
+  font-family: Quicksand;
+  font-size: 56px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
 margin-left: 3rem;
-width: 14rem; 
+ 
 
 }
 .button-container{
   margin-left: 3rem;
   
 }
+.image1{
+  
+}
+
 
 
   @media only screen and (width: 1920px) and (height: 1080px) {

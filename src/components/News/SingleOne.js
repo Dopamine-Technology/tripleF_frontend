@@ -15,18 +15,18 @@ const SingleOne = ({img,content,category}) => {
 <Card
     hoverable
     style={{
-      width: 330,
+      width: 391,
       border:0
     }}
     cover={
     <img alt={img} src={img} 
+    style={{borderRadius:'16px',  width: '391px', height: '347px'}}
    />
-   
   }
   >
  <Meta
-        title={<p style={{color:'#C2C2C2'}} >{category}</p>}
-        description={<p style={{color:'#464646',fontSize:'19px'}}>{content}</p>}
+        title={<p  className='category-p' >{category}</p>}
+        description={<p style={{color:'#464646',fontSize:'19px',marginRight:'3rem'}}>{content}</p>}
 
       />
      <a href='#' > <img src={single} style={{marginTop:'1rem'}} /> </a>

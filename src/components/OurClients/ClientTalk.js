@@ -1,7 +1,9 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { FaLongArrowAltRight, FaLongArrowAltLeft } from 'react-icons/fa';
-import { FaQuoteLeft } from 'react-icons/fa';
+import LeftVector from '../../assets/imgs/vectorLeft.svg';
+import RightVector from '../../assets/imgs/vectorRight.svg';
+import { ImQuotesLeft } from "react-icons/im";
 
 const ClientTalk = ({ selectedImageIndex, setSelectedImageIndex }) => {
   let description = '';
@@ -52,31 +54,31 @@ const ClientTalk = ({ selectedImageIndex, setSelectedImageIndex }) => {
 
   return (
     <div className='bg-gray mb-4 clientTalk-container'>
-      <h1 className='who-h1 mt-5 test-h1'>What people are saying</h1>
-      <p className='m-1' style={{ width: '30rem' }}>
-        <span style={{ fontSize: '4rem', color: '#1A2A44' }} className='talkQ'>
-          <FaQuoteLeft size={38} />
+      <p className='who-h1 mt-5 test-h1'>What people are saying</p>
+      <p className='' style={{ width: '30rem',marginLeft:'-1rem' }}>
+        <span style={{  color: '#213555' }} className='talkQ '>
+          <ImQuotesLeft size={40} className='mb-1 mt-3'/>
         </span>
         <br />
-        {description && <p>{description}</p>}
+        {description && <p className='test-desc'>{description}</p>}
 
         <br />
         <div className=''>
          
-            {name &&  <span style={{}}>-{name}</span>}
+            {name &&  <span className=''>-{name}</span>}
           <br />
 
-          {job &&<span style={{ color: '#464646' }}>{job}       </span>}
+         <p className='mt-2'> {job &&<span className='test-job' >{job}</span>}</p>
    
         </div>
       </p>
 
-      <div>
+      <div className='mt-4' style={{marginLeft:'-1rem'}} >
         <Button className='customButton' style={{ backgroundColor: '#213555' }} onClick={handlePrevButtonClick}>
-          <FaLongArrowAltLeft />
+          <img src={LeftVector} style={{width: '17.1px',height: '15px'}} />
         </Button>
         <Button className='customButton' style={{ backgroundColor: '#213555' }} onClick={handleNextButtonClick}>
-          <FaLongArrowAltRight />
+          <img src={RightVector} style={{width: '17.1px',height: '15px'}} />
         </Button>
       </div>
     </div>
