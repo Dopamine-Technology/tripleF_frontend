@@ -7,8 +7,7 @@ const HeaderDesc = () => {
 
   const { permData } = useContext(PermDataContext);
   const isViewingTalent = permData?.find(item => item.name === 'view_talent' && item.value === true);
-
-  console.log('perm123',permData)
+  
   return (
     <div className='header-div' id='#homeSection'>
       <Row>

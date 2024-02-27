@@ -73,7 +73,7 @@ const ClientTalk = ({ selectedImageIndex, setSelectedImageIndex }) => {
         </div>
       </p>
 
-      <div className='mt-4' style={{marginLeft:'-1rem'}} >
+      <div className='mt-4' style={{marginLeft:'-1.3rem'}} >
         <Button className='customButton' style={{ backgroundColor: '#213555' }} onClick={handlePrevButtonClick}>
           <img src={LeftVector} style={{width: '17.1px',height: '15px'}} />
         </Button>

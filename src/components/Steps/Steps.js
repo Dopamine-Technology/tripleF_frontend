@@ -31,7 +31,7 @@ const Steps = () => {
         
           <Row className='mb-3'>
             {stepsArray.map((step, index) => (
-              <Col key={index} md={12} style={{ marginLeft: index % 2 == 0 ? '5rem' : '2rem' }}>
+              <Col key={index} md={12} style={{ marginLeft: index % 2 == 0 ? '5.3rem' : '2.3rem' }}>
                 <Step step={step.step} content={step.content} stepNum={step.stepNum} />
               </Col>
             ))}

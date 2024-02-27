@@ -13,7 +13,7 @@ const BecomeClient = () => {
           <ContactForm />
         </Col>
         <Col md={5}>
-         <img src={boy} alt="" border="0" height='678px' width='516px' className='contactForm-img' />
+         <img src={boy} alt="" border="0" height='688px' width='526px' className='contactForm-img' />
         </Col>
       </Row>
     </div>

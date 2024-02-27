@@ -5,8 +5,8 @@
 
 .becomeClient-div{
     background-color: #213555;
-    width:75.31rem;
-    height: 42.43rem;
+    width:81rem;
+    height: 43rem;
     /* width: 1205px;
     height: 679px; */
     margin: auto;
@@ -23,7 +23,7 @@
     border-color: #77DCBF;
     color:black;
     float: right;
-    margin-right: 3rem;
+    margin-right: 4rem;
     width:9rem
 }
 .submit-button:hover{

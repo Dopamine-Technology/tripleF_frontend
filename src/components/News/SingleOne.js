@@ -1,37 +1,34 @@
 import React from 'react';
 import './style.css';
-import { FaLongArrowAltRight,FaLongArrowAltLeft } from "react-icons/fa";
+import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
 import single from '../../assets/imgs/SingleRight.svg'
 import { Card } from 'antd';
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const { Meta } = Card;
-
-
-
-const SingleOne = ({img,content,category}) => {
-
-    return (
-<Card
-    hoverable
-    style={{
-      width: 391,
-      border:0
-    }}
-    cover={
-    <img alt={img} src={img} 
-    style={{borderRadius:'16px',  width: '391px', height: '347px'}}
-   />
-  }
-  >
- <Meta
-        title={<p  className='category-p' >{category}</p>}
-        description={<p style={{color:'#464646',fontSize:'19px',marginRight:'3rem'}}>{content}</p>}
-
+const SingleOne = ({ img, content, category }) => {
+  return (
+    <Card
+      hoverable
+      style={{
+        width: 391,
+        border: 0,
+      }}
+      cover={
+        <img alt={img} src={img}
+          style={{ borderRadius: '16px', width: '391px', height: '347px' }}
+        />
+      }
+    >
+      <Meta
+        title={<p className='category-p'>{category}</p>}
+        description={
+          <p className="description-text">{content}</p>
+        }
       />
-     <a href='#' > <img src={single} style={{marginTop:'1rem'}} /> </a>
-  </Card>
-    );
+      <a href='#'><img src={single} style={{ marginTop: '1rem',marginLeft:'-0.8rem' }} /></a>
+    </Card>
+  );
 }
- 
+
 export default SingleOne;

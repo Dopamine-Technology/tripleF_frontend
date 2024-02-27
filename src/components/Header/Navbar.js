@@ -159,7 +159,7 @@ const BottomNavbar = () => {
 const CombinedNavbars = () => {
   return (
     <div>
-    <Container  style={{marginLeft:'3.3rem'}}>
+    <Container  style={{marginLeft:'2.2rem'}}>
       <TopNavbar />
       <BottomNavbar />
     </Container>
