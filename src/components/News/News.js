@@ -49,10 +49,10 @@ const News = () => {
   return (
     <div className='p-4 mt-5' id='News'>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <p className='about-h1' style={{ width: '30rem', marginLeft: '3.7rem' }}>Our Latest News</p>
-        <p><a href="/blogs" className='read-more-link'>View More</a> <FaArrowRight /></p>
+        <p className='about-h1' style={{ width: '30rem', marginLeft: '2.7rem' }}>Our Latest News</p>
+        <p><a href="/blogs" className='read-more-link mt-2'>View More</a> <FaArrowRight /></p>
       </div>
-      <Row className='mt-5' style={{ marginLeft: '3rem', marginRight: '-16px' }}>
+      <Row className='mt-5' style={{ marginLeft: '2.7rem', marginRight: '-16px' }}>
         {news2 && news2.length > 0 ? (
           news2.map((item, index) => (
             <Col key={index} md={4} xs={12}  className='col-single' style={{ paddingBottom: '16px' }}>

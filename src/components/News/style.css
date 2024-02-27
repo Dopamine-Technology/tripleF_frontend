@@ -61,10 +61,17 @@
   line-height: normal;
   letter-spacing: normal;
   color: #464646;
-  margin-left: -0.8rem;
+  /* margin-left: -0.5rem; */
 }
 .description-text{
-    margin-left: -0.8rem;
+  font-family: 'Poppins-Regular';
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
 }
 
 .description {
