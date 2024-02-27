@@ -12,7 +12,7 @@ function VerifyPage() {
 
   const handleActivation = async () => {
     axios
-      .post(`https://backendtriplef.dopaminetechnology.com/api/user/auth/verify_email`, {
+      .post(`https://backend.triplef.group/api/user/auth/verify_email`, {
         user_token: token,
       })
       .then(

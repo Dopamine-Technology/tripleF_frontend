@@ -15,7 +15,7 @@ const ContactForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post('https://backendtriplef.dopaminetechnology.com/api/app/contact_us', data); 
+      const response = await axios.post('https://backend.triplef.group/api/app/contact_us', data); 
       message.error('please try again')
 
     } catch (error) {

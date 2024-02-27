@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import Container from 'react-bootstrap/Container';
+import {Container,Row,Col} from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { GrLanguage } from 'react-icons/gr';
@@ -20,12 +20,10 @@ import En from '../../assets/imgs/en.jpg';
 import LanguageIcon from '../../assets/imgs/langauge-icon.png';
 import profileIcon from '../../assets/imgs/profile-icon.svg';
 import ArrowDownImage from '../../assets/imgs/dropdownWhite.svg';
-
-
+// import { HashLink as Link } from 'react-router-hash-link';
 
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'En';
-  console.log('bbb',content)
 
   const changeLanguage = (lng) => {
     window.location.reload();
@@ -37,49 +35,83 @@ const TopNavbar = ({content}) => {
   ];
 
   return (
-    <Navbar collapseOnSelect expand="xl" className="">
-      {/* <Container className="justify-content-start " style={{marginLeft:'3.5rem'}} >  */}
-      <Container className="justify-content-start navbar-container " > 
-        <Navbar.Brand href="#home" className='fs-4 text-white'><img src={LogoWhite} width='18%' /></Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto" style={{marginRight:'-6rem'}}>
-          </Nav>
-          <Nav className='right-nav'>
+//     <Navbar collapseOnSelect expand="xl" className="">
+//       <Container className="justify-content-start navbar-container-responsive"  > 
+//         <Navbar.Brand href="#home" className='fs-4 text-white'><img src={LogoWhite} width='18%' /></Navbar.Brand>
+//         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+//         <Navbar.Collapse id="responsive-navbar-nav">
+//           <Nav className="me-auto" style={{marginRight:'-6rem'}}>
+//           </Nav>
+//           <Nav className='right-nav'>
       
-          <DropdownButton
-  title={
-    <div className='d-flex align-items-center'>
-      <img src={LanguageIcon} width='24px' height= '24px' className='me-1' />
-      <span className='text-white'>{currentLanguage}</span>
-      <img src={ArrowDownImage} width='24px' height= '24px' className='ms-1 mt-1' />
-    </div>
-  }
-  id="language-dropdown"
-  variant=""
-  className="text-white bg-transparent mr-5 custom-dropdown"
->
-  {availableLanguages.map((lang) => (
-    <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
-      <img src={lang.img} style={{height:'1.5rem',width:'1.5rem'}} className='me-2'/>
-     {lang.label}
-    </Dropdown.Item>
-  ))}
-</DropdownButton>
+//           <DropdownButton
+//   title={
+//     <div className='d-flex align-items-center'>
+//       <img src={LanguageIcon} width='24px' height= '24px' className='me-1' />
+//       <span className='text-white'>{currentLanguage}</span>
+//       <img src={ArrowDownImage} width='24px' height= '24px' className='ms-1 mt-1' />
+//     </div>
+//   }
+//   id="language-dropdown"
+//   variant=""
+//   className="text-white bg-transparent mr-5 custom-dropdown"
+// >
+//   {availableLanguages.map((lang) => (
+//     <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
+//       <img src={lang.img} style={{height:'1.5rem',width:'1.5rem'}} className='me-2'/>
+//      {lang.label}
+//     </Dropdown.Item>
+//   ))}
+// </DropdownButton>
 
-<RxDividerVertical color="gray" size={30} className='mt-1 me-3' />
-            <p className='text-white mt-2'> <Link to='/login' style={{textDecoration:'none',color:'white'}}>
-            <img src={profileIcon} width='24px' height= '24px' className='me-1' />
-              Login</Link></p>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+// <RxDividerVertical color="gray" size={30} className='mt-1 me-3' />
+//             <p className='text-white mt-2'> 
+//             <Link to='/login' style={{textDecoration:'none',color:'white'}}>
+//             <img src={profileIcon} width='24px' height= '24px' className='me-1' />
+//               Login</Link></p>
+//           </Nav>
+//         </Navbar.Collapse>
+//       </Container>
+//     </Navbar>
+<Row>
+  <Col md={6} lg={6}>
+    <Navbar.Brand href="#home" className='fs-4 text-white'><img src={LogoWhite} width='26%' /></Navbar.Brand>
+  </Col>
+  <Col md={4} lg={4}></Col>
+  <Col md={2} lg={2} className='d-flex align-items-center justify-content-end'>
+    <DropdownButton
+      title={
+        <div className='d-flex align-items-center'>
+          <img src={LanguageIcon} width='24px' height= '24px' className='me-1' />
+          <span className='text-white'>{currentLanguage}</span>
+          <img src={ArrowDownImage} width='24px' height= '24px' className='ms-1 mt-1' />
+        </div>
+      }
+      id="language-dropdown"
+      variant=""
+      className="text-white bg-transparent mr-5 custom-dropdown"
+    >
+      {availableLanguages.map((lang) => (
+        <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
+          <img src={lang.img} style={{height:'1.5rem',width:'1.5rem'}} className='me-2'/>
+          {lang.label}
+        </Dropdown.Item>
+      ))}
+    </DropdownButton>
+
+    <RxDividerVertical color="gray" size={30}  />
+    
+    <Link to='/login' className='text-white d-flex' style={{ textDecoration: 'none', }}>
+      <img src={profileIcon} width='24px' height= '24px' className='me-1' />
+      Login
+    </Link>
+  </Col>
+</Row>
   );
 }
 
 const BottomNavbar = () => {
-  const [activeLink, setActiveLink] = useState(null);
+  const [activeLink, setActiveLink] = useState(1);
 
   const handleNavLinkClick = (index,sectionId) => {
     setActiveLink(index);
@@ -91,32 +123,47 @@ const BottomNavbar = () => {
 
 
   return (
-    <Navbar collapseOnSelect expand="lg" className="bg-body-transparent">
-      {/* <Container style={{marginLeft:'3.8rem'}} > */}
-      <Container className='navbar-container' >
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home" className='text-white' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`text-white  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</p></Nav.Link>
+    // <Navbar collapseOnSelect expand="lg" className="bg-body-transparent">
+    //   <Container className='navbar-container' >
+    //     <Navbar.Collapse id="responsive-navbar-nav">
+    //       <Nav className="me-auto">
+    //         <Nav.Link href="#home" className='text-white' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`text-white  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</p></Nav.Link>
+    //         <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>AboutUs</p></Nav.Link>
+    //         <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >Who is TripleF for</p></Nav.Link>
+    //         <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>How it works</p></Nav.Link>
+    //         <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</p></Nav.Link>
+    //         <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</p></Nav.Link>
+    //         <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>News</p></Nav.Link>
+    //       </Nav>
+    //       <Nav>
+    //       </Nav>
+    //     </Navbar.Collapse>
+    //   </Container>
+    // </Navbar>
+    <Row>
+      <Col>
+      <Nav className="" style={{marginLeft:'1rem'}}>
+           <Nav.Link href='#section1' className='text-white' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`text-white  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</p></Nav.Link>
             <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>AboutUs</p></Nav.Link>
             <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >Who is TripleF for</p></Nav.Link>
-            <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>How it works</p></Nav.Link>
-            <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</p></Nav.Link>
-            <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</p></Nav.Link>
-            <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>News</p></Nav.Link>
-          </Nav>
-          <Nav>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+             <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>How it works</p></Nav.Link>
+             <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</p></Nav.Link>
+             <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</p></Nav.Link>
+             <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>News</p></Nav.Link>
+         </Nav>
+  </Col>
+    </Row>
   );
 }
 
 const CombinedNavbars = () => {
   return (
     <div>
+    <Container  style={{marginLeft:'3.3rem'}}>
       <TopNavbar />
       <BottomNavbar />
+    </Container>
+     
     </div>
   );
 }

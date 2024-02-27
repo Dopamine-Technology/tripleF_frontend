@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { UserDataContext } from "../UserContext/UserData.context";
 import Cookies from "js-cookie";
 const defaultOptions = {
-  baseURL: "https://backendtriplef.dopaminetechnology.com/api/",
+  baseURL: "https://backend.triplef.group/api/",
   headers: {
     "Content-Type": "application/json",
   },

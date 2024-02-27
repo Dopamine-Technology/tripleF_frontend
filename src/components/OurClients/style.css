@@ -3,6 +3,11 @@
   src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Bold.ttf') format('truetype'); 
 }
 
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: url('../../assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype'); 
+}
+
 .customButton {
     background-color: #007bff;
     color: white;
@@ -54,9 +59,8 @@ font-weight: 700;
 font-style: normal;
 letter-spacing: 0px;
 text-align: left;
-margin-left: 3rem;
 width: 36rem;
-margin-left:-0.6rem ;
+margin-left:-1.6rem ;
   }
   
   .thumbnail {
@@ -74,9 +78,36 @@ margin-left:-0.6rem ;
   }
   
   .clientTalk-container{
-    margin-left: 4rem;
+    margin-left: 3rem;
 
   }
+  .test-desc{
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+  margin-top: 29px;
+  }
+.test-job{
+  width: 154px;
+  height: 23px;
+  margin: 8px 0 0;
+  opacity: 0.7;
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+  margin-top: 18px;
+}
+
   @media only screen and (width: 1920px) and (height: 1080px) {
   .clients-img{
     margin-left: 14rem;

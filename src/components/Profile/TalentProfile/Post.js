@@ -29,7 +29,6 @@ function Post(){
     const [showMedalPopups, setShowMedalPopups] = useState(Array(posts?.length).fill(false));
     const [selectedPostId, setSelectedPostId] = useState(null);
     const { user } = useContext(UserDataContext);
-    
     const axios=useAxios();
 
     useEffect(() => {
@@ -46,7 +45,6 @@ function Post(){
         
       }, []);
     
-
 
       const likeHandle = (index) => {
         const newShowMedalPopups = [...showMedalPopups];
@@ -98,7 +96,6 @@ function Post(){
 
     const handleReport=({id,report})=>{
         axios.post(`status/report/${id}`,report);
-     
     }
 
 

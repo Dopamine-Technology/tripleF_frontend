@@ -41,7 +41,7 @@ const Step = ({ step, content ,stepNum}) => {
               </Col>
          
               <Col xs={12}  style={{textAlign:'left'}}>
-                <p>{content}</p>
+                <p className='steps-content'>{content}</p>
               </Col>
             </Row>
           </Col>

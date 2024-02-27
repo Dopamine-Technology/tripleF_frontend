@@ -17,6 +17,32 @@
   top: 0;
   right: 0;
 }
+.how-h1{
+
+    width: 493px;
+    font-family: Quicksand;
+    font-size: 56px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #464646;
+  margin-left: 3rem;
+   
+  
+  
+}
+.steps-content{
+  width: 310px;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: rgba(70, 70, 70, 0.8);
+}
 
 
 @media only screen and (width: 1920px) and (height: 1080px) {

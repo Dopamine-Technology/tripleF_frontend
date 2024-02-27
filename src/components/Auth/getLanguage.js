@@ -15,7 +15,7 @@ function ContentFetcher({ setFetchedContent }) {
           },
         };
         const response = await axios.get(
-          'https://backendtriplef.dopaminetechnology.com/api/app/get_translations?tag=landing',
+          'https://backend.triplef.group/api/app/get_translations?tag=landing',
           axiosConfig
         );
         setContent(response.data.result); // Assuming 'result' contains the array of content

@@ -1,8 +1,8 @@
 import React from 'react';
 
 const WhosForDesc = () => {
-    return ( <div className='mt-3'>
-   <h1 className='about-h1' style={{width:'30rem',marginLeft:'7rem'}} >Who is TripleF for</h1>
+    return ( <div className='mt-3' id='Who'>
+   <p className='about-h1 mb-5' style={{width:'40rem',marginLeft:'6rem'}} >Who is TripleF for</p>
    
     </div> );
 }
