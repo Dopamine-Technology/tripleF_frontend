@@ -35,7 +35,7 @@ const WhosForImg = ({ img, title, desc }) => {
             width: '48px',
             height: '48px',
             padding: '3px',
-            objectFit: 'contain'
+            objectFit: 'contain',
 }
           }
         />

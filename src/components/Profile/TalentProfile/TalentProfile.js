@@ -8,6 +8,7 @@ import NewPost from '../../MainArea/NewPost';
 import { UserDataContext } from '../../UserContext/UserData.context';
 import OpportunityList from '../../Opportunities/OpportunityList';
 import useAxios from '../../Auth/useAxiosHook.interceptor';
+import ProfileStrong from './ProfileStrong';
 
 function TalentProfile(){
     const axios=useAxios();
@@ -19,6 +20,7 @@ function TalentProfile(){
 
             <Col md={6} lg={4} xs={12}>
                 <ProfileCard />
+                <ProfileStrong />
             </Col>
             <Col md={6} lg={8} xs={12}>
                 <NewPost />
