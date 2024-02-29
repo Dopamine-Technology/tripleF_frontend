@@ -1,4 +1,4 @@
-import React,{useState,useContext} from 'react';
+import React,{useState,useContext,useEffect} from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import NavBar from '../../Layout/Navbar';
 import Card from 'react-bootstrap/Card';
@@ -11,30 +11,23 @@ import Weight from '../../../assets/imgs/weight.svg';
 import Place from '../../../assets/imgs/place.svg';
 import Call from '../../../assets/imgs/call.svg';
 import { Link } from 'react-router-dom';
-import FollowersPopup from './FollowersPopup';
+import FollowersPopup from '../TalentProfile/FollowersPopup';
 import { UserDataContext } from '../../UserContext/UserData.context';
-import Email from '../../../assets/imgs/Email.svg'
+import Email from '../../../assets/imgs/Email.svg';
+import checkmark from '../../../assets/imgs/checkmark.svg'
 
-function ProfileCard() {
+
+function ClubProfileCard({id}) {
+
   const { user } = useContext(UserDataContext);
   const currentYear = new Date().getFullYear();
-  const TalentData = [
-    { title: 'gender', value: user.userData.profile.gender, svg: Heart },
-    { title: 'Nationality', value: user.userData.profile.country.name, svg: Positon },
-    { title: 'position', value: user.userData.profile.position.name, svg: Positon },
-    { title: 'Preferred Foot', value: 'Left', svg: Positon },
-    { title: 'Date Of Birth', value: user.userData.profile.birth_date, svg: Calendar },
-    { title: 'Height', value: user.userData.profile.height, svg: Height },
-    { title: 'Weight', value: user.userData.profile.wight, svg: Weight },
-    { title: 'Place of Residence', value: user.userData.profile.country.name, svg: Place },
-    { title: 'Mobile Number', value: user.userData.profile.mobile_number, svg: Call },
-  ];
+
 
   const ClubData=[
-    { title: 'Year Founded', value: '18 Feb, 2023', svg: Calendar },
-    { title: 'Country', value: 'Jordan', svg: Place },
-    { title: 'Mobile Number', value: '+962 79 000 0000', svg: Call },
-    { title: 'Email', value: 'example@domain.com', svg: Email },
+    { title: 'Year Founded', value:`${user.userData.profile.year_founded} (${ currentYear - user.userData.profile.year_founded} years)`, svg: Calendar },
+    { title: 'Country', value: user.userData.profile.country.name, svg: Place },
+    { title: 'Mobile Number', value: user.userData.profile.mobile_number, svg: Call },
+    { title: 'Email', value: user.userData.email, svg: Email },
  
   ]
 
@@ -129,12 +122,12 @@ function ProfileCard() {
       ]
 
   return (
-    <Card className='profile-card' style={{padding:'0'}} >
+    <Card className='profile-card'style={{padding:'0'}} >
     <div className='images-container'>
       <Card.Img
         roundedCircle
         className='profile-img'
-        src={user.userData.image?user.userData.image:user.userData.social_image}
+        src={user.userData.profile.club_logo}
       />
       <Card.Img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ__AlJC7xkCAQituHiG5hIzlQWn-DbhiCj4g&usqp=CAU" 
@@ -142,74 +135,26 @@ function ProfileCard() {
       />
     </div>
     <Card.Body className='mt-3'>
-      <Card.Title className='card-title'>{user.userData.name} {user.userData.last_name}</Card.Title>
+      <Card.Title className='card-title'>{user.userData.profile.club_name} {id!=null?<img src={checkmark} />:null}</Card.Title>
       <Card.Subtitle className='card-subTitle'>{user.userData.profile.type_name}</Card.Subtitle>
       <p className='followers-number'>
         <span className='followers-span me-2' onClick={handleShow}>9 followers</span>
         <span className='me-2'>.</span>
         <span className='followers-span' onClick={handleShowFollowingPopup}> 16 following</span>
       </p>
-      {user.userData.profile.type_name === 'talent' && user.userData.profile.parent_position=='goalkeeper'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-         {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Sweeper'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-          {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Left Back'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-           {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Right Back'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-              {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Central Back'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-                    {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Left Wing Back'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-                    {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Right Wing Back'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-              {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Defending Mid Fielder'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-             {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Left Mid Fielder'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-            {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Right Mid Fielder'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-            {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Central Mid Fielder'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-            {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Attacking Mid Fielder'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-            {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Left Winger'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-             {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Right Winger'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-              {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Seconder Striker'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-              {user.userData.profile.type_name === 'talent' && user.userData.profile.position.name=='Central Forward'&&
-        <Card.Img src={GoalKeeper} className='' />
-      }
-      {user.userData.profile.type_name == 'talent' ? 
-        (TalentData.map((data, index) => (
+      
+      {user.userData.profile.type_name == 'club' ? 
+        (ClubData.map((data, index) => (
           <div>
-          <div key={index} className=' d-flex align-items-center justify-content-between mt-1'>
+          <div key={index} className='d-flex mt-2 d-flex align-items-center justify-content-between mt-3'>
             <div  className="d-flex align-items-center">
             <img src={data.svg} alt={data.title} className='me-3' /> 
             <p className='data-title me-5 mt-3' >{data.title}</p>
             </div >
             <p className='data-value mt-3'>{data.value}</p>
             </div>
-            {index !== TalentData.length - 1 && <hr className='line'/>}
+            {index !== ClubData.length - 1 && <hr className='line'/>}
           </div>
-          
         ))) :null
       }
     </Card.Body>
@@ -219,4 +164,4 @@ function ProfileCard() {
   );
 }
 
-export default ProfileCard;
+export default ClubProfileCard;

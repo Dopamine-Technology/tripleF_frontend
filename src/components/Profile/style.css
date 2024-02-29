@@ -13,6 +13,26 @@
     src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Light.ttf') format('truetype'); 
     
   }
+  @font-face {
+    font-family: 'Poppins-Regular';
+    src: url('../../assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype'); 
+  }
+  @font-face {
+    font-family: 'Poppins-Black';
+    src: url('../../assets/fonts/Poppins/Poppins-Black.ttf') format('truetype'); 
+  }
+  @font-face {
+    font-family: 'Poppins-Medium';
+    src: url('../../assets/fonts/Poppins/Poppins-Medium.ttf') format('truetype'); 
+  }
+  @font-face {
+    font-family: 'Poppins-Light';
+    src: url('../../assets/fonts/Poppins/Poppins-Light.ttf') format('truetype'); 
+  }
+  @font-face {
+    font-family: 'Poppins-Bold';
+    src: url('../../assets/fonts/Poppins/Poppins-Bold.ttf') format('truetype'); 
+  }
 
 .profile-card{
     border-radius: 8px;
@@ -20,17 +40,17 @@ box-shadow: 0px 2px 16px rgba(235, 234, 237, 1);
 opacity: 1;
 background-color: rgba(255, 255, 255, 1);
 border:none;
-width:25rem
+width:25rem;
+margin-top:1.9rem
 }
 .images-container{
     position: relative;
 }
 .profile-img{
-   
     width: 90px;
     height: 90px;
     position: absolute;
-    top:11rem;
+    top:13rem;
     left:calc(50% - 50px);
     border-radius: 50%;
     border: solid 6px white;
@@ -40,7 +60,9 @@ width:25rem
     width:100%;
     height: auto;
     border-radius: 8px 8px 0px 0px;
-opacity: 1;
+    opacity: 1;
+    object-fit:contain;
+
 
 }
 .card-title{
@@ -71,14 +93,14 @@ font-size: 14px;
 font-weight: 400;
 font-style: Regular;
 letter-spacing: 0px;
-margin-top: 1rem;
+margin-top: 0.5rem;
 margin-bottom: 1rem;
 }
 .data-title{
     display: inline-block;
     opacity: 0.8;
 color: rgba(70, 70, 70, 1);
-font-family: "Quicksand-Light";
+font-family: 'Poppins-regular';
 font-size: 0.9rem;
 font-weight: 300;
 font-style: Light;
@@ -87,13 +109,14 @@ text-align: left;
 }
 .data-value{
     opacity: 1;
-color: rgba(70, 70, 70, 1);
-font-family: "Quicksand-Medium";
+    color: #464646;
+font-family: "Poppins-Medium";
 font-size: 0.9rem;
 font-weight: 500;
 font-style: Medium;
 letter-spacing: 0px;
 text-align: left;
+
 }
 .text2{
     width: 90%;
@@ -119,3 +142,113 @@ font-style: Regular;
 letter-spacing: 0px;
 text-align: left;
 }
+.strong-value{
+    opacity: 0.8;
+    color: #464646;
+font-family: "Poppins-regular";
+font-size: 14px;
+font-weight: 300;
+font-style: Light;
+letter-spacing: 0px;
+text-align: left;
+}
+.item-svg{
+    opacity: 1;
+color: rgba(70, 70, 70, 1);
+font-family: "Poppins-Medium";
+font-size: 14px;
+font-weight: 500;
+font-style: Medium;
+letter-spacing: 0px;
+text-align: left;
+}
+.following{
+    border-radius: 18px;
+    float: right;
+    background-color:rgba(228, 248, 242, 0.5);
+    border:1px #5FB099 solid;
+    color:#5FB099
+    
+}
+.follow{
+    border-radius: 18px;
+    float: right;
+    border:1px #5FB099 solid;
+    color:#5FB099
+    /* background-color:#5FB099 ; */
+}
+.following:hover{
+    border-radius: 18px;
+    float: right;
+    background-color:rgba(228, 248, 242, 0.5);
+    border:1px #5FB099 solid;
+    color:#5FB099;
+    cursor: pointer;
+}
+.follow:hover{
+    border-radius: 18px;
+    float: right;
+    border:1px #5FB099 solid;
+    color:#5FB099;
+    cursor: pointer;
+    /* background-color:#5FB099 ; */
+}
+.license-name{
+
+  margin: 0 163.5px 2px 10px;
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #1a2a44;
+}
+.issued-by-name-here{
+  margin: 2px 128.5px 6px 10px;
+  opacity: 0.8;
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+}
+.line{
+    width: 325px;
+    height: 1px;
+    margin: 12px 0 0 0.5px;
+    border: solid 1px #e1e1e1;
+    margin-bottom:0.7rem
+}
+.custom-progress .progress-bar {
+    background-color: #5fb099;
+}
+.progressbar-span {
+    width: 32px;
+    height: 20px;
+    margin: 15px 0 0 12px;
+    font-family: 'Poppins-Regular';
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #464646;
+  }
+  .followersModal-title{
+    width: 105px;
+    height: 23px;
+    font-family: 'Poppins-Medium';
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #464646;
+  }

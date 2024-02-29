@@ -10,7 +10,8 @@ const WhosForImg = ({ img, title, desc }) => {
       hoverable
       className='whos-card'
       style={{
-        width: 300,
+        width: '289px',
+       height: '350px'
       }}
     >
       <div
@@ -24,23 +25,22 @@ const WhosForImg = ({ img, title, desc }) => {
           overflow: 'hidden',
           backgroundColor: '#E4F8F2',
           margin: '0 auto', 
-        
         }}
       >
         <img
           alt="example"
           src={img}
           style={{
-            // borderRadius: '50%', 
             width: '48px',
             height: '48px',
             padding: '3px',
             objectFit: 'contain',
-}
+           }
           }
         />
       </div>
-      <Meta title={<div className='card-title'>{title}</div>} description={<div style={{color:'rgba(70, 70, 70, 0.8)'}}>{desc}</div>} />
+      <Meta title={<div className='card-title'>{title}</div>} 
+      description={<div style={{color:'rgba(70, 70, 70, 0.8)',textAlign: 'center'}}>{desc}</div>} />
     </Card>
   );
 }

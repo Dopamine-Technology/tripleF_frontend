@@ -9,18 +9,23 @@ const OurClients = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const newIndex = (selectedImageIndex + 1) % 6; // Assuming there are 6 images
+      const newIndex = (selectedImageIndex + 1) % 6; 
       setSelectedImageIndex(newIndex);
-    }, 30000); // 30 seconds
+    }, 30000); 
 
     return () => clearInterval(interval);
   }, [selectedImageIndex]);
+
+  const handleImageChange = (index) => {
+    setSelectedImageIndex(index);
+   
+  };
 
   return (
     <div className='OurClientsWhole' id='Testimonial'>
       <Row>
         <Col><ClientTalk selectedImageIndex={selectedImageIndex} setSelectedImageIndex={setSelectedImageIndex} /></Col>
-        <Col><ClientImg selectedImageIndex={selectedImageIndex} /></Col>
+        <Col><ClientImg selectedImageIndex={selectedImageIndex} onImageClick={handleImageChange} /></Col>
       </Row>
     </div>
   );

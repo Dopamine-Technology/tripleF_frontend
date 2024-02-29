@@ -72,7 +72,7 @@ function NavBar({ toggleLeftSidebar }){
             className='d-flex' 
             style={{textDecoration:'none',width:'13rem'}}
           >
-            <img src={Profile} />
+            <img src={Profile} className="me-2" />
             <p className='mt-3'>My Profile</p>
           </Link>
           </>
@@ -87,7 +87,7 @@ function NavBar({ toggleLeftSidebar }){
             className=' d-flex ' 
             style={{textDecoration:'none'}}
           >
-            <img src={Settings} />
+            <img src={Settings}  className="me-2"/>
             <p className='mt-3'>Settings</p>
           </Link>
           ),
@@ -100,8 +100,8 @@ function NavBar({ toggleLeftSidebar }){
             className=' d-flex ' 
             style={{textDecoration:'none'}}
           >
-            <img src={Language} />
-            <p className='mt-3'>Language</p>
+            <img src={Language} className="me-2" />
+            <p className='mt-3'>Language (English)</p>
           </Link>
           ),
         },
@@ -113,7 +113,7 @@ function NavBar({ toggleLeftSidebar }){
             className=' d-flex' 
             style={{textDecoration:'none'}}
           >
-            <img src={signOut} />
+            <img src={signOut} className="me-2" />
             <p className='mt-3'>Sing Out </p>
           </Link>
           ),

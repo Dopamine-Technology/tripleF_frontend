@@ -2,15 +2,22 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Followed from '../../../assets/imgs/Followed.svg'
+import Followed from '../../../assets/imgs/Followed.svg';
+import useAxios from '../../Auth/useAxiosHook.interceptor';
 
 function FollowersPopup({ users, handleClose, show, showFollowing, followingUsers, handleCloseFollowingPopup }) {
+    
+    const axios=useAxios();
+
+    const ToggleFollow = (id) =>{
+        axios.get(`follow/toggle/${id}`);
+    }
 
     return (
         <Modal show={show} onHide={handleClose} size='lg'>
             <Modal.Header>
-                <Modal.Title>
-                    {show ? <p className='fs-5'>Followers (9)</p> : <p>Following (19)</p>}
+                <Modal.Title className=''>
+                    {show ? <p className='followersModal-title mb-0'>Followers (9)</p> : <p>Following (19)</p>}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -26,14 +33,14 @@ function FollowersPopup({ users, handleClose, show, showFollowing, followingUser
                                         <div className="fw-bold me-3">
                                             <img src={user.img} className='user-img' />
                                         </div>
-                                        <p className='user-name'>{user.username}</p>
+                                        <p className='followersModal-title mt-3'>{user.username}</p>
                                     </div>
                                     {
-                                        user.isFollowed ?  <Button variant="outline-success" className="" style={{ borderRadius: '18px', float: 'right',backgroundColor:'rgba(228, 248, 242, 0.5)' }}>
+                                        user.isFollowed ?  <Button variant="" className="following" onClick={()=>ToggleFollow(user.id)} >
                                         
                                         <img src={Followed} /> Following
                                     </Button>  :
-                                            <Button variant="outline-success" className="" style={{ borderRadius: '18px', float: 'right' }}>
+                                            <Button variant="" className="follow"  onClick={()=>ToggleFollow(user.id)}>
                                                 + Follow
                                             </Button>
                                     }
@@ -56,12 +63,12 @@ function FollowersPopup({ users, handleClose, show, showFollowing, followingUser
                                         </div>
                                         {
                                             user.isFollowed ? 
-                                            <Button variant="outline-success" className="" style={{ borderRadius: '18px', float: 'right',backgroundColor:'rgba(228, 248, 242, 0.5)' }}>
+                                            <Button variant="outline-success"  onClick={()=>ToggleFollow(user.id)} className="" style={{ borderRadius: '18px', float: 'right',backgroundColor:'rgba(228, 248, 242, 0.5)' }}>
                                         
                                             <img src={Followed} /> Following
                                         </Button>  
                                          :
-                                                <Button variant="outline-success" className="" style={{ borderRadius: '18px', float: 'right' }}>
+                                                <Button variant="outline-success"  onClick={()=>ToggleFollow(user.id)} className="" style={{ borderRadius: '18px', float: 'right' }}>
                                                     + Follow
                                                 </Button>
                                         }
