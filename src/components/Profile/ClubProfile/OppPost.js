@@ -15,7 +15,7 @@ import { message } from 'antd';
 import { UserDataContext } from '../../UserContext/UserData.context';
 
 
-function OppPost(){
+function OppPost({id}){
 
     const axios=useAxios();
     const [isExpanded, setIsExpanded] = useState(false);
@@ -61,7 +61,7 @@ function OppPost(){
 
     return(
 
-        <div>
+        <div style={{marginTop:'1.8rem'}}>
         {opportunities?.map((data)=>(
        <div className='post2-continer' style={{marginLeft:'0rem'}}>
    
@@ -101,37 +101,35 @@ function OppPost(){
     <div>
     
     </div>
-    <div className="opp-container mt-1" style={{border: '1px solid rgba(225, 225, 225, 1)',padding:'2rem'}}>
-           <h5 className='postOpp-title'>{data.title}</h5>
-           <div className='d-flex'>
-                                        <p className='me-5 blog-sub'>{data.country.name}
-                                        <RxDividerVertical color="gray" size={30} className='' />
-                                        {/* {data.position && data.position.name} */}
-                                        {data.position}
-                                        </p>
-            </div>
-            <p className='postOpp-desc'> {displayDescription}
-            {
-                isExpanded?(
-                    <div className='mt-4'>
-                    <p className='postOpp-title'>Requirements</p>
-                    <ul dangerouslySetInnerHTML={{ __html: data.requirements }}></ul>
-    
-                    <p className='postOpp-title'>Additional Information</p>
-                    <ul dangerouslySetInnerHTML={{ __html: data.requirements }}></ul>
-                    </div>
-                ):(null)
-            }
-            </p>
-    
-           <div className="center-icon" >
-            {isExpanded?<IoMdArrowDropup onClick={handleExpandClick} color='gray' fontSize={30} />:<IoMdArrowDropdown onClick={handleExpandClick} color='gray' fontSize={30} />}
-            
-            </div>
-    
-      
+    <div className='opp-container mt-1' style={{border: '1px solid rgba(225, 225, 225, 1)',padding:'2rem'}}>
+    <div className="d-flex justify-content-between align-items-center">
+        <h5 className='postOpp-title'>{data.title}</h5>
+        {id!=null? <Button className='apply-btn h-auto m-0' >Apply Now</Button>:null}
+       
     </div>
-    
+    <div className='d-flex'>
+        <p className='me-5 blog-sub'>{data.country.name}
+        <RxDividerVertical color="gray" size={30} className='' />
+        {data.position && data.position.name}
+        {data.position}
+        </p>
+    </div>
+    <p className='postOpp-desc'> {displayDescription}
+    {
+        isExpanded?(
+            <div className='mt-4'>
+                <p className='postOpp-title'>Requirements</p>
+                <ul dangerouslySetInnerHTML={{ __html: data.requirements }}></ul>
+                <p className='postOpp-title'>Additional Information</p>
+                <ul dangerouslySetInnerHTML={{ __html: data.requirements }}></ul>
+            </div>
+        ):(null)
+    }
+    </p>
+    <div className="center-icon" >
+        {isExpanded?<IoMdArrowDropup onClick={handleExpandClick} color='gray' fontSize={30} />:<IoMdArrowDropdown onClick={handleExpandClick} color='gray' fontSize={30} />}
+    </div>
+</div>
      </div>
            
     </div>

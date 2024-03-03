@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext,useEffect,useState} from 'react'
 import { Row,Col,Container } from 'react-bootstrap';
 import NavBar from '../../Layout/Navbar';
 import ProfileCard from './ProfileCard';
@@ -16,11 +16,35 @@ import OppProfileScout from '../ScoutProfile/OppProfileScout';
 import Certifications from '../CoachProfile/Certifications';
 import { useParams } from 'react-router-dom';
 import ProfileStrongView from './ProfileStrongView';
+import LoadingScreen from '../../LoadingScreen/LoadingScreen';
 
 function WholeProfile(){
     const axios=useAxios();
     const { id } = useParams();
     const { user } = useContext(UserDataContext);
+
+    const [profileData,setProfileData]=useState();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                    const response = await axios.get(`user/get_profile/${id}`);
+                    setProfileData(response.data.result);
+            
+                
+            } catch (error) {
+                console.error('aya', 'Error fetching user data:', error);
+            }
+            finally {
+                setLoading(false); 
+            }
+        };
+    
+        fetchData();
+    }, [id]);
+    
+
     const License=[
         {
            img:'https://c8.alamy.com/comp/T9M6KX/soccer-club-emblem-design-element-for-logo-label-sign-poster-vector-illustration-T9M6KX.jpg',
@@ -42,18 +66,22 @@ function WholeProfile(){
 
     ]
 
+    if (loading) {
+        return (
+         <LoadingScreen />
+        );
+    }
+
     return(
 <div style={{overflowX:'hidden'}}>
         <NavBar />
         <Row style={{marginLeft:'3rem'}}>
-
             <Col md={6} lg={4} xs={12}>
-            {user.userData.profile.type_name=='talent'?
-                <ProfileCard />:
-                user.userData.profile.type_name=='club'?
-                <ClubProfileCard id={id}/>:
-                
-                <CoachProfileCard />
+            {profileData && profileData.profile && profileData.profile.type_name == 'talent' ?
+                <ProfileCard id={id} profileData={profileData} />:
+                profileData && profileData.profile && profileData.profile.type_name == 'club' ?
+                <ClubProfileCard id={id} profileData={profileData} />:
+                <CoachProfileCard profileData={profileData}  />
             }
             {user.userData.profile.type_name=='couch'?
                <Certifications sectionName='Coaching License' data={License} id={id}/>:null
@@ -76,11 +104,12 @@ function WholeProfile(){
          
             </Col>
             <Col md={6} lg={8} xs={12}>
-                <NewPost />
+           {id == null ? 
+                <NewPost />:null}
                 {
                 user.userData.profile.type_name=='talent'? <Post />:
                 user.userData.profile.type_name=='scout'? <OppProfileScout />:
-                <OppPost />
+                <OppPost id={id} />
                 }
             
             </Col>

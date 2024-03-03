@@ -57,7 +57,7 @@ function App() {
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />
           
           )}
-          <Route path='/profile' element={<WholeProfile />} />
+          {/* <Route path='/profile' element={<WholeProfile />} /> */}
           <Route path='/profile/:id' element={<WholeProfile />} />
           <Route path='/test' element={<Test />}  />
           </>

@@ -68,7 +68,7 @@ function NavBar({ toggleLeftSidebar }){
           label: (
             <>
             <Link
-            to='/profile'
+            to={`/profile/${user.userData.id}`}
             className='d-flex' 
             style={{textDecoration:'none',width:'13rem'}}
           >
@@ -112,6 +112,7 @@ function NavBar({ toggleLeftSidebar }){
             to='/profile'
             className=' d-flex' 
             style={{textDecoration:'none'}}
+            onClick={logout}
           >
             <img src={signOut} className="me-2" />
             <p className='mt-3'>Sing Out </p>
@@ -122,9 +123,10 @@ function NavBar({ toggleLeftSidebar }){
       ];
 
     return(
-<Navbar expand="lg" className="bg-body-tertiary " style={{boxShadow:" 0px 1px 10px rgba(181,181,181, 1)"}}>
-      <Container>
-        <Navbar.Brand href="/home" ><img src={Logo} width='40%'  /></Navbar.Brand>
+<Navbar expand="lg" className="bg-body-tertiary " style={{boxShadow:" 0px 1px 10px rgba(181,181,181, 1)"}} >
+
+      <Container style={{marginRight:'8.6rem'}}>
+        <Navbar.Brand href="/home"><img src={Logo} width='40%' /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -136,11 +138,10 @@ function NavBar({ toggleLeftSidebar }){
          
           </Nav>
          <Nav>
-          {/* <img src={ChatIcon} /> */}
      <AiOutlineMessage style={{width: '24px',height: '24px'}}  color='#979797' className="mt-3 me-4 " /> 
         <IoIosNotificationsOutline style={{width: '24px',height: '24px'}}  color='#979797' className=" mt-3 me-4" />
          <Dropdown menu={{ items }}  >
-              <Space >
+              <Space>
                  
               <div class="image-container">
     <img
@@ -159,6 +160,7 @@ function NavBar({ toggleLeftSidebar }){
       
          </Nav>
         </Navbar.Collapse>
+       
       </Container>
     </Navbar>
     )

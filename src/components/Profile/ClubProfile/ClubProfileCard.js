@@ -17,18 +17,24 @@ import Email from '../../../assets/imgs/Email.svg';
 import checkmark from '../../../assets/imgs/checkmark.svg'
 
 
-function ClubProfileCard({id}) {
+function ClubProfileCard({id,profileData}) {
 
   const { user } = useContext(UserDataContext);
   const currentYear = new Date().getFullYear();
 
 
-  const ClubData=[
+  const ClubData= id == null ?[
     { title: 'Year Founded', value:`${user.userData.profile.year_founded} (${ currentYear - user.userData.profile.year_founded} years)`, svg: Calendar },
     { title: 'Country', value: user.userData.profile.country.name, svg: Place },
     { title: 'Mobile Number', value: user.userData.profile.mobile_number, svg: Call },
     { title: 'Email', value: user.userData.email, svg: Email },
  
+  ]:
+  [
+    { title: 'Year Founded', value:`${profileData.profile.year_founded} (${ currentYear - profileData.profile.year_founded} years)`, svg: Calendar },
+    { title: 'Country', value: profileData.profile.country.name, svg: Place },
+    { title: 'Mobile Number', value: profileData.profile.mobile_number, svg: Call },
+    { title: 'Email', value: profileData.email, svg: Email },
   ]
 
   const [show, setShow] = useState(false);
@@ -127,7 +133,7 @@ function ClubProfileCard({id}) {
       <Card.Img
         roundedCircle
         className='profile-img'
-        src={user.userData.profile.club_logo}
+        src={profileData.profile.club_logo}
       />
       <Card.Img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ__AlJC7xkCAQituHiG5hIzlQWn-DbhiCj4g&usqp=CAU" 
@@ -146,7 +152,7 @@ function ClubProfileCard({id}) {
       {user.userData.profile.type_name == 'club' ? 
         (ClubData.map((data, index) => (
           <div>
-          <div key={index} className='d-flex mt-2 d-flex align-items-center justify-content-between mt-3'>
+          <div key={index} className='d-flex  d-flex align-items-center justify-content-between '>
             <div  className="d-flex align-items-center">
             <img src={data.svg} alt={data.title} className='me-3' /> 
             <p className='data-title me-5 mt-3' >{data.title}</p>

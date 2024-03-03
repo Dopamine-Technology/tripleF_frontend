@@ -18,7 +18,7 @@ import { RiFootballLine } from "react-icons/ri";
 
 
 
-function CoachProfileCard() {
+function CoachProfileCard({profileData}) {
 
   const { user } = useContext(UserDataContext);
  
@@ -126,11 +126,12 @@ function CoachProfileCard() {
 
   return (
     <Card className='profile-card' style={{padding:'0'}} >
+      {console.log('profile',profileData)}
     <div className='images-container'>
       <Card.Img
         roundedCircle
         className='profile-img'
-        src={user.userData.image?user.userData.image:user.userData.social_image}
+        src={profileData.image?profileData.image:profileData.social_image}
       />
       <Card.Img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ__AlJC7xkCAQituHiG5hIzlQWn-DbhiCj4g&usqp=CAU" 
@@ -138,7 +139,7 @@ function CoachProfileCard() {
       />
     </div>
     <Card.Body className='mt-3'>
-      <Card.Title className='card-title'>{user.userData.name} {user.userData.last_name}</Card.Title>
+      <Card.Title className='card-title'>{profileData.name} {profileData.last_name}</Card.Title>
       <Card.Subtitle className='card-subTitle'>{user.userData.profile.type_name}</Card.Subtitle>
       <p className='followers-number'>
         <span className='followers-span me-2' onClick={handleShow}>9 followers</span>
