@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import loginPic from '../../assets/imgs/login.png'
 import { Row, Col, Button, Form } from 'react-bootstrap';
-import search from '../../assets/imgs/search.png';
 import facebook from '../../assets/imgs/facebook.png';
 import { useForm } from "react-hook-form";
 import Input from './Input';
@@ -24,13 +23,15 @@ import startsWith from 'lodash.startswith';
 function RegisterForm() {
   const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
 
+  
+
   const schema = Yup.object().shape({
     email: signedUpWithGoogle
         ? Yup.string()
         : Yup.string()
               .required("Email is required")
               .email("Wrong email format")
-              .transform((value) => value.trim())  // Trim whitespace from the email
+              .transform((value) => value.trim()) 
               .required("Email is required"),
     first_name: signedUpWithGoogle
         ? Yup.string()
@@ -49,9 +50,6 @@ function RegisterForm() {
               .min(8, "Password must be at least 8 characters long"),
 });
 
-
-
-
       const {
         register,
         handleSubmit,
@@ -61,7 +59,6 @@ function RegisterForm() {
         formState: { errors },
       } = useForm( { mode: "onChange",
       resolver: yupResolver(schema)});
-
 
       const [currentStep, setCurrentStep] = useState(1);
       const [accessToken, setAccessToken] = useState();
@@ -90,11 +87,11 @@ function RegisterForm() {
         const value = event.target.value;
         const emojiPattern = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/;
     
-        // Check if the input contains any unwanted characters
         if (!emojiPattern.test(value)) {
           setClubName(value);
         }
       };
+
       
       const onSuccess = (res) => {
         const userData = {
@@ -135,19 +132,7 @@ function RegisterForm() {
         console.log('O')
       }
 
-    
-      // useEffect(() => {
-      //   const fetchData = async () => {
-      //     try {
-      //       const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_sports');
-      //       setSports(response.data.result);
-      //     } catch (error) {
-      //       console.error('Error fetching sports:', error);
-      //     }
-      //   };
-      
-      //   fetchData();
-      // }, []);
+
       useEffect(() => {
         axios
           .get('https://backend.triplef.group/api/app/get_sports')
@@ -171,19 +156,6 @@ function RegisterForm() {
       }, [isFirstRender]);
     
 
-      // useEffect(() => {
-      //   const fetchData = async () => {
-      //     try {
-      //       const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_user_types');
-      //       setAccountType(response.data.result);
-      //     } catch (error) {
-      //       console.error('Error fetching sports:', error);
-      //     }
-      //   };
-      
-      //   fetchData();
-      // }, []);
-
       useEffect(() => {
         axios
           .get('https://backend.triplef.group/api/app/get_user_types')
@@ -197,19 +169,7 @@ function RegisterForm() {
             setLoading(false);
           });
       }, []);
-      
-      // useEffect(() => {
-      //   const fetchData = async () => {
-      //     try {
-      //       const response = await axios.get('https://backendtriplef.dopaminetechnology.com/api/app/get_countries');
-      //       setCountries(response.data.result);
-      //     } catch (error) {
-      //       console.error('Error fetching countries:', error);
-      //     }
-      //   };
-      
-      //   fetchData();
-      // }, []);
+
 
       useEffect(() => {
         axios
@@ -287,20 +247,14 @@ function RegisterForm() {
           setFormData(data);
           setCurrentStep(currentStep + 1);
         } else if (currentStep === 2) {
-          const mergedData = {};
-          for (const key in formData) {
-            if (formData[key]) {
-              mergedData[key] = formData[key];
-            }
-          }
-          for (const key in data) {
-            if (data[key]) {
-              mergedData[key] = data[key];
-            }
-          }
+          const mergedData = { ...formData, ...data };
           const formDataWithImage = new FormData();
       
-          const imageFile = mergedData.image[0];
+          // Check if image field is defined and not empty
+          if (mergedData.image && mergedData.image.length > 0) {
+            const imageFile = mergedData.image[0];
+            formDataWithImage.append('image', imageFile);
+          }
       
           if (accountType === '3') {
             const logo = data.club_logo[0];
@@ -308,30 +262,24 @@ function RegisterForm() {
             formDataWithImage.append('club_logo', logo);
           }
       
-         
-      
           for (const key in mergedData) {
-            formDataWithImage.append(key, mergedData[key]);
+            // Skip appending the image field again
+            if (key !== 'image' && mergedData[key]) {
+              formDataWithImage.append(key, mergedData[key]);
+            }
           }
- 
-          
-          formDataWithImage.delete('image');
-          if (!accessToken) {
-            formDataWithImage.append('image', imageFile);
-          }
-          formDataWithImage.append('user_type', accountType);
-          // formDataWithImage.append('google_identifier', accessToken);
       
-        
-          await axios.post(`https://backend.triplef.group/api/user/auth/register`, formDataWithImage)
-          .then((response) => {
+          formDataWithImage.append('user_type', accountType);
+      
+          try {
+            const response = await axios.post(`https://backend.triplef.group/api/user/auth/register`, formDataWithImage);
             if (response.status === 200) {
               message.success('Registration successful! Please check your email to verify it.');
             } else {
               if (response.status === 422) {
                 const errors = response.data.errors;
                 if (errors && errors.email && Array.isArray(errors.email) && errors.email.length > 0) {
-                  const emailErrorMessage = errors.email[0]; 
+                  const emailErrorMessage = errors.email[0];
                   message.error(emailErrorMessage);
                 } else {
                   message.error('Unknown validation error. Please try again.');
@@ -340,18 +288,17 @@ function RegisterForm() {
                 message.error('An error occurred. Please try again.');
               }
             }
-          })
-          .catch((error) => {
+          } catch (error) {
             if (error.response) {
-              
               const errorMessage = error.response.data.message || 'Unknown error occurred.';
               message.error(errorMessage);
             } else {
               message.error('Something went wrong. Please try again.');
             }
-          });
+          }
         }
       };
+      
       
       const handleNextStep = (data) => {
         if (currentStep === 2) {
@@ -364,7 +311,7 @@ function RegisterForm() {
       };
       const handleBack = () => {
         setCurrentStep(currentStep - 1);
-        setTermsAccepted(false);
+        setTermsAccepted(true);
 
       };
 
@@ -727,15 +674,6 @@ function RegisterForm() {
                   <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}   />
                     </div>
                   </div>
-{/* <div className='form-group'>
-                  <label htmlFor="birthdate">years of experience:</label>
-                  <input type="number" id="years_of_experience" {...register('years_of_experience')} />
-</div>
-
-                <div className='form-group'>
-                  <label htmlFor="birthdate">Birthdate:</label>
-                  <input type="date" id="birthdate" {...register('birth_date')} />
-                </div> */}
    
    <div className='form-group'>
   <label htmlFor="country">Country:</label>
@@ -874,7 +812,6 @@ function RegisterForm() {
       )}
         <div className='form-group'>
           <label htmlFor="phone">Phone:</label>
-          {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
           <PhoneInput
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
   inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
@@ -968,7 +905,6 @@ function RegisterForm() {
       )}
   <div className='form-group'>
           <label htmlFor="phone">Phone Number:</label>
-          {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
           <PhoneInput
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
   inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
@@ -1051,19 +987,22 @@ function RegisterForm() {
 
 </div>
 
-
-                {subPositions?.length > 0 && (
-        <div className='form-group'>
-          <label htmlFor="subPosition">Sub Positions:</label>
-          <select id="subPosition" {...register('position')}>
-            {subPositions?.map(subPosition => (
-              <option key={subPosition.id} value={subPosition.id}>
-                {subPosition.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+{subPositions ? (
+  <div className='form-group'>
+    <label htmlFor="subPosition">Sub Positions:</label>
+    <select id="subPosition" {...register('position')}>
+      {subPositions.map(subPosition => (
+        <option key={subPosition.id} value={subPosition.id}>
+          {subPosition.name}
+        </option>
+      ))}
+    </select>
+  </div>
+) : (
+  <select id="subPosition" {...register('position', { value: '1' })}>
+    <option key={1} value={1}></option>
+  </select>
+)}
            <div className='form-group'>
   <label>Gender:</label>
   <div className="radio-buttons">
@@ -1122,7 +1061,6 @@ function RegisterForm() {
       )}
         <div className='form-group'>
           <label htmlFor="mobile_number">Phone:</label>
-          {/* <input type="tel" id="phone" {...register('mobile_number')} /> */}
           <PhoneInput
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
   inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
@@ -1175,7 +1113,6 @@ function RegisterForm() {
     <Row>
     <Col md={6}>
       <img src={loginPic} alt="Your Image" className='signup-img'  />
-      {/* <img src={loginPic} alt="Your Image" style={{ width: '37rem', height: '30rem' }} />  */}
     </Col>
     <Col md={6} className='mt-4'>
         <p className='login-welcome fs-4' style={{marginBottom:'1rem'}}>Create an Account</p>

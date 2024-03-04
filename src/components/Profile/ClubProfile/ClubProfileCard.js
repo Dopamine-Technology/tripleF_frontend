@@ -1,8 +1,5 @@
 import React,{useState,useContext,useEffect} from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
-import NavBar from '../../Layout/Navbar';
 import Card from 'react-bootstrap/Card';
-import GoalKeeper from '../../../assets/imgs/GoalKeeper.svg';
 import Heart from '../../../assets/imgs/heart.svg';
 import Positon from '../../../assets/imgs/position.svg';
 import Calendar from '../../../assets/imgs/calendar.svg';
@@ -23,109 +20,21 @@ function ClubProfileCard({id,profileData}) {
   const currentYear = new Date().getFullYear();
 
 
-  const ClubData= id == null ?[
-    { title: 'Year Founded', value:`${user.userData.profile.year_founded} (${ currentYear - user.userData.profile.year_founded} years)`, svg: Calendar },
-    { title: 'Country', value: user.userData.profile.country.name, svg: Place },
-    { title: 'Mobile Number', value: user.userData.profile.mobile_number, svg: Call },
-    { title: 'Email', value: user.userData.email, svg: Email },
- 
-  ]:
-  [
+  const ClubData=[
     { title: 'Year Founded', value:`${profileData.profile.year_founded} (${ currentYear - profileData.profile.year_founded} years)`, svg: Calendar },
     { title: 'Country', value: profileData.profile.country.name, svg: Place },
     { title: 'Mobile Number', value: profileData.profile.mobile_number, svg: Call },
     { title: 'Email', value: profileData.email, svg: Email },
+ 
   ]
-
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (whichOne) => 
+  {setShow(true)
+    setActiveKey(whichOne)}
 
-
-
-    const [showFollowing, setShowFollowing] = useState(false);
-    const handleCloseFollowingPopup = () => setShowFollowing(false);
-      const handleShowFollowingPopup = () => setShowFollowing(true);
-
-    const users=[
-        {
-            img:'https://media.istockphoto.com/id/1336646860/photo/teenage-boy-kicking-soccer-ball-in-field.jpg?s=612x612&w=0&k=20&c=yGZ7Wpd84_MhP9Ll6ol0DysGo_GUly-RQrrUmGiXSUI=',
-            username:'username',
-            isFollowed:false
-
-        },
-        {
-            img:'https://thumbs.dreamstime.com/b/two-children-playing-soccer-training-session-happy-boys-practicing-football-summer-camp-kids-club-wearing-blue-jersey-240352926.jpg',
-            username:'username',
-            isFollowed:false
-
-        },
-        {
-            img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO17hg6KvLlweeZWN0LCEdi-OXM9qGpbQ9w&usqp=CAU',
-            username:'username',
-            isFollowed:false
-
-        },
-        {
-            img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-6IvAK6rubu5Yl2MzuDBuQWUeHULHZ2MGJ6NeHQ4ToCkakMqmVSlzCyuPKo9m2vjNfcw&usqp=CAU',
-            username:'username',
-            isFollowed:true
-
-        },
-        {
-            img:'https://media.istockphoto.com/id/1327776849/photo/dark-skinned-boy-knee-up-soccer-ball.jpg?s=612x612&w=0&k=20&c=mpgwqYf2HNOOIFztqT0_J5cTBScVgqKSJoSycnBWsdM=',
-            username:'username',
-            isFollowed:false
-
-        },
-        {
-            img:'https://media.istockphoto.com/id/1342037702/photo/happy-little-asian-boy-with-football-ball-in-hand-over-blue-background.jpg?s=612x612&w=0&k=20&c=iYHt7GoyPIDs92mgrUUMZ5WFNNnzqtGIy6dY10vNWFY=',
-            username:'username',
-            isFollowed:true
-
-        },
-        
-      ]
-
-      const FollowingUsers=[
-        {
-            img:'https://pics.craiyon.com/2023-07-21/484a4f8e720b4353a49e0e3135e85b6b.webp',
-            username:'username',
-            isFollowed:true
-
-        },
-        {
-            img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvEnmv8w9jWepciYHXvU3UqoNCb5ZnaWfHYge9lCsuLVy5E52Ufn8OTr30CyrcukZrTtM&usqp=CAU',
-            username:'username',
-            isFollowed:true
-
-        },
-        {
-            img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO17hg6KvLlweeZWN0LCEdi-OXM9qGpbQ9w&usqp=CAU',
-            username:'username',
-            isFollowed:true
-
-        },
-        {
-            img:'https://w7.pngwing.com/pngs/613/212/png-transparent-children-player-kids-boy-young-football-soccer-thumbnail.png',
-            username:'username',
-            isFollowed:true
-
-        },
-        {
-            img:'https://media.istockphoto.com/id/1327776849/photo/dark-skinned-boy-knee-up-soccer-ball.jpg?s=612x612&w=0&k=20&c=mpgwqYf2HNOOIFztqT0_J5cTBScVgqKSJoSycnBWsdM=',
-            username:'username',
-            isFollowed:true
-
-        },
-        {
-            img:'https://media.istockphoto.com/id/1342037702/photo/happy-little-asian-boy-with-football-ball-in-hand-over-blue-background.jpg?s=612x612&w=0&k=20&c=iYHt7GoyPIDs92mgrUUMZ5WFNNnzqtGIy6dY10vNWFY=',
-            username:'username',
-            isFollowed:true
-
-        },
-        
-      ]
+      const [activeKey,setActiveKey]=useState();
+   
 
   return (
     <Card className='profile-card'style={{padding:'0'}} >
@@ -141,15 +50,15 @@ function ClubProfileCard({id,profileData}) {
       />
     </div>
     <Card.Body className='mt-3'>
-      <Card.Title className='card-title'>{user.userData.profile.club_name} {id!=null?<img src={checkmark} />:null}</Card.Title>
-      <Card.Subtitle className='card-subTitle'>{user.userData.profile.type_name}</Card.Subtitle>
+      <Card.Title className='card-title'>{profileData.profile.club_name} {id!=null?<img src={checkmark} />:null}</Card.Title>
+      <Card.Subtitle className='card-subTitle'>{profileData.profile.type_name}</Card.Subtitle>
       <p className='followers-number'>
-        <span className='followers-span me-2' onClick={handleShow}>9 followers</span>
+        <span className='followers-span me-2' onClick={() => handleShow('followers')}>{profileData.followers_count} followers</span>
         <span className='me-2'>.</span>
-        <span className='followers-span' onClick={handleShowFollowingPopup}> 16 following</span>
+        <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} following</span>
       </p>
       
-      {user.userData.profile.type_name == 'club' ? 
+      {profileData.profile.type_name == 'club' ? 
         (ClubData.map((data, index) => (
           <div>
           <div key={index} className='d-flex  d-flex align-items-center justify-content-between '>
@@ -164,8 +73,8 @@ function ClubProfileCard({id,profileData}) {
         ))) :null
       }
     </Card.Body>
-    {show && <FollowersPopup show={show} users={users} handleClose={handleClose} />}
-    {showFollowing && <FollowersPopup show={showFollowing} followingUsers={FollowingUsers} handleClose={handleCloseFollowingPopup}/>}
+    {show && <FollowersPopup show={show}  handleClose={handleClose} id={id} activeKey={activeKey}/>}
+    
   </Card>
   );
 }

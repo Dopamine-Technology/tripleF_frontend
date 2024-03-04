@@ -81,36 +81,36 @@ function WholeProfile(){
                 <ProfileCard id={id} profileData={profileData} />:
                 profileData && profileData.profile && profileData.profile.type_name == 'club' ?
                 <ClubProfileCard id={id} profileData={profileData} />:
-                <CoachProfileCard profileData={profileData}  />
+                <CoachProfileCard profileData={profileData} id={id}  />
             }
-            {user.userData.profile.type_name=='couch'?
+            {profileData.profile.type_name =='coach'?
                <Certifications sectionName='Coaching License' data={License} id={id}/>:null
             }
 
-            {user.userData.profile.type_name=='couch'||user.userData.profile.type_name=='scout'?
+            {profileData.profile.type_name =='coach'||profileData.profile.type_name =='scout'?
                <Certifications sectionName='Certifications' data={Certification} id={id}/>:null
             }
         {
-  id == null ? (
+     id == user.userData.id ? (
     <ProfileStrong />
-  ) : (
-    id != null && user.userData.profile.type_name === 'club' ? null : 
+     ) : (
+        id != user.userData.id && profileData.profile.type_name === 'club' ? null : 
 
 
     <ProfileStrongView />
-  )
-}
+    )
+   }
                   
          
             </Col>
             <Col md={6} lg={8} xs={12}>
-           {id == null ? 
-                <NewPost />:null}
+           {id == user.userData.id ? 
+                <NewPost profileData={profileData} />:null}
                 {
-                user.userData.profile.type_name=='talent'? <Post />:
-                user.userData.profile.type_name=='scout'? <OppProfileScout />:
-                <OppPost id={id} />
-                }
+                profileData.profile.type_name=='talent'? <Post />:
+                profileData.profile.type_name=='scout'? <OppProfileScout  profileData={profileData}/>:
+                <OppPost id={id} /> &&<Post />
+            }
             
             </Col>
         </Row>

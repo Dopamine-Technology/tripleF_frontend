@@ -7,9 +7,8 @@ import ChallengesList from '../CreateChallenge/ChallengesList';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-function NewPost(){
+function NewPost({profileData}){
   
-    const { user } = useContext(UserDataContext);
     const [show, setShow] = useState(false);
     const location=useLocation();
     const navigate=useNavigate();
@@ -21,7 +20,7 @@ function NewPost(){
 
 return(
 <Container className='new-post' style={{ marginLeft: isProfilePath ? '0rem' : '4rem' }}>
-    {user.userData.profile.type_name === "talent" ? (
+    {profileData.profile.type_name === "talent" ? (
         <Row>
             <Col xs={12} md={6} lg={10}>
                 <div className='d-flex'>
@@ -40,7 +39,7 @@ return(
             </Col>
         </Row>
     ) : (
-        user.userData.profile.type_name === "couch" ? (
+        profileData.profile.type_name === "couch" ? (
           <Row>
             <Col xs={12} md={6} lg={10}>
                 <div className='d-flex'>

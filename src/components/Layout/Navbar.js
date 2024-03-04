@@ -75,6 +75,7 @@ function NavBar({ toggleLeftSidebar }){
             <img src={Profile} className="me-2" />
             <p className='mt-3'>My Profile</p>
           </Link>
+          <hr className='line-dropdown'/>
           </>
           ),
         },
@@ -82,6 +83,7 @@ function NavBar({ toggleLeftSidebar }){
         {
           key: "2",
           label: (
+            <>
             <Link
             to='/profile'
             className=' d-flex ' 
@@ -90,11 +92,14 @@ function NavBar({ toggleLeftSidebar }){
             <img src={Settings}  className="me-2"/>
             <p className='mt-3'>Settings</p>
           </Link>
+          <hr className='line-dropdown'/>
+          </>
           ),
         },
         {
           key: "3",
           label: (
+            <>
             <Link
             to='/profile'
             className=' d-flex ' 
@@ -103,11 +108,14 @@ function NavBar({ toggleLeftSidebar }){
             <img src={Language} className="me-2" />
             <p className='mt-3'>Language (English)</p>
           </Link>
+          <hr className='line-dropdown'/>
+          </>
           ),
         },
         {
           key: "4",
           label: (
+            <>
             <Link
             to='/profile'
             className=' d-flex' 
@@ -117,6 +125,8 @@ function NavBar({ toggleLeftSidebar }){
             <img src={signOut} className="me-2" />
             <p className='mt-3'>Sing Out </p>
           </Link>
+        
+          </>
           ),
         },
        

@@ -28,7 +28,6 @@ function Post(){
     const [showReactionPopup,setShowReactionPop]=useState();
     const [showMedalPopups, setShowMedalPopups] = useState(Array(posts?.length).fill(false));
     const [selectedPostId, setSelectedPostId] = useState(null);
-    const { user } = useContext(UserDataContext);
     const axios=useAxios();
 
     useEffect(() => {
@@ -100,7 +99,7 @@ function Post(){
 
 
     return(
-        <div className=''>
+        <div className='mt-4'>
              {posts &&
                 posts.map((post, index) => (
         <div className='text2'>

@@ -15,12 +15,11 @@ import { message } from 'antd';
 import { UserDataContext } from '../../UserContext/UserData.context';
 
 
-function OppProfileScout(){
+function OppProfileScout({profileData}){
 
     const axios=useAxios();
     const [isExpanded, setIsExpanded] = useState(false);
     const [ScoutOpportunities,setScoutOpportunities]=useState();
-    const { user } = useContext(UserDataContext);
 
     const fetchOppData = async () => {
         try {
@@ -69,9 +68,9 @@ function OppProfileScout(){
    <div className='d-flex justify-content-between' >
    <div className="poster">
    <div className="Simplilearn" style={{marginTop:'0.7rem'}}>
-       <img src={user.userData.image?user.userData.image:user.userData.social_image}
+       <img src={profileData.image?profileData.image:profileData.social_image}
         alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
-       <p className='post-username'>{user.userData.user_name} <br /> 
+       <p className='post-username'>{profileData.user_name} <br /> 
 
        </p> 
     
