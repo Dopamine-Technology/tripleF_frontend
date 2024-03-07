@@ -131,6 +131,13 @@ margin-top: 1rem;
 
   }
 
+ .Line-2{
+  width: 1205px;
+  height: 1px;
+  margin: 7px 80.5px 0;
+  border: solid 1px rgba(211, 215, 221, 0.5);
+ }
+
  /* input{
   accent-color: #5fb099
  } */
@@ -288,6 +295,7 @@ margin-top: 1rem;
 
 .react-tel-input .flag-dropdown {
   margin-top: 0; 
+
 }
 
   .form-container {
@@ -300,12 +308,30 @@ margin-top: 1rem;
     display: flex;
     flex-direction: column;
   }
-
-  
-  
-  label {
-
+  @media (max-width: 360px) {
+  .signup-img{
+    display: none;
   }
+  .signup-form{
+   
+  margin-left: 3rem;
+  }
+  .form-container select,
+  .form-container input[type='date'],
+  .form-container input[type='number']
+  .form-container input[type='text'],
+  .form-container input[type='radio'],
+  .form-container input[type='number']
+ {
+    width: 70%;
+  
+  }
+
+
+
+}
+
+/* 
   @media only screen and (width: 1920px) and (height: 1080px) {
     .login-img{
       width:57rem;
@@ -358,4 +384,4 @@ margin-top: 1rem;
       width:24rem;
       height: 20rem;
     }
-  }
+  } */

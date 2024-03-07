@@ -35,13 +35,13 @@ const ClientImg = ({ onImageClick, selectedImageIndex }) => {
     const totalImages = images.length;
     const angle = (360 / totalImages) * index;
     const mainImageRadius = 200;
-
+     
     const transformX =
       Math.cos((angle * Math.PI) / 180) * mainImageRadius - (index === selectedImageIndex ? 60 : 80);
 
     const transformY =
       Math.sin((angle * Math.PI) / 180) * mainImageRadius - (index === selectedImageIndex ? 60 : 80);
-
+    
     return {
       width:'130px',
       height:'130px',

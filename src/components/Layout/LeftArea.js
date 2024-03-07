@@ -16,7 +16,7 @@ import { NavLink } from 'react-bootstrap';
 import HomeIcon from '../../assets/imgs/home.svg';
 import dropdownImg from '../../assets/imgs/dropdown.svg'
 
-function LeftArea({ isCollapsed }) {
+function LeftArea({ isCollapsed, toggleCollapse }) {
     const [activeLink, setActiveLink] = useState(1);
     const navigate=useNavigate();
     const { user } = useContext(UserDataContext);
@@ -37,34 +37,37 @@ function LeftArea({ isCollapsed }) {
     return(
         <div>
         <div className={`leftside-container  ${isCollapsed ? 'collapsed' : ''}`}>
-            
+        {!isCollapsed && 
             <div className="Pro" onClick={() => handleNavLinkClick(1,'/home')} >
             <img src={HomeIcon} />
             <div>
-            {!isCollapsed && <div>Home</div>}
+            <div>Home</div>
                 </div>
-            </div>
+            </div>}
             <hr style={{color:'#B0B0B0',width:'130%'}} />
+            {!isCollapsed && 
             <div className="Pro" onClick={() => handleNavLinkClick(2,'/clubs')}>
                 <RiFootballLine  fontSize="1.3rem" className={`${activeLink === 2 ? 'activeLink' : 'not-active'}`}/>
                 <div  >
                 {!isCollapsed && <div >Clubs</div>}
                 </div>
-            </div>
+            </div>}
             <hr style={{color:'#B0B0B0',width:'130%'}} />
+            {!isCollapsed && 
             <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
                 <img src={scoutIcon} />
                 <div>
                 {!isCollapsed && <div >Scouts</div>}
                 </div>
-            </div>
+            </div>}
             <hr style={{color:'#B0B0B0',width:'130%'}} />
+            {!isCollapsed && 
             <div className="Pro" onClick={() => handleOppClick(4,'/Opportunities')} >
             <img src={OpportunitiesIcon} />
             <div style={{fontSize:'15px'}}>
                 {user.userData.profile.type_name=="talent"?(!isCollapsed && <div > <span className='me-3'>Opportunities</span> <img src={dropdownImg} /></div>):(!isCollapsed && <div >My Opportunities <img src={dropdownImg} /> </div>)}  
                 </div>
-            </div>
+            </div>}
             {isNavLinkVisible && (
         <div style={{marginLeft:'0.5rem'}} className='mt-3'>
        <div onClick={() => handleNavLinkClick(7,'/opportunity/list')} className={`Pro ${activeLink === 7 ? 'activeSubLink' : 'not-activeSub'}`}>
@@ -83,21 +86,23 @@ function LeftArea({ isCollapsed }) {
         </div>
       )}
             <hr style={{color:'#B0B0B0',width:'130%'}} />
+            {      !isCollapsed && 
             <div className="Pro" onClick={() => handleNavLinkClick(5,'/challenges')}>
                 <FaFlagCheckered  fontSize="1.3rem" className={`${activeLink === 5 ? 'activeLink' : 'not-active'}`}/>
                 <div  >
                 {!isCollapsed && <div>Challenges</div>}
                 </div>
             </div>
-            
+}
             <hr style={{color:'#B0B0B0',width:'130%'}} />
+            {      !isCollapsed && 
             <div className="Pro" onClick={() => handleNavLinkClick(6,'/saved')}>
                 {/* <CiSaveDown2  fontSize="1.3rem"  className={`${activeLink === 6 ? 'activeLink' : 'not-active'}`}/> */}
                 <img src={savedIcon} />
                 <div>
                     {!isCollapsed && <div >Saved</div>}</div>
-            </div>
-           
+              </div>
+}
             <br></br>
             
         </div>

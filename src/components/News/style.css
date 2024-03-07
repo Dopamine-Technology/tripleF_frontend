@@ -78,14 +78,29 @@
     font-size: 14px;
     color: #555;
 }
+.news-row{
+    margin-left: 2.7rem;
+}
 
 :where(.css-dev-only-do-not-override-2q8sxy).ant-card .ant-card-body {
     padding: 1rem;
 }
+@media only screen and (max-width: 360px) {
+    .read-more-link,.arrow-hidden{
+        display: none;
+    }
+    .news-row{
+        margin-left: -1rem;
+    }
+   .description-text{
+    /* font-size: 16px; */
+    max-width: 13rem;
+   }
 
-@media only screen and (max-width: 768px) and (max-height: 1024px) {
+}
+/* @media only screen and (max-width: 768px) and (max-height: 1024px) {
     .col-single{
         margin-left: 12rem;
     }
 
-}
+} */

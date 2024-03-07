@@ -104,6 +104,28 @@ margin-left:-1rem ;
   letter-spacing: normal;
   color: #464646;
 }
+@media only screen and (max-width: 360px) {
+  .clientTalk-container{
+    margin-left: 0rem;
+  }
+  .test-desc{
+    width: 325px;
+  height: 138px;
+  margin: 0 0 24px;
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+
+  }
+  .test-h1{
+    width:auto
+  }
+}
 
   @media only screen and (width: 1920px) and (height: 1080px) {
   .clients-img{
@@ -118,4 +140,5 @@ margin-left:-1rem ;
     .clients-img{
       width:23rem
     }
+    
   }

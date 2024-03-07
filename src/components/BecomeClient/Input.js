@@ -29,12 +29,11 @@ const Input = ({
           className={`${className} ${
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
+          className='textarea-input'
           style={{
-            backgroundColor: "#1A2A44",
-            border: "1px solid white",
-            color: "white",
-            width: "36rem", 
+           
           }}
+
           placeholder={placeholder}
         />
       ) : (
@@ -45,11 +44,10 @@ const Input = ({
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
           style={{
-            backgroundColor: "#1A2A44",
-            border: "1px solid white",
-            color: "white",
-            width: "15rem", 
+
+            
           }}
+          className='text-input'
           placeholder={placeholder}
           type={type}
         />

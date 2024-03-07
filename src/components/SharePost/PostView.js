@@ -9,6 +9,10 @@ import SocialPopup from '../SharePost/Popup';
 import { useParams } from 'react-router-dom';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import useAxios from '../Auth/useAxiosHook.interceptor';
+import Bronze from '../../assets/imgs/bronze.svg';
+import Silver from '../../assets/imgs/silver.svg';
+import Gold from '../../assets/imgs/gold.svg';
+import Medal from '../../assets/imgs/Medal.svg';
 
 
 function PostView() {
@@ -20,20 +24,6 @@ function PostView() {
     const axios=useAxios();
     const [post,setPost]=useState();
 
-    // useEffect(() => {
-    
-    //     const fetchPostData = async () => {
-    //       try {
-    //         const response = await axios.get(`status/get/${id}`);
-    //         setPost(response.data.result);
-    //       } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //       }
-       
-    //     };
-    //     fetchPostData()
-        
-    //   }, []);
     useEffect(() => {
         axios
           .get(`status/get/${id}`)
@@ -130,13 +120,12 @@ function PostView() {
     <hr style={{ color: '#A3A3A3' }} />
     <Row>
         <Col xs={6}>
-            <div className="d-flex align-items-center" >
-                <LiaMedalSolid color="gold" className="" />
-                <LiaMedalSolid color="saddlebrown" className="" />
-                <LiaMedalSolid color="silver" className="" />
-
-                <p className="share-time m-0">{post.reaction_count}</p>
-            </div>
+        <div className="d-flex align-items-center" >
+    <img className="stacked-image" src={Bronze} />
+    <img className="stacked-image" src={Silver} />
+    <img className="stacked-image" src={Gold} />
+    <p className="share-time m-0">{post.reaction_count}</p>
+</div>
         </Col>
         <Col xs={6}>
          
@@ -150,24 +139,30 @@ function PostView() {
     
          {show && (
                 <div className="MedalOptions" onMouseLeave={clearSelection}>
-                    <div className="MedalOption" onClick={() => handleSelectMedal(post.id,'gold')}>
-                        <LiaMedalSolid color="gold" className='me-2' size={40}/>
-                    </div>
-                    <div className="MedalOption" onClick={() => handleSelectMedal(post.id,'silver')}>
-                        <LiaMedalSolid color="silver" className='me-2' size={40}/>
-                    </div>
-                    <div className="MedalOption" onClick={() => handleSelectMedal(post.id,'saddlebrown')}>
-                        <LiaMedalSolid color="saddlebrown" className='me-2' size={40}/>
-                    </div>
+                <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'gold', post.is_reacted)}>
+                    {/* <LiaMedalSolid color="gold" className='me-2' size={40}/> */}
+                    <img src={Gold} className='me-2' />
+                </div>
+                <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'silver', post.is_reacted)}>
+                    {/* <LiaMedalSolid color="silver" className='me-2' size={40}/> */}
+                    <img src={Silver} className='me-2' />
+                </div>
+                <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'saddlebrown', post.is_reacted)}>
+                    {/* <LiaMedalSolid color="saddlebrown" className='me-2' size={40}/> */}
+                    <img src={Bronze} className='me-2' />
+                </div>
                 </div>
             )}
         
     <div className="Comment">
     
-        <div className="Like" onClick={likeHandle}>
-            <LiaMedalSolid color={selectedMedal} className='me-2 2' size={20}/>Medal 
-        </div>
-        
+    <div className="Like" onClick={() => likeHandle}>
+    {post.is_reacted=='1' ?<img src={Bronze} />:
+      post.is_reacted=='2'?<img src={Silver} />:
+      post.is_reacted=='3'? <img src={Gold} />: <img src={Medal} />
+    }
+    Medal
+    </div>
        
         <div className="Like" onClick={handleShow}>
             <IoShareSocialOutline color="grey" className='me-2' size={20}/>Share

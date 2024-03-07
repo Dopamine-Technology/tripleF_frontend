@@ -10,7 +10,7 @@ const HeaderDesc = () => {
   
   return (
     <div className='header-div' id='#homeSection'>
-      <Row>
+      <Row >
         <Col md={6} className='mt-5'>
           <p className='header-h1'>
             What We Do In Life Echoes In Eternity
@@ -18,7 +18,9 @@ const HeaderDesc = () => {
           <p className='mt-4 mb-4 header-p2' >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
           </p>
+          <div className='register-responsive-btn'>
           <RegisterButton />
+          </div>
         </Col>
       </Row>
     </div>

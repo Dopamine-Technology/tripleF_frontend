@@ -41,7 +41,7 @@ const ContactForm = () => {
   
   return (
     <div className='form-contact'>
-      <h2 className='about-h1 text-white' style={{width:'35rem',marginLeft:'0',fontSize:'43px'}}>
+      <h2 className='become-h1 text-white' >
       Become a client Do you have any questions? Talk to our analysts
       </h2>
       <form onSubmit={handleSubmit(onSubmit)}>

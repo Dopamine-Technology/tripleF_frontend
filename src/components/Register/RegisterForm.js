@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useLayoutEffect} from 'react';
 import loginPic from '../../assets/imgs/login.png'
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import facebook from '../../assets/imgs/facebook.png';
@@ -22,8 +22,8 @@ import startsWith from 'lodash.startswith';
 
 function RegisterForm() {
   const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
-
   
+
 
   const schema = Yup.object().shape({
     email: signedUpWithGoogle
@@ -78,6 +78,18 @@ function RegisterForm() {
       const [minAge] = useState(5);
       const [maxDate, setMaxDate] = useState(calculateMaxDate());
       const [clubName, setClubName] = useState('');
+      const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+      useLayoutEffect(() => {
+        const handleResize = () => {
+          setWindowWidth(window.innerWidth);
+        };
+    
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+    
+      const isSmallScreen = windowWidth <= 360;
       
       const clientId='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'
 
@@ -342,13 +354,13 @@ function RegisterForm() {
                className="custom-google-login"
                    />
                 
-                <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px',marginLeft:'1rem', padding: '10px' }}>
+                <Button variant="" className=' facebook-btn' >
                   <img src={facebook} alt='search' className='me-2' />
                   Sign up with Facebook
                 </Button>
 
                 
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center' }} className='login-or'>
   <hr className='mt-4' style={{width:'24%',color:'#7C7C7C'}} />
 
   <p style={{ margin: '0 10px' }}>OR</p>
@@ -357,7 +369,7 @@ function RegisterForm() {
 </div>
 
                 
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form onSubmit={handleSubmit(onSubmit)} className='signup-form'>
                   <Form.Group className='mb-3' controlId='formFile'>
                   <EditImage
                   register={register}
@@ -367,8 +379,8 @@ function RegisterForm() {
                       />
                   </Form.Group>
         
-                  <div className='mb-3 d-flex '>
-                    <div className='flex-fill' >
+                  <div className={isSmallScreen ? 'mb-3' : 'mb-3 d-flex'}>
+                    <div className={isSmallScreen ? 'mb-3' : 'flex-fill'} >
                       <Input
                         register={register}
                         errors={errors}
@@ -442,7 +454,7 @@ function RegisterForm() {
                 onChange={handleTermsCheckbox}
               />
             </Form.Group>
-            <div className="d-flex justify-content-between align-items-center">
+            <div className={isSmallScreen?"mt-3":"d-flex justify-content-between align-items-center"}>
 
 <Button className='btn-tall' variant='' type='submit' disabled={!termsAccepted}>
   Next <FaArrowRight color='white'/>
@@ -458,21 +470,29 @@ function RegisterForm() {
             case 2:
               return (
                 <div>
-                <p>Accoount Type</p>
+                <p>Account Type</p>
                 <div className="account-type-options" onChange={handleAccountTypeChange}>
-
-                  {
-                    accountTypes?.map((account, index)=>(
-                  <label class="custom-radio-btn">
-                  <span className="label">{account.name}</span>
-                  <input type="radio" value={account.id} name="user_type"  />
-                  <span className="checkmark"></span>
-                  </label>
-
-                    ))
-                  }
+                  {isSmallScreen ? (
+                    <select className="form-select" style={{ width: isSmallScreen ? '70%' : '100%' }}>
+                      {accountTypes.map((account, index) => (
+                        <option key={index} value={account.id}>
+                          {account.name}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <>
+                      {accountTypes.map((account, index) => (
+                        <label key={index} className="custom-radio-btn">
+                          <span className="label">{account.name}</span>
+                          <input type="radio" value={account.id} name="user_type" />
+                          <span className="checkmark"></span>
+                        </label>
+                      ))}
+                    </>
+                  )}
                 </div>
-                {renderAccountTypeFields()} 
+                {renderAccountTypeFields()}
               </div>
          
               );
@@ -491,7 +511,7 @@ function RegisterForm() {
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Talent Type</label>
-                  <select id="talentType" {...register('talent_type')}>
+                  <select id="talentType" {...register('talent_type')} >
     {sports.map(sport => (
       <option key={sport.id} value={sport.id}>
         {sport.name}
@@ -546,6 +566,27 @@ function RegisterForm() {
   
 </div>
 
+<div className='form-group'>
+  <label>Preferred Foot:</label>
+  <div className="radio-buttons">
+    <label className='custom-radio-btn'>
+      <span className="label">Right</span>
+      <input type="radio" id="male" value="male" {...register('gender')} />
+      <span className="checkmark"></span>
+    </label>
+    <label className='custom-radio-btn'>
+      <span className="label">Left</span>
+      <input type="radio" id="female" value="female" {...register('gender')} />
+      <span className="checkmark"></span>
+    </label>
+    <label className='custom-radio-btn'>
+      <span className="label">Both</span>
+      <input type="radio" id="other" value="other" {...register('gender')} />
+      <span className="checkmark"></span>
+    </label>
+  </div>
+  
+</div>
                 <div className='form-group'>
                   <label htmlFor="birthdate">Date of Birth:</label>
                   <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}  />
@@ -584,7 +625,7 @@ function RegisterForm() {
           <label htmlFor="mobile_number">Phone:</label>
           <PhoneInput
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
-  inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+  inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
   country={"jo"}
   value={"mobile_number"}
@@ -702,7 +743,7 @@ function RegisterForm() {
           <label htmlFor="phone">Phone:</label>
           <PhoneInput
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
-  inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+  inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
   country={"jo"}
   value={"mobile_number"}
@@ -814,7 +855,7 @@ function RegisterForm() {
           <label htmlFor="phone">Phone:</label>
           <PhoneInput
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
-  inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+  inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
   country={"jo"}
   value={"mobile_number"}
@@ -907,7 +948,7 @@ function RegisterForm() {
           <label htmlFor="phone">Phone Number:</label>
           <PhoneInput
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
-  inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+  inputClass={`${isSmallScreen ? 'w-50' : 'w-100'} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
   country={"jo"}
   value={"mobile_number"}
@@ -1063,7 +1104,7 @@ function RegisterForm() {
           <label htmlFor="mobile_number">Phone:</label>
           <PhoneInput
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
-  inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+  inputClass={`${isSmallScreen ? 'w-50' : 'w-100 '} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
   country={"jo"}
   value={"mobile_number"}

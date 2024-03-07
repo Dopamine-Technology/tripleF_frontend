@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useLayoutEffect,useState} from 'react';
 import './style.css';
 import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
 import single from '../../assets/imgs/SingleRight.svg'
@@ -7,6 +7,18 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const { Meta } = Card;
 const SingleOne = ({ img, content, category }) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isSmallScreen = windowWidth <= 360;
   return (
     <Card
       hoverable
@@ -16,7 +28,7 @@ const SingleOne = ({ img, content, category }) => {
       }}
       cover={
         <img alt={img} src={img}
-          style={{ borderRadius: '16px', width: '391px', height: '347px' }}
+          style={{ borderRadius: '16px', width: !isSmallScreen?'391px':'300px', height: !isSmallScreen?'347px':'300px' }}
         />
       }
     >

@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Quicksand-Medium';
+  src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Medium.ttf') format('truetype'); 
+}
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: url('../../assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype'); 
+}
+
 .steps-div{
     background-color:  #213555;
     margin-top: 5rem;
@@ -43,10 +52,47 @@
   letter-spacing: normal;
   color: rgba(70, 70, 70, 0.8);
 }
+.Lorem-responsive{
+  width: 30rem;
+}
 
+@media (max-width: 360px) {
+  .how-h1{
+  }
+  .desc-responsive{
+    margin-top: 5rem
+  }
+  .how-h1{
+    width: 153px;
+  height: 30px;
+  margin: 0 175px 12px 0;
+  font-family: 'Quicksand-bold';
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
 
+  }
+  .Lorem-responsive{
+    width: 303px;
+    height: 350px;
+  margin: 0px 0px 0px 0;
+  opacity: 0.8;
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+
+  }
+ }
+/* 
 @media only screen and (width: 1920px) and (height: 1080px) {
   .about-h1{
     font-size: 4rem;
   }
-}
+  
+} */
