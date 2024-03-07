@@ -20,7 +20,6 @@ import En from '../../assets/imgs/en.jpg';
 import LanguageIcon from '../../assets/imgs/langauge-icon.png';
 import profileIcon from '../../assets/imgs/profile-icon.svg';
 import ArrowDownImage from '../../assets/imgs/dropdownWhite.svg';
-// import { HashLink as Link } from 'react-router-hash-link';
 
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'En';

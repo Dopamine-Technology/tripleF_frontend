@@ -7,50 +7,68 @@ import ChallengesList from '../CreateChallenge/ChallengesList';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-function NewPost(){
+function NewPost({profileData}){
   
-    const { user } = useContext(UserDataContext);
     const [show, setShow] = useState(false);
     const location=useLocation();
     const navigate=useNavigate();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const profilePath = location.pathname === '/profile';
+    const isProfilePath = location.pathname.startsWith('/profile');
+
 
 return(
-<Container className='new-post ' style={{marginLeft:profilePath?'0rem':'4rem'}}>
-{user.userData.profile.type_name=="talent"?(
-<Row >
-  <Col xs={12} md={6} lg={10}>
-    <div className='d-flex'>
-      <div>
-  <img src={asset2} width='90px' height='70px' className='m-3' />
-  </div>
-  <div>
-  <p className='newPost-title'>Share your challenges</p>
-  <p className='newPost-desc'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed</p>
-  </div>
-  </div>
-  </Col>
-  <Col xs={12} md={12} lg={2}><Button className='share-btn' onClick={handleShow}>Share</Button>
-  {show&& <ChallengesList handleClose={handleClose} show={show} />}
-  </Col>
-</Row>
-):(
-  <Row style={{marginLeft:'3rem'}}>
-  <Col xs={12} md={12} lg={10}>
-   
-
-  <div>
-  <p className='newPost-title'>Post your Opportunities</p>
-  <p className='newPost-desc'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed</p>
-  </div>
- 
-  </Col>
-  <Col xs={12} md={6} lg={2}><Button className='share-btn' onClick={()=>{navigate('add/opportunity')}}>Add</Button></Col>
-</Row>
-)}
+<Container className='new-post' style={{ marginLeft: isProfilePath ? '0rem' : '4rem' }}>
+    {profileData.profile.type_name === "talent" ? (
+        <Row>
+            <Col xs={12} md={6} lg={10}>
+                <div className='d-flex'>
+                    <div>
+                        <img src={asset2} width='90px' height='70px' className='m-3' />
+                    </div>
+                    <div>
+                        <p className='newPost-title'>Share your challenges</p>
+                        <p className='newPost-desc'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed</p>
+                    </div>
+                </div>
+            </Col>
+            <Col xs={12} md={12} lg={2}>
+                <Button className='share-btn' onClick={handleShow}>Share</Button>
+                {show && <ChallengesList handleClose={handleClose} show={show} />}
+            </Col>
+        </Row>
+    ) : (
+        profileData.profile.type_name === "couch" ? (
+          <Row>
+            <Col xs={12} md={6} lg={10}>
+                <div className='d-flex'>
+                    <div>
+                        <img src={asset2} width='90px' height='70px' className='m-3' />
+                    </div>
+                    <div>
+                        <p className='newPost-title'>Share your Training sessions</p>
+                        <p className='newPost-desc'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed</p>
+                    </div>
+                </div>
+            </Col>
+            <Col xs={12} md={12} lg={2}>
+                <Button className='share-btn' onClick={handleShow}>Share</Button>
+                {show && <ChallengesList handleClose={handleClose} show={show} />}
+            </Col>
+        </Row>
+        ) : (
+            <Row style={{ marginLeft: '3rem' }}>
+                <Col xs={12} md={12} lg={10}>
+                    <div>
+                        <p className='newPost-title'>Post your Opportunities</p>
+                        <p className='newPost-desc'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed</p>
+                    </div>
+                </Col>
+                <Col xs={12} md={6} lg={2}><Button className='share-btn' onClick={() => { navigate('add/opportunity') }}>Add</Button></Col>
+            </Row>
+        )
+    )}
 </Container>
     )
 }

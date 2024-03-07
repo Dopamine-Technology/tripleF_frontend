@@ -17,7 +17,7 @@ const Layout = () => {
 
   return (
     <AntLayout style={{ minHeight: "100vh" }}>
-      <NavBar toggleLeftSidebar={toggleLeftSidebar} />
+      <NavBar toggleLeftSidebar={toggleLeftSidebar}  />
       <AntLayout>
         <Sider
           width={80}

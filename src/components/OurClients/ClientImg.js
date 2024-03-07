@@ -43,8 +43,6 @@ const ClientImg = ({ onImageClick, selectedImageIndex }) => {
       Math.sin((angle * Math.PI) / 180) * mainImageRadius - (index === selectedImageIndex ? 60 : 80);
 
     return {
-      // width: index === 0 ? '80px' : index === 1 ? '60px' : index === 2 ? '120px' : '60px',
-      // height: index === 0 ? '80px' : index === 1 ? '60px' : index === 2 ? '120px' : '60px',
       width:'130px',
       height:'130px',
       borderRadius: '50%',

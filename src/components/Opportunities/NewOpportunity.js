@@ -182,8 +182,9 @@ const [editorContent2,setEditorContent2]=useState('');
             delete formData.from_weight;
             delete formData.to_weight;
 
-
-
+        }
+        if(user.userData.profile.type_name=='scout'){
+          formData.targeted_type='1'
         }
       
           const response = await axios.post('opportunities/create', formData)
@@ -207,8 +208,6 @@ const [editorContent2,setEditorContent2]=useState('');
 
           console.log(response.data);
           message.success('opportunity uploded successfully');
-    
-          // You can also handle other logic based on the API response, e.g., show a success message, redirect, etc.
         } catch (error) {
           console.error('Error submitting data:', error);
     
@@ -663,20 +662,22 @@ const [editorContent2,setEditorContent2]=useState('');
                       />
                       </Col>
                      
-      
-      <Col md={4} lg={4}>
-      <Input
-    register={register}
-    errors={errors}
-    name="targeted_type"
-    label="Type"
-    className="form-control form-control-sm rounded me-3"
-    type="radio"
-    radioOptions={Types}
-    onChange={handleAccountTypeChange}
+                      {user.userData.profile.type_name!='scout'?
+                      <Col md={4} lg={4}>
+                            <Input
+                          register={register}
+                          errors={errors}
+                          name="targeted_type"
+                          label="Type"
+                          className="form-control form-control-sm rounded me-3"
+                          type="radio"
+                          radioOptions={Types}
+                          onChange={handleAccountTypeChange}
+                      
+                        />
+                            </Col>:null}
+                           
 
-  />
-      </Col>
       {accountType=='1'?  <Col md={4} lg={4}>
                               <Input
                  type="select"

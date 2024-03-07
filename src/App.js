@@ -23,7 +23,7 @@ import LayoutWithoutRight from './components/Layout/LayoutWithoutRight';
 import { useRoleCheck } from './components/Auth/useRoleCheck';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import Test from './components/Opportunities/Test';
-import TalentProfile from './components/Profile/TalentProfile/TalentProfile';
+import WholeProfile from './components/Profile/TalentProfile/WholeProfile';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -57,7 +57,8 @@ function App() {
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />
           
           )}
-            <Route path='/profile' element={<TalentProfile />} />
+          {/* <Route path='/profile' element={<WholeProfile />} /> */}
+          <Route path='/profile/:id' element={<WholeProfile />} />
           <Route path='/test' element={<Test />}  />
           </>
         ):(
