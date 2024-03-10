@@ -22,7 +22,8 @@ import report from '../../assets/imgs/Report.svg';
 import Bronze from '../../assets/imgs/bronze.svg';
 import Silver from '../../assets/imgs/silver.svg';
 import Gold from '../../assets/imgs/gold.svg';
-import Medal from '../../assets/imgs/Medal.svg'
+import Medal from '../../assets/imgs/Medal.svg';
+import UnFollowUser from '../../assets/imgs/UnfollowUser.svg';
 
 
 function Post(){
@@ -126,7 +127,7 @@ function Post(){
       <Dropdown.Menu style={{width:'14rem'}}>
         <Dropdown.Item href="" className='p-2' ><img src={copyLink} className='me-2' />Copy link to Post</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'> <img src={notInterested} className='me-2' />I don’t want to see <br /> this</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'><img src={UnFollowUser} className='me-2' />Unfollow user</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' ><img src={report} className='me-2' />Report Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

@@ -24,7 +24,7 @@ return(
 <Container className='new-post' style={{ marginLeft: isProfilePath ? '0rem' : '4rem' }}>
     {user.userData.profile.type_name === "talent" ? (
         <Row>
-        <Col xs={12} md={6} lg={10}>
+        <Col xs={8} sm={8} md={6} lg={10}>
             <div className='d-flex'>
                 <div>
                     <img src={asset2} width='90px' height='70px' className='m-3 shareChallenge-img' />
@@ -35,15 +35,15 @@ return(
                 </div>
             </div>
         </Col>
-        <Col xs={12} md={12} lg={2}>
+        <Col xs={4} sm={4} md={12} lg={2}>
             <Button className='share-btn' onClick={handleShow}>Share</Button>
             {show && <ChallengesList handleClose={handleClose} show={show} />}
         </Col>
     </Row>
     ) : (
-        user.userData.profile.type_name === "couch" ? (
+        user.userData.profile.type_name === "coach" ? (
           <Row>
-            <Col xs={12} md={6} lg={10}>
+            <Col xs={6} sm={6} md={6} lg={10}>
                 <div className='d-flex'>
                     <div>
                         <img src={asset2} width='90px' height='70px' className='m-3' />
@@ -54,20 +54,20 @@ return(
                     </div>
                 </div>
             </Col>
-            <Col xs={12} md={12} lg={2}>
+            <Col  xs={6} sm={6} md={12} lg={2}>
                 <Button className='share-btn' onClick={handleShow}>Share</Button>
                 {show && <ChallengesList handleClose={handleClose} show={show} />}
             </Col>
         </Row>
         ) : (
-            <Row style={{ marginLeft: '3rem' }}>
-                <Col xs={12} md={12} lg={10}>
-                    <div>
+            <Row >
+                <Col xs={6} sm={6} md={12} lg={10}>
+                    <div  className='add-post'>
                         <p className='newPost-title'>Post your Opportunities</p>
                         <p className='newPost-desc'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed</p>
                     </div>
                 </Col>
-                <Col xs={12} md={6} lg={2}><Button className='share-btn' onClick={() => { navigate('add/opportunity') }}>Add</Button></Col>
+                <Col xs={6} sm={6} md={6} lg={2}><Button className='share-btn' onClick={() => { navigate('add/opportunity') }}>Add</Button></Col>
             </Row>
         )
     )}

@@ -14,7 +14,10 @@ import './Navbar.css';
 import { UserDataContext } from '../../components/UserContext/UserData.context';
 import { NavLink } from 'react-bootstrap';
 import HomeIcon from '../../assets/imgs/home.svg';
-import dropdownImg from '../../assets/imgs/dropdown.svg'
+import dropdownImg from '../../assets/imgs/dropdown.svg';
+import ChallengesIcon from '../../assets/imgs/ChallengesIcon.svg';
+import ClubIcon from '../../assets/imgs/clubIcon.svg';
+
 
 function LeftArea({ isCollapsed, toggleCollapse }) {
     const [activeLink, setActiveLink] = useState(1);
@@ -47,8 +50,8 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             {!isCollapsed && 
             <div className="Pro" onClick={() => handleNavLinkClick(2,'/clubs')}>
-                <RiFootballLine  fontSize="1.3rem" className={`${activeLink === 2 ? 'activeLink' : 'not-active'}`}/>
-                <div  >
+                <img src={ClubIcon} />
+                <div>
                 {!isCollapsed && <div >Clubs</div>}
                 </div>
             </div>}
@@ -88,7 +91,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             {      !isCollapsed && 
             <div className="Pro" onClick={() => handleNavLinkClick(5,'/challenges')}>
-                <FaFlagCheckered  fontSize="1.3rem" className={`${activeLink === 5 ? 'activeLink' : 'not-active'}`}/>
+                 <img src={ChallengesIcon} alt="Saved Icon" className="icon"  />
                 <div  >
                 {!isCollapsed && <div>Challenges</div>}
                 </div>
@@ -97,8 +100,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             {      !isCollapsed && 
             <div className="Pro" onClick={() => handleNavLinkClick(6,'/saved')}>
-                {/* <CiSaveDown2  fontSize="1.3rem"  className={`${activeLink === 6 ? 'activeLink' : 'not-active'}`}/> */}
-                <img src={savedIcon} />
+                <img src={savedIcon} alt="Saved Icon" className="icon"  />
                 <div>
                     {!isCollapsed && <div >Saved</div>}</div>
               </div>

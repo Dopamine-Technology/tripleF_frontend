@@ -115,8 +115,14 @@ margin-left: 4rem;
  .btn-tall{
   width: 80%;
  }
+ .btn:hover{
+  background-color: #142033;
+ }
  .forget-p{
   margin-left:4rem
+ }
+ .form-check{
+padding: 0rem;
  }
    
    }

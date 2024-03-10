@@ -469,7 +469,7 @@ function RegisterForm() {
             );
             case 2:
               return (
-                <div>
+                <div className='register-form' >
                 <p>Account Type</p>
                 <div className="account-type-options" onChange={handleAccountTypeChange}>
                   {isSmallScreen ? (
@@ -507,7 +507,7 @@ function RegisterForm() {
         switch (accountType) {
           case '1':
             return (
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)} className='register-form'>
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Talent Type</label>
@@ -671,7 +671,7 @@ function RegisterForm() {
             );
           case '2':
             return (
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)} className='register-form'>
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Sport Type</label>
@@ -783,7 +783,7 @@ function RegisterForm() {
             );
           case '4':
             return (
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)}className='register-form'>
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Sport Type</label>
@@ -895,7 +895,7 @@ function RegisterForm() {
             );
           case '3':
             return (
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)} className='register-form'>
       <div className='form-container'>
       <Form.Group className='mb-3' controlId='formFile'>
                   <EditImage

@@ -120,7 +120,7 @@ function PostView() {
     <hr style={{ color: '#A3A3A3' }} />
     <Row>
         <Col xs={6}>
-        <div className="d-flex align-items-center" >
+        <div className="d-flex align-items-center">
     <img className="stacked-image" src={Bronze} />
     <img className="stacked-image" src={Silver} />
     <img className="stacked-image" src={Gold} />

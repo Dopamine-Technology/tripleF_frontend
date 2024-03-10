@@ -11,6 +11,10 @@
     border-radius: 24px;
     box-shadow: 0px 2px 12px rgba(1,37,43, 0.3);
   }
+  .btn:hover{
+    background-color: #142033;
+    color:white
+  }
   .label{
     font-family: 'Quicksand-Medium';
   }
@@ -34,6 +38,9 @@
     gap: 10px;
     max-width: 400px;
     margin-top: 2rem;
+  }
+  .navbar-container{
+    margin-left: -1rem;
   }
   
   .form-container select,
@@ -326,6 +333,15 @@ margin-top: 1rem;
     width: 70%;
   
   }
+  .register-form{
+    align-items: center;
+    margin-left: 3rem;
+  }
+.navbar-container{
+  margin-left: -2.3rem;
+  box-shadow: 0 2px 12px 0 #dadada;
+  width: 40rem;
+}
 
 
 

@@ -10,7 +10,7 @@ const AboutImg = () => {
         <Col>
     <img src={football} alt="Image 2" className="me-1 image2" />
     </Col>
-    <Col>
+    <Col className='p-0'>
     <img src={boy} alt="Image 1" className="image1" />
     </Col>
     </Row>

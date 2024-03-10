@@ -1048,6 +1048,9 @@ user-select: none;
 
     
 }
+.add-post{
+    margin-left: 3rem;
+}
 
 .pressEnterToPost {
     color: rgb(153, 153, 153);
@@ -1108,11 +1111,15 @@ user-select: none;
     .share-btn{
         margin-top: 0rem;
         width: auto;
+        margin-left: 4rem;
     }
     .post-video{
         height: 30rem;
         width: 75%;
-      
+        margin-top: 0rem;
+    }
+    .add-post{
+        margin-left: 0rem;
     }
 }
 /* 

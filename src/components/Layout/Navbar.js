@@ -17,6 +17,9 @@ import { Link ,useNavigate} from 'react-router-dom';
 import Cookies from "js-cookie";
 import useAxios from "../Auth/useAxiosHook.interceptor";
 import { RxHamburgerMenu } from "react-icons/rx";
+import india from '../../assets/imgs/india.svg'
+import messages from '../../assets/imgs/messages.svg';
+import NotificationIcon from '../../assets/imgs/notificationIcon.svg';
 
 function NavBar({ toggleCollapse,isSmallScreen }) {
     const { user } = useContext(UserDataContext);
@@ -135,14 +138,16 @@ function NavBar({ toggleCollapse,isSmallScreen }) {
                         <AiOutlineSearch className="search-icon" />
                     </div>
                 </Nav>
+                {/* <img src={india} width='20px' height='20px' /> */}
        
                 <Nav className="right-content">
-                    <AiOutlineMessage className="icon" />
-                    <IoIosNotificationsOutline className="icon" />
+                    {/* <AiOutlineMessage className="icon" /> */}
+                    <img src={messages} className="icon me-4" />
+                    <img src={NotificationIcon} className="icon me-4" />
                     <Dropdown menu={{ items }} className="dropdown-responsive">
                         <Space>
                             <div className="image-container">
-                                <img src={user.userData.image} alt="Profile" />
+                                <img src={user.userData.image} alt="Profile" width='30px' height='30px' style={{borderRadius:'30px'}}/>
                                 <p className="me">Me</p>
                             </div>
                             <MdArrowDropDown fontSize={38} style={{ color: '#979797' }} />

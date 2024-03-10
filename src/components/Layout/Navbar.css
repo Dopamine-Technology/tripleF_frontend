@@ -51,6 +51,7 @@ input::placeholder{font-size: 1rem;}
     align-items: center;
     cursor: pointer;
     padding: 0 50px;
+    fill:red !important
 }
 
 
@@ -246,6 +247,26 @@ text-align: left;
         height: 24px;
         margin-right: 10px;
     }
+    .brand-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .right-content {
+        margin-top: 10px;
+    }
+    .icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+    }
+    .dropdown-responsive {
+        display: none;
+    }
+    .story-section{
+        max-width: 80%;
+        overflow-x: scroll;
+    }
     
 }
 
@@ -257,8 +278,8 @@ text-align: left;
       display: none;
     }
     .navbar-nav{
-        display: flex;
-        flex-direction: row;
+        /* display: flex;
+        flex-direction: row; */
     }
     .dropdown-responsive{
         display: none;
@@ -270,6 +291,10 @@ text-align: left;
 
     .right-content {
         margin-top: 10px;
+    }
+    .RightArea{
+     margin-left: 3.5rem;
+     width: 20rem;
     }
     /* .AntLayout{
         margin-left:-3rem;
