@@ -50,9 +50,9 @@ const News = () => {
     <div className='p-4 mt-5' id='News'>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <p className='about-h1' style={{ width: '30rem', marginLeft: '2.7rem' }}>Our Latest News</p>
-        <p><a href="/blogs" className='read-more-link mt-2'>View More</a> <FaArrowRight /></p>
+        <p><a href="/blogs" className='read-more-link mt-2'>View More</a> <FaArrowRight className='arrow-hidden' /></p>
       </div>
-      <Row className='mt-5' style={{ marginLeft: '2.7rem', marginRight: '-16px' }}>
+      <Row className='mt-5 news-row' >
         {news2 && news2.length > 0 ? (
           news2.map((item, index) => (
             <Col key={index} md={4} xs={12}  className='col-single' style={{ paddingBottom: '16px' }}>

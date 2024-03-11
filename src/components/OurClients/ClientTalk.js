@@ -54,7 +54,7 @@ const ClientTalk = ({ selectedImageIndex, setSelectedImageIndex }) => {
 
   return (
     <div className='bg-gray mb-4 clientTalk-container'>
-      <p className='who-h1 mt-5 test-h1'>What people are saying</p>
+      <p className=' mt-5 test-h1'>What people are saying</p>
       <p className='' style={{ width: '30rem',marginLeft:'-1rem' }}>
         <span style={{  color: '#213555' }} className='talkQ '>
           <ImQuotesLeft size={40} className='mb-1 mt-3'/>

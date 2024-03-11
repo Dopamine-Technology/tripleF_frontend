@@ -7,6 +7,10 @@ import { LiaMedalSolid } from "react-icons/lia";
 import Reaction from './Reaction';
 import './Post.css';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import Bronze from '../../assets/imgs/bronze.svg';
+import Silver from '../../assets/imgs/silver.svg';
+import Gold from '../../assets/imgs/gold.svg';
+import Medal from '../../assets/imgs/Medal.svg'
 
 function ReactionPopup({handleClose,show,id}) {
     const axios=useAxios();
@@ -115,7 +119,7 @@ function ReactionPopup({handleClose,show,id}) {
           ),
         },
         Gold: {
-          title: (<div className='d-flex'><div className='rectangle me-2'><LiaMedalSolid color="gold" className='me-2' size={25}/></div><p className='reaction-p'> 322 </p></div>),
+          title: (<div className='d-flex'><div className='rectangle me-2'><img src={Gold} className='me-2' /></div><p className='reaction-p'> 322 </p></div>),
           content: (
             <>
             <Reaction users={subReaction}/>
@@ -123,7 +127,7 @@ function ReactionPopup({handleClose,show,id}) {
           ),
         },
         Silver: {
-          title: (<div className='d-flex'><div className='rectangle me-2'><LiaMedalSolid color="silver" className='me-2' size={25}/></div> <p className='reaction-p'> 322 </p></div>),
+          title: (<div className='d-flex'><div className='rectangle me-2'><img src={Silver} className='me-2' /></div> <p className='reaction-p'> 322 </p></div>),
           content: (
             <>
               <Reaction users={subReaction}/>
@@ -131,7 +135,7 @@ function ReactionPopup({handleClose,show,id}) {
           ),
         },
         Bronze: {
-            title: (<div className='d-flex'><div className='rectangle me-2'><LiaMedalSolid color="saddlebrown" className='me-2' size={25}/></div> <p className='reaction-p'> 322 </p></div>),
+            title: (<div className='d-flex'><div className='rectangle me-2'>  <img src={Bronze} className='me-2' /></div> <p className='reaction-p'> 322 </p></div>),
             content: (
               <>
                  <Reaction users={subReaction}/>

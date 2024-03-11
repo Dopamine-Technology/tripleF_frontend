@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import { RxDividerVertical } from "react-icons/rx";
 import { Button } from 'react-bootstrap';
 import { IoMdArrowDropdown,IoMdArrowDropup } from "react-icons/io";
@@ -12,11 +12,15 @@ import cancel from '../../assets/imgs/cancel.png';
 import { AiOutlineReload } from "react-icons/ai";
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { message } from 'antd';
+import collpase from '../../assets/imgs/collapse.svg';
+import UnCollpase from '../../assets/imgs/unCollapse.svg';
+import { UserDataContext } from '../UserContext/UserData.context';
 
 
 function Opportunity({data}){
 
     const location = useLocation();
+    const { user } = useContext(UserDataContext);
     const isAppliedPath = location.pathname === '/applied/list';
     const axios=useAxios();
     const [isExpanded, setIsExpanded] = useState(false);
@@ -56,8 +60,8 @@ function Opportunity({data}){
    <div className='d-flex justify-content-between'>
    <div className="poster">
    <div className="Simplilearn">
-       <img src={data.user.image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
-       <p className='post-username'>{data.user.user_name} <br /> 
+       <img src={user.userData.profile.type_name=="club"?data.user.profile.club_logo:data.user.image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
+       <p className='post-username'>{user.userData.profile.type_name=="club"?data.user.profile.club_name:data.user.user_name} <br /> 
        <div className='d-flex'>
                                     <p className='me-5 blog-sub'>{data.country.name}
                                     <RxDividerVertical color="gray" size={30} className='' />
@@ -120,8 +124,8 @@ function Opportunity({data}){
         </p>
 
        <div className="center-icon" >
-        {isExpanded?<IoMdArrowDropup onClick={handleExpandClick} color='gray' fontSize={30} />:<IoMdArrowDropdown onClick={handleExpandClick} color='gray' fontSize={30} />}
-        
+        {/* {isExpanded?<IoMdArrowDropup onClick={handleExpandClick} color='gray' fontSize={30} />:<IoMdArrowDropdown onClick={handleExpandClick} color='gray' fontSize={30} />} */}
+        {isExpanded? <img src={UnCollpase} onClick={handleExpandClick} />:<img src={collpase} onClick={handleExpandClick} />}
         </div>
 
   

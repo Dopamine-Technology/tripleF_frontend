@@ -17,19 +17,28 @@ import Email from '../../../assets/imgs/Email.svg';
 import { RiFootballLine } from "react-icons/ri";
 import nationlaity from '../../../assets/imgs/group-11@3x.webp';
 import LanguageIcon from '../../../assets/imgs/languageIconProfile.svg';
-import exp from '../../../assets/imgs/sport-filled-soccer.svg'
-
+import exp from '../../../assets/imgs/sport-filled-soccer.svg';
+import FollowBtn from '../FollowBtn';
 
 
 function CoachProfileCard({profileData,id}) {
 
   const { user } = useContext(UserDataContext);
+
+  const birthDate = new Date(profileData.profile.birth_date);
+const today = new Date();
+const age = today.getFullYear() - birthDate.getFullYear();
+
+const hasBirthdayOccurred = today.getMonth() >= birthDate.getMonth() &&
+  today.getDate() >= birthDate.getDate();
+
+const finalAge = hasBirthdayOccurred ? age : age - 1;
  
   const CoachData=[
     { title: 'Gender', value:profileData.profile.gender, svg: Heart },
     { title: 'Nationality', value: profileData.profile.country.name, svg: nationlaity },
     { title: 'Languages', value: 'Arabic, English', svg: LanguageIcon },
-    { title: 'Date Of Birth', value: profileData.profile.birth_date, svg: Calendar },
+    { title: 'Date Of Birth', value: `${profileData.profile.birth_date} (${finalAge} years) `, svg: Calendar },
     { title: 'Years of experience ', value: profileData.profile.years_of_experience, svg:exp  },
     { title: 'Place of Residence', value: profileData.profile.country.name, svg: Place },
     { title: 'Mobile Number', value: profileData.profile.mobile_number, svg: Call },
@@ -40,7 +49,8 @@ function CoachProfileCard({profileData,id}) {
   const handleClose = () => setShow(false);
   const handleShow = (whichOne) => 
   {setShow(true)
-    setActiveKey(whichOne)}
+    setActiveKey(whichOne)
+  }
 
     const [activeKey,setActiveKey]=useState();
 
@@ -66,6 +76,7 @@ function CoachProfileCard({profileData,id}) {
         <span className='me-2'>.</span>
         <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} following</span>
       </p>
+      {profileData.id!=user.userData.id?   <FollowBtn id={id}  is_followed={profileData.is_followed}/>:null}
       
       {profileData.profile.type_name == 'coach'||profileData.profile.type_name == 'scout' ? 
         (CoachData.map((data, index) => (

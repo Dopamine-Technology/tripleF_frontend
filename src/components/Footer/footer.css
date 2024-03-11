@@ -98,7 +98,13 @@ opacity: 0.8;
     text-align: center;
     font-family:"Quicksand-Bold";;
   }
-  
+
+   @media (max-width: 360px) {
+    .social-icons{
+      margin-right: 10rem;
+      margin-bottom: 2rem;
+    }
+   }
   @media (max-width: 768px) {
     .footer {
       flex-direction: column; 

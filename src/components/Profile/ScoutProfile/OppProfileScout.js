@@ -13,18 +13,22 @@ import { AiOutlineReload } from "react-icons/ai";
 import useAxios from '../../Auth/useAxiosHook.interceptor';
 import { message } from 'antd';
 import { UserDataContext } from '../../UserContext/UserData.context';
+import { useParams } from 'react-router-dom';
+
 
 
 function OppProfileScout({profileData}){
 
     const axios=useAxios();
     const [isExpanded, setIsExpanded] = useState(false);
+    const { id } = useParams();
     const [ScoutOpportunities,setScoutOpportunities]=useState();
+    const { user } = useContext(UserDataContext);
 
     const fetchOppData = async () => {
         try {
           const type = 'published';
-          const response = await axios.post('/opportunities/user_opportunities',{type});
+          const response = await axios.get(`opportunities/user_published_opportunities/${id}`,{type});
           setScoutOpportunities(response.data.result);
          
         } catch (error) {
@@ -35,8 +39,6 @@ function OppProfileScout({profileData}){
       useEffect(() => {
  
         fetchOppData();
-        
-        
       }, []);
 
     const opportunityData='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi  ut aliquip ex ea commodo consequat. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
@@ -68,9 +70,9 @@ function OppProfileScout({profileData}){
    <div className='d-flex justify-content-between' >
    <div className="poster">
    <div className="Simplilearn" style={{marginTop:'0.7rem'}}>
-       <img src={profileData.image?profileData.image:profileData.social_image}
+       <img src={user.userData.profile.type_name=="club"?data.user.profile.club_logo:data.user.image}
         alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
-       <p className='post-username'>{profileData.user_name} <br /> 
+       <p className='post-username'>{user.userData.profile.type_name=="club"?data.user.profile.club_name:data.user.user_name} <br /> 
 
        </p> 
     

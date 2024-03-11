@@ -105,26 +105,27 @@ function LoginForm() {
         {/* <img src={loginPic} alt="Your Image" style={{ width: '37rem', height: '30rem' }} />  */}
      
       </Col>
-      <Col md={6} className='mt-5'>
+      <Col md={6} className='login-col'>
         <div>
           <p className='login-welcome'>Welcome Back</p>
           <p  className='login-p'>Welcome Back, please enter your details</p>
         </div>
+        <div className='social-login'>
         <GoogleLogin
                clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
-               buttonText="Login with Google"
+               buttonText="    Login with Google"
                onSuccess={onSuccess}
                onFailure={onFailure}
                cookiePolicy={'single_host_origin'}
                className="custom-google-login"
                    />
                 
-         <Button variant="" className='w-auto' style={{ boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)', borderRadius: '24px', marginLeft:'1rem',padding:'10px' }}>
+         <Button variant="" className=' facebook-btn' >
                   <img src={facebook} alt='search' className='me-2' />
                   Sign up with Facebook
           </Button>
-                
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }} className='login-or'>
   <hr className='mt-4' style={{width:'24%',color:'#7C7C7C'}} />
 
   <p style={{ margin: '0 10px' }}>OR</p>
@@ -132,7 +133,7 @@ function LoginForm() {
   <hr className=' mt-4' style={{width:'24%',color:'#7C7C7C'}} />
 </div>
 
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} className='login-form'>
           <Form.Group className='mb-3' controlId='formFile'>
    
             <Input
@@ -176,7 +177,7 @@ function LoginForm() {
             Sign in
           </Button>
         </Form>
-       <p style={{marginLeft:'7rem',marginTop:'1rem'}}> Don’t have an account? <Link to='/register'>Sign Up</Link></p>
+       <p style={{marginTop:'1rem'}} className='forget-p'> Don’t have an account? <Link to='/register'>Sign Up</Link></p>
       </Col>
     </Row>
   );

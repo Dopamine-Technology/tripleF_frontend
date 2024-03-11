@@ -109,8 +109,9 @@ function WholeProfile(){
                 {
                 profileData.profile.type_name=='talent'? <Post />:
                 profileData.profile.type_name=='scout'? <OppProfileScout  profileData={profileData}/>:
-                <OppPost id={id} /> &&<Post />
-            }
+                profileData.profile.type_name=='coach'?  <Post />:
+                <OppProfileScout  profileData={profileData}/>
+                }
             
             </Col>
         </Row>

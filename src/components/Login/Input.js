@@ -32,12 +32,8 @@ const Input = ({
           className={`${className} ${
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
-          style={{
-            backgroundColor: "transparent",
-            border: "1px solid #EBEBEB",
-            color: "black",
-            width: "30rem", 
-          }}
+          className='input-login'
+       
           placeholder={placeholder}
           type={showPassword ? "text" : type}
         />

@@ -11,7 +11,8 @@ import { Link } from 'react-router-dom';
 import FollowersPopup from '../TalentProfile/FollowersPopup';
 import { UserDataContext } from '../../UserContext/UserData.context';
 import Email from '../../../assets/imgs/Email.svg';
-import checkmark from '../../../assets/imgs/checkmark.svg'
+import checkmark from '../../../assets/imgs/checkmark.svg';
+import FollowBtn from '../FollowBtn';
 
 
 function ClubProfileCard({id,profileData}) {
@@ -57,7 +58,7 @@ function ClubProfileCard({id,profileData}) {
         <span className='me-2'>.</span>
         <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} following</span>
       </p>
-      
+      {profileData.id!=user.userData.id?   <FollowBtn id={id}  is_followed={profileData.is_followed}/>:null}
       {profileData.profile.type_name == 'club' ? 
         (ClubData.map((data, index) => (
           <div>

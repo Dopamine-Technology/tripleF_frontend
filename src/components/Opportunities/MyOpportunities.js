@@ -148,8 +148,17 @@ function OpportunityList(){
         const filteredList = applyFilters();
         setFilteredListPosition(filteredList);
       }, [filterTextValue, filterTextGender, filterTextPosition,filterTextCountry,filterTextType]);
+
+     
       
       const fetchOppData = async () => {
+  
+        if (user.userData.profile.type_name == "talent") {
+          setFilterTextType('applied')
+          } else  {
+            setFilterTextType('published');
+          }
+      
         const type = { "type": filterTextType };
         try {
     

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useLayoutEffect} from "react";
 import { Layout as AntLayout, Row, Col } from "antd";
 import NavBar from "./Navbar";
 import LeftArea from "./LeftArea";
@@ -9,26 +9,40 @@ import { Outlet } from "react-router-dom";
 const { Header, Sider, Content } = AntLayout;
 
 const Layout = () => {
-  const [isLeftSidebarCollapsed, setIsLeftSidebarCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const toggleLeftSidebar = () => {
-    setIsLeftSidebarCollapsed(!isLeftSidebarCollapsed);
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+};
+
+const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+useLayoutEffect(() => {
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
   };
+
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
+const isSmallScreen = windowWidth <= 360;
 
   return (
     <AntLayout style={{ minHeight: "100vh" }}>
-      <NavBar toggleLeftSidebar={toggleLeftSidebar}  />
+      <NavBar toggleCollapse={toggleCollapse} isSmallScreen={isSmallScreen}  />
       <AntLayout>
         <Sider
-          width={80}
+          width={isCollapsed?0:80}
           className="bg-transparent"
         
-          style={{ overflow: 'auto', height: '100vh', position: '', left: 0 }}
+          style={{ overflow: 'auto', height: '100vh', position: '', left: 0, width: isCollapsed ? 0 : 80 }}
         >
           
-          <LeftArea isCollapsed={isLeftSidebarCollapsed} />
+          <LeftArea isCollapsed={isCollapsed} toggleCollapse={toggleCollapse}  />
         </Sider>
-        <AntLayout style={{ transition: 'margin-left 0.3s' }} className="AntLayout">
+        <AntLayout style={{ transition: 'margin-left 0.3s' }} className="AntLayout" style={{marginLeft:isSmallScreen ?(isCollapsed?'-3rem':'100rem'):''}}>
+                                                    {/* marginLeft: isSmallScreen ? (isCollapsed ? '-3rem' : '0') : '100rem' */}
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
             <Row justify="center">
               <Col xs={24} md={24} lg={16}>

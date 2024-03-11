@@ -16,11 +16,13 @@ import { UserDataContext } from '../../UserContext/UserData.context';
 import Email from '../../../assets/imgs/Email.svg';
 import useAxios from '../../Auth/useAxiosHook.interceptor';
 import nationlaity from '../../../assets/imgs/group-11@3x.webp';
-import prefferedFoot from '../../../assets/imgs/run-outlined.svg'
+import prefferedFoot from '../../../assets/imgs/run-outlined.svg';
+import FollowBtn from '../FollowBtn';
 
 function ProfileCard({id,profileData}) {
   const axios  = useAxios();
   const currentYear = new Date().getFullYear();
+  const {user}=useContext(UserDataContext);
   const TalentData= [
     { title: 'gender', value: profileData.profile.gender, svg: Heart },
     { title: 'Nationality', value: profileData.profile.country.name, svg: nationlaity },
@@ -69,6 +71,9 @@ function ProfileCard({id,profileData}) {
         <span className='me-2'>.</span>
         <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} following</span>
       </p>
+      {profileData.id!=user.userData.id?  
+       <FollowBtn id={id} is_followed={profileData.is_followed} />:null}
+   
       {profileData.profile.type_name == 'talent' && profileData.profile.parent_position.name=='goalkeeper'&&
         <Card.Img src={GoalKeeper} className='mt-4' />
       }

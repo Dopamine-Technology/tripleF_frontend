@@ -13,19 +13,21 @@ import { AiOutlineReload } from "react-icons/ai";
 import useAxios from '../../Auth/useAxiosHook.interceptor';
 import { message } from 'antd';
 import { UserDataContext } from '../../UserContext/UserData.context';
+import { useParams } from 'react-router-dom';
 
 
-function OppPost({id}){
+function OppPost(){
 
     const axios=useAxios();
     const [isExpanded, setIsExpanded] = useState(false);
     const [opportunities,setOpportunities]=useState();
     const { user } = useContext(UserDataContext);
+    const { id } = useParams();
 
     const fetchOppData = async () => {
         try {
           const type = 'published';
-          const response = await axios.post('/opportunities/user_opportunities',{type});
+          const response = await axios.get(`opportunities/user_published_opportunities/${id}`);
           setOpportunities(response.data.result);
          
         } catch (error) {

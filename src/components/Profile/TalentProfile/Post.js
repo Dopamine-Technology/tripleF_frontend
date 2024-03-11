@@ -1,8 +1,4 @@
-import React,{useState,useEffect,useContext} from 'react';
-import { MdMoreHoriz} from 'react-icons/md';
-import { IoShareSocialOutline } from "react-icons/io5";
-import { BsSave } from "react-icons/bs";
-import { LiaMedalSolid } from "react-icons/lia";
+import React,{useState,useEffect} from 'react';
 import { Row,Col } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SocialPopup from '../../SharePost/Popup';
@@ -16,7 +12,11 @@ import savedIcon from '../../../assets/imgs/Saved.svg';
 import ShareIcon from '../../../assets/imgs/Share.svg';
 import OpportunityPost from '../../Opportunities/OpportunityPost';
 import TimlinePost from '../../Post/TimlinePost';
-import { UserDataContext } from '../../UserContext/UserData.context';
+import Bronze from '../../../assets/imgs/bronze.svg';
+import Silver from '../../../assets/imgs/silver.svg';
+import Gold from '../../../assets/imgs/gold.svg';
+import Medal from '../../../assets/imgs/Medal.svg'
+import { useParams } from 'react-router-dom';
 
 
 function Post(){
@@ -29,12 +29,13 @@ function Post(){
     const [showMedalPopups, setShowMedalPopups] = useState(Array(posts?.length).fill(false));
     const [selectedPostId, setSelectedPostId] = useState(null);
     const axios=useAxios();
+    const { id } = useParams();
 
     useEffect(() => {
     
         const fetchPostsData = async () => {
           try {
-            const response = await axios.get('status/timeline');
+            const response = await axios.get(`status/user_statuses/${id}`);
             setPosts(response.data.result);
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -130,12 +131,12 @@ function Post(){
     <hr style={{ color: '#A3A3A3' }} />
     <Row>
         <Col xs={6}>
-            <div className="d-flex align-items-center  " style={{marginLeft:'2rem'}} onClick={() => handleShowPopup(post.id)}  >
-            <LiaMedalSolid color="gold" className="" />
-                <LiaMedalSolid color="saddlebrown" className="" />
-                <LiaMedalSolid color="silver" className="" />
-                <p className="share-time m-0" >{post.reaction_count}</p>
-            </div>
+        <div className="d-flex align-items-center"  onClick={() => handleShowPopup(post.id)}>
+    <img className="stacked-image" src={Bronze} />
+    <img className="stacked-image" src={Silver} />
+    <img className="stacked-image" src={Gold} />
+    <p className="share-time m-0">{post.reaction_count}</p>
+</div>
         </Col>
         <Col xs={6}>
          
@@ -151,24 +152,32 @@ function Post(){
 
 {showMedalPopups[index] && (
 
-    <div className="MedalOptions" onMouseLeave={clearSelection}>
-        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'gold', post.is_reacted)}>
-            <LiaMedalSolid color="gold" className='me-2' size={40}/>
-        </div>
-        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'silver', post.is_reacted)}>
-            <LiaMedalSolid color="silver" className='me-2' size={40}/>
-        </div>
-        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'saddlebrown', post.is_reacted)}>
-            <LiaMedalSolid color="saddlebrown" className='me-2' size={40}/>
-        </div>
-    </div>
+<div className="MedalOptions" onMouseLeave={clearSelection}>
+<div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'gold', post.is_reacted)}>
+    {/* <LiaMedalSolid color="gold" className='me-2' size={40}/> */}
+    <img src={Gold} className='me-2' />
+</div>
+<div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'silver', post.is_reacted)}>
+    {/* <LiaMedalSolid color="silver" className='me-2' size={40}/> */}
+    <img src={Silver} className='me-2' />
+</div>
+<div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'saddlebrown', post.is_reacted)}>
+    {/* <LiaMedalSolid color="saddlebrown" className='me-2' size={40}/> */}
+    <img src={Bronze} className='me-2' />
+</div>
+</div>
 )}
         
     <div className="Comment">
     <div className="Like" onClick={() => likeHandle(index)}>
-    <LiaMedalSolid color={selectedMedalColor || (post.is_reacted=='1' ? 'saddlebrown' : post.is_reacted=='2' ? 'silver' : post.is_reacted=='3' ? 'gold' : 'none')} className='me-2 2' size={20}/>
+    {post.is_reacted=='1' ?<img src={Bronze} />:
+      post.is_reacted=='2'?<img src={Silver} />:
+      post.is_reacted=='3'? <img src={Gold} />: <img src={Medal} />
+    }
+   
+    
     Medal
-</div>
+    </div>
         
         <div className="Like" onClick={handleShow}>
         <img src={ShareIcon} className='me-2'/>
