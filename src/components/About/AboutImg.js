@@ -5,7 +5,7 @@ import { Container,Row,Col } from 'react-bootstrap';
 
 
 const AboutImg = () => {
-    return (   <div className="image-container">
+    return ( <div className="image-container">
       <Row>
         <Col>
     <img src={football} alt="Image 2" className="me-1 image2" />

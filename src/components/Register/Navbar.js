@@ -89,7 +89,7 @@ const BottomNavbar = () => {
 
 
   return (
-    <Navbar expand="lg">
+    <Navbar expand="lg" className=''>
     <Container style={{marginLeft:'1rem'}}>
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'14.5rem'}} className=""/>

@@ -9,10 +9,7 @@ const WhosForImg = ({ img, title, desc }) => {
     <Card
       hoverable
       className='whos-card'
-      style={{
-        width: '289px',
-       height: '350px'
-      }}
+
     >
       <div
         style={{

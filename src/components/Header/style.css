@@ -111,6 +111,7 @@
   border-color:transparent
 }
 
+
 @media only screen and (max-width: 360px) {
   .logo-header{
     width:60%;
@@ -151,5 +152,11 @@
     .header-div{
       max-height: 1vh;
       margin-left: 2rem;
+    }
+    .whole-div {
+
+      background-position:0%;       /* if you want to fix the background remove this line */
+
+
     }
 }

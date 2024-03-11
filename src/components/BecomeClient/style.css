@@ -89,8 +89,11 @@
         width: 19rem 
     }
     .submit-button {
-        margin-right: -2rem;
+        margin-right: 1rem;
 
+    }
+    .form-contact{
+        padding:1rem;
     }
   }
 /* 

@@ -36,8 +36,24 @@ const TopNavbar = ({content}) => {
     { code: 'Ar', label: 'Arabic' ,img:Ar },
   ];
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-<Navbar expand="lg">
+<Navbar expand="lg" className={isScrolled ? 'navbar-fixed' : ''}>
   <Container style={{ marginLeft: '-1rem' }}>
     <Navbar.Brand href="#home" className="d-flex align-items-center">
       <img src={LogoWhite} className='logo-header' />
@@ -80,6 +96,21 @@ const TopNavbar = ({content}) => {
 const BottomNavbar = () => {
   
   const [activeLink, setActiveLink] = useState(1);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleNavLinkClick = (index,sectionId) => {
     setActiveLink(index);
@@ -92,7 +123,7 @@ const BottomNavbar = () => {
 
 
   return (
-    <Navbar expand="lg" >
+    <Navbar expand="lg"  className={isScrolled ? 'navba2-fixed' : ''} >
     <Container style={{marginLeft:'1rem'}}>
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'13rem'}} className="custom-toggler"/>

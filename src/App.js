@@ -25,6 +25,8 @@ import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import Test from './components/Opportunities/Test';
 import WholeProfile from './components/Profile/TalentProfile/WholeProfile';
 import NotFound from './pages/NotFound';
+import SettingsLayout from './components/Settings/SettingsLayout';
+import MyAccount from './components/Settings/MyAccount';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -53,6 +55,9 @@ function App() {
           <Route path='/opportunity/list' element={<OpportunityList />} />
             <Route path='/applied/list' element={<MyOpportunities />} />
           
+           </Route>
+           <Route path='/' element={<SettingsLayout />}>
+           <Route path='/settings/myAccount' element={<MyAccount />} />
            </Route>
            {checkRole(["scout","coach","club"]) && (
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />
