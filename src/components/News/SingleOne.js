@@ -38,7 +38,7 @@ const SingleOne = ({ img, content, category }) => {
           <p className="description-text">{content}</p>
         }
       />
-      <a href='#'><img src={single} style={{ marginTop: '1rem'}} /></a>
+      <a href='/blogs/1'><img src={single} style={{ marginTop: '1rem'}} /></a>
     </Card>
   );
 }

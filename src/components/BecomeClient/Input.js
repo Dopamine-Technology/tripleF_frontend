@@ -53,9 +53,9 @@ const Input = ({
         />
       )}
 
-      {errors && (
-        <div className="text-danger text-start">{errors[name]?.message}</div>
-      )}
+{errors && (
+        <div className="text-danger text-start" style={{width:'15rem'}}>{errors[name]?.message}</div>
+)}
     </Form.Group>
   );
 };

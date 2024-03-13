@@ -8,6 +8,7 @@ import facebook2 from '../../assets/imgs/facebook2.png'
 import twitter from '../../assets/imgs/twitter.svg';
 import instagram from '../../assets/imgs/instagram.png';
 import snapchat from '../../assets/imgs/snapchat.png';
+import Nav from 'react-bootstrap/Nav';
 
 const Footer = () => {
   return (
@@ -25,15 +26,15 @@ const Footer = () => {
 
       <div className='section'>
         <h6 className='align-h6'>Usefull Links</h6>
-        <p className='align-h6'>About us</p>
-        <p className='align-h6'>How it works</p>
-        <p className='align-h6'>Who TripleF For</p>
-        <p className='align-h6'>Register Now</p>
+        <p className='align-h6'> <Nav.Link href="#about">About us</Nav.Link></p>
+        <p className='align-h6'><Nav.Link href="#How">How it works</Nav.Link></p>
+        <p className='align-h6'><Nav.Link href="#Who">Who TripleF For</Nav.Link></p>
+        <p className='align-h6'><Nav.Link href="/register">Register Now</Nav.Link></p>
       </div>
 
       <div className='section'>
         <h6 className='align-h6'>Help & Support</h6>
-        <p  className='align-h6'><a>Contact Us</a></p>
+        <p  className='align-h6'><Nav.Link href="#Contact">Contact Us</Nav.Link></p>
         <p className='align-h6'><a>Privacy Policy</a></p>
         <p className='align-h6'><a>Terms & Conditions</a></p>
       

@@ -13,7 +13,7 @@ const Header = ({ content }) => {
             <Row style={{ marginRight: '6rem', position: 'relative', zIndex: 2 }}> 
                 <NavBar content={content} />
             </Row>
-            <div id="overlay">
+            <div id="overlay" >
             <Row className='header-row' style={{ position: 'relative', zIndex: 2 }}> 
                 <Col md={8}><HeaderDesc /></Col>
                 <Col md={4}><HeaderImg /></Col>
