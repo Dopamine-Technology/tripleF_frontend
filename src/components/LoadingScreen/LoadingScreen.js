@@ -27,7 +27,7 @@ const LoadingScreen = () => {
     return(
 <div className="loader-wrapper">
           <BounceLoader color="#36d7b7" />
-        </div>
+ </div>
   
   )
 }

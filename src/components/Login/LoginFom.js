@@ -20,12 +20,15 @@ function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch
   } = useForm();
   const navigate = useNavigate();
 
   const [error, setError] = useState();
   const { user, setUser } = useContext(UserDataContext);
   const [loading, setLoading] = useState(true);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const onSuccess = (res) => {
     const { profileObj } = res;
@@ -35,19 +38,28 @@ function LoginForm() {
     };
   
     axios.post('https://backend.triplef.group/api/user/auth/google_login', dataToSend)
-      .then((response) => {
-        if (response.data.result) {
-          message.success('Logged in successfully');
-          setUser(response.data.result.user);
+    .then((response) => {
+      if (response.data.result) {
+        setUser(response.data.result.user);
+        Cookies.set('token', response.data.result.token);
+        message.success('Logged in successfully');
+        
+        // Check if token is successfully saved before navigating
+        const savedToken = Cookies.get('token');
+        if (savedToken === response.data.result.token) {
           navigate('/home');
+          window.location.reload();
         } else {
-          message.error('Invalid response from server');
+          console.error('Token not saved correctly');
         }
-      })
-      .catch((error) => {
-        console.error('Error sending data to other API:', error);
-      });
-  }
+      } else {
+        message.error('Invalid response from server');
+      }
+    })
+    .catch((error) => {
+      console.error('Error sending data to other API:', error);
+    });}
+  
 
     const onFailure =()=>{
       // message.error('logged in failed, please try again')
@@ -59,7 +71,7 @@ function LoginForm() {
       setError();
     
       try {
-        // Set loading state to true while waiting for the authentication response
+
         setLoading(true);
     
         const response = await axios.post(
@@ -70,11 +82,10 @@ function LoginForm() {
         if (response.data.result) {
           Cookies.set("token", response.data.result.token);
           Cookies.set("profileType", response.data.result.user.profile.type_name);
-    
-          // Set user data and isAuthenticated status
+
           setUser({
             isAuthenticated: true,
-            userData: response.data.result.user, // You might need to adjust this based on your response structure
+            userData: response.data.result.user, 
           });
     
           message.success('Logged in successfully');
@@ -95,7 +106,23 @@ function LoginForm() {
     console.log('User updated:', user);
   }, [user]); 
 
+  const handleRememberMeChange = () => {
+    setRememberMe(!rememberMe);
+    const email = watch('email');
+    const password = watch('password');
+    localStorage.setItem('rememberedEmail', email);
+    localStorage.setItem('rememberedPassword', password);
+  };
 
+  useEffect(() => {
+    const rememberedEmail = localStorage.getItem('rememberedEmail');
+    const rememberedPassword = localStorage.getItem('rememberedPassword');
+    if (rememberedEmail && rememberedPassword) {
+      // Pre-fill the email and password fields
+      setValue('email', rememberedEmail);
+      setValue('password', rememberedPassword);
+    }
+  }, []);
   
 
   return (
@@ -163,7 +190,7 @@ function LoginForm() {
  <Form.Group className='mb-3' controlId='formRememberMe'>
   <Row>
     <Col xs={6}>
-      <Form.Check type='checkbox' label='Remember Me' />
+      <Form.Check type='checkbox' label='Remember Me' onChange={handleRememberMeChange} />
     </Col>
     <Col xs={6}>
       <Form.Text>

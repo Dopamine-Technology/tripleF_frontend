@@ -315,6 +315,16 @@ margin-top: 1rem;
     display: flex;
     flex-direction: column;
   }
+  .password-ul{
+    list-style:disc;
+    padding: 0; /* Remove default padding */
+    margin-left:2rem
+  }
+  .password-li{
+    position: relative;
+    padding-left: 0px; 
+    margin-bottom: 10px; 
+  }
   @media (max-width: 360px) {
   .signup-img{
     display: none;

@@ -4,14 +4,29 @@ import Input from './Input';
 import { Button } from 'react-bootstrap';
 import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import { message } from 'antd'
+import { message } from 'antd';
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const ContactForm = () => {
+  const schema = Yup.object().shape({
+    email: Yup.string()
+      .required("Email is required")
+      .email("Wrong email format")
+      .transform((value) => value.trim())
+      .required("Email is required"),
+      name: Yup.string().required(" Name is required"),
+      message: Yup.string().required("Content of the message is required"),
+
+    
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onChange",
+  resolver: yupResolver(schema)});
 
   const onSubmit = async (data) => {
     try {
@@ -54,6 +69,7 @@ const ContactForm = () => {
               placeholder=''
               className={`border rounded`}
               register={register}
+              errors={errors}
             />
           </Col>
           <Col>
@@ -64,6 +80,7 @@ const ContactForm = () => {
               placeholder=''
               className={`border rounded`}
               register={register}
+              errors={errors}
             />
           </Col>
         </Row>
@@ -75,6 +92,7 @@ const ContactForm = () => {
           className={`border rounded`}
           register={register}
           rows={5}
+          errors={errors}
          
         />
         <Button type='submit' className='submit-button'>

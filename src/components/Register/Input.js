@@ -16,6 +16,7 @@ const Input = ({
   type,
   rows,
   inputWidth,
+  defaultValue
 }) => {
   const [showPassword, setShowPassword] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -55,7 +56,7 @@ const Input = ({
             paddingRight: "2.5rem",
           }}
           placeholder={placeholder}
-          value={inputValue}
+          value={inputValue||defaultValue}
           type={showPassword ? "text" : type}
         />
         {type === "password" && (
@@ -78,7 +79,7 @@ const Input = ({
         )}
       </div>
       {errors && (
-        <div className="text-danger text-start">{errors[name]?.message}</div>
+        <div className="text-danger text-start" style={{width:'15rem'}}>{errors[name]?.message}</div>
       )}
     </Form.Group>
   );

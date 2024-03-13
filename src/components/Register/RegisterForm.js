@@ -20,35 +20,65 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import startsWith from 'lodash.startswith';
 
 
-function RegisterForm() {
+function RegisterForm({ onLoadingChange }) {
   const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
-  
-
 
   const schema = Yup.object().shape({
-    email: signedUpWithGoogle
-        ? Yup.string()
-        : Yup.string()
-              .required("Email is required")
-              .email("Wrong email format")
-              .transform((value) => value.trim()) 
-              .required("Email is required"),
-    first_name: signedUpWithGoogle
-        ? Yup.string()
-        : Yup.string().required("First name is required"),
-    last_name: signedUpWithGoogle
-        ? Yup.string()
-        : Yup.string().required("Last name is required"),
-        
-    user_name: signedUpWithGoogle
-        ? Yup.string()
-        : Yup.string().required("Username is required"),
-    password: signedUpWithGoogle
-        ? Yup.string()
-        : Yup.string()
-              .required("New password is required")
-              .min(8, "Password must be at least 8 characters long"),
-});
+    email:signedUpWithGoogle ? Yup.string():Yup.string()
+      .required("Email is required")
+      .email("wrong email")
+      .required("Email is required"),
+    first_name: signedUpWithGoogle ? Yup.string():Yup.string().required("First name is required"),
+    last_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Last name is required"),
+    user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required"),
+
+    password: signedUpWithGoogle ? Yup.string():Yup.string()
+    .required("New password is required")
+    .min(8, "Password must be at least 8 characters long")
+    // .matches(
+    //   "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+    //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character")
+  
+  });
+
+  
+
+  const stepTwoSchema = {
+    1: Yup.object().shape({
+      talent_type: Yup.string().required('Talent Type is required'),
+      parent_position: Yup.string().required('Position is required'),
+      gender: Yup.string().required('Gender is required'),
+      birth_date: Yup.date().typeError('Birth date must be a valid date').required('Birth date is required'),
+      height: Yup.number().typeError('Height must be a valid date').required('Height is required'),
+      wight: Yup.number().typeError('Weight must be a valid date').required('Height is required'),
+      country_id: Yup.string().required('Country is required'),
+      mobile_number: Yup.string().required('Mobile number is required'),
+    }),
+    2: Yup.object().shape({
+      talent_type: Yup.string().required('Sport Type is required'),
+      gender: Yup.string().required('Gender is required'),
+      years_of_experience:  Yup.number().typeError('Years of Experience must be a valid date').required('Years of Experience is required'),
+      birth_date: Yup.date().typeError('Birth date must be a valid date').required('Birth date is required'),
+      country_id: Yup.string().required('Country is required'),
+      mobile_number: Yup.string().required('Mobile number is required'),
+    }),
+    3: Yup.object().shape({
+      club_name: Yup.string().required('Club Name is required'),
+      talent_type: Yup.string().required('Sport Type is required'),
+      country_id: Yup.string().required('Country is required'),
+      city_id: Yup.string().required('City is required'),
+      mobile_number: Yup.string().required('Mobile number is required'),
+      year_founded: Yup.number().typeError('year founded must be a valid date').required('year founded is required'),
+    }),
+    4: Yup.object().shape({
+      talent_type: Yup.string().required('Sport Type is required'),
+      gender: Yup.string().required('Gender is required'),
+      years_of_experience:  Yup.number().typeError('Years of Experience must be a valid date').required('Years of Experience is required'),
+      birth_date: Yup.date().typeError('Birth date must be a valid date').required('Birth date is required'),
+      country_id: Yup.string().required('Country is required'),
+      mobile_number: Yup.string().required('Mobile number is required'),
+    }),
+  };
 
       const {
         register,
@@ -78,7 +108,10 @@ function RegisterForm() {
       const [minAge] = useState(5);
       const [maxDate, setMaxDate] = useState(calculateMaxDate());
       const [clubName, setClubName] = useState('');
+      const [selectedCountry, setSelectedCountry] = useState("");
+      const [selectedCountryCode, setSelectedCountryCode] = useState("");
       const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+      const currentYear = new Date().getFullYear();
 
       useLayoutEffect(() => {
         const handleResize = () => {
@@ -91,7 +124,7 @@ function RegisterForm() {
     
       const isSmallScreen = windowWidth <= 360;
       
-      const clientId='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'
+      const clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
 
       const bothErrors = { ...responseError, ...errors };
 
@@ -121,8 +154,8 @@ function RegisterForm() {
         setCurrentStep(currentStep + 1);
         setAccountType('1');
         setSignedUpWithGoogle(true);
-
       };
+
       function calculateMaxDate() {
         const currentDate = new Date();
         const maxDate = new Date(currentDate);
@@ -156,6 +189,7 @@ function RegisterForm() {
           })
           .finally(() => {
             setLoading(false);
+            onLoadingChange(false);
           });
       }, []);
 
@@ -179,6 +213,7 @@ function RegisterForm() {
           })
           .finally(() => {
             setLoading(false);
+            onLoadingChange(false);
           });
       }, []);
 
@@ -194,6 +229,7 @@ function RegisterForm() {
           })
           .finally(() => {
             setLoading(false);
+            onLoadingChange(false);
           });
       }, []);
 
@@ -208,6 +244,7 @@ function RegisterForm() {
           })
           .finally(() => {
             setLoading(false);
+            onLoadingChange(false);
           });
       }, []);
 
@@ -218,6 +255,10 @@ function RegisterForm() {
             setAccountTypes(response.data.result);
           } catch (error) {
             console.error('Error fetching positions:', error);
+          }
+          finally{
+            setLoading(false);
+            onLoadingChange(false);
           }
         };
       
@@ -252,64 +293,87 @@ function RegisterForm() {
         }
       };
       
+      
+      
     
+      const [formErrors, setFormErrors] = useState({});
 
       const onSubmit = async (data) => {
         if (currentStep === 1) {
           setFormData(data);
           setCurrentStep(currentStep + 1);
         } else if (currentStep === 2) {
-          const mergedData = { ...formData, ...data };
-          const formDataWithImage = new FormData();
-      
-          // Check if image field is defined and not empty
-          if (mergedData.image && mergedData.image.length > 0) {
-            const imageFile = mergedData.image[0];
-            formDataWithImage.append('image', imageFile);
-          }
-      
-          if (accountType === '3') {
-            const logo = data.club_logo[0];
-            formDataWithImage.delete('club_logo');
-            formDataWithImage.append('club_logo', logo);
-          }
-      
-          for (const key in mergedData) {
-            // Skip appending the image field again
-            if (key !== 'image' && mergedData[key]) {
-              formDataWithImage.append(key, mergedData[key]);
-            }
-          }
-      
-          formDataWithImage.append('user_type', accountType);
-      
           try {
-            const response = await axios.post(`https://backend.triplef.group/api/user/auth/register`, formDataWithImage);
-            if (response.status === 200) {
-              message.success('Registration successful! Please check your email to verify it.');
-            } else {
-              if (response.status === 422) {
-                const errors = response.data.errors;
-                if (errors && errors.email && Array.isArray(errors.email) && errors.email.length > 0) {
-                  const emailErrorMessage = errors.email[0];
-                  message.error(emailErrorMessage);
-                } else {
-                  message.error('Unknown validation error. Please try again.');
-                }
+            await stepTwoSchema[accountType].validate(data, { abortEarly: false });
+      
+            const mergedData = {};
+            for (const key in formData) {
+              if (formData[key]) {
+                mergedData[key] = formData[key];
+              }
+            }
+            for (const key in data) {
+              if (data[key]) {
+                mergedData[key] = data[key];
+              }
+            }
+            const formDataWithImage = new FormData();
+      
+            if (mergedData.image && mergedData.image.length > 0) {
+              const imageFile = mergedData.image[0];
+              formDataWithImage.append('image', imageFile);
+            }
+            if (accountType === '3') {
+              const logo = data.club_logo[0];
+              formDataWithImage.delete('club_logo');
+              formDataWithImage.append('club_logo', logo);
+            }
+            for (const key in mergedData) {
+              if (key !== 'image' && mergedData[key]) {
+                formDataWithImage.append(key, mergedData[key]);
+              }
+            }
+      
+            formDataWithImage.append('user_type', accountType);
+      
+            try {
+              const response = await axios.post(`https://backend.triplef.group/api/user/auth/register`, formDataWithImage);
+              if (response.status === 200) {
+                message.success('Registration successful! Please check your email to verify it.');
               } else {
-                message.error('An error occurred. Please try again.');
+                if (response.status === 422) {
+                  const errors = response.data.errors;
+                  if (errors && errors.email && Array.isArray(errors.email) && errors.email.length > 0) {
+                    const emailErrorMessage = errors.email[0];
+                    message.error(emailErrorMessage);
+                  } else {
+                    message.error('Unknown validation error. Please try again.');
+                  }
+                } else {
+                  message.error('An error occurred. Please try again.');
+                }
+              }
+            } catch (error) {
+              if (error.response) {
+                const errorMessage = error.response.data.message || 'Unknown error occurred.';
+                message.error(errorMessage);
+              } else {
+                message.error('Something went wrong. Please try again.');
               }
             }
           } catch (error) {
-            if (error.response) {
-              const errorMessage = error.response.data.message || 'Unknown error occurred.';
-              message.error(errorMessage);
-            } else {
-              message.error('Something went wrong. Please try again.');
+
+            const validationErrors = {};
+            if (error instanceof Yup.ValidationError) {
+              error.inner.forEach((err) => {
+                validationErrors[err.path] = err.message;
+              });
             }
+            setFormErrors(validationErrors);
           }
         }
       };
+
       
       
       const handleNextStep = (data) => {
@@ -331,21 +395,22 @@ function RegisterForm() {
         setAccountType(e.target.value);
       };
 
-      if (loading) {
-        return <LoadingScreen />;
-      }
+      // if (loading) {
+      //   return <LoadingScreen />;
+      // }
 
       
 
       const renderFormStep = () => {
         switch (currentStep) {
           case 1:
+            
             return (
               <Row>
            
               <Col md={12}>
 
-                 <GoogleLogin
+              <GoogleLogin
                clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
                buttonText="Sign up with Google"
                onSuccess={onSuccess}
@@ -446,6 +511,11 @@ function RegisterForm() {
                     errors={bothErrors}
                     inputWidth='31rem'
                   />
+                  {/* <p className='fw-bold'>Passwrod must</p>
+                  <ul className='password-ul'>
+                    <li className='password-li' >Be a minimum of eight (8) charchters</li>
+                    <li className='password-li'>Contain at least one (1) uppercase letter (A-Z),lowercase letter (a-z) and special charchters</li>
+                  </ul> */}
                   </Form.Group>
                   <Form.Group controlId="termsCheckbox" className="mb-3">
               <Form.Check
@@ -511,29 +581,39 @@ function RegisterForm() {
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Talent Type</label>
-                  <select id="talentType" {...register('talent_type')} >
-    {sports.map(sport => (
-      <option key={sport.id} value={sport.id}>
-        {sport.name}
-      </option>
-    ))}
-  </select>
+                  <select id="talentType" {...register('talent_type')} required>
+                    {sports.map(sport => (
+                      <option key={sport.id} value={sport.id}>
+                        {sport.name}
+                      </option>
+                    ))}
+                  </select>
+                  {Object.keys(formErrors).length > 0 && formErrors.talent_type && (
+    <div className="text-danger">
+      <p>{formErrors.talent_type}</p>
+    </div>
+  )}
                 </div>
-  
+            
                 <div className='form-group'>
   <label htmlFor="position">Position:</label>
-  <select id="position" {...register('parent_position')} onChange={(e) => handlePositionSelect(e.target.value)} >
+  <select id="position" {...register('parent_position')} onChange={(e) => handlePositionSelect(e.target.value)} required>
     {positions?.map(position => (
       <option key={position.id} value={position.id}>
         {position.name}
       </option>
     ))}
   </select>
-
+  {Object.keys(formErrors).length > 0 && formErrors.parent_position && (
+    <div className="text-danger">
+      <p>{formErrors.parent_position}</p>
+    </div>
+  )}
 </div>
 
+            
 {subPositions?.length > 0 && (
-  <div className='form-group'>
+  <div className='form-group' required>
     <label htmlFor="subPosition">Sub Positions:</label>
     <select id="subPosition" {...register('position')} multiple>
       {subPositions?.map(subPosition => (
@@ -542,9 +622,16 @@ function RegisterForm() {
         </option>
       ))}
     </select>
+    {Object.keys(formErrors).length > 0 && formErrors.position && (
+      <div className="text-danger">
+        <p>{formErrors.position}</p>
+      </div>
+    )}
   </div>
 )}
-          <div className='form-group'>
+
+            
+            <div className='form-group'>
   <label>Gender:</label>
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
@@ -558,228 +645,303 @@ function RegisterForm() {
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">rather not to say</span>
+      <span className="label">Rather not to say</span>
       <input type="radio" id="other" value="other" {...register('gender')} />
       <span className="checkmark"></span>
     </label>
   </div>
-  
+  {Object.keys(formErrors).length > 0 && formErrors.gender && (
+    <div className="text-danger">
+      <p>{formErrors.gender}</p>
+    </div>
+  )}
 </div>
 
-<div className='form-group'>
-  <label>Preferred Foot:</label>
-  <div className="radio-buttons">
-    <label className='custom-radio-btn'>
-      <span className="label">Right</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
-      <span className="checkmark"></span>
-    </label>
-    <label className='custom-radio-btn'>
-      <span className="label">Left</span>
-      <input type="radio" id="female" value="female" {...register('gender')} />
-      <span className="checkmark"></span>
-    </label>
-    <label className='custom-radio-btn'>
-      <span className="label">Both</span>
-      <input type="radio" id="other" value="other" {...register('gender')} />
-      <span className="checkmark"></span>
-    </label>
-  </div>
-  
+            
+                {/* <div className='form-group'>
+                  <label>Preferred Foot:</label>
+                  <div className="radio-buttons">
+                    <label className='custom-radio-btn'>
+                      <span className="label">Right</span>
+                      <input type="radio" id="male" value="male" {...register('gender')} />
+                      <span className="checkmark"></span>
+                    </label>
+                    <label className='custom-radio-btn'>
+                      <span className="label">Left</span>
+                      <input type="radio" id="female" value="female" {...register('gender')} />
+                      <span className="checkmark"></span>
+                    </label>
+                    <label className='custom-radio-btn'>
+                      <span className="label">Both</span>
+                      <input type="radio" id="other" value="other" {...register('gender')} />
+                      <span className="checkmark"></span>
+                    </label>
+                  </div>
+                </div> */}
+            
+            <div className='form-group'>
+  <label htmlFor="birthdate">Date of Birth:</label>
+  <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} />
+  {Object.keys(formErrors).length > 0 && formErrors.birth_date && (
+    <div className="text-danger">
+      <p>{formErrors.birth_date}</p>
+    </div>
+  )}
 </div>
-                <div className='form-group'>
-                  <label htmlFor="birthdate">Date of Birth:</label>
-                  <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}  />
-                </div>
-                <div className='form-group'>
-                  <label htmlFor="height">Height (cm):</label>
-                  <input type="number" id="height" {...register('height')} />
-                  <label htmlFor="weight">Weight (kg):</label>
-                  <input type="number" id="weight" {...register('wight')} />
-                </div>
-                <div className='form-group'>
+
+            
+<div className='form-group'>
+<label htmlFor="height">Height (cm):</label>
+                  <input type="number" id="height" {...register('height')}  min="25" max='250' />
+       
+  {Object.keys(formErrors).length > 0 && formErrors.height && (
+    <div className="text-danger">
+      <p>{formErrors.height}</p>
+    </div>
+  )}
+
+<label htmlFor="weight">Weight (kg):</label>
+ <input type="number" id="weight" {...register('wight')} min="38" max='600' />
+  {Object.keys(formErrors).length > 0 && formErrors.wight && (
+    <div className="text-danger">
+      <p>{formErrors.wight}</p>
+    </div>
+  )}
+</div>
+
+            
+<div className='form-group'>
   <label htmlFor="country">Country:</label>
-  <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
-    <option value=" ">Select Country</option>
+  <select id="country" {...register('country_id', { required: true })} onChange={(e) => handleCountrySelect(e.target.value)}>
+    <option value=""></option>
     {countries.map(country => (
       <option key={country.id} value={country.id}>
         {country.name}
       </option>
     ))}
   </select>
+  {Object.keys(formErrors).length > 0 && formErrors.country_id && (
+    <div className="text-danger">
+      <p>{formErrors.country_id}</p>
+    </div>
+  )}
 </div>
 
+            
 {cities?.length > 0 && (
-        <div className='form-group'>
-          <label htmlFor="subPosition">City:</label>
-          <select id="subPosition" {...register('city_id')}>
-            {cities?.map(city => (
-              <option key={city.id} value={city.id}>
-                {city.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-        <div className='form-group'>
-          <label htmlFor="mobile_number">Phone:</label>
-          <PhoneInput
-  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
-  inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
-  buttonClass="border-0"
-  country={"jo"}
-  value={"mobile_number"}
-  isValid={(inputNumber, country, countries) => {
-    const isValid = countries.some((country) => {
-      return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
-    });
+  <div className='form-group'>
+    <label htmlFor="subPosition">City:</label>
+    <select id="subPosition" {...register('city_id')}>
+      {cities?.map(city => (
+        <option key={city.id} value={city.id}>
+          {city.name}
+        </option>
+      ))}
+    </select>
+    {Object.keys(formErrors).length > 0 && formErrors.city_id && (
+      <div className="text-danger">
+        <p>{formErrors.city_id}</p>
+      </div>
+    )}
+  </div>
+)}
 
-    setIsValidMobileNumber(isValid);
+            
+<div className='form-group'>
+  <label htmlFor="mobile_number">Phone:</label>
+  <PhoneInput
+    className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+    inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
+    buttonClass="border-0"
+    country={selectedCountryCode || 'jo'}
+    value={"mobile_number"}
+    isValid={(inputNumber, country, countries) => {
+      const isValid = countries.some((country) => {
+        return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+      });
 
-    return isValid;
-  }}
-  inputProps={{
-    name: "mobile_number",
-    required: true,
-  }}
-  onChange={(e) => {
-    setValue("mobile_number", e);
-  }}
-  onCountryChange={() => {}}
-/>
-{!isValidMobileNumber && (
-        <div className="text-danger">Please enter a valid mobile number.</div>
-      )}
+      setIsValidMobileNumber(isValid);
 
+      return isValid;
+    }}
+    inputProps={{
+      name: "mobile_number",
+      required: true,
+    }}
+    onChange={(e) => {
+      setValue("mobile_number", e);
+    }}
+    onCountryChange={() => { }}
+  />
+  {Object.keys(formErrors).length > 0 && formErrors.mobile_number && (
+      <div className="text-danger">
+        <p>{formErrors.mobile_number}</p>
+      </div>
+    )}
+</div>
 
-        </div>
               </div>
-              
-                
-    
-                <button onClick={handleBack} className=' btn-tall mt-4 bg-white border-none'
-                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
-                  <FaArrowLeft color='black' />Back
-                </button>
-                <button type="submit" className='btn-tall mt-4 get-started' style={{width:'12rem',padding:'0.5rem'}}>
-                  Get Started <FaArrowRight color='white' />
-                </button>
-              
-              
+
+
+          
+            
+              <button onClick={handleBack} className=' btn-tall mt-4 bg-white border-none' style={{ color: "#213555", width: '12rem', borderColor: 'white', marginRight: '2rem', padding: '0.5rem' }}>
+                <FaArrowLeft color='black' />Back
+              </button>
+              <button type="submit" className='btn-tall mt-4 get-started' style={{ width: '12rem', padding: '0.5rem' }}>
+                Get Started <FaArrowRight color='white' />
+              </button>
             </form>
+            
             
             );
           case '2':
             return (
               <form onSubmit={handleSubmit(onSubmit)} className='register-form'>
-              <div className='form-container'>
-                <div className='form-group'>
-                  <label htmlFor="talentType">Sport Type</label>
-                  <select id="talentType" {...register('talent_type')}>
-    {sports.map(sport => (
-      <option key={sport.id} value={sport.id}>
-        {sport.name}
-      </option>
-    ))}
-  </select>
-                </div>
-  
-                <div className='form-group'>
-  <label>Gender:</label>
-  <div className="radio-buttons">
-    <label className='custom-radio-btn'>
-      <span className="label">Male</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
-      <span className="checkmark"></span>
-    </label>
-    <label className='custom-radio-btn'>
-      <span className="label">Female</span>
-      <input type="radio" id="female" value="female" {...register('gender')} />
-      <span className="checkmark"></span>
-    </label>
-    <label className='custom-radio-btn'>
-      <span className="label">rather not to say</span>
-      <input type="radio" id="other" value="other" {...register('gender')} />
-      <span className="checkmark"></span>
-    </label>
-  </div>
-  
-</div>
-<div className='mb-3 d-flex '>
-                    <div className='flex-fill form-group' >
-                    <label htmlFor="birthdate">years of experience:</label>
-                  <input type="number" id="years_of_experience" {...register('years_of_experience')}  style={{padding:'8px'}} />
-                    </div>
-                    <div className='flex-fill form-group'>
-                    <label htmlFor="birthdate">Date of Birth::</label>
-                  <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}   />
-                    </div>
-                  </div>
-   
-   <div className='form-group'>
-  <label htmlFor="country">Country:</label>
-  <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
-    <option value=" ">Select Country</option>
-    {countries.map(country => (
-      <option key={country.id} value={country.id}>
-        {country.name}
-      </option>
-    ))}
-  </select>
-</div>
-{cities?.length > 0 && (
-        <div className='form-group'>
-          <label htmlFor="subPosition">City:</label>
-          <select id="subPosition" {...register('city_id')}>
-            {cities?.map(city => (
-              <option key={city.id} value={city.id}>
-                {city.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-        <div className='form-group'>
-          <label htmlFor="phone">Phone:</label>
-          <PhoneInput
-  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
-  inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
-  buttonClass="border-0"
-  country={"jo"}
-  value={"mobile_number"}
-  isValid={(inputNumber, country, countries) => {
-    const isValid = countries.some((country) => {
-      return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
-    });
+  <div className='form-container'>
+    <div className='form-group'>
+      <label htmlFor="talentType">Sport Type</label>
+      <select id="talentType" {...register('talent_type')}>
+        {sports.map(sport => (
+          <option key={sport.id} value={sport.id}>
+            {sport.name}
+          </option>
+        ))}
+      </select>
+      {Object.keys(formErrors).length > 0 && formErrors.talent_type && (
+    <div className="text-danger">
+      <p>{formErrors.talent_type}</p>
+    </div>
+  )}
+    </div>
 
-    setIsValidMobileNumber(isValid);
+    <div className='form-group'>
+      <label>Gender:</label>
+      <div className="radio-buttons">
+        <label className='custom-radio-btn'>
+          <span className="label">Male</span>
+          <input type="radio" id="male" value="male" {...register('gender')} />
+          <span className="checkmark"></span>
+        </label>
+        <label className='custom-radio-btn'>
+          <span className="label">Female</span>
+          <input type="radio" id="female" value="female" {...register('gender')} />
+          <span className="checkmark"></span>
+        </label>
+        <label className='custom-radio-btn'>
+          <span className="label">rather not to say</span>
+          <input type="radio" id="other" value="other" {...register('gender')} />
+          <span className="checkmark"></span>
+        </label>
+      </div>
+      {Object.keys(formErrors).length > 0 && formErrors.gender && (
+    <div className="text-danger">
+      <p>{formErrors.gender}</p>
+    </div>
+  )}
+    </div>
 
-    return isValid;
-  }}
-  inputProps={{
-    name: "mobile_number",
-    required: true,
-  }}
-  onChange={(e) => {
-    setValue("mobile_number", e);
-  }}
-  onCountryChange={() => {}}
-/>
-{!isValidMobileNumber && (
+    <div className='mb-3 d-flex'>
+      <div className='flex-fill form-group'>
+        <label htmlFor="years_of_experience">Years of Experience:</label>
+        <input type="number" id="years_of_experience" {...register('years_of_experience')} min="0" style={{ padding: '8px' }} />
+        {Object.keys(formErrors).length > 0 && formErrors.years_of_experience && (
+    <div className="text-danger">
+      <p>{formErrors.years_of_experience}</p>
+    </div>
+  )}
+      </div>
+      <div className='flex-fill form-group'>
+        <label htmlFor="birthdate">Date of Birth:</label>
+        <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} />
+        {Object.keys(formErrors).length > 0 && formErrors.birth_date && (
+    <div className="text-danger">
+      <p>{formErrors.birth_date}</p>
+    </div>
+  )}
+      </div>
+      
+    </div>
+
+    <div className='form-group'>
+      <label htmlFor="country">Place of Residence</label>
+      <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+        <option value=" ">Select Country</option>
+        {countries.map(country => (
+          <option key={country.id} value={country.id}>
+            {country.name}
+          </option>
+        ))}
+      </select>
+      {Object.keys(formErrors).length > 0 && formErrors.country_id && (
+    <div className="text-danger">
+      <p>{formErrors.country_id}</p>
+    </div>
+  )}
+    </div>
+    {cities?.length > 0 && (
+      <div className='form-group'>
+        <label htmlFor="city">City:</label>
+        <select id="city" {...register('city_id')}>
+          {cities?.map(city => (
+            <option key={city.id} value={city.id}>
+              {city.name}
+            </option>
+          ))}
+        </select>
+        {Object.keys(formErrors).length > 0 && formErrors.city_id && (
+      <div className="text-danger">
+        <p>{formErrors.city_id}</p>
+      </div>
+    )}
+      </div>
+    )}
+    <div className='form-group'>
+      <label htmlFor="phone">Phone:</label>
+      <PhoneInput
+        className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+        inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
+        buttonClass="border-0"
+        country={selectedCountryCode || 'jo'}
+        value={"mobile_number"}
+        isValid={(inputNumber, country, countries) => {
+          const isValid = countries.some((country) => {
+            return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+          });
+
+          setIsValidMobileNumber(isValid);
+
+          return isValid;
+        }}
+        inputProps={{
+          name: "mobile_number",
+          required: true,
+        }}
+        onChange={(e) => {
+          setValue("mobile_number", e);
+        }}
+        onCountryChange={() => { }}
+      />
+      {!isValidMobileNumber && (
         <div className="text-danger">Please enter a valid mobile number.</div>
       )}
+    </div>
+    {Object.keys(formErrors).length > 0 && formErrors.mobile_number && (
+      <div className="text-danger">
+        <p>{formErrors.mobile_number}</p>
+      </div>
+    )}
+  </div>
 
-        </div>
-              </div>
-                 
-              <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
-                 style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
-                  <FaArrowLeft color='black' />Back
-                </button>
-                <button type="submit" className='btn-tall mt-4' style={{width:'12rem',padding:'0.5rem'}}>
-                  Get Started <FaArrowRight color='white' />
-                </button>
-            </form>
+  <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
+    style={{ color: "#213555", width: '12rem', borderColor: 'white', marginRight: '2rem', padding: '0.5rem' }}>
+    <FaArrowLeft color='black' />Back
+  </button>
+  <button type="submit" className='btn-tall mt-4' style={{ width: '12rem', padding: '0.5rem' }}>
+    Get Started <FaArrowRight color='white' />
+  </button>
+</form>
+
             );
           case '4':
             return (
@@ -794,6 +956,11 @@ function RegisterForm() {
       </option>
     ))}
   </select>
+  {Object.keys(formErrors).length > 0 && formErrors.talent_type && (
+    <div className="text-danger">
+      <p>{formErrors.talent_type}</p>
+    </div>
+  )}
                 </div>
   
                 <div className='form-group'>
@@ -815,21 +982,35 @@ function RegisterForm() {
       <span className="checkmark"></span>
     </label>
   </div>
-  
+  {Object.keys(formErrors).length > 0 && formErrors.gender && (
+    <div className="text-danger">
+      <p>{formErrors.gender}</p>
+    </div>
+  )}
 </div>
 <div className='mb-3 d-flex '>
                     <div className='flex-fill form-group' >
                     <label htmlFor="birthdate">years of experience:</label>
-                  <input type="number" id="years_of_experience" {...register('years_of_experience')}  style={{padding:'8px'}} />
+                  <input type="number" id="years_of_experience" {...register('years_of_experience')} min="0"  style={{padding:'8px'}} />
+                  {Object.keys(formErrors).length > 0 && formErrors.years_of_experience && (
+    <div className="text-danger">
+      <p>{formErrors.years_of_experience}</p>
+    </div>
+  )}
                     </div>
                     <div className='flex-fill form-group'>
                     <label htmlFor="birthdate">Date of Birth::</label>
                   <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}  />
+                  {Object.keys(formErrors).length > 0 && formErrors.birth_date && (
+    <div className="text-danger">
+      <p>{formErrors.birth_date}</p>
+    </div>
+  )}
                     </div>
                   </div>
    
                   <div className='form-group'>
-  <label htmlFor="country">Country:</label>
+  <label htmlFor="country">Place of Residence</label>
   <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
     <option value=" ">Select Country</option>
     {countries.map(country => (
@@ -838,6 +1019,11 @@ function RegisterForm() {
       </option>
     ))}
   </select>
+  {Object.keys(formErrors).length > 0 && formErrors.country_id && (
+    <div className="text-danger">
+      <p>{formErrors.country_id}</p>
+    </div>
+  )}
 </div>
 {cities?.length > 0 && (
         <div className='form-group'>
@@ -849,6 +1035,11 @@ function RegisterForm() {
               </option>
             ))}
           </select>
+          {Object.keys(formErrors).length > 0 && formErrors.city_id && (
+      <div className="text-danger">
+        <p>{formErrors.city_id}</p>
+      </div>
+    )}
         </div>
       )}
         <div className='form-group'>
@@ -857,7 +1048,7 @@ function RegisterForm() {
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
-  country={"jo"}
+  country={selectedCountryCode||'jo'}
   value={"mobile_number"}
   isValid={(inputNumber, country, countries) => {
     const isValid = countries.some((country) => {
@@ -882,8 +1073,13 @@ function RegisterForm() {
       )}
 
         </div>
+        {Object.keys(formErrors).length > 0 && formErrors.mobile_number && (
+      <div className="text-danger">
+        <p>{formErrors.mobile_number}</p>
+      </div>
+    )}
               </div>
-                  
+              
               <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
                  style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
                   <FaArrowLeft color='black' />Back
@@ -910,6 +1106,11 @@ function RegisterForm() {
           <label htmlFor="clubname">Club Name:</label>
           <input type="text" id="clube_name" {...register('club_name')}  value={clubName}  onChange={handleClubNameChange} 
           style={{border:'1px solid #ccc',borderRadius:'5px',padding:'8px'}} />
+          {Object.keys(formErrors).length > 0 && formErrors.club_name && (
+    <div className="text-danger">
+      <p>{formErrors.club_name}</p>
+    </div>
+  )}
         </div>
       <div className='form-group'>
   <label htmlFor="talentType">Sport Type</label>
@@ -920,6 +1121,11 @@ function RegisterForm() {
       </option>
     ))}
   </select>
+  {Object.keys(formErrors).length > 0 && formErrors.talent_type && (
+    <div className="text-danger">
+      <p>{formErrors.talent_type}</p>
+    </div>
+  )}
 </div>
 <div className='form-group'>
   <label htmlFor="country">Country:</label>
@@ -931,6 +1137,11 @@ function RegisterForm() {
       </option>
     ))}
   </select>
+  {Object.keys(formErrors).length > 0 && formErrors.country_id && (
+    <div className="text-danger">
+      <p>{formErrors.country_id}</p>
+    </div>
+  )}
 </div>
 {cities?.length > 0 && (
         <div className='form-group'>
@@ -942,6 +1153,11 @@ function RegisterForm() {
               </option>
             ))}
           </select>
+          {Object.keys(formErrors).length > 0 && formErrors.city_id && (
+      <div className="text-danger">
+        <p>{formErrors.city_id}</p>
+      </div>
+    )}
         </div>
       )}
   <div className='form-group'>
@@ -950,7 +1166,7 @@ function RegisterForm() {
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100'} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
-  country={"jo"}
+  country={selectedCountryCode||'jo'}
   value={"mobile_number"}
   isValid={(inputNumber, country, countries) => {
     const isValid = countries.some((country) => {
@@ -970,9 +1186,11 @@ function RegisterForm() {
   }}
   onCountryChange={() => {}}
 />
-{!isValidMobileNumber && (
-        <div className="text-danger">Please enter a valid mobile number.</div>
-      )}
+{Object.keys(formErrors).length > 0 && formErrors.mobile_number && (
+      <div className="text-danger">
+        <p>{formErrors.mobile_number}</p>
+      </div>
+    )}
 
 
   </div>
@@ -982,15 +1200,21 @@ function RegisterForm() {
             type="number"
             id="yearsFounded"
             name="year_founded"
-            min="1900"
-            max="2023"
+            min="1800"
+            max={currentYear}
             style={{padding:'8px'}}
             {...register('year_founded')}
           />
+          
+          {Object.keys(formErrors).length > 0 && formErrors.year_founded && (
+      <div className="text-danger">
+        <p>{formErrors.year_founded}</p>
+      </div>
+    )}
         </div>
    
       </div >
-        
+     
       <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
                  style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
                   <FaArrowLeft color='black' />Back
@@ -1072,9 +1296,9 @@ function RegisterForm() {
                 </div>
                 <div className='form-group'>
                   <label htmlFor="height">Height (cm):</label>
-                  <input type="number" id="height" {...register('height')} />
+                  <input type="number" id="height" {...register('height')}  min="25" max='250' />
                   <label htmlFor="weight">Weight (kg):</label>
-                  <input type="number" id="weight" {...register('wight')} />
+                  <input type="number" id="weight" {...register('wight')} min="38" max='600' />
                 </div>
                 <div className='form-group'>
   <label htmlFor="country">Country:</label>
@@ -1106,7 +1330,7 @@ function RegisterForm() {
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100 '} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
-  country={"jo"}
+  country={selectedCountryCode||'jo'}
   value={"mobile_number"}
   isValid={(inputNumber, country, countries) => {
     const isValid = countries.some((country) => {
@@ -1134,7 +1358,13 @@ function RegisterForm() {
               </div>
               
                 
-    
+              {Object.keys(formErrors).length > 0 && (
+                <div className="text-danger">
+                  {Object.values(formErrors).map((error, index) => (
+                    <p key={index}>{error}</p>
+                  ))}
+                </div>
+              )}
                 <button onClick={handleBack} className=' btn-tall mt-4 bg-white border-none'
                  style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
                   <FaArrowLeft color='black' />Back
@@ -1149,7 +1379,7 @@ function RegisterForm() {
             );
         }
       };
-    
+
   return (
     <Row>
     <Col md={6}>

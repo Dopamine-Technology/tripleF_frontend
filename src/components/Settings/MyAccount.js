@@ -1,4 +1,4 @@
-import React,{useLayoutEffect,useState,useEffect} from 'react';
+import React,{useLayoutEffect,useState,useEffect,useContext} from 'react';
 import './style.css';
 import Input from '../Register/Input';
 import { useForm } from "react-hook-form";
@@ -10,6 +10,7 @@ import 'react-phone-input-2/lib/style.css';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import startsWith from 'lodash.startswith';
 import useAxios from '../Auth/useAxiosHook.interceptor';
+import { UserDataContext } from '../UserContext/UserData.context';
 
 function MyAccount() {
     const schema = Yup.object().shape({
@@ -56,6 +57,7 @@ function MyAccount() {
           const [sports,setSports]=useState();
           const [accountTypes,setAccountTypes]=useState();
           const [subPositions,setSubPositions]=useState();
+          const {user}=useContext(UserDataContext);
 
           useLayoutEffect(() => {
             const handleResize = () => {
@@ -144,7 +146,7 @@ function MyAccount() {
                         className="form-control form-control-sm rounded"
                         validation={{}}
                         type="text"
-                        
+                        defaultValue={user.userData.first_name}
                       />
                     </div>
                     <div className='flex-fill' style={{marginRight:'18rem'}}>
@@ -157,22 +159,28 @@ function MyAccount() {
                         className="form-control form-control-sm rounded"
                         validation={{}}
                         type="text"
+                        defaultValue={user.userData.last_name}
                       />
                     </div>
                   </div>
-                  <Form.Group className='mb-3' controlId='email'>
-                  <Input
-                      register={register}
-                      errors={errors}
-                      name="email"
-                      label="Email address"
-                      placeholder=''
-                      className="form-control form-control-sm rounded"
-                      validation={{}}
-                      type="text"
-                      inputWidth='31rem'
-                    />
-                  </Form.Group>
+                  <Form.Group className='mb-3' controlId='email' style={{ position: 'relative' }}>
+  <Input
+    register={register}
+    errors={errors}
+    name="email"
+    label="Email address"
+    placeholder=''
+    className="form-control form-control-sm rounded"
+    validation={{}}
+    type="text"
+    inputWidth='31rem'
+    defaultValue={user.userData.email}
+  />
+  <p className='need-verify' style={{ position: 'absolute', right: '13rem', bottom: '-2.5rem' }}>Verify your email</p>
+</Form.Group>
+
+
+
                 
                   <Form.Group className='mb-3' controlId='phoneAndUsername'>
     <div className="d-flex">
@@ -184,6 +192,7 @@ function MyAccount() {
                 buttonClass="border-0"
                 country={"jo"}
                 value={"mobile_number"}
+                defaultValue={user.userData.profile.mobile_number}
                 isValid={(inputNumber, country, countries) => {
                     const isValid = countries.some((country) => {
                         return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
@@ -216,6 +225,7 @@ function MyAccount() {
                 className="form-control form-control-sm rounded"
                 validation={{}}
                 type="text"
+                defaultValue={user.userData.user_name}
             />
         </div>
     </div>

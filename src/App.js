@@ -27,6 +27,8 @@ import WholeProfile from './components/Profile/TalentProfile/WholeProfile';
 import NotFound from './pages/NotFound';
 import SettingsLayout from './components/Settings/SettingsLayout';
 import MyAccount from './components/Settings/MyAccount';
+import ChangePassword from './components/Settings/ChangePassword';
+import Notification from './components/Settings/Notification';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -58,6 +60,8 @@ function App() {
            </Route>
            <Route path='/' element={<SettingsLayout />}>
            <Route path='/settings/myAccount' element={<MyAccount />} />
+           <Route path='/settings/changePassword' element={<ChangePassword />} />
+           <Route path='/settings/ControlNofification' element={<Notification />} />
            </Route>
            {checkRole(["scout","coach","club"]) && (
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />

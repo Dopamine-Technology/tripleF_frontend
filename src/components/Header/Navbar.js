@@ -19,10 +19,11 @@ import Ar from '../../assets/imgs/Ar.png';
 import En from '../../assets/imgs/en.jpg';
 import LanguageIcon from '../../assets/imgs/langauge-icon.png';
 import profileIcon from '../../assets/imgs/profile-icon.svg';
-
-
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ArrowDownImage from '../../assets/imgs/dropdownWhite.svg';
+import Logo from '../../assets/imgs/Logo.png'
+import LanguageIconBlack from '../../assets/imgs/langauge-icon.svg';
+import profileIconBlack from '../../assets/imgs/profile-black-icon.svg';
 
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'En';
@@ -38,22 +39,67 @@ const TopNavbar = ({content}) => {
 
   const [isScrolled, setIsScrolled] = useState(false);
 
+  
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      if (scrollTop > 0) {
+      const windowHeight = window.innerHeight; // Height of the viewport
+  
+      // Calculate the threshold where you want to change the navbar
+      const threshold = windowHeight * 1; // For example, change the navbar when the user scrolls past half of the viewport height
+  
+      if (scrollTop > threshold) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
     };
-
+  
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-<Navbar expand="lg" className={isScrolled ? 'navbar-fixed' : ''}>
+    <>
+    {isScrolled?
+<Navbar expand="lg" className='scroll-navbar' >
+  <Container className='navbar-container'>
+    <Navbar.Brand href="#home" className="d-flex align-items-center">
+      <img src={Logo} className='logo-register' />
+      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
+    </Navbar.Brand>
+    <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="ms-auto mt-2">
+        <DropdownButton
+          title={
+            <div className='d-flex align-items-center'>
+              <img src={LanguageIconBlack} width='24px' height='24px' className='me-1 mb-4' />
+              <span className='mb-4'>{currentLanguage}</span>
+              <img src={ArrowDownImage} width='24px' height='24px' className='ms-1 mb-4' />
+            </div>
+          }
+          id="language-dropdown"
+          variant=""
+          className=" bg-transparent mr-5 custom-dropdown mt-1 "
+        >
+          {availableLanguages.map((lang) => (
+            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
+              <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
+              {lang.label}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+        <RxDividerVertical color="gray" size={30} className='mt-2' />
+        <Link to='/login' className='text-black d-flex mt-2' style={{ textDecoration: 'none', }}>
+          <img src={profileIconBlack} width='24px' height='24px' className='me-1' />
+          Login
+        </Link>
+      </Nav>
+    </Navbar.Collapse>
+  </Container>
+</Navbar>:
+<Navbar expand="lg" >
   <Container style={{ marginLeft: '-1rem' }}>
     <Navbar.Brand href="#home" className="d-flex align-items-center">
       <img src={LogoWhite} className='logo-header' />
@@ -89,7 +135,9 @@ const TopNavbar = ({content}) => {
     </Navbar.Collapse>
   </Container>
 </Navbar>
+}
 
+</>
   );
 }
 
@@ -101,13 +149,18 @@ const BottomNavbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      if (scrollTop > 0) {
+      const windowHeight = window.innerHeight; // Height of the viewport
+  
+      // Calculate the threshold where you want to change the navbar
+      const threshold = windowHeight * 1; // For example, change the navbar when the user scrolls past half of the viewport height
+  
+      if (scrollTop > threshold) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
     };
-
+  
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -123,13 +176,30 @@ const BottomNavbar = () => {
 
 
   return (
-    <Navbar expand="lg"  className={isScrolled ? 'navba2-fixed' : ''} >
+    <>
+    {isScrolled?<Navbar expand="lg" className='scroll-navbar2'>
+    <Container >
+    
+      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'14.5rem'}} className=""/>
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="me-auto">
+        <Nav.Link href='/#section1' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</p></Nav.Link>
+            <Nav.Link href="/#about"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>AboutUs</p></Nav.Link>
+            <Nav.Link href="/#Who"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >Who is TripleF for</p></Nav.Link>
+             <Nav.Link href="/#How" className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>How it works</p></Nav.Link>
+             <Nav.Link href="/#Testimonial" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</p></Nav.Link>
+             <Nav.Link href="/#Contact" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</p></Nav.Link>
+             <Nav.Link href="/#News" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>News</p></Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+    </Container>
+  </Navbar>:<Navbar expand="lg"  >
     <Container style={{marginLeft:'1rem'}}>
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'13rem'}} className="custom-toggler"/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-        <Nav.Link href='#section1' className='text-white' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`text-white  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</p></Nav.Link>
+        <Nav.Link href="#section1"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</p></Nav.Link>
             <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>AboutUs</p></Nav.Link>
             <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >Who is TripleF for</p></Nav.Link>
              <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>How it works</p></Nav.Link>
@@ -139,7 +209,9 @@ const BottomNavbar = () => {
         </Nav>
       </Navbar.Collapse>
     </Container>
-  </Navbar>
+  </Navbar>}
+    
+  </>
   );
 }
 
