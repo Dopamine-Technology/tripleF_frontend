@@ -42,9 +42,9 @@ const isSmallScreen = windowWidth <= 360;
         </Sider>
         <AntLayout style={{ transition: 'margin-left 0.3s' }} className="AntLayout" style={{marginLeft:isSmallScreen ?(isCollapsed?'-3rem':'100rem'):''}}>
                                                    
-          <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
-            <Row justify="center">
-              <Col xs={24} md={24} lg={16}>
+          <Content style={{ margin: "24px 0px 0px 0px", overflow: "initial" }}>
+            <Row >
+              <Col xs={24} md={24} lg={20}>
                 <Outlet />
               </Col>
 

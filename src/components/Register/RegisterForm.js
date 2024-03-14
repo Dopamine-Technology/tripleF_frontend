@@ -35,10 +35,9 @@ function RegisterForm({ onLoadingChange }) {
     password: signedUpWithGoogle ? Yup.string():Yup.string()
     .required("New password is required")
     .min(8, "Password must be at least 8 characters long")
-    // .matches(
-    //   "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
-    //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character")
-  
+    .matches(
+      "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character")
   });
 
   

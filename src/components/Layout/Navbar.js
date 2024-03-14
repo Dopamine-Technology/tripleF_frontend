@@ -20,11 +20,20 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import india from '../../assets/imgs/india.svg'
 import messages from '../../assets/imgs/messages.svg';
 import NotificationIcon from '../../assets/imgs/notificationIcon.svg';
+import NotificationDropDown from "../Notification/NotificationDropDown";
+
 
 function NavBar({ toggleCollapse,isSmallScreen }) {
     const { user } = useContext(UserDataContext);
     const navigate=useState();
     const axios=useAxios();
+    const [dropdownVisible, setDropdownVisible] = useState(false);
+
+    const toggleDropdown = () => {
+      setDropdownVisible(!dropdownVisible);
+      console.log("Toggling dropdown visibility",dropdownVisible);
+  };
+  
 
     function logout() {
       axios
@@ -138,12 +147,14 @@ function NavBar({ toggleCollapse,isSmallScreen }) {
                         <AiOutlineSearch className="search-icon" />
                     </div>
                 </Nav>
-                {/* <img src={india} width='20px' height='20px' /> */}
        
                 <Nav className="right-content">
-                    {/* <AiOutlineMessage className="icon" /> */}
                     <img src={messages} className="icon me-4" />
-                    <img src={NotificationIcon} className="icon me-4" />
+                    {/* <img src={NotificationIcon} className="icon me-4" onClick={toggleDropdown} /> */}
+      
+               <NotificationDropDown />
+              
+                
                     <Dropdown menu={{ items }} className="dropdown-responsive">
                         <Space>
                             <div className="image-container">
