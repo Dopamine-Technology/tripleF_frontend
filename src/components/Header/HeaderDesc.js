@@ -9,7 +9,7 @@ const HeaderDesc = () => {
   const isViewingTalent = permData?.find(item => item.name === 'view_talent' && item.value === true);
   
   return (
-    <div className='header-div' id='#homeSection'>
+    <div className='header-div' >
       <Row >
         <Col md={6} className='mt-5'>
           <p className='header-h1'>

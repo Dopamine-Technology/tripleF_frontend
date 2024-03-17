@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import NavBar from '../components/Register/Navbar'
 import Footer from '../components/Footer/Footer'
 import RegisterForm from '../components/Register/RegisterForm'
@@ -12,6 +12,9 @@ function Register() {
   const handleLoadingChange = (newLoadingState) => {
     setLoading(newLoadingState);
   };
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page when the component mounts
+}, []);
   
   if(loading){
   return <LoadingScreen />

@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
+import notFoundImg from '../assets/imgs/404Image.png'
 
 function NotFound() {
     return(
-        <div>
-        <img src='' />
-        <p>404</p>
+        <div style={{overflowY:'hidden'}}>
+        <img src={notFoundImg}style={{height:'49rem',marginLeft:'8rem'}}  />
         </div>
     )
 }

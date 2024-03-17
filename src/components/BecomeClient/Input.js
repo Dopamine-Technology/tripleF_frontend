@@ -30,10 +30,6 @@ const Input = ({
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
           className='textarea-input'
-          style={{
-           
-          }}
-
           placeholder={placeholder}
         />
       ) : (
@@ -54,7 +50,7 @@ const Input = ({
       )}
 
 {errors && (
-        <div className="text-danger text-start" style={{width:'15rem'}}>{errors[name]?.message}</div>
+        <div className="text-danger text-start" style={{width:'19rem'}}>{errors[name]?.message}</div>
 )}
     </Form.Group>
   );

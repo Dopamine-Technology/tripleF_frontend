@@ -18,6 +18,7 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import startsWith from 'lodash.startswith';
+import { gapi } from "gapi-script";
 
 
 function RegisterForm({ onLoadingChange }) {
@@ -31,13 +32,13 @@ function RegisterForm({ onLoadingChange }) {
     first_name: signedUpWithGoogle ? Yup.string():Yup.string().required("First name is required"),
     last_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Last name is required"),
     user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required"),
-
-    password: signedUpWithGoogle ? Yup.string():Yup.string()
+    password: signedUpWithGoogle ? Yup.string() : Yup.string()
     .required("New password is required")
     .min(8, "Password must be at least 8 characters long")
     .matches(
-      "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character")
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case "
+    )
   });
 
   
@@ -78,6 +79,14 @@ function RegisterForm({ onLoadingChange }) {
       mobile_number: Yup.string().required('Mobile number is required'),
     }),
   };
+
+  gapi.load("client:auth2", () => {
+    gapi.client.init({
+      clientId:
+        "993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com",
+      plugin_name: "chat",
+    });
+  });
 
       const {
         register,
@@ -172,9 +181,9 @@ function RegisterForm({ onLoadingChange }) {
         console.log('Updated formData:', formData);
       }, [formData,accessToken]);
 
-      const onFailure =()=>{
-        console.log('O')
-      }
+      const onFailure = (error) => {
+        console.error('Google sign-in failed:', error);
+      };
 
 
       useEffect(() => {
@@ -635,7 +644,7 @@ function RegisterForm({ onLoadingChange }) {
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
       <span className="label">Male</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="male" value="male" {...register('gender')} checked />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
@@ -819,7 +828,7 @@ function RegisterForm({ onLoadingChange }) {
       <div className="radio-buttons">
         <label className='custom-radio-btn'>
           <span className="label">Male</span>
-          <input type="radio" id="male" value="male" {...register('gender')} />
+          <input type="radio" id="male" value="male" {...register('gender')} checked />
           <span className="checkmark"></span>
         </label>
         <label className='custom-radio-btn'>
@@ -967,7 +976,7 @@ function RegisterForm({ onLoadingChange }) {
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
       <span className="label">Male</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="male" value="male" {...register('gender')} checked />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
@@ -1272,7 +1281,7 @@ function RegisterForm({ onLoadingChange }) {
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
       <span className="label">Male</span>
-      <input type="radio" id="male" value="male" {...register('gender')} />
+      <input type="radio" id="male" value="male" {...register('gender')} checked />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>

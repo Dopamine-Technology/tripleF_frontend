@@ -13,6 +13,7 @@
     src: url('../../assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype'); 
   }
 
+
 .header-div {
     max-height: 10vh;
     display: flex;
@@ -76,10 +77,22 @@
     box-shadow: 0px 32px 54px rgba(3,3,3, 0.135927);
   }
 .Register-button:hover{
+  color:black;
+  border-radius: 45px;
+  padding: 0.7rem;
+  background-color: #77DCBF;
+  border-color:#77DCBF;
   box-shadow: 0px 32px 54px rgba(3,3,3, 0.135927);
-  color:white;
-  background-color:#77DCBF; 
-  border-color: #77DCBF;
+  cursor: pointer;
+}
+.Register-button:active{
+  color:black;
+  border-radius: 45px;
+  padding: 0.7rem;
+  background-color: #77DCBF;
+  border-color:#77DCBF;
+  box-shadow: 0px 32px 54px rgba(3,3,3, 0.135927);
+  cursor: pointer;
 }
 .right-nav{
   /* margin-right: -4rem; */
@@ -92,9 +105,15 @@
   padding: 0.9rem 
   
 }
-.Register-link:hover{
-  color:white;
+.Register-link:active{
+  text-decoration: none;
+  color:black;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.9rem 
+  
 }
+
 .header-p2{
   width:31.5rem;
   color:#ebeaea;
@@ -121,7 +140,7 @@ width:100%;
 background-color: white;
 margin-top: 5rem;
 width:100%;
-/* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); */
+box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 

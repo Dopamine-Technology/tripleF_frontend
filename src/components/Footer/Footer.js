@@ -41,10 +41,10 @@ const Footer = () => {
       </div>
 
       <div className='section'>
-        <h6 className='align-h6'>Who is TripleF for</h6>
-        <p className='align-h6'>Talented</p>
-        <p className='align-h6'>Coaches</p>
-        <p className='align-h6'>Clubs</p>
+        <h6 className='align-h6'><Nav.Link href="#Who">Who is TripleF for</Nav.Link></h6>
+        <p className='align-h6'><Nav.Link href="#Who">Talented</Nav.Link></p>
+        <p className='align-h6'><Nav.Link href="#Who">Coaches</Nav.Link></p>
+        <p className='align-h6'><Nav.Link href="#Who">Clubs</Nav.Link></p>
         <p className='align-h6'>Companies</p>
       </div>
 
