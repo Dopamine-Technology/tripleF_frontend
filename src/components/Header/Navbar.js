@@ -3,7 +3,7 @@ import {Container,Row,Col} from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { GrLanguage } from 'react-icons/gr';
-import RegisterButton from './RegisterButton';
+import tton from './RegisterButton';
 import { useTranslation } from 'react-i18next';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -44,10 +44,8 @@ const TopNavbar = ({content}) => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight; // Height of the viewport
-  
-      // Calculate the threshold where you want to change the navbar
-      const threshold = windowHeight * 1; // For example, change the navbar when the user scrolls past half of the viewport height
+      const windowHeight = window.innerHeight; 
+      const threshold = windowHeight * 1;
   
       if (scrollTop > threshold) {
         setIsScrolled(true);
@@ -65,7 +63,7 @@ const TopNavbar = ({content}) => {
     {isScrolled?
 <Navbar expand="lg" className='scroll-navbar' >
   <Container className='navbar-container'>
-    <Navbar.Brand href="#home" className="d-flex align-items-center">
+    <Navbar.Brand href="/" className="d-flex align-items-center">
       <img src={Logo} className='logo-register' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
     </Navbar.Brand>
@@ -101,7 +99,7 @@ const TopNavbar = ({content}) => {
 </Navbar>:
 <Navbar expand="lg" >
   <Container style={{ marginLeft: '-1rem' }}>
-    <Navbar.Brand href="#home" className="d-flex align-items-center">
+    <Navbar.Brand href="/" className="d-flex align-items-center">
       <img src={LogoWhite} className='logo-header' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className="custom-toggler ms-5" />
     </Navbar.Brand>
@@ -165,6 +163,55 @@ const BottomNavbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // const hashToSectionId = {
+  //   '1': 'homeSection',
+  //   '2': 'about',
+  //   '3': 'Who',
+  //   '4': 'How',
+  //   '5': 'Testimonial',
+  //   '6': 'Contact',
+  //   '7': 'News',
+  //   // Add more mappings as needed
+  // };
+
+  // useEffect(() => {
+  //   const handleHashChange = () => {
+  //     const hash = window.location.hash.substring(1);
+  //     setActiveLink(hashToSectionId[hash]);
+  //     console.log('hash',activeLink)
+  //   };
+
+  //   window.addEventListener('hashchange', handleHashChange);
+  //   handleHashChange(); 
+
+  
+  //   return () => {
+  //     window.removeEventListener('hashchange', handleHashChange);
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1);
+      if(hash=='home')setActiveLink(1);
+      else if(hash=='about') setActiveLink(2);
+      else if(hash=='Who') setActiveLink(3);
+      else if(hash=='How') setActiveLink(4);
+      else if(hash=='Testimonial') setActiveLink(5);
+      else if(hash=='Contact') setActiveLink(6);
+      else if(hash=='News') setActiveLink(7);
+
+      
+      
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange(); // Call it initially to set the active link based on the initial hash
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
   const handleNavLinkClick = (index,sectionId) => {
     setActiveLink(index);
     const section = document.getElementById(sectionId);
@@ -183,13 +230,13 @@ const BottomNavbar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'14.5rem'}} className=""/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-        <Nav.Link href='/#section1' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</p></Nav.Link>
-            <Nav.Link href="/#about"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>AboutUs</p></Nav.Link>
-            <Nav.Link href="/#Who"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >Who is TripleF for</p></Nav.Link>
-             <Nav.Link href="/#How" className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>How it works</p></Nav.Link>
-             <Nav.Link href="/#Testimonial" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</p></Nav.Link>
-             <Nav.Link href="/#Contact" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</p></Nav.Link>
-             <Nav.Link href="/#News" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>News</p></Nav.Link>
+        <Nav.Link href='/#homeSection' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')} className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</Nav.Link>
+            <Nav.Link href="/#about"className='' style={{textDecoration:'none'}} className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>AboutUs</Nav.Link>
+            <Nav.Link href="/#Who"className='' style={{textDecoration:'none'}} className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >Who is TripleF for</Nav.Link>
+             <Nav.Link href="/#How" className='' style={{textDecoration:'none'}} className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}> How it works</Nav.Link>
+             <Nav.Link href="/#Testimonial" className='' style={{textDecoration:'none'}} className={` ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</Nav.Link>
+             <Nav.Link href="/#Contact" className='' style={{textDecoration:'none'}} className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</Nav.Link>
+             <Nav.Link href="/#News" className='' style={{textDecoration:'none'}} className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}><p>News</p></Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Container>
@@ -199,13 +246,13 @@ const BottomNavbar = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'13rem'}} className="custom-toggler"/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-        <Nav.Link href="#section1"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</p></Nav.Link>
-            <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>AboutUs</p></Nav.Link>
-            <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >Who is TripleF for</p></Nav.Link>
-             <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}}> <p className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>How it works</p></Nav.Link>
-             <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</p></Nav.Link>
-             <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</p></Nav.Link>
-             <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}}><p className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>News</p></Nav.Link>
+        <Nav.Link href="/#homeSection"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}> Home</Nav.Link>
+            <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}> About Us</Nav.Link>
+            <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} > Who is TripleF for</Nav.Link>
+             <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}> How it works</Nav.Link>
+             <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</Nav.Link>
+             <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</Nav.Link>
+             <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>News</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Container>
@@ -216,9 +263,30 @@ const BottomNavbar = () => {
 }
 
 const CombinedNavbars = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight; 
+      const threshold = windowHeight * 1;
+  
+      if (scrollTop > threshold) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div>
-    <Container  style={{marginLeft:'2.2rem'}}>
+    <Container  style={{marginRight:isScrolled?'14rem':'2.5rem'}}>
       <TopNavbar />
       <BottomNavbar />
     </Container>

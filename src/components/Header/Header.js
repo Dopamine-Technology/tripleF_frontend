@@ -8,7 +8,7 @@ import './style.css';
 const Header = ({ content }) => {
     return (
         <div className='whole-div'>
-            <div className="background-overlay"></div>
+            <div className="background-overlay"  id='homeSection'></div>
 
             <Row style={{ marginRight: '6rem', position: 'relative', zIndex: 2 }}> 
                 <NavBar content={content} />

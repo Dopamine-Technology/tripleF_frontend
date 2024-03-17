@@ -34,7 +34,7 @@ function Sidebar({ isCollapsed, toggleCollapse }) {
         <div>
         <div className={`leftside-container  ${isCollapsed ? 'collapsed' : ''}`}>
         {!isCollapsed && 
-            <div className="Pro" onClick={() => handleNavLinkClick(1,'/home')} >
+            <div className="Pro" onClick={() => handleNavLinkClick(1,'/settings/myAccount')} >
             <img src={myAccount} />
             <div>
             <div>My Account </div>
@@ -42,7 +42,7 @@ function Sidebar({ isCollapsed, toggleCollapse }) {
             </div>}
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             {!isCollapsed && 
-            <div className="Pro" onClick={() => handleNavLinkClick(2,'/clubs')}>
+            <div className="Pro" onClick={() => handleNavLinkClick(2,'/settings/changePassword')}>
                 <img src={Change} />
                 <div>
                 {!isCollapsed && <div >Change Password </div>}
@@ -50,13 +50,40 @@ function Sidebar({ isCollapsed, toggleCollapse }) {
             </div>}
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             {!isCollapsed && 
-            <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
+            <div className="Pro" onClick={() => handleNavLinkClick(3, '/settings/ControlNofification')}>
                 <img src={Notification} />
                 <div>
                 {!isCollapsed && <div >Notifications </div>}
                 </div>
             </div>}
+            {user.userData.profile.type_name=="coach"?<>
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+            {!isCollapsed && 
+            <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
+                <img src={Notification} />
+                <div>
+                {!isCollapsed && <div >Coaching License  </div>}
+                </div>
+            </div>}
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+            {!isCollapsed && 
+            <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
+                <img src={Notification} />
+                <div>
+                {!isCollapsed && <div > Certifications   </div>}
+                </div>
+            </div>}
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+            {!isCollapsed && 
+            <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
+                <img src={Notification} />
+                <div>
+                {!isCollapsed && <div > Championships    </div>}
+                </div>
+            </div>}
             
+            </>:null}
+          
         </div>
         </div>
     )

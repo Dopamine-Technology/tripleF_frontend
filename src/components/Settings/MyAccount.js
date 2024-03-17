@@ -131,6 +131,147 @@ function MyAccount() {
           };
           useEffect(() => {
         }, [countries,sports,accountTypes]);
+
+        const talentFields = (
+            <>
+           <Form.Group className='mb-3' controlId='heightAndWeight'>
+    <div className="d-flex">
+        <div className="me-2">
+            <label htmlFor="height">Height </label>
+            <input type="number" id="height" {...register('height')} className="form-control" style={{width:'188px'}}/>
+        </div>
+        <div>
+            <label htmlFor="weight">Weight </label>
+            <input type="number" id="weight" {...register('weight')} className="form-control"  style={{width:'188px'}} />
+        </div>
+    </div>
+</Form.Group> 
+<Form.Group controlId='country' className='mb-3'>
+    <Form.Label htmlFor="country">Place of Residence</Form.Label>
+    <Form.Control as="select" id="country" {...register('country_id')} style={{width:'391px'}} >
+        <option value=" ">Select Country</option>
+        {countries?.map(country => (
+            <option key={country.id} value={country.id}>
+                {country.name}
+            </option>
+        ))}
+    </Form.Control>
+</Form.Group>
+<Form.Group controlId='country' className=''>
+    <Form.Label className='mb-0 mt-3'>Talent Type:</Form.Label>
+    <div className="d-flex align-items-center ">
+        <Form.Control as="select" id="country" {...register('country_id')} style={{ width: '391px', marginRight: '1rem' }}>
+            <option value=" ">Select type</option>
+            {sports?.map(sport => (
+                <option key={sport.id} value={sport.id}>
+                    {sport.name}
+                </option>
+            ))}
+        </Form.Control>
+        <div className='mb-4' >
+            <Form.Label>Account Type:</Form.Label>
+
+                <>
+    
+                    <label key={1} className="custom-radio-btn">
+                        <span className="label">Talent</span>
+                        <input type="radio" value='1' name="user_type" checked />
+                        <span className="checkmark"></span>
+                    </label>
+     
+            </>
+ 
+        </div>
+    </div>
+</Form.Group> 
+<Form.Group controlId='gender' className='me-2'>
+        <label>Position</label>
+        <div className="d-flex" onChange={(e) => handlePositionSelect(e.target.value)}>
+            <label className='custom-radio-btn me-2'>
+                <span className="label">Goal Kepper</span>
+                <input type="radio" id="male" value="male" {...register('gender')} />
+                <span className="checkmark"></span>
+            </label>
+            <label className='custom-radio-btn  me-2'>
+                <span className="label">Defender</span>
+                <input type="radio" id="female" value="female" {...register('gender')} checked />
+                <span className="checkmark"></span>
+            </label>
+            <label className='custom-radio-btn '>
+                <span className="label">Midfielder</span>
+                <input type="radio" id="other" value="other" {...register('gender')} />
+                <span className="checkmark"></span>
+            </label>
+            <label className='custom-radio-btn '>
+                <span className="label">Attacker</span>
+                <input type="radio" id="other" value="other" {...register('gender')} />
+                <span className="checkmark"></span>
+            </label>
+        </div>
+    </Form.Group>
+    <div className='mt-3 d-flex  '>
+<Form.Group controlId='subPosition' className='mb-3 me-4'>
+    <div className='form-group'>
+        <Form.Label htmlFor="subPosition">Defender Position</Form.Label>
+        <select id="subPosition" {...register('position')} className='form-control' style={{width:'391px'}}>
+            {subPositions?.map(subPosition => (
+                <option key={subPosition.id} value={subPosition.id}>
+                    {subPosition.name}
+                </option>
+            ))}
+        </select>
+    </div>
+</Form.Group>
+<Form.Group controlId='gender' className='me-2 mt-2'>
+        <label>Preferred Foot</label>
+        <div className="d-flex">
+            <label className='custom-radio-btn me-2'>
+                <span className="label">Right</span>
+                <input type="radio" id="male" value="male" {...register('gender')} checked/>
+                <span className="checkmark"></span>
+            </label>
+            <label className='custom-radio-btn  me-2'>
+                <span className="label">Left</span>
+                <input type="radio" id="female" value="female" {...register('gender')}  />
+                <span className="checkmark"></span>
+            </label>
+            <label className='custom-radio-btn '>
+                <span className="label">Both</span>
+                <input type="radio" id="other" value="other" {...register('gender')} />
+                <span className="checkmark"></span>
+            </label>
+        </div>
+    </Form.Group>
+ 
+    
+</div> 
+            </>
+        );
+        const coachFields = (
+            <>
+<Form.Group controlId='country' className=''>
+<Form.Label htmlFor="country">Place of Residence</Form.Label>
+    <div className="d-flex align-items-center ">
+    <Form.Control as="select" id="country" {...register('country_id')} style={{width:'26rem'}} >
+        <option value=" ">Select Country</option>
+        {countries?.map(country => (
+            <option key={country.id} value={country.id}>
+                {country.name}
+            </option>
+        ))}
+    </Form.Control>
+        <div className='mb-4' >
+        <div className="me-2">
+            <label htmlFor="height">Years of experience </label>
+            <input type="number" id="height" {...register('Years_of_experience ')} className="form-control" />
+        </div>
+ 
+        </div>
+    </div>
+</Form.Group>
+            </>
+        );
+    
     return(
         <div className='edit-data'>
            <p className='title-editData'> My Account</p>
@@ -147,6 +288,7 @@ function MyAccount() {
                         validation={{}}
                         type="text"
                         defaultValue={user.userData.first_name}
+                        inputWidth='289px'
                       />
                     </div>
                     <div className='flex-fill' style={{marginRight:'18rem'}}>
@@ -160,6 +302,7 @@ function MyAccount() {
                         validation={{}}
                         type="text"
                         defaultValue={user.userData.last_name}
+                        inputWidth='289px'
                       />
                     </div>
                   </div>
@@ -173,10 +316,11 @@ function MyAccount() {
     className="form-control form-control-sm rounded"
     validation={{}}
     type="text"
-    inputWidth='31rem'
+    inputWidth='595px'
     defaultValue={user.userData.email}
+
   />
-  <p className='need-verify' style={{ position: 'absolute', right: '13rem', bottom: '-2.5rem' }}>Verify your email</p>
+  <p className='need-verify' style={{ position: 'absolute', right: '15rem', bottom: '-2.5rem' }}>Verify your email</p>
 </Form.Group>
 
 
@@ -187,8 +331,8 @@ function MyAccount() {
         <div className="me-3 mt-2">
             <label htmlFor="mobile_number">Phone:</label>
             <PhoneInput
-                className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
-                inputClass={`w-100 border-0 form-control-lg py-0 shadow-none`}
+                className={`form-control py-1 rounded-sm custom-phone-input${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+                inputClass={` border-0 form-control-lg py-0 shadow-none custom-phone-input `}
                 buttonClass="border-0"
                 country={"jo"}
                 value={"mobile_number"}
@@ -226,12 +370,13 @@ function MyAccount() {
                 validation={{}}
                 type="text"
                 defaultValue={user.userData.user_name}
+                inputWidth='188px'
             />
         </div>
     </div>
 </Form.Group>
 <div className='mb-3 d-flex '>
-    <Form.Group controlId='gender' className='me-2'>
+    <Form.Group controlId='gender' className='me-5'>
         <label>Gender:</label>
         <div className="d-flex">
             <label className='custom-radio-btn me-2'>
@@ -252,7 +397,7 @@ function MyAccount() {
         </div>
     </Form.Group>
 
-    <Form.Group controlId='birthdate' className=''>
+    <Form.Group controlId='birthdate' className='' style={{marginLeft:'1.2rem',width:'188px'}}>
         <label htmlFor="birthdate">Date of Birth:</label>
         <div className="d-flex">
             <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} className="form-control me-2" />
@@ -260,119 +405,9 @@ function MyAccount() {
     </Form.Group>
     
 </div>
-<Form.Group className='mb-3' controlId='heightAndWeight'>
-    <div className="d-flex">
-        <div className="me-2">
-            <label htmlFor="height">Height </label>
-            <input type="number" id="height" {...register('height')} className="form-control" />
-        </div>
-        <div>
-            <label htmlFor="weight">Weight </label>
-            <input type="number" id="weight" {...register('weight')} className="form-control" />
-        </div>
-    </div>
-</Form.Group>
-<Form.Group controlId='country' className='mb-3'>
-    <Form.Label htmlFor="country">Place of Residence</Form.Label>
-    <Form.Control as="select" id="country" {...register('country_id')} style={{width:'26rem'}} >
-        <option value=" ">Select Country</option>
-        {countries?.map(country => (
-            <option key={country.id} value={country.id}>
-                {country.name}
-            </option>
-        ))}
-    </Form.Control>
-</Form.Group>
-<Form.Group controlId='country' className=''>
-    <Form.Label className='mb-0 mt-3'>Talent Type:</Form.Label>
-    <div className="d-flex align-items-center ">
-        <Form.Control as="select" id="country" {...register('country_id')} style={{ width: '26rem', marginRight: '1rem' }}>
-            <option value=" ">Select type</option>
-            {sports?.map(sport => (
-                <option key={sport.id} value={sport.id}>
-                    {sport.name}
-                </option>
-            ))}
-        </Form.Control>
-        <div className='mb-4' >
-            <Form.Label>Account Type:</Form.Label>
 
-                <>
-    
-                    <label key={1} className="custom-radio-btn">
-                        <span className="label">talent</span>
-                        <input type="radio" value='1' name="user_type" />
-                        <span className="checkmark"></span>
-                    </label>
-     
-            </>
- 
-        </div>
-    </div>
-</Form.Group>
-
-<Form.Group controlId='gender' className='me-2'>
-        <label>Position</label>
-        <div className="d-flex" onChange={(e) => handlePositionSelect(e.target.value)}>
-            <label className='custom-radio-btn me-2'>
-                <span className="label">Goal Kepper</span>
-                <input type="radio" id="male" value="male" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-            <label className='custom-radio-btn  me-2'>
-                <span className="label">Defender</span>
-                <input type="radio" id="female" value="female" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-            <label className='custom-radio-btn '>
-                <span className="label">Midfielder</span>
-                <input type="radio" id="other" value="other" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-            <label className='custom-radio-btn '>
-                <span className="label">Attacker</span>
-                <input type="radio" id="other" value="other" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-        </div>
-    </Form.Group>
-
-<div className='mt-3 d-flex  '>
-<Form.Group controlId='subPosition' className='mb-3 me-4'>
-    <div className='form-group'>
-        <Form.Label htmlFor="subPosition">Sub Positions:</Form.Label>
-        <select id="subPosition" {...register('position')} className='form-control'>
-            {subPositions?.map(subPosition => (
-                <option key={subPosition.id} value={subPosition.id}>
-                    {subPosition.name}
-                </option>
-            ))}
-        </select>
-    </div>
-</Form.Group>
-<Form.Group controlId='gender' className='me-2'>
-        <label>Preferred Foot</label>
-        <div className="d-flex">
-            <label className='custom-radio-btn me-2'>
-                <span className="label">Left</span>
-                <input type="radio" id="male" value="male" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-            <label className='custom-radio-btn  me-2'>
-                <span className="label">Right</span>
-                <input type="radio" id="female" value="female" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-            <label className='custom-radio-btn '>
-                <span className="label">Both</span>
-                <input type="radio" id="other" value="other" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-        </div>
-    </Form.Group>
- 
-    
-</div>
+{user.userData.profile.type_name === 'talent' && talentFields}
+{(user.userData.profile.type_name === 'coach'||user.userData.profile.type_name === 'scout') && coachFields}
            </Form>
         </div>
     )

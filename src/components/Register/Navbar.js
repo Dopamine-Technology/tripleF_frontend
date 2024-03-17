@@ -52,7 +52,7 @@ const TopNavbar = ({content}) => {
           }
           id="language-dropdown"
           variant=""
-          className=" bg-transparent mr-5 custom-dropdown mt-1 "
+          className=" bg-transparent mr-5 custom-dropdown mt-1"
         >
           {availableLanguages.map((lang) => (
             <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>

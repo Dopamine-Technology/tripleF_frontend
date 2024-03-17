@@ -36,7 +36,7 @@ const Steps = () => {
   const isSmallScreen = windowWidth <= 360;
 
   return (
-    <div className='steps-div' id='How' >
+    <div className='steps-div' id='How'>
    <div className="Shape"></div>
       <Row style={{marginTop:'2rem'}}>
         <Col md={6} className="order-md-1 order-2">

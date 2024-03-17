@@ -1,0 +1,26 @@
+.notification-owner{
+    border-radius: 68.96551513671875px;
+    opacity: 1;
+    width:40px;
+    height:40px;
+}
+.notification-owner-userName{
+    opacity: 1;
+color: rgba(70, 70, 70, 1);
+font-family: "Poppins-Medium";
+font-size: 14px;
+font-weight: 500;
+font-style: Medium;
+letter-spacing: 0px;
+text-align: left;
+}
+.notification-content{
+    opacity: 0.8;
+color: rgba(70, 70, 70, 1);
+font-family: "Poppins-Light";
+font-size: 14px;
+font-weight: 300;
+font-style: Light;
+letter-spacing: 0px;
+text-align: left;
+}
