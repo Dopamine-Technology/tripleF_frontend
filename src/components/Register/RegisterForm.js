@@ -33,8 +33,8 @@ function RegisterForm({ onLoadingChange }) {
     last_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Last name is required"),
     user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required"),
     password: signedUpWithGoogle ? Yup.string() : Yup.string()
-    .required("New password is required")
-    .min(8, "Password must be at least 8 characters long")
+    .required("password is required")
+    // .min(8, " must be at least 8 characters")
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case "
@@ -69,6 +69,12 @@ function RegisterForm({ onLoadingChange }) {
       city_id: Yup.string().required('City is required'),
       mobile_number: Yup.string().required('Mobile number is required'),
       year_founded: Yup.number().typeError('year founded must be a valid date').required('year founded is required'),
+      // club_logo: Yup.mixed().test('fileRequired', 'Logo is required', value => {
+      //   if (!value || !value.length) {
+      //     return false;
+      //   }
+      //   return true;
+      // }),
     }),
     4: Yup.object().shape({
       talent_type: Yup.string().required('Sport Type is required'),
@@ -117,7 +123,7 @@ function RegisterForm({ onLoadingChange }) {
       const [maxDate, setMaxDate] = useState(calculateMaxDate());
       const [clubName, setClubName] = useState('');
       const [selectedCountry, setSelectedCountry] = useState("");
-      const [selectedCountryCode, setSelectedCountryCode] = useState("");
+      const [selectedCountryCode, setSelectedCountryCode] = useState('jo');
       const [windowWidth, setWindowWidth] = useState(window.innerWidth);
       const currentYear = new Date().getFullYear();
 
@@ -291,16 +297,22 @@ function RegisterForm({ onLoadingChange }) {
           console.error('Error fetching sub-positions:', error);
         }
       };
-
       const handleCountrySelect = async (selectedCountryId) => {
         try {
+          const selectedCountry = countries.find(country => country.id == selectedCountryId);
+          if (selectedCountry) {
+            setSelectedCountryCode(selectedCountry.iso);
+            console.log('selectedCoutryCode',selectedCountry.iso ) // Assuming iso property contains the country code
+          }
+          // Optionally, you can also set the cities based on the selected country
           const response = await axios.get(`https://backend.triplef.group/api/app/get_cities/${selectedCountryId}`);
           setCities(response.data.result);
         } catch (error) {
-          console.error('Error fetching sub-positions:', error);
+          console.error('Error handling country select:', error);
         }
       };
       
+   
       
       
     
@@ -333,6 +345,10 @@ function RegisterForm({ onLoadingChange }) {
             }
             if (accountType === '3') {
               const logo = data.club_logo[0];
+              if (!logo) {
+                message.error('please upload club logo')
+                return;
+              }
               formDataWithImage.delete('club_logo');
               formDataWithImage.append('club_logo', logo);
             }
@@ -530,6 +546,7 @@ function RegisterForm({ onLoadingChange }) {
                 type="checkbox"
                 label="I accept the Privacy Policies and Terms&Conditions Agreements."
                 onChange={handleTermsCheckbox}
+                checked={termsAccepted?true:false}
               />
             </Form.Group>
             <div className={isSmallScreen?"mt-3":"d-flex justify-content-between align-items-center"}>
@@ -665,28 +682,6 @@ function RegisterForm({ onLoadingChange }) {
   )}
 </div>
 
-            
-                {/* <div className='form-group'>
-                  <label>Preferred Foot:</label>
-                  <div className="radio-buttons">
-                    <label className='custom-radio-btn'>
-                      <span className="label">Right</span>
-                      <input type="radio" id="male" value="male" {...register('gender')} />
-                      <span className="checkmark"></span>
-                    </label>
-                    <label className='custom-radio-btn'>
-                      <span className="label">Left</span>
-                      <input type="radio" id="female" value="female" {...register('gender')} />
-                      <span className="checkmark"></span>
-                    </label>
-                    <label className='custom-radio-btn'>
-                      <span className="label">Both</span>
-                      <input type="radio" id="other" value="other" {...register('gender')} />
-                      <span className="checkmark"></span>
-                    </label>
-                  </div>
-                </div> */}
-            
             <div className='form-group'>
   <label htmlFor="birthdate">Date of Birth:</label>
   <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} />
@@ -758,29 +753,29 @@ function RegisterForm({ onLoadingChange }) {
 <div className='form-group'>
   <label htmlFor="mobile_number">Phone:</label>
   <PhoneInput
-    className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
-    inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
-    buttonClass="border-0"
-    country={selectedCountryCode || 'jo'}
-    value={"mobile_number"}
-    isValid={(inputNumber, country, countries) => {
-      const isValid = countries.some((country) => {
-        return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
-      });
+  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+  inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
+  buttonClass="border-0"
+  country={selectedCountryCode}
+  value={"mobile_number"} // Not sure if this line is correct, please verify
+  isValid={(inputNumber, country, countries) => {
+    const isValid = countries.some((country) => {
+      return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+    });
 
-      setIsValidMobileNumber(isValid);
+    setIsValidMobileNumber(isValid);
 
-      return isValid;
-    }}
-    inputProps={{
-      name: "mobile_number",
-      required: true,
-    }}
-    onChange={(e) => {
-      setValue("mobile_number", e);
-    }}
-    onCountryChange={() => { }}
-  />
+    return isValid;
+  }}
+  inputProps={{
+    name: "mobile_number",
+    required: true,
+  }}
+  onChange={(e) => {
+    setValue("mobile_number", e);
+  }}
+  onCountryChange={() => { }}
+/>
   {Object.keys(formErrors).length > 0 && formErrors.mobile_number && (
       <div className="text-danger">
         <p>{formErrors.mobile_number}</p>
@@ -1107,9 +1102,13 @@ function RegisterForm({ onLoadingChange }) {
                   watch={watch}
                   name={"club_logo"}
                   label={"Logo"}
-
-                      />
-                  </Form.Group>
+                  errors={errors}
+       />
+       
+     {errors["club_logo"] && <p className="text-danger">{errors["club_logo"].message}</p>}
+     {console.log('errors',errors)}
+    
+      </Form.Group>
             <div className='form-group'> 
           <label htmlFor="clubname">Club Name:</label>
           <input type="text" id="clube_name" {...register('club_name')}  value={clubName}  onChange={handleClubNameChange} 

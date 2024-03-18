@@ -11,6 +11,7 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import startsWith from 'lodash.startswith';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { UserDataContext } from '../UserContext/UserData.context';
+import CheckCircleFill from '../../assets/imgs/checkCircleFill.svg';
 
 function MyAccount() {
     const schema = Yup.object().shape({
@@ -56,8 +57,12 @@ function MyAccount() {
           const [loading, setLoading] = useState(true);
           const [sports,setSports]=useState();
           const [accountTypes,setAccountTypes]=useState();
+          const [positions,setPositions]=useState();
           const [subPositions,setSubPositions]=useState();
+          const[verificationEmail,setVerificationEmail]=useState(false);
           const {user}=useContext(UserDataContext);
+
+
 
           useLayoutEffect(() => {
             const handleResize = () => {
@@ -106,6 +111,21 @@ function MyAccount() {
                 setLoading(false);
               });
           }, []);
+          
+          useEffect(() => {
+            axios
+              .post('https://backend.triplef.group/api/app/get_sport_positions/1')
+              .then((response) => {
+                setPositions(response.data.result);
+              })
+              .catch((error) => {
+                console.error("Error fetching countries data:", error);
+              })
+              .finally(() => {
+                setLoading(false);
+             
+              });
+          }, []);
           useEffect(() => {
             const fetchData = async () => {
               try {
@@ -118,6 +138,12 @@ function MyAccount() {
           
             fetchData();
           }, []);
+
+          
+          const handleVerifyClick =()=>{
+            setVerificationEmail(true);
+          }
+
           const handlePositionSelect = async (selectedPositionId) => {
             try {
               const response = await axios.post('https://backend.triplef.group/api/app/get_sport_positions/1', {
@@ -132,24 +158,26 @@ function MyAccount() {
           useEffect(() => {
         }, [countries,sports,accountTypes]);
 
+
+         
         const talentFields = (
             <>
            <Form.Group className='mb-3' controlId='heightAndWeight'>
     <div className="d-flex">
         <div className="me-2">
             <label htmlFor="height">Height </label>
-            <input type="number" id="height" {...register('height')} className="form-control" style={{width:'188px'}}/>
+            <input type="number" id="height" {...register('height')}  min="25" max='250' defaultValue={user.userData.profile.height} className="form-control" style={{width:'188px'}}/>
         </div>
         <div>
             <label htmlFor="weight">Weight </label>
-            <input type="number" id="weight" {...register('weight')} className="form-control"  style={{width:'188px'}} />
+            <input type="number" id="weight" {...register('weight')} min="38" max='600' className="form-control"defaultValue={user.userData.profile.wight}  style={{width:'188px'}} />
         </div>
     </div>
 </Form.Group> 
 <Form.Group controlId='country' className='mb-3'>
     <Form.Label htmlFor="country">Place of Residence</Form.Label>
-    <Form.Control as="select" id="country" {...register('country_id')} style={{width:'391px'}} >
-        <option value=" ">Select Country</option>
+    <Form.Control as="select" id="country" {...register('country_id')}  style={{width:'391px'}} >
+        <option value={user.userData.profile.country.id}>{user.userData.profile.country.name}</option>
         {countries?.map(country => (
             <option key={country.id} value={country.id}>
                 {country.name}
@@ -160,21 +188,20 @@ function MyAccount() {
 <Form.Group controlId='country' className=''>
     <Form.Label className='mb-0 mt-3'>Talent Type:</Form.Label>
     <div className="d-flex align-items-center ">
-        <Form.Control as="select" id="country" {...register('country_id')} style={{ width: '391px', marginRight: '1rem' }}>
-            <option value=" ">Select type</option>
-            {sports?.map(sport => (
+        <Form.Control as="select" id="country" {...register('talent_type')} style={{ width: '391px', marginRight: '1rem' }}>
+            <option value="Football">Football</option>
+            {/* {sports?.map(sport => (
                 <option key={sport.id} value={sport.id}>
                     {sport.name}
                 </option>
-            ))}
+            ))} */}
         </Form.Control>
         <div className='mb-4' >
             <Form.Label>Account Type:</Form.Label>
-
+            
                 <>
-    
                     <label key={1} className="custom-radio-btn">
-                        <span className="label">Talent</span>
+                        <span className="label">{user.userData.profile.type_name}</span>
                         <input type="radio" value='1' name="user_type" checked />
                         <span className="checkmark"></span>
                     </label>
@@ -187,27 +214,21 @@ function MyAccount() {
 <Form.Group controlId='gender' className='me-2'>
         <label>Position</label>
         <div className="d-flex" onChange={(e) => handlePositionSelect(e.target.value)}>
-            <label className='custom-radio-btn me-2'>
-                <span className="label">Goal Kepper</span>
-                <input type="radio" id="male" value="male" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-            <label className='custom-radio-btn  me-2'>
-                <span className="label">Defender</span>
-                <input type="radio" id="female" value="female" {...register('gender')} checked />
-                <span className="checkmark"></span>
-            </label>
-            <label className='custom-radio-btn '>
-                <span className="label">Midfielder</span>
-                <input type="radio" id="other" value="other" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-            <label className='custom-radio-btn '>
-                <span className="label">Attacker</span>
-                <input type="radio" id="other" value="other" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
+        {positions?.map((position)=>(
+  
+    <label className='custom-radio-btn me-2'>
+        <span className="label">{position.name}</span>
+        <input type="radio" id={position.id}
+         value={position.name}
+          {...register('position')}
+          // defaultChecked={position.name === user.userData.profile.position.name} 
+          />
+        <span className="checkmark"></span>
+    </label>
+
+        ))}
         </div>
+    
     </Form.Group>
     <div className='mt-3 d-flex  '>
 <Form.Group controlId='subPosition' className='mb-3 me-4'>
@@ -227,17 +248,17 @@ function MyAccount() {
         <div className="d-flex">
             <label className='custom-radio-btn me-2'>
                 <span className="label">Right</span>
-                <input type="radio" id="male" value="male" {...register('gender')} checked/>
+                <input type="radio" id="male" value="male" {...register('preffered_foot')} />
                 <span className="checkmark"></span>
             </label>
             <label className='custom-radio-btn  me-2'>
                 <span className="label">Left</span>
-                <input type="radio" id="female" value="female" {...register('gender')}  />
+                <input type="radio" id="female" value="female" {...register('preffered_foot')}  />
                 <span className="checkmark"></span>
             </label>
             <label className='custom-radio-btn '>
                 <span className="label">Both</span>
-                <input type="radio" id="other" value="other" {...register('gender')} />
+                <input type="radio" id="other" value="other" {...register('preffered_foot')} />
                 <span className="checkmark"></span>
             </label>
         </div>
@@ -249,10 +270,10 @@ function MyAccount() {
         );
         const coachFields = (
             <>
-<Form.Group controlId='country' className=''>
+<Form.Group controlId='country' >
 <Form.Label htmlFor="country">Place of Residence</Form.Label>
     <div className="d-flex align-items-center ">
-    <Form.Control as="select" id="country" {...register('country_id')} style={{width:'26rem'}} >
+    <Form.Control as="select" id="country" {...register('country_id')} style={{width:'391px'}} className='me-3' >
         <option value=" ">Select Country</option>
         {countries?.map(country => (
             <option key={country.id} value={country.id}>
@@ -261,9 +282,9 @@ function MyAccount() {
         ))}
     </Form.Control>
         <div className='mb-4' >
-        <div className="me-2">
+        <div className="">
             <label htmlFor="height">Years of experience </label>
-            <input type="number" id="height" {...register('Years_of_experience ')} className="form-control" />
+            <input type="number" id="height" {...register('Years_of_experience ')} className="form-control" min="0" />
         </div>
  
         </div>
@@ -271,41 +292,56 @@ function MyAccount() {
 </Form.Group>
             </>
         );
+        if(loading){
+            return <LoadingScreen />
+          }
     
     return(
         <div className='edit-data'>
            <p className='title-editData'> My Account</p>
            <Form  className='signup-form'>
-           <div className={isSmallScreen ? 'mb-3' : 'mb-3 d-flex'}>
-                    <div className={isSmallScreen ? 'mb-3' : 'flex-fill'} >
-                      <Input
+            {user.userData.profile.type_name=='club'?<Input
                         register={register}
                         errors={errors}
-                        name="first_name"
-                        label="First Name"
+                        name="club_name"
+                        label="Club Name"
                         placeholder=''
                         className="form-control form-control-sm rounded"
                         validation={{}}
                         type="text"
-                        defaultValue={user.userData.first_name}
+                        defaultValue={user.userData.profile.club_name}
                         inputWidth='289px'
-                      />
-                    </div>
-                    <div className='flex-fill' style={{marginRight:'18rem'}}>
-                      <Input
-                        register={register}
-                        errors={errors}
-                        name="last_name"
-                        label="Last Name"
-                        placeholder=''
-                        className="form-control form-control-sm rounded"
-                        validation={{}}
-                        type="text"
-                        defaultValue={user.userData.last_name}
-                        inputWidth='289px'
-                      />
-                    </div>
-                  </div>
+                      />:     <div className={isSmallScreen ? 'mb-3' : 'mb-3 d-flex'}>
+                      <div className={isSmallScreen ? 'mb-3' : 'flex-fill'} >
+                        <Input
+                          register={register}
+                          errors={errors}
+                          name="first_name"
+                          label="First Name"
+                          placeholder=''
+                          className="form-control form-control-sm rounded"
+                          validation={{}}
+                          type="text"
+                          defaultValue={user.userData.first_name}
+                          inputWidth='289px'
+                        />
+                      </div>
+                      <div className='flex-fill' style={{marginRight:'18rem'}}>
+                        <Input
+                          register={register}
+                          errors={errors}
+                          name="last_name"
+                          label="Last Name"
+                          placeholder=''
+                          className="form-control form-control-sm rounded"
+                          validation={{}}
+                          type="text"
+                          defaultValue={user.userData.last_name}
+                          inputWidth='289px'
+                        />
+                      </div>
+                    </div>}
+      
                   <Form.Group className='mb-3' controlId='email' style={{ position: 'relative' }}>
   <Input
     register={register}
@@ -320,7 +356,13 @@ function MyAccount() {
     defaultValue={user.userData.email}
 
   />
-  <p className='need-verify' style={{ position: 'absolute', right: '15rem', bottom: '-2.5rem' }}>Verify your email</p>
+  {user.userData.is_email_verified? null:
+  verificationEmail? <p className='sent-verify'  style={{ position: 'absolute', right: '15rem', bottom: '-2.5rem' }} ><img src={CheckCircleFill}  className='me-1'/>Verification email sent</p>:
+  <p className='need-verify' onClick={handleVerifyClick} style={{ position: 'absolute', right: '15rem', bottom: '-2.5rem' }} >Verify your email</p>
+
+}
+
+ 
 </Form.Group>
 
 
@@ -335,7 +377,7 @@ function MyAccount() {
                 inputClass={` border-0 form-control-lg py-0 shadow-none custom-phone-input `}
                 buttonClass="border-0"
                 country={"jo"}
-                value={"mobile_number"}
+                value={`mobile_number||${user.userData.profile.mobile_number}`}
                 defaultValue={user.userData.profile.mobile_number}
                 isValid={(inputNumber, country, countries) => {
                     const isValid = countries.some((country) => {
@@ -360,7 +402,9 @@ function MyAccount() {
             )}
         </div>
         <div className="flex-fill">
-            <Input
+          {user.userData.profile.type_name=='club'?
+          <p>mmm</p>
+          :         <Input
                 register={register}
                 errors={errors}
                 name="user_name"
@@ -371,7 +415,10 @@ function MyAccount() {
                 type="text"
                 defaultValue={user.userData.user_name}
                 inputWidth='188px'
-            />
+                disabled
+      
+            />}
+   
         </div>
     </div>
 </Form.Group>
@@ -379,35 +426,38 @@ function MyAccount() {
     <Form.Group controlId='gender' className='me-5'>
         <label>Gender:</label>
         <div className="d-flex">
-            <label className='custom-radio-btn me-2'>
-                <span className="label">Male</span>
-                <input type="radio" id="male" value="male" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-            <label className='custom-radio-btn  me-2'>
-                <span className="label">Female</span>
-                <input type="radio" id="female" value="female" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
-            <label className='custom-radio-btn '>
-                <span className="label">Rather not to say</span>
-                <input type="radio" id="other" value="other" {...register('gender')} />
-                <span className="checkmark"></span>
-            </label>
+       
+        <label className='custom-radio-btn me-2'>
+    <span className="label">Male</span>
+    <input type="radio" id="male" value="male" {...register('male')} checked={user.userData.profile.gender === 'male'} />
+    <span className="checkmark"></span>
+</label>
+<label className='custom-radio-btn me-2'>
+    <span className="label">Female</span>
+    <input type="radio" id="female" value="female" {...register('female')} checked={user.userData.profile.gender === 'female'} />
+    <span className="checkmark"></span>
+</label>
+<label className='custom-radio-btn'>
+    <span className="label">Rather not to say</span>
+    <input type="radio" id="other" value="other" {...register('other')} checked={user.userData.profile.gender === 'other'} />
+    <span className="checkmark"></span>
+</label>
         </div>
     </Form.Group>
 
     <Form.Group controlId='birthdate' className='' style={{marginLeft:'1.2rem',width:'188px'}}>
-        <label htmlFor="birthdate">Date of Birth:</label>
-        <div className="d-flex">
-            <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} className="form-control me-2" />
-        </div>
-    </Form.Group>
+    <label htmlFor="birthdate">Date of Birth:</label>
+    <div className="d-flex">
+        <input type="date" id="birthdate" {...register('birth_date')} defaultValue={user.userData.profile.birth_date} max={maxDate} className="form-control me-2" />
+    </div>
+</Form.Group>
+
     
 </div>
 
 {user.userData.profile.type_name === 'talent' && talentFields}
 {(user.userData.profile.type_name === 'coach'||user.userData.profile.type_name === 'scout') && coachFields}
+
            </Form>
         </div>
     )

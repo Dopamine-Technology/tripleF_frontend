@@ -25,7 +25,7 @@ import NotificationDropDown from "../Notification/NotificationDropDown";
 
 function NavBar({ toggleCollapse,isSmallScreen }) {
     const { user } = useContext(UserDataContext);
-    const navigate=useState();
+    const navigate=useNavigate();
     const axios=useAxios();
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -34,36 +34,38 @@ function NavBar({ toggleCollapse,isSmallScreen }) {
       console.log("Toggling dropdown visibility",dropdownVisible);
   };
   
-
-    function logout() {
-      axios
-        .delete("auth/logout")
-        .then((response) => {
-          if (response.status === 200) {
-            Cookies.remove("token");
-            navigate('/');
-            window.location.reload();
-            
-          } else {
-            console.error("Failed to log out server-side:", response.data);
-            message.error(
-              "There was an issue logging you out. Please try again later."
-            );
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            console.error("Failed to log out client-side:", error);
-            message.error(
-              "An error occurred while logging out. Please try again later."
-            );
-          } else {
-            message.error(
-              "Failed to log out. Please check your internet connection and try again later."
-            );
-          }
-        });
-    }
+  function logout() {
+    axios
+      .delete("auth/logout")
+      .then((response) => {
+        window.location.reload();
+        if (response.status == 200) {
+          Cookies.remove("token");
+          navigate('/');
+          window.location.reload();
+        } else {
+          console.error("Failed to log out server-side:", response.data);
+          message.error(
+            "There was an issue logging you out. Please try again later."
+          );
+        }
+      })
+      // .catch((error) => {
+      //   if (error.response) {
+      //     console.error("Failed to log out client-side:", error);
+      //     message.error(
+      //       "An error occurred while logging out. Please try again later."
+      //     );
+      //   } else {
+      //     message.error(
+      //       "Failed to log out. Please check your internet connection and try again later."
+      //     );
+      //     navigate('/');
+      //     window.location.reload();
+      //   }
+      // });
+  }
+  
     const items = [
       {
         key: "1",
@@ -87,7 +89,7 @@ function NavBar({ toggleCollapse,isSmallScreen }) {
         label: (
           <>
           <Link
-          to='/profile'
+          to='/settings/myAccount'
           className=' d-flex ' 
           style={{textDecoration:'none'}}
         >
@@ -119,7 +121,6 @@ function NavBar({ toggleCollapse,isSmallScreen }) {
         label: (
           <>
           <Link
-          to='/profile'
           className=' d-flex' 
           style={{textDecoration:'none'}}
           onClick={logout}

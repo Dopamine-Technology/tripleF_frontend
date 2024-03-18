@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import placeholder from '../../assets/imgs/placeholder.png'
 
-const EditImage = ({ register, name, label, image, watch }) => {
+const EditImage = ({ register, name, label, image, watch,errors }) => {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <div >
@@ -13,6 +13,7 @@ const EditImage = ({ register, name, label, image, watch }) => {
               ? URL.createObjectURL(watch(name)[0])
               : placeholder
           }
+          
           style={{
             width: "60px",
             height: "60px",
@@ -22,13 +23,14 @@ const EditImage = ({ register, name, label, image, watch }) => {
         />
         {image}
       </div>
+  
       <div>
         <label
           htmlFor='upload-input'
           className='custom-file-upload d-inline-block mt-4 px-2  cursor-pointer bg-transparent text-primary  bg-white '
         >
           <input
-            {...register(name)}
+            {...register(name, { required: true })} 
             id='upload-input'
             type='file'
             accept='image/*'
@@ -37,6 +39,7 @@ const EditImage = ({ register, name, label, image, watch }) => {
           />
           {label}
         </label>
+        {/* {errors[name] && <p className="text-danger">{errors[name].message}</p>} */}
         <p style={{color:'#464646'}}>.png .jpeg files up to 8MB</p>
       </div>
     </div>

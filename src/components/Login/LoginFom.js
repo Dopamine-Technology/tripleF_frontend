@@ -121,6 +121,7 @@ function LoginForm() {
       // Pre-fill the email and password fields
       setValue('email', rememberedEmail);
       setValue('password', rememberedPassword);
+      setRememberMe(true);
     }
   }, []);
   
@@ -187,10 +188,10 @@ function LoginForm() {
      type='password'
    />
  </Form.Group>
- <Form.Group className='mb-3' controlId='formRememberMe'>
+ <Form.Group className='mb-3' controlId='formRememberMe'  >
   <Row>
     <Col xs={6}>
-      <Form.Check type='checkbox' label='Remember Me' onChange={handleRememberMeChange} />
+      <Form.Check type='checkbox' label='Remember Me' onChange={handleRememberMeChange} checked={rememberMe} />
     </Col>
     <Col xs={6}>
       <Form.Text>
