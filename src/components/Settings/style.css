@@ -39,6 +39,24 @@ letter-spacing: 0px;
 text-align: left;
 margin-left: auto;
 }
+.need-verify:hover{
+  cursor: pointer;
+}
+.sent-verify{
+    opacity: 1;
+    color: #5fb099;
+    font-family: "Poppins-Regular";
+    font-size: 14px;
+    font-weight: 400;
+    font-style: Regular;
+    letter-spacing: 0px;
+    text-align: left;
+    margin-left: auto;
+}
+.date-input::placeholder {
+
+}
+
 .saveChanges-btn{
     box-shadow: 0px 2px 12px rgba(1,37,43, 0.3);
     opacity: 1;
