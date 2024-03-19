@@ -14,31 +14,52 @@ import { UserDataContext } from '../UserContext/UserData.context';
 import CheckCircleFill from '../../assets/imgs/checkCircleFill.svg';
 
 function MyAccount() {
-    const schema = Yup.object().shape({
-        email:
-       
-            Yup.string()
-                  .required("Email is required")
-                  .email("Wrong email format")
-                  .transform((value) => value.trim()) 
-                  .required("Email is required"),
-        first_name: 
-       
-             Yup.string().required("First name is required"),
-        last_name: 
-         
-             Yup.string().required("Last name is required"),
+
+  const [validationSchema, setValidationSchema] = useState(null);
+  const {user}=useContext(UserDataContext);
+
+  useEffect(() => {
+    if (user.userData.profile.type_name === 'talent') {
+        const clubSchema = Yup.object().shape({
+          first_name: Yup.string().required("First name is required"),
+          last_name:  Yup.string().required("Last name is required"),
+          email:Yup.string()
+      .required("Email is required")
+      .email("wrong email")
+      .required("Email is required"),
+          mobile_number: Yup.string().required('Mobile number is required'),
+          height: Yup.number().typeError('Height must be a valid date').required('Height is required'),
+          wight: Yup.number().typeError('Weight must be a valid date').required('Height is required'),
             
-        user_name:
-          
-             Yup.string().required("Username is required"),
-        password:
-          
-             Yup.string()
-                  .required("New password is required")
-                  .min(8, "Password must be at least 8 characters long"),
-    });
-    
+        });
+        setValidationSchema(clubSchema);
+    } else if (user.userData.profile.type_name === 'club') {
+        const talentSchema = Yup.object().shape({
+           club_name: Yup.string().required('Club Name is required'),
+           email:Yup.string()
+      .required("Email is required")
+      .email("wrong email")
+      .required("Email is required"),
+           mobile_number: Yup.string().required('Mobile number is required'),
+           year_founded: Yup.number().typeError('year founded must be a valid date').required('year founded is required'),
+        });
+        setValidationSchema(talentSchema);
+    } else if (user.userData.profile.type_name === 'coach' || user.userData.profile.type_name === 'scout') {
+        const coachSchema = Yup.object().shape({
+          first_name: Yup.string().required("First name is required"),
+          last_name:  Yup.string().required("Last name is required"),
+          email:Yup.string()
+      .required("Email is required")
+      .email("wrong email")
+      .required("Email is required"),
+      mobile_number: Yup.string().required('Mobile number is required'),
+      years_of_experience:  Yup.number().typeError('Years of Experience must be a valid date').required('Years of Experience is required'),
+     
+        });
+        setValidationSchema(coachSchema);
+    }
+}, [user.userData.profile.type_name]);
+   
           const {
             register,
             handleSubmit,
@@ -46,9 +67,10 @@ function MyAccount() {
             watch,
             setValue,
             formState: { errors },
-          } = useForm( { mode: "onChange",
-          resolver: yupResolver(schema)});
-          
+          } = useForm({
+            resolver: yupResolver(validationSchema),
+        });
+
           const axios=useAxios();
           const [windowWidth, setWindowWidth] = useState(window.innerWidth);
           const [isValidMobileNumber, setIsValidMobileNumber] = useState(true);
@@ -59,10 +81,19 @@ function MyAccount() {
           const [accountTypes,setAccountTypes]=useState();
           const [positions,setPositions]=useState();
           const [subPositions,setSubPositions]=useState();
-          const[verificationEmail,setVerificationEmail]=useState(false);
-          const {user}=useContext(UserDataContext);
+          const [verificationEmail,setVerificationEmail]=useState(false);
+     
 
-
+          const onSubmit = async (data) => {
+            try {
+              const response = await axios.post('https://your-api-endpoint.com', data);
+              console.log("Form submitted successfully", response.data);
+              reset();
+          } catch (error) {
+              console.error("Error submitting form", error);
+          }
+        };
+     
 
           useLayoutEffect(() => {
             const handleResize = () => {
@@ -142,6 +173,17 @@ function MyAccount() {
           
           const handleVerifyClick =()=>{
             setVerificationEmail(true);
+             const watchEmail = watch('email', ''); 
+            axios.post('/your-api-endpoint', watchEmail)
+            .then(response => {
+              console.log("Email sent successfully:", response.data);
+              // setVerificationEmail(true); I have to put it here 
+            })
+            .catch(error => {
+              console.error("Error sending email:", error);
+              // Optionally, you can add logic here to handle errors
+            });
+        
           }
 
           const handlePositionSelect = async (selectedPositionId) => {
@@ -158,8 +200,8 @@ function MyAccount() {
           useEffect(() => {
         }, [countries,sports,accountTypes]);
 
+  
 
-         
         const talentFields = (
             <>
            <Form.Group className='mb-3' controlId='heightAndWeight'>
@@ -174,7 +216,7 @@ function MyAccount() {
         </div>
     </div>
 </Form.Group> 
-<Form.Group controlId='country' className='mb-3'>
+<Form.Group controlId='countryy' className='mb-3'>
     <Form.Label htmlFor="country">Place of Residence</Form.Label>
     <Form.Control as="select" id="country" {...register('country_id')}  style={{width:'391px'}} >
         <option value={user.userData.profile.country.id}>{user.userData.profile.country.name}</option>
@@ -185,7 +227,7 @@ function MyAccount() {
         ))}
     </Form.Control>
 </Form.Group>
-<Form.Group controlId='country' className=''>
+<Form.Group controlId='countryy' className=''>
     <Form.Label className='mb-0 mt-3'>Talent Type:</Form.Label>
     <div className="d-flex align-items-center ">
         <Form.Control as="select" id="country" {...register('talent_type')} style={{ width: '391px', marginRight: '1rem' }}>
@@ -271,10 +313,10 @@ function MyAccount() {
         const coachFields = (
             <>
 <Form.Group controlId='country' >
-<Form.Label htmlFor="country">Place of Residence</Form.Label>
+<Form.Label htmlFor="country ">Place of Residence</Form.Label>
     <div className="d-flex align-items-center ">
     <Form.Control as="select" id="country" {...register('country_id')} style={{width:'391px'}} className='me-3' >
-        <option value=" ">Select Country</option>
+    <option value={user.userData.profile.country.id}>{user.userData.profile.country.name}</option>
         {countries?.map(country => (
             <option key={country.id} value={country.id}>
                 {country.name}
@@ -284,7 +326,7 @@ function MyAccount() {
         <div className='mb-4' >
         <div className="">
             <label htmlFor="height">Years of experience </label>
-            <input type="number" id="height" {...register('Years_of_experience ')} className="form-control" min="0" />
+            <input type="number" id="height" {...register('Years_of_experience ')} defaultValue={user.userData.profile.years_of_experience} className="form-control" min="0" />
         </div>
  
         </div>
@@ -299,7 +341,7 @@ function MyAccount() {
     return(
         <div className='edit-data'>
            <p className='title-editData'> My Account</p>
-           <Form  className='signup-form'>
+           <Form className='signup-form' onSubmit={handleSubmit(onSubmit)}>
             {user.userData.profile.type_name=='club'?<Input
                         register={register}
                         errors={errors}
@@ -347,7 +389,7 @@ function MyAccount() {
     register={register}
     errors={errors}
     name="email"
-    label="Email address"
+    label="Email"
     placeholder=''
     className="form-control form-control-sm rounded"
     validation={{}}
@@ -403,7 +445,18 @@ function MyAccount() {
         </div>
         <div className="flex-fill">
           {user.userData.profile.type_name=='club'?
-          <p>mmm</p>
+   <Form.Group controlId='birthdate' className='mt-3' style={{marginLeft:'1rem',width:'188px',height:'23px'}}>
+   <label htmlFor="birthdate">Year Founded</label>
+   <div className="d-flex">
+       <select id="birthdate" {...register('birth_date')} className="form-control me-2">
+           <option value={user.userData.profile.year_founded}>{user.userData.profile.year_founded}</option>
+           {Array.from({length: 100}, (_, i) => new Date().getFullYear() - i).map(year => (
+               <option key={year} value={year}>{year}</option>
+           ))}
+       </select>
+   </div>
+</Form.Group>
+     
           :         <Input
                 register={register}
                 errors={errors}
@@ -422,41 +475,66 @@ function MyAccount() {
         </div>
     </div>
 </Form.Group>
-<div className='mb-3 d-flex '>
-    <Form.Group controlId='gender' className='me-5'>
-        <label>Gender:</label>
-        <div className="d-flex">
-       
-        <label className='custom-radio-btn me-2'>
-    <span className="label">Male</span>
-    <input type="radio" id="male" value="male" {...register('male')} checked={user.userData.profile.gender === 'male'} />
-    <span className="checkmark"></span>
-</label>
-<label className='custom-radio-btn me-2'>
-    <span className="label">Female</span>
-    <input type="radio" id="female" value="female" {...register('female')} checked={user.userData.profile.gender === 'female'} />
-    <span className="checkmark"></span>
-</label>
-<label className='custom-radio-btn'>
-    <span className="label">Rather not to say</span>
-    <input type="radio" id="other" value="other" {...register('other')} checked={user.userData.profile.gender === 'other'} />
-    <span className="checkmark"></span>
-</label>
-        </div>
-    </Form.Group>
 
-    <Form.Group controlId='birthdate' className='' style={{marginLeft:'1.2rem',width:'188px'}}>
-    <label htmlFor="birthdate">Date of Birth:</label>
-    <div className="d-flex">
-        <input type="date" id="birthdate" {...register('birth_date')} defaultValue={user.userData.profile.birth_date} max={maxDate} className="form-control me-2" />
-    </div>
-</Form.Group>
-
-    
-</div>
+    {user.userData.profile.type_name=='club'?(<Form.Group controlId='country' className='mb-3'>
+    <Form.Label htmlFor="country">Place of Residence</Form.Label>
+    <Form.Control as="select" id="country" {...register('country_id')}  style={{width:'391px'}} >
+        <option value={user.userData.profile.country.id}>{user.userData.profile.country.name}</option>
+        {countries?.map(country => (
+            <option key={country.id} value={country.id}>
+                {country.name}
+            </option>
+        ))}
+    </Form.Control>
+</Form.Group>):(
+      <div className='mb-3 d-flex '>
+      <Form.Group controlId='gender' className='me-5'>
+          <label>Gender:</label>
+          <div className="d-flex">
+         
+          <label className='custom-radio-btn me-2'>
+      <span className="label">Male</span>
+      <input type="radio" id="male" value="male" {...register('male')} checked={user.userData.profile.gender === 'male'} />
+      <span className="checkmark"></span>
+  </label>
+  <label className='custom-radio-btn me-2'>
+      <span className="label">Female</span>
+      <input type="radio" id="female" value="female" {...register('female')} checked={user.userData.profile.gender === 'female'} />
+      <span className="checkmark"></span>
+  </label>
+  <label className='custom-radio-btn'>
+      <span className="label">Rather not to say</span>
+      <input type="radio" id="other" value="other" {...register('other')} checked={user.userData.profile.gender === 'other'} />
+      <span className="checkmark"></span>
+  </label>
+          </div>
+      </Form.Group>
+  
+      <Form.Group controlId='birthdate' className='' style={{marginLeft:'1.2rem',width:'188px'}}>
+      <label htmlFor="birthdate">Date of Birth:</label>
+      <div className="d-flex">
+          <input type="date" id="birthdate" {...register('birth_date')} defaultValue={user.userData.profile.birth_date} max={maxDate} className="form-control me-2" />
+      </div>
+  </Form.Group>
+  
+      
+  </div>
+    )}
 
 {user.userData.profile.type_name === 'talent' && talentFields}
 {(user.userData.profile.type_name === 'coach'||user.userData.profile.type_name === 'scout') && coachFields}
+  <hr style={{ border: 'solid 1px #e1e1e1', opacity: '0.5',marginTop:'3rem',marginBottom:'1rem' }}  />
+  <Row>
+    <Col></Col>
+    <Col>
+
+    </Col>
+    <Col>
+    <Button type='submit' className='save-changes' variant=''>
+    Save Changes
+</Button>
+    </Col>
+  </Row>
 
            </Form>
         </div>
