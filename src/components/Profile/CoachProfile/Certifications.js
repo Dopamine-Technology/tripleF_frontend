@@ -19,9 +19,7 @@ function Certifications({sectionName, data,id}){
     const handleCloseEdit = () => setShowEdit(false);
     const handleShowEdit = () => setShowEdit(true);
 
-    const [showEditWhole, setShowEditWhole] = useState(false);
-    const handleCloseEditWhole = () => setShowEditWhole(false);
-    const handleShowEditWhole = () => setShowEditWhole(true);
+ 
 
 
     return(

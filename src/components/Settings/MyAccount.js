@@ -12,6 +12,7 @@ import startsWith from 'lodash.startswith';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { UserDataContext } from '../UserContext/UserData.context';
 import CheckCircleFill from '../../assets/imgs/checkCircleFill.svg';
+import { message } from 'antd';
 
 function MyAccount() {
 
@@ -85,14 +86,19 @@ function MyAccount() {
      
 
           const onSubmit = async (data) => {
+            // Add the sport_id=1 to the form data
+            data.talent_type = '1';
+        
             try {
-              const response = await axios.post('https://your-api-endpoint.com', data);
-              console.log("Form submitted successfully", response.data);
-              reset();
-          } catch (error) {
-              console.error("Error submitting form", error);
-          }
+                const response = await axios.put('user/edit', data);
+                console.log("Form submitted successfully", response.data);
+                message.success('your account data updated sucessfully')
+              
+            } catch (error) {
+                console.error("Error submitting form", error);
+            }
         };
+        
      
 
           useLayoutEffect(() => {
@@ -326,7 +332,7 @@ function MyAccount() {
         <div className='mb-4' >
         <div className="">
             <label htmlFor="height">Years of experience </label>
-            <input type="number" id="height" {...register('Years_of_experience ')} defaultValue={user.userData.profile.years_of_experience} className="form-control" min="0" />
+            <input type="number" id="height" {...register('years_of_experience')} defaultValue={user.userData.profile.years_of_experience} className="form-control" min="0" />
         </div>
  
         </div>
@@ -415,30 +421,31 @@ function MyAccount() {
         <div className="me-3 mt-2">
             <label htmlFor="mobile_number">Phone:</label>
             <PhoneInput
-                className={`form-control py-1 rounded-sm custom-phone-input${errors && errors["mobile_number"] ? "border-danger" : ""}`}
-                inputClass={` border-0 form-control-lg py-0 shadow-none custom-phone-input `}
-                buttonClass="border-0"
-                country={"jo"}
-                value={`mobile_number||${user.userData.profile.mobile_number}`}
-                defaultValue={user.userData.profile.mobile_number}
-                isValid={(inputNumber, country, countries) => {
-                    const isValid = countries.some((country) => {
-                        return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
-                    });
+    className={`form-control py-1 rounded-sm custom-phone-input${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+    inputClass={` border-0 form-control-lg py-0 shadow-none custom-phone-input `}
+    buttonClass="border-0"
+    country={"jo"}
+    value={'mobile_number'} // Corrected this line
+    defaultValue={user.userData.profile.mobile_number}
+    isValid={(inputNumber, country, countries) => {
+        const isValid = countries.some((country) => {
+            return startsWith(inputNumber, country.dialCode) || startsWith(country.dialCode, inputNumber);
+        });
 
-                    setIsValidMobileNumber(isValid);
+        setIsValidMobileNumber(isValid);
 
-                    return isValid;
-                }}
-                inputProps={{
-                    name: "mobile_number",
-                    required: true,
-                }}
-                onChange={(e) => {
-                    setValue("mobile_number", e);
-                }}
-                onCountryChange={() => {}}
-            />
+        return isValid;
+    }}
+    inputProps={{
+        name: "mobile_number",
+        required: true,
+    }}
+    onChange={(e) => {
+        setValue("mobile_number", e);
+    }}
+    onCountryChange={() => {}}
+/>
+
             {!isValidMobileNumber && (
                 <div className="text-danger">Please enter a valid mobile number.</div>
             )}
@@ -494,17 +501,17 @@ function MyAccount() {
          
           <label className='custom-radio-btn me-2'>
       <span className="label">Male</span>
-      <input type="radio" id="male" value="male" {...register('male')} checked={user.userData.profile.gender === 'male'} />
+      <input type="radio" id="male" value="male" {...register('gender')} checked={user.userData.profile.gender === 'male'} />
       <span className="checkmark"></span>
   </label>
   <label className='custom-radio-btn me-2'>
       <span className="label">Female</span>
-      <input type="radio" id="female" value="female" {...register('female')} checked={user.userData.profile.gender === 'female'} />
+      <input type="radio" id="female" value="female" {...register('gender')} checked={user.userData.profile.gender === 'female'} />
       <span className="checkmark"></span>
   </label>
   <label className='custom-radio-btn'>
       <span className="label">Rather not to say</span>
-      <input type="radio" id="other" value="other" {...register('other')} checked={user.userData.profile.gender === 'other'} />
+      <input type="radio" id="other" value="other" {...register('gender')} checked={user.userData.profile.gender === 'other'} />
       <span className="checkmark"></span>
   </label>
           </div>

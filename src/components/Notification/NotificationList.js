@@ -1,11 +1,9 @@
 import React from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
-import NotificationIcon from '../../assets/imgs/notificationIcon.svg';
-import NotificationActive from '../../assets/imgs/notificationIconActive.svg';
-import './style.css';
+import NavBar from '../Layout/Navbar';
 
-function NotificationDropDown({ dropdownVisible, onClose }) {
 
+
+function NotificationList() {
     const notifications=[
         {userImg:'https://img.freepik.com/free-photo/view-child-hair-salon_23-2150462483.jpg',
          userName:'FarisJad',
@@ -48,35 +46,23 @@ function NotificationDropDown({ dropdownVisible, onClose }) {
          created_at:'8 Mar, 2024  06:40 PM'
          },
     ];
-
-    const displayedNotifications = notifications.slice(0, 7);
-
-    return (
-        <Dropdown className="d-inline mx-2" drop='start' >
-            <Dropdown.Toggle id="dropdown-autoclose-true" className="bg-transparent border-white">
-                <img src={NotificationIcon} className="icon me-4" />
-            </Dropdown.Toggle>
-            <Dropdown.Menu  style={{ width: '28rem' }} className='mt-5'>
-                {displayedNotifications.map((notification, index) => (
-                    <Dropdown.Item href="#" key={index}>
-                        <div className='d-flex'>
-                            <img src={notification.userImg} className='notification-owner me-2' />
-                            <div>
-                                <p className='notification-content mt-2 ' style={{maxWidth:'200px'}}><span className='notification-owner-userName'>{notification.userName}</span>{notification.notificationContent}</p>
-                                <p className='notification-content mb-1'>{notification.created_at}</p>
-                            </div>
-                        </div>
-                    </Dropdown.Item>
-                ))}
-                {notifications.length > 7 && (
-                    <>
-                        <Dropdown.Divider />
-                        <Dropdown.Item href="/my/notifications"><p className='view-more'>View more notifications</p></Dropdown.Item>
-                    </>
-                )}
-            </Dropdown.Menu>
-        </Dropdown>
-    );
+    return(
+        <div >
+            <NavBar />
+            <p className='notifiactionList-title'>Notifications</p>
+         <div className='notification-container'>
+           {notifications.map((notification)=>(
+              <div className='d-flex' style={{marginLeft:'5rem'}}>
+              <img src={notification.userImg} className='notification-owner me-3 ' />
+              <div>
+                  <p className='notificationList-content mt-2 ' style={{maxWidth:'200px'}}><span className='notification-owner-userName'>{notification.userName}</span>{notification.notificationContent}</p>
+                  <p className='notification-content mb-1'>{notification.created_at}</p>
+              </div>
+          </div>
+           ))}
+         </div>
+        </div>  
+    )
 }
 
-export default NotificationDropDown;
+export default NotificationList;

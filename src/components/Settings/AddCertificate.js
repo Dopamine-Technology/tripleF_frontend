@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import Input from '../Register/Input';
 
 
-function AddCertificate({handleClose,show}){
+function AddCertificate({handleClose,show,certificate}){
     const {
         register,
         handleSubmit,
@@ -48,11 +48,12 @@ function AddCertificate({handleClose,show}){
                           validation={{}}
                           type="text"
                           inputWidth='440px'
+                          defaultValue={certificate ? certificate.name : null}
                         />
                         <Form.Group controlId='country' className='mb-3'>
     <Form.Label htmlFor="country">Issued by *</Form.Label>
     <Form.Control as="select" id="country" {...register('country_id')}  style={{width:'440px'}} >
-        <option value=''></option>
+        <option value={certificate?certificate.IssuedBy:null}>{certificate?certificate.IssuedBy:null}</option>
         {/* {countries?.map(country => (
             <option key={country.id} value={country.id}>
                 {country.name}
@@ -65,7 +66,9 @@ function AddCertificate({handleClose,show}){
     <Form.Group controlId='birthdate' className='mt-1' >
       <label htmlFor="birthdate">Date of Birth:</label>
       <div className="d-flex">
-          <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} className="form-control me-2" style={{width:'188px',height:'56px',marginTop:'0rem'}} />
+          <input type="date" id="birthdate" {...register('birth_date')} 
+          max={maxDate} className="form-control me-2"
+          style={{width:'188px',height:'56px',marginTop:'0rem'}} defaultValue={certificate ? certificate.date : null}/>
       </div>
 
       </Form.Group>
@@ -82,6 +85,7 @@ function AddCertificate({handleClose,show}){
                 validation={{}}
                 type="text"
                 inputWidth='250px'
+                defaultValue={certificate ? certificate.cerdentialID : null}
              
       
             />
@@ -93,8 +97,9 @@ function AddCertificate({handleClose,show}){
         </div>
       </Modal.Body>
       <Modal.Footer className='challenge-footer'>
-      <Button onClick={handleClose} className='afterSubmit-btn'>
-      Add
+      <Button onClick={handleClose} className={certificate?'editSubmit-btn':'afterSubmit-btn'} >
+        {certificate?'Save Changes':'Add'}
+      
       </Button>
       </Modal.Footer>
     </Modal>

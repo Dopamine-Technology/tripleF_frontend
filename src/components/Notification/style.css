@@ -24,3 +24,51 @@ font-style: Light;
 letter-spacing: 0px;
 text-align: left;
 }
+.view-more{
+    width: 168px;
+    height: 23px;
+    margin: 12px 200px 13px 110px;
+    font-family: 'Poppins-Regular';
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #1877f2;
+  }
+  .notification-container{
+    width: 1003px;
+    height: 838px;
+    margin: 16px 182px 0 181px;
+    padding: 30px 0 30px;
+    border-radius: 16px;
+    border: solid 1px #e2e2ea;
+    background-color: white
+  }
+  .notifiactionList-title{
+    width: 144px;
+  height: 30px;
+  margin: 32px 1041px 16px 181px;
+  font-family: 'Quicksand-Medium';
+  font-size: 24px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+  }
+  .notificationList-content{
+
+  margin: 0 0 2px 8px;
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6b6b6b;
+  }
+ 

@@ -9,9 +9,12 @@ import HomeIcon from '../../assets/imgs/home.svg';
 import dropdownImg from '../../assets/imgs/dropdown.svg';
 import ChallengesIcon from '../../assets/imgs/ChallengesIcon.svg';
 import ClubIcon from '../../assets/imgs/clubIcon.svg';
-import myAccount from '../../assets/imgs/myAccount.svg';
+import myAccount from '../../assets/imgs/profile.svg';
 import Change from '../../assets/imgs/change.svg';
 import Notification from '../../assets/imgs/notificationProfile.svg';
+import myAccountActive from '../../assets/imgs/myAccountActive.svg';
+import ChangeActive from '../../assets/imgs/changeActive.svg';
+import NotificationActive from '../../assets/imgs/notificationIconActive.svg'
 
 function Sidebar({ isCollapsed, toggleCollapse }) {
   const [activeLink, setActiveLink] = useState(1);
@@ -33,12 +36,11 @@ function Sidebar({ isCollapsed, toggleCollapse }) {
   const renderIcon = (index) => {
     switch (index) {
       case 1:
-        return activeLink === index ? myAccount : Change;
+        return activeLink === index ? myAccountActive : myAccount;
       case 2:
-        return activeLink === index ? Change : myAccount;
+        return activeLink === index ? ChangeActive :Change ;
       case 3:
-        return activeLink === index ? Notification : Change;
-      // Add more cases as needed for additional sidebar items
+        return activeLink === index ?  NotificationActive: Notification;
       default:
         return null;
     }
@@ -48,7 +50,7 @@ function Sidebar({ isCollapsed, toggleCollapse }) {
       <div className={`leftside-container  ${isCollapsed ? 'collapsed' : ''}`}>
         {!isCollapsed && (
           <div className="Pro" onClick={() => handleNavLinkClick(1, '/settings/myAccount')}>
-            <img src={renderIcon(1)} /> {/* Render icon based on active link */}
+            <img src={renderIcon(1)} /> 
             <div>
               <div>My Account </div>
             </div>
@@ -57,7 +59,7 @@ function Sidebar({ isCollapsed, toggleCollapse }) {
         <hr style={{ color: '#B0B0B0', width: '130%' }} />
         {!isCollapsed && (
           <div className="Pro" onClick={() => handleNavLinkClick(2, '/settings/changePassword')}>
-            <img src={renderIcon(2)} /> {/* Render icon based on active link */}
+            <img src={renderIcon(2)} /> 
             <div>
               {!isCollapsed && <div>Change Password </div>}
             </div>

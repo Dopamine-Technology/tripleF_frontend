@@ -107,8 +107,6 @@ function OpportunityList(){
         setFilterTextCountry(filterValue);
       };
 
-      
-
       useEffect(() => {
     
         const fetchOppData = async () => {

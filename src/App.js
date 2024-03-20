@@ -29,6 +29,8 @@ import SettingsLayout from './components/Settings/SettingsLayout';
 import MyAccount from './components/Settings/MyAccount';
 import ChangePassword from './components/Settings/ChangePassword';
 import Notification from './components/Settings/Notification';
+import ProfilesApplied from './components/Opportunities/ProfilesApplied';
+import NotificationList from './components/Notification/NotificationList';
 
 function App() {
   const { user } = useContext(UserDataContext);
@@ -47,6 +49,7 @@ function App() {
             <Route path='/clubs' element={<ComingSoon />}  />
             <Route path='/Scouts' element={<ComingSoon />}  />
             <Route path='/Opportunities' element={<ComingSoon />}  />
+          
             <Route path='/challenges' element={<ComingSoon />}  />
             <Route path='/saved' element={<ComingSoon />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
@@ -56,6 +59,7 @@ function App() {
           <Route path='/' element={<LayoutWithoutRight />}>
           <Route path='/opportunity/list' element={<OpportunityList />} />
             <Route path='/applied/list' element={<MyOpportunities />} />
+            <Route path='/profiles/applied' element={<ProfilesApplied />}  />
           
            </Route>
            <Route path='/' element={<SettingsLayout />}>
@@ -67,6 +71,7 @@ function App() {
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />
           
           )}
+          <Route path='/my/notifications' element={<NotificationList />}  />
           {/* <Route path='/profile' element={<WholeProfile />} /> */}
           <Route path='/profile/:id' element={<WholeProfile />} />
           <Route path='/test' element={<Test />}  />

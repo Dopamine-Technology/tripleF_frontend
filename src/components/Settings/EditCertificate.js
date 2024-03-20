@@ -2,10 +2,19 @@ import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button,Form } from 'react-bootstrap';
 import Edit from '../../assets/imgs/edit.svg';
+import AddCertificate from './AddCertificate';
 
 
 
 function EditCertificate({handleClose,show,data}){
+
+  const [selectedCertificate, setSelectedCertificate] = useState(null);
+  const [showEditWhole, setShowEditWhole] = useState(false);
+  const handleCloseEditWhole = () => setShowEditWhole(false);
+  const handleShowEditWhole = (certificate) => {
+    setSelectedCertificate(certificate);
+    setShowEditWhole(true);
+  };
 
     return(
         <div>
@@ -19,7 +28,7 @@ function EditCertificate({handleClose,show,data}){
                  <div className='challenge-container mt-2'>
              <div className='d-flex' style={{ justifyContent: 'space-between' }}>
               <p>{certificate.name}</p>
-              <img src={Edit} />
+              <img src={Edit} onClick={() => handleShowEditWhole(certificate)} />
             </div>
                 </div>
         ))}
@@ -29,6 +38,13 @@ function EditCertificate({handleClose,show,data}){
   
       </Modal.Footer>
     </Modal>
+    {showEditWhole && (
+        <AddCertificate
+          handleClose={handleCloseEditWhole}
+          show={showEditWhole}
+          certificate={selectedCertificate}
+        />
+      )}
         </div>
     )
 }
