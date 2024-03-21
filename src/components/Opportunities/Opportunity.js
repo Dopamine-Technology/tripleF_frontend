@@ -3,7 +3,7 @@ import { RxDividerVertical } from "react-icons/rx";
 import { Button } from 'react-bootstrap';
 import { IoMdArrowDropdown,IoMdArrowDropup } from "react-icons/io";
 import {Row,Col} from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useLocation,Link } from 'react-router-dom';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { CiLink } from "react-icons/ci";
@@ -15,7 +15,7 @@ import { message } from 'antd';
 import collpase from '../../assets/imgs/collapse.svg';
 import UnCollpase from '../../assets/imgs/unCollapse.svg';
 import { UserDataContext } from '../UserContext/UserData.context';
-
+import { FaArrowRight } from "react-icons/fa";
 
 function Opportunity({data}){
 
@@ -33,6 +33,10 @@ function Opportunity({data}){
         {title:'Preferred Foot',name:data.foot}
     ]
    
+    const handleApply = (id) => {
+        axios.get(`/opportunities/apply/${id}`);
+        console.log('apply saved',id)
+     }
  
     const handleExpandClick = () => {
         setIsExpanded(!isExpanded);
@@ -74,7 +78,10 @@ function Opportunity({data}){
    
 
 </div>
-{isAppliedPath?( <Dropdown>
+{isAppliedPath?( 
+    <div className='d-flex'>
+        <Link className='seeApplicants' to={`/profiles/applied/${data.title}/${data.id}`}>32 Applicants <FaArrowRight color='#1d71b8' /></Link>
+<Dropdown >
       <Dropdown.Toggle variant=""  className="edit">
          <BsThreeDotsVertical fontSize="1.5rem"  />
       </Dropdown.Toggle>
@@ -88,7 +95,9 @@ function Opportunity({data}){
         </Dropdown.Item>
        
       </Dropdown.Menu>
-    </Dropdown>):(<Button className='apply-btn'>Apply Now</Button>  )}
+    </Dropdown>
+    </div>
+    ):(<Button className='apply-btn' onClick={() => handleApply(data.id)}>Apply Now</Button>  )}
    
 
 </div>

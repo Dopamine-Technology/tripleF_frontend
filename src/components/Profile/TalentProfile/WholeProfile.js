@@ -49,6 +49,7 @@ function WholeProfile(){
         {
            img:'https://c8.alamy.com/comp/T9M6KX/soccer-club-emblem-design-element-for-logo-label-sign-poster-vector-illustration-T9M6KX.jpg',
            name:'License Name',
+           IssuedBy:'Lorem by',
            details:['Issued by name here' , 'Expired Date Nov 2023','Issued Date Nov 2023',' License no 1234 098 444']
         }
     ];
@@ -56,11 +57,17 @@ function WholeProfile(){
         {
             img:'https://c8.alamy.com/comp/T9M6KX/soccer-club-emblem-design-element-for-logo-label-sign-poster-vector-illustration-T9M6KX.jpg',
             name:'Certificate Name',
+            IssuedBy:'Lorem by',
+            cerdentialID:'PNO2323mm',
+            date:'14/7/2020',
             details:['Issued by name here' , 'Expired Date Nov 2023','Issued Date Nov 2023',' License no 1234 098 444']
          },
          {
             img:'https://c8.alamy.com/comp/T9M6KX/soccer-club-emblem-design-element-for-logo-label-sign-poster-vector-illustration-T9M6KX.jpg',
             name:'Certificate Name',
+            IssuedBy:'Lorem by',
+            date:'14/7/2021',
+            cerdentialID:'PNO2323mm',
             details:['Issued by name here' , 'Expired Date Nov 2023','Issued Date Nov 2023',' License no 1234 098 444']
          },
 

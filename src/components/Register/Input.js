@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Col } from "react-bootstrap";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { message } from "antd";
+
+// ... other imports
 
 const Input = ({
   register,
@@ -8,11 +12,30 @@ const Input = ({
   label,
   placeholder,
   className,
+  validation, 
   type,
+  rows,
   inputWidth,
   defaultValue,
-  disabled, // Adding disabled prop
+  disabled,
 }) => {
+  const [showPassword, setShowPassword] = useState('');
+  const [inputValue, setInputValue] = useState(defaultValue || ''); // Initialize with defaultValue if provided
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    const emojiPattern = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/;
+
+    // Check if the input contains any unwanted characters
+    if (!emojiPattern.test(value)) {
+      setInputValue(value);
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
   return (
     <Form.Group as={Col} md={4} className="mb-4">
       <Form.Label className={`text-capitalize text-black label`}>
@@ -22,7 +45,8 @@ const Input = ({
         <Form.Control
           size="lg"
           {...register(name)}
-          className={`${className} ${
+          onChange={handleInputChange}
+          className={`${className}  ${
             errors && errors[name]?.message ? "border-danger" : ""
           } `}
           style={{
@@ -34,14 +58,31 @@ const Input = ({
           }}
           placeholder={placeholder}
           defaultValue={defaultValue}
-          type={type}
-          disabled={disabled} // Setting disabled attribute
+          value={inputValue}
+          type={showPassword ? "text" : type}
+          disabled={disabled} 
         />
+        {type === "password" && (
+          <div
+            className="position-absolute top-50 end-0 translate-middle-y"
+            style={{ marginRight: "-14rem" }}
+          >
+            {showPassword ? (
+              <FaEyeSlash
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              />
+            ) : (
+              <FaEye
+                onClick={togglePasswordVisibility}
+                style={{ cursor: "pointer" }}
+              />
+            )}
+          </div>
+        )}
       </div>
       {errors && (
-        <div className="text-danger text-start" style={{ width: "15rem" }}>
-          {errors[name]?.message}
-        </div>
+        <div className="text-danger text-start">{errors[name]?.message}</div>
       )}
     </Form.Group>
   );

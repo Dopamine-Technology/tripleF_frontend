@@ -13,6 +13,10 @@
     src: url('../../assets/fonts/Quicksand (1)\static\Quicksand-Regular.ttf') format('truetype'); 
     
   }
+  @font-face {
+    font-family: 'Poppins-Regular';
+    src: url('../../assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype'); 
+  }
 
 .post2-continer{
     font-size: 1rem;
@@ -273,6 +277,35 @@ margin:3rem;
   margin:2rem
 
 }
+.seeApplicants{
+  /* width: 110px;
+  height: 23px; */
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #1d71b8;
+  margin-top: 1.7rem;
+}
+.seeApplicants:hover{
+  /* width: 110px;
+  height: 23px; */
+  height: 25px; 
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #1d71b8;
+  margin-top: 1.7rem;
+  cursor: pointer;
+  background-color: rgba(211, 215, 221, 0.6);
+}
 .search-icon2 {
   position: absolute;
   left: 20px;
@@ -305,6 +338,32 @@ text-align: left;
   opacity: 1;
   background-color: rgba(255, 255, 255, 1);
   
+}
+.applied-title{
+  width: 252px;
+  height: 30px;
+  margin: 3px 0 3px 6px;
+  font-family: 'Quicksand-Regular';
+  font-size: 24px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+}
+.applicants-num{
+  width: 95px;
+  height: 20px;
+  margin: 32px 759px 12px 47px;
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6b6b6b;
 }
 .page-link:active{
   border-radius: 19.5px;
@@ -342,6 +401,12 @@ margin-bottom: 1rem;
   margin-left: 2rem;
   margin-top:0.4rem
 }
+.appProfile-img{
+  width: 54px;
+  height: 54px;
+  background-color: rgba(211, 215, 221, 0.2);
+  border-radius: 45px;
+}
 .time-applied{
   opacity: 1;
 color: rgba(107, 107, 107, 1);
@@ -356,6 +421,7 @@ margin-top: 1.5rem;
 .nav-tabs{
   border-bottom: none;
 }
+
 .title-p{
   width: 60px;
   height: 17px;
@@ -482,4 +548,42 @@ Link{
   border: 0;
   display: inline-block;
   padding-left: 3px;
+}
+.appProfile-name{
+  /* width: 169px; */
+  height: 23px;
+  margin: 0 48px 4px 0;
+  font-family: 'Poppins-Regular';
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+}
+.appProfile-content{
+  /* width: 70px; */
+  height: 20px;
+  margin: 0 0 0 6px;
+  opacity: 0.8;
+  font-family: 'Poppins-Regular';
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+}
+.go-profile{
+  width: 24px;
+  height: 24px;
+  margin: 18px 0 12px 438px;
+  padding: 5px 8px 6px;
+  border-radius: 4px;
+  background-color: rgba(235, 234, 237, 0.5);
+}
+.go-profile:hover{
+  cursor: pointer;
 }

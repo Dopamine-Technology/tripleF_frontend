@@ -5,16 +5,28 @@ import Input from '../Register/Input';
 import './style.css';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {Button} from 'react-bootstrap';
+import {Button,Row,Col} from 'react-bootstrap';
 
 function ChangePassword() {
     const schema = Yup.object().shape({
-        password: Yup.string()
-          .required("New password is required")
-          .min(8, "Password must be at least 8 characters long")
-          .matches(
-            "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
-            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character")
+      current_password:  Yup.string()
+      .required("password is required")
+      // .min(8, " must be at least 8 characters")
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case "
+      ),
+      new_password:  Yup.string()
+      .required("password is required")
+      // .min(8, " must be at least 8 characters")
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case "
+      ),
+
+         confirmPassword: Yup.string()
+          .required('Confirm password is required')
+          .oneOf([Yup.ref('new_password'), null], 'Passwords must match')
         
       });
       const {
@@ -26,14 +38,20 @@ function ChangePassword() {
         formState: { errors },
       } = useForm( { mode: "onChange",
       resolver: yupResolver(schema)});    
+
+      const onSubmit = (data) => {
+        console.log(data);
+        // Here you can perform any action with the submitted data
+    };
+
     return(
         <div className='edit-data'>
            <p className='title-editData'> Change Password</p>
-           <Form  className='signup-form'>
+           <Form  className='signup-form' onSubmit={handleSubmit(onSubmit)}>
            <Form.Group className='mb-3' controlId='password'>
                   <Input
                     type="password"
-                    name="password"
+                    name="current_password"
                     placeholder=''
                     register={register}
                     label="Current Password"
@@ -47,7 +65,7 @@ function ChangePassword() {
                   <Form.Group className='mb-3' controlId='password'>
                   <Input
                     type="password"
-                    name="password"
+                    name="new_password"
                     placeholder=''
                     register={register}
                     label="New Password"
@@ -76,7 +94,15 @@ function ChangePassword() {
           inputWidth='31rem'
         />
       </Form.Group>
-      <Button className='saveChanges-btn'>Save Changes</Button>
+      <Row>
+    <Col></Col>
+   
+    <Col>
+    <Button type='submit' className='save-changes mt-4' variant=''>
+    Save Changes
+</Button>
+    </Col>
+  </Row>
            </Form>
         </div>
     )
