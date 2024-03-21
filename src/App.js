@@ -59,7 +59,7 @@ function App() {
           <Route path='/' element={<LayoutWithoutRight />}>
           <Route path='/opportunity/list' element={<OpportunityList />} />
             <Route path='/applied/list' element={<MyOpportunities />} />
-            <Route path='/profiles/applied' element={<ProfilesApplied />}  />
+            <Route path='/profiles/applied/:name/:id' element={<ProfilesApplied />}  />
           
            </Route>
            <Route path='/' element={<SettingsLayout />}>
