@@ -57,6 +57,7 @@ function NotificationDropDown({ dropdownVisible, onClose }) {
                 <img src={NotificationIcon} className="icon me-4" />
             </Dropdown.Toggle>
             <Dropdown.Menu  style={{ width: '28rem' }} className='mt-5'>
+                <p className='title'>Notifications</p>
                 {displayedNotifications.map((notification, index) => (
                     <Dropdown.Item href="#" key={index}>
                         <div className='d-flex'>

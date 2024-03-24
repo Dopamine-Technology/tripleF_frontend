@@ -20,13 +20,13 @@ const Input = ({
   disabled,
 }) => {
   const [showPassword, setShowPassword] = useState('');
-  const [inputValue, setInputValue] = useState(defaultValue || ''); // Initialize with defaultValue if provided
+  const [inputValue, setInputValue] = useState(defaultValue || ''); 
+  
 
   const handleInputChange = (event) => {
     const value = event.target.value;
     const emojiPattern = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/;
 
-    // Check if the input contains any unwanted characters
     if (!emojiPattern.test(value)) {
       setInputValue(value);
     }
@@ -50,7 +50,7 @@ const Input = ({
             errors && errors[name]?.message ? "border-danger" : ""
           } `}
           style={{
-            backgroundColor: disabled ? "#f2f2f2" : "transparent", // Setting background color if disabled
+            backgroundColor: disabled ? "#f2f2f2" : "transparent", 
             border: "1px solid rgba(144,144,144, 0.3)",
             color: "black",
             width: inputWidth || "15rem",
@@ -82,7 +82,7 @@ const Input = ({
         )}
       </div>
       {errors && (
-        <div className="text-danger text-start">{errors[name]?.message}</div>
+        <div className="text-danger text-start d-inline-block" style={{ whiteSpace: 'nowrap' }}>{errors[name]?.message}</div>
       )}
     </Form.Group>
   );

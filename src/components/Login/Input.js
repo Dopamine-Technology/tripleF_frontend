@@ -59,7 +59,7 @@ const Input = ({
       
       </div>
       {errors && (
-        <div className="text-danger text-start">{errors[name]?.message}</div>
+        <div className="text-danger text-start d-inline-block" style={{ whiteSpace: 'nowrap' }}>{errors[name]?.message}</div>
       )}
     </Form.Group>
   );

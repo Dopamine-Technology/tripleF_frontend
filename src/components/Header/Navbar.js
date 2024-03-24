@@ -24,6 +24,7 @@ import ArrowDownImage from '../../assets/imgs/dropdownWhite.svg';
 import Logo from '../../assets/imgs/Logo.png'
 import LanguageIconBlack from '../../assets/imgs/langauge-icon.svg';
 import profileIconBlack from '../../assets/imgs/profile-black-icon.svg';
+import btnIconHover from '../../assets/imgs/btnIconHover.svg';
 
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'En';
@@ -38,6 +39,15 @@ const TopNavbar = ({content}) => {
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleHover = () => {
+    setIsHovering(true);
+  };
+
+  const handleHoverOut = () => {
+    setIsHovering(false);
+  };
 
   
 
@@ -89,10 +99,13 @@ const TopNavbar = ({content}) => {
           ))}
         </DropdownButton>
         <RxDividerVertical color="gray" size={30} className='mt-2' />
-        <Link to='/login' className='text-black d-flex mt-2' style={{ textDecoration: 'none', }}>
-          <img src={profileIconBlack} width='24px' height='24px' className='me-1' />
-          Login
-        </Link>
+        <Link to='/login' className='text-black d-flex mt-2' style={{ textDecoration: 'none' }}>
+      <div onMouseOver={handleHover} onMouseOut={handleHoverOut} className='text-black d-flex'>
+        <img src={isHovering ? btnIconHover : profileIconBlack} width='24px' height='24px' className='me-1' alt='Profile Icon' />
+        <p style={{color:isHovering?'#77dcbf':'black'}}>Login</p>
+        <p></p>
+      </div>
+    </Link>
       </Nav>
     </Navbar.Collapse>
   </Container>
@@ -125,10 +138,13 @@ const TopNavbar = ({content}) => {
           ))}
         </DropdownButton>
         <RxDividerVertical color="gray" size={30} className='mt-2' />
-        <Link to='/login' className='text-white d-flex mt-2' style={{ textDecoration: 'none', }}>
-          <img src={profileIcon} width='24px' height='24px' className='me-1' />
-          Login
-        </Link>
+        <Link to='/login' className='text-black d-flex' style={{ textDecoration: 'none' }}>
+      <div onMouseOver={handleHover} onMouseOut={handleHoverOut} className='text-black d-flex mt-2'>
+        <img src={isHovering ? btnIconHover : profileIcon} width='24px' height='24px' className='me-1' alt='Profile Icon' />
+        <p style={{color:isHovering?'#77dcbf':'white'}}>Login</p>
+        <p></p>
+      </div>
+    </Link>
       </Nav>
     </Navbar.Collapse>
   </Container>

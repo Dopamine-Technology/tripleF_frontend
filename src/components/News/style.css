@@ -73,6 +73,16 @@
   letter-spacing: normal;
   color: #464646;
 }
+.description-text:hover{
+  
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #1877f2;
+    text-decoration: underline;
+}
 
 .description {
     font-size: 14px;

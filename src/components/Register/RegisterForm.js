@@ -27,7 +27,7 @@ function RegisterForm({ onLoadingChange }) {
   const schema = Yup.object().shape({
     email:signedUpWithGoogle ? Yup.string():Yup.string()
       .required("Email is required")
-      .email("wrong email")
+      .email("Provide a valid email address ex:John@example.com")
       .required("Email is required"),
     first_name: signedUpWithGoogle ? Yup.string():Yup.string().required("First name is required"),
     last_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Last name is required"),
@@ -671,7 +671,7 @@ function RegisterForm({ onLoadingChange }) {
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Rather not to say</span>
-      <input type="radio" id="other" value="other" {...register('gender')} />
+      <input type="radio" id="other" value="other" {...register('gender')}  />
       <span className="checkmark"></span>
     </label>
   </div>
