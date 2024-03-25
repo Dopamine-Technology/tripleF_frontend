@@ -57,7 +57,7 @@ const TopNavbar = ({content}) => {
       const windowHeight = window.innerHeight; 
       const threshold = windowHeight * 1;
   
-      if (scrollTop > threshold) {
+      if (scrollTop ) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -110,7 +110,7 @@ const TopNavbar = ({content}) => {
     </Navbar.Collapse>
   </Container>
 </Navbar>:
-<Navbar expand="lg" >
+<Navbar expand="lg" className='fixed-navbar' >
   <Container style={{ marginLeft: '-1rem' }}>
     <Navbar.Brand href="/" className="d-flex align-items-center">
       <img src={LogoWhite} className='logo-header' />
@@ -168,7 +168,7 @@ const BottomNavbar = () => {
       // Calculate the threshold where you want to change the navbar
       const threshold = windowHeight * 1; // For example, change the navbar when the user scrolls past half of the viewport height
   
-      if (scrollTop > threshold) {
+      if (scrollTop ) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -222,7 +222,7 @@ const BottomNavbar = () => {
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    handleHashChange(); // Call it initially to set the active link based on the initial hash
+    handleHashChange(); 
 
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
@@ -256,7 +256,7 @@ const BottomNavbar = () => {
         </Nav>
       </Navbar.Collapse>
     </Container>
-  </Navbar>:<Navbar expand="lg"  >
+  </Navbar>:<Navbar expand="lg" className='fixed-navbar2' >
     <Container style={{marginLeft:'1rem'}}>
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'13rem'}} className="custom-toggler"/>
@@ -289,7 +289,7 @@ const CombinedNavbars = () => {
       const windowHeight = window.innerHeight; 
       const threshold = windowHeight * 1;
   
-      if (scrollTop > threshold) {
+      if (scrollTop ) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);

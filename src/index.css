@@ -19,3 +19,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+:root {
+  --custom-cursor: url('https://static-00.iconduck.com/assets.00/cursor-pointer-icon-1907x2048-0ifemj1z.png');
+}
+
+.custom-cursor {
+  cursor: var(--custom-cursor), auto;
+}

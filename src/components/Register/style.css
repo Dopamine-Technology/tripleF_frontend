@@ -187,6 +187,10 @@ margin-top: 1rem;
 .custom-radio-btn2 input {
   display: none;
 }
+.custom-radio-btn:hover .checkmark {
+ border:solid 1px #5fb099;
+}
+
 .custom-radio-btn2.left {
   padding-left: 0;
   padding-right: var(--size);
@@ -318,6 +322,12 @@ margin-top: 1rem;
   }
   input:focus{
    outline: none !important;
+  }
+  .form-control:focus ,.form-group select:focus ,.form-group select:focus ,
+  .form-group input[type="date"]:focus, .form-group input[type="number"]:focus,
+  .form-group input[type="text"]:focus{
+    outline: solid 1px #77dcbf !important;
+    box-shadow: none !important; /* Some browsers may apply box-shadow instead of outline */
   }
   .password-ul{
     list-style:disc;

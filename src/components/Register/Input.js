@@ -21,7 +21,7 @@ const Input = ({
 }) => {
   const [showPassword, setShowPassword] = useState('');
   const [inputValue, setInputValue] = useState(defaultValue || ''); 
-  
+  const [isTyping, setIsTyping] = useState(false);
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -29,6 +29,7 @@ const Input = ({
 
     if (!emojiPattern.test(value)) {
       setInputValue(value);
+      setIsTyping(true);
     }
   };
 
@@ -55,6 +56,7 @@ const Input = ({
             color: "black",
             width: inputWidth || "15rem",
             paddingRight: "2.5rem",
+            outline: "none",
           }}
           placeholder={placeholder}
           defaultValue={defaultValue}

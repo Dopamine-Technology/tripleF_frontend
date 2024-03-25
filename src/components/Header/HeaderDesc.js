@@ -11,7 +11,7 @@ const HeaderDesc = () => {
   return (
     <div className='header-div' >
       <Row >
-        <Col md={6} className='mt-5'>
+        <Col md={6} className='mt-5' >
           <p className='header-h1'>
             What We Do In Life Echoes In Eternity
           </p>

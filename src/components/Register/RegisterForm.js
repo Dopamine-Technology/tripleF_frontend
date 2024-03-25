@@ -31,7 +31,12 @@ function RegisterForm({ onLoadingChange }) {
       .required("Email is required"),
     first_name: signedUpWithGoogle ? Yup.string():Yup.string().required("First name is required"),
     last_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Last name is required"),
-    user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required"),
+    user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required")
+    .matches(
+      /^[^\u0600-\u06FF\s]+$/, // Regular expression to disallow Arabic letters
+      "Username cannot contain Arabic letters"
+    ),
+    
     password: signedUpWithGoogle ? Yup.string() : Yup.string()
     .required("password is required")
     // .min(8, " must be at least 8 characters")
@@ -606,7 +611,7 @@ function RegisterForm({ onLoadingChange }) {
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Talent Type</label>
-                  <select id="talentType" {...register('talent_type')} required>
+                  <select id="talentType" {...register('talent_type')} required className="green-border">
                     {sports.map(sport => (
                       <option key={sport.id} value={sport.id}>
                         {sport.name}

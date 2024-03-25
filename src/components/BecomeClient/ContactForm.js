@@ -95,7 +95,7 @@ const ContactForm = () => {
           errors={errors}
          
         />
-        <Button type='submit' className='submit-button'>
+        <Button type='submit' className='submit-button hover-element'>
           Send Message
         </Button>
       </form>
