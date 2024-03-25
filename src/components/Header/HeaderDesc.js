@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React,{useContext,useState,useLayoutEffect} from 'react';
 import RegisterButton from './RegisterButton';
 import {Row,Col} from 'react-bootstrap';
 import { PermDataContext } from '../PermContext/PermData.context';
@@ -7,11 +7,22 @@ const HeaderDesc = () => {
 
   const { permData } = useContext(PermDataContext);
   const isViewingTalent = permData?.find(item => item.name === 'view_talent' && item.value === true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+    const isSmallScreen = windowWidth <= 360;
   
   return (
     <div className='header-div' >
       <Row >
-        <Col md={6} className='mt-5'>
+        <Col md={6} className={isSmallScreen ? '':'mt-5'} >
           <p className='header-h1'>
             What We Do In Life Echoes In Eternity
           </p>

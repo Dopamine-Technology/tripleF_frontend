@@ -36,7 +36,7 @@ const ContactForm = () => {
       if (error.response) {
         const responseData = error.response.data;
         if (responseData.errors) {
-          // If the response contains validation errors, extract and display them
+    
           const validationErrors = responseData.errors;
           Object.values(validationErrors).forEach((errorMessages) => {
             errorMessages.forEach((errorMessage) => {
@@ -44,11 +44,11 @@ const ContactForm = () => {
             });
           });
         } else {
-          // If there are no validation errors, display a generic error message
+    
           message.error('An error occurred. Please try again.');
         }
       } else {
-        // If no response was received, display a generic error message
+   
         message.error('Something went wrong. Please try again.');
       }
     }
@@ -95,7 +95,7 @@ const ContactForm = () => {
           errors={errors}
          
         />
-        <Button type='submit' className='submit-button'>
+        <Button type='submit' className='submit-button hover-element'>
           Send Message
         </Button>
       </form>

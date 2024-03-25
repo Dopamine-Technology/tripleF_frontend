@@ -27,11 +27,16 @@ function RegisterForm({ onLoadingChange }) {
   const schema = Yup.object().shape({
     email:signedUpWithGoogle ? Yup.string():Yup.string()
       .required("Email is required")
-      .email("wrong email")
+      .email("Provide a valid email address ex:John@example.com")
       .required("Email is required"),
     first_name: signedUpWithGoogle ? Yup.string():Yup.string().required("First name is required"),
     last_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Last name is required"),
-    user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required"),
+    user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required")
+    .matches(
+      /^[^\u0600-\u06FF\s]+$/, // Regular expression to disallow Arabic letters
+      "Username cannot contain Arabic letters"
+    ),
+    
     password: signedUpWithGoogle ? Yup.string() : Yup.string()
     .required("password is required")
     // .min(8, " must be at least 8 characters")
@@ -547,6 +552,7 @@ function RegisterForm({ onLoadingChange }) {
                 label="I accept the Privacy Policies and Terms&Conditions Agreements."
                 onChange={handleTermsCheckbox}
                 checked={termsAccepted?true:false}
+                style={{marginLeft:isSmallScreen?'2rem':''}}
               />
             </Form.Group>
             <div className={isSmallScreen?"mt-3":"d-flex justify-content-between align-items-center"}>
@@ -606,7 +612,7 @@ function RegisterForm({ onLoadingChange }) {
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Talent Type</label>
-                  <select id="talentType" {...register('talent_type')} required>
+                  <select id="talentType" {...register('talent_type')} required className="green-border">
                     {sports.map(sport => (
                       <option key={sport.id} value={sport.id}>
                         {sport.name}
@@ -671,7 +677,7 @@ function RegisterForm({ onLoadingChange }) {
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Rather not to say</span>
-      <input type="radio" id="other" value="other" {...register('gender')} />
+      <input type="radio" id="other" value="other" {...register('gender')}  />
       <span className="checkmark"></span>
     </label>
   </div>
@@ -693,7 +699,7 @@ function RegisterForm({ onLoadingChange }) {
 </div>
 
             
-<div className='form-group'>
+<div className='form-group d-flex'>
 <label htmlFor="height">Height (cm):</label>
                   <input type="number" id="height" {...register('height')}  min="25" max='250' />
        
@@ -1301,10 +1307,10 @@ function RegisterForm({ onLoadingChange }) {
                   <label htmlFor="birthdate">Date of Birth:</label>
                   <input type="date" id="birthdate"  {...register('birth_date')} max={maxDate} />
                 </div>
-                <div className='form-group'>
-                  <label htmlFor="height">Height (cm):</label>
+                <div className={isSmallScreen?'d-flex':'form-group'}>
+                  <label htmlFor="height" style={{display:'flex',flexDirection:'column'}}>Height (cm):</label>
                   <input type="number" id="height" {...register('height')}  min="25" max='250' />
-                  <label htmlFor="weight">Weight (kg):</label>
+                  <label htmlFor="weight" style={{display:isSmallScreen?'flex':'',flexDirection:isSmallScreen?'column':''}}>Weight (kg):</label>
                   <input type="number" id="weight" {...register('wight')} min="38" max='600' />
                 </div>
                 <div className='form-group'>

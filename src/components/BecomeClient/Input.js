@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Form, Col } from "react-bootstrap";
 
 const Input = ({
@@ -16,6 +16,16 @@ const Input = ({
 }) => {
   const isTextarea = type === "textarea";
 
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleHover = () => {
+    setIsHovering(true);
+  };
+
+  const handleHoverOut = () => {
+    setIsHovering(false);
+  };
+
   return (
     <Form.Group as={Col} md={4} className="mb-4">
       <Form.Label className={`text-capitalize text-white`}>{label}</Form.Label>
@@ -30,7 +40,12 @@ const Input = ({
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
           className='textarea-input'
+          onMouseOver={handleHover} onMouseOut={handleHoverOut}
           placeholder={placeholder}
+          style={{
+            backgroundColor:isHovering ? '#1A2A44':'#1A2A44',
+            color:isHovering?'white':'white'
+            }}
         />
       ) : (
         <Form.Control
@@ -40,12 +55,14 @@ const Input = ({
             errors && errors[name]?.message ? "border-danger" : ""
           }`}
           style={{
-
+          backgroundColor:isHovering ? '#1A2A44':'#1A2A44',
+          color:isHovering?'white':'white'
             
           }}
           className='text-input'
           placeholder={placeholder}
           type={type}
+          onMouseOver={handleHover} onMouseOut={handleHoverOut}
         />
       )}
 

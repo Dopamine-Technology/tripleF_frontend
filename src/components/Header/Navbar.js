@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useLayoutEffect} from 'react';
 import {Container,Row,Col} from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -24,6 +24,7 @@ import ArrowDownImage from '../../assets/imgs/dropdownWhite.svg';
 import Logo from '../../assets/imgs/Logo.png'
 import LanguageIconBlack from '../../assets/imgs/langauge-icon.svg';
 import profileIconBlack from '../../assets/imgs/profile-black-icon.svg';
+import btnIconHover from '../../assets/imgs/btnIconHover.svg';
 
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'En';
@@ -38,6 +39,15 @@ const TopNavbar = ({content}) => {
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleHover = () => {
+    setIsHovering(true);
+  };
+
+  const handleHoverOut = () => {
+    setIsHovering(false);
+  };
 
   
 
@@ -47,7 +57,7 @@ const TopNavbar = ({content}) => {
       const windowHeight = window.innerHeight; 
       const threshold = windowHeight * 1;
   
-      if (scrollTop > threshold) {
+      if (scrollTop ) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -58,12 +68,13 @@ const TopNavbar = ({content}) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+
   return (
     <>
     {isScrolled?
 <Navbar expand="lg" className='scroll-navbar' >
   <Container className='navbar-container'>
-    <Navbar.Brand href="/" className="d-flex align-items-center">
+    <Navbar.Brand href="/" className="d-flex align-items-center" style={{marginLeft:'5rem'}}>
       <img src={Logo} className='logo-register' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
     </Navbar.Brand>
@@ -89,15 +100,18 @@ const TopNavbar = ({content}) => {
           ))}
         </DropdownButton>
         <RxDividerVertical color="gray" size={30} className='mt-2' />
-        <Link to='/login' className='text-black d-flex mt-2' style={{ textDecoration: 'none', }}>
-          <img src={profileIconBlack} width='24px' height='24px' className='me-1' />
-          Login
-        </Link>
+        <Link to='/login' className='text-black d-flex mt-2' style={{ textDecoration: 'none' }}>
+      <div onMouseOver={handleHover} onMouseOut={handleHoverOut} className='text-black d-flex'>
+        <img src={isHovering ? btnIconHover : profileIconBlack} width='24px' height='24px' className='me-1' alt='Profile Icon' />
+        <p style={{color:isHovering?'#77dcbf':'black'}}>Login</p>
+        <p></p>
+      </div>
+    </Link>
       </Nav>
     </Navbar.Collapse>
   </Container>
 </Navbar>:
-<Navbar expand="lg" >
+<Navbar expand="lg" className='fixed-navbar' >
   <Container style={{ marginLeft: '-1rem' }}>
     <Navbar.Brand href="/" className="d-flex align-items-center">
       <img src={LogoWhite} className='logo-header' />
@@ -125,10 +139,13 @@ const TopNavbar = ({content}) => {
           ))}
         </DropdownButton>
         <RxDividerVertical color="gray" size={30} className='mt-2' />
-        <Link to='/login' className='text-white d-flex mt-2' style={{ textDecoration: 'none', }}>
-          <img src={profileIcon} width='24px' height='24px' className='me-1' />
-          Login
-        </Link>
+        <Link to='/login' className='text-black d-flex' style={{ textDecoration: 'none' }}>
+      <div onMouseOver={handleHover} onMouseOut={handleHoverOut} className='text-black d-flex mt-2'>
+        <img src={isHovering ? btnIconHover : profileIcon} width='24px' height='24px' className='me-1' alt='Profile Icon' />
+        <p style={{color:isHovering?'#77dcbf':'white'}}>Login</p>
+        <p></p>
+      </div>
+    </Link>
       </Nav>
     </Navbar.Collapse>
   </Container>
@@ -143,6 +160,7 @@ const BottomNavbar = () => {
   
   const [activeLink, setActiveLink] = useState(1);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -152,7 +170,7 @@ const BottomNavbar = () => {
       // Calculate the threshold where you want to change the navbar
       const threshold = windowHeight * 1; // For example, change the navbar when the user scrolls past half of the viewport height
   
-      if (scrollTop > threshold) {
+      if (scrollTop ) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -206,7 +224,7 @@ const BottomNavbar = () => {
     };
 
     window.addEventListener('hashchange', handleHashChange);
-    handleHashChange(); // Call it initially to set the active link based on the initial hash
+    handleHashChange(); 
 
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
@@ -221,13 +239,23 @@ const BottomNavbar = () => {
   };
   
 
+useLayoutEffect(() => {
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
+  const isSmallScreen = windowWidth <= 360;
+
 
   return (
     <>
     {isScrolled?<Navbar expand="lg" className='scroll-navbar2'>
     <Container >
     
-      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'14.5rem'}} className=""/>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'18.8rem':'14.5rem'}} className=""/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
         <Nav.Link href='/#homeSection' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')} className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</Nav.Link>
@@ -240,10 +268,10 @@ const BottomNavbar = () => {
         </Nav>
       </Navbar.Collapse>
     </Container>
-  </Navbar>:<Navbar expand="lg"  >
+  </Navbar>:<Navbar expand="lg" className='fixed-navbar2' >
     <Container style={{marginLeft:'1rem'}}>
     
-      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'13rem'}} className="custom-toggler"/>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'16rem':'13rem'}} className="custom-toggler"/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
         <Nav.Link href="/#homeSection"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}> Home</Nav.Link>
@@ -273,7 +301,7 @@ const CombinedNavbars = () => {
       const windowHeight = window.innerHeight; 
       const threshold = windowHeight * 1;
   
-      if (scrollTop > threshold) {
+      if (scrollTop ) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);

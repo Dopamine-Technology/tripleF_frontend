@@ -20,6 +20,7 @@ const SingleOne = ({ img, content, category }) => {
 
   const isSmallScreen = windowWidth <= 360;
   return (
+    <Link to="/blogs/1" style={{ textDecoration: 'none' }}>
     <Card
       hoverable
       style={{
@@ -35,11 +36,12 @@ const SingleOne = ({ img, content, category }) => {
       <Meta
         title={<p className='category-p'>{category}</p>}
         description={
-          <p className="description-text">{content}</p>
+          <Link to='/blogs/1' style={{textDecoration:'none'}}><p className="description-text">{content}</p></Link>
         }
       />
       <a href='/blogs/1'><img src={single} style={{ marginTop: '1rem'}} /></a>
     </Card>
+    </Link>
   );
 }
 

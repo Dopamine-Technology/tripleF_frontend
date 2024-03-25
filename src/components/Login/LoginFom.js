@@ -14,21 +14,34 @@ import './style.css';
 import { GoogleLogin } from 'react-google-login';
 import { message } from 'antd';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import * as yup from "yup"; // Import Yup
+import { yupResolver } from "@hookform/resolvers/yup";
 
 function LoginForm() {
+
+  const schema = yup.object().shape({
+    email:yup.string()
+    .required("Email is required")
+    .email("Provide a valid email address ex:John@example.com")
+    .required("Email is required"),
+    password: yup.string().required('Password is required'),
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
     watch
-  } = useForm();
+  } = useForm({ mode: "onChange",
+  resolver: yupResolver(schema)});
   const navigate = useNavigate();
 
   const [error, setError] = useState();
   const { user, setUser } = useContext(UserDataContext);
   const [loading, setLoading] = useState(true);
   const [rememberMe, setRememberMe] = useState(false);
+  const [errorMessageDisplayed, setErrorMessageDisplayed] = useState(false);
+
 
   const onSuccess = (res) => {
     const { profileObj } = res;
@@ -43,8 +56,7 @@ function LoginForm() {
         setUser(response.data.result.user);
         Cookies.set('token', response.data.result.token);
         message.success('Logged in successfully');
-        
-        // Check if token is successfully saved before navigating
+
         const savedToken = Cookies.get('token');
         if (savedToken === response.data.result.token) {
           navigate('/home');
@@ -69,37 +81,54 @@ function LoginForm() {
     const onSubmit = async (data) => {
       data.email = data.email.toLowerCase();
       setError();
-    
+      setErrorMessageDisplayed(false);
+  
       try {
-
         setLoading(true);
-    
+  
         const response = await axios.post(
           `https://backend.triplef.group/api/user/auth/email_login`,
           data
         );
-    
+  
         if (response.data.result) {
           Cookies.set("token", response.data.result.token);
           Cookies.set("profileType", response.data.result.user.profile.type_name);
-
+  
           setUser({
             isAuthenticated: true,
-            userData: response.data.result.user, 
+            userData: response.data.result.user,
           });
-    
+  
           message.success('Logged in successfully');
           navigate('/home');
         } else {
-          message.error('Invalid response from server');
+          if (!errorMessageDisplayed) {
+            message.error('Invalid response from server');
+            setErrorMessageDisplayed(true);
+  
+            // Reset errorMessageDisplayed after 5 seconds
+            setTimeout(() => {
+              setErrorMessageDisplayed(false);
+            }, 5000); // 5000 milliseconds = 5 seconds
+          }
         }
       } catch (error) {
-        message.error('Your email or password is incorrect');
+        if (!errorMessageDisplayed) {
+          message.error('Your email or password is incorrect');
+          setErrorMessageDisplayed(true);
+  
+          // Reset errorMessageDisplayed after 5 seconds
+          setTimeout(() => {
+            setErrorMessageDisplayed(false);
+          }, 6000); // 5000 milliseconds = 5 seconds
+        }
       } finally {
-        // Set loading state to false after the authentication response is received
         setLoading(false);
       };
     };
+  
+    
     
 
   useEffect(() => {
@@ -118,7 +147,6 @@ function LoginForm() {
     const rememberedEmail = localStorage.getItem('rememberedEmail');
     const rememberedPassword = localStorage.getItem('rememberedPassword');
     if (rememberedEmail && rememberedPassword) {
-      // Pre-fill the email and password fields
       setValue('email', rememberedEmail);
       setValue('password', rememberedPassword);
       setRememberMe(true);
@@ -201,7 +229,7 @@ function LoginForm() {
   </Row>
 </Form.Group>
 
-          <Button variant='' className='btn-tall' type='submit'>
+          <Button variant='' className='btn-tall' type='submit' >
             Sign in
           </Button>
         </Form>

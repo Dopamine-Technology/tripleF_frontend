@@ -73,6 +73,16 @@
   letter-spacing: normal;
   color: #464646;
 }
+.description-text:hover{
+  
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #1877f2;
+    text-decoration: underline;
+}
 
 .description {
     font-size: 14px;
@@ -80,6 +90,17 @@
 }
 .news-row{
     margin-left: 2.7rem;
+}
+.news-h1{
+   
+  font-family: 'Quicksand-Bold';
+  font-size: 48px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
 }
 
 :where(.css-dev-only-do-not-override-2q8sxy).ant-card .ant-card-body {
@@ -95,6 +116,19 @@
    .description-text{
     /* font-size: 16px; */
     max-width: 13rem;
+   }
+   .news-h1{
+    width: 192px;
+    height: 30px;
+    margin: 0 63px 24px 0;
+    font-family: 'Quicksand-Bold';
+    font-size: 24px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #464646;
    }
 
 }

@@ -47,7 +47,7 @@ function NotificationList() {
          },
     ];
     return(
-        <div >
+        <div className='notification-main'>
             <NavBar />
             <p className='notifiactionList-title'>Notifications</p>
          <div className='notification-container'>

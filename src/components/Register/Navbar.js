@@ -36,7 +36,7 @@ const TopNavbar = ({content}) => {
   return (
 <Navbar expand="lg" className=''>
   <Container className='navbar-container'>
-    <Navbar.Brand href="#home" className="d-flex align-items-center">
+    <Navbar.Brand href="/" className="d-flex align-items-center">
       <img src={Logo} className='logo-register' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
     </Navbar.Brand>

@@ -1,0 +1,46 @@
+.notFound-container{
+    border-radius: 12px;
+    background-color: #fafbfc;
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+   align-items: center; 
+   flex-direction: column;
+
+}
+.notFound-word{
+    margin: 9px 59px 0 37px;
+    font-family: 'Quicksand-Regular';
+    font-size: 64px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -6px;
+    color: #213555;
+}
+.the-page-not{
+    margin: 0 5px 12px 6px;
+    font-family: 'Quicksand-Regular';
+    font-size: 32px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #464646;
+  
+}
+.reason-notFound{
+    width: 20rem;
+    margin: 12px 0 0;
+    font-family: 'Poppins-Regular';
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: rgba(70, 70, 70, 0.8);
+}
