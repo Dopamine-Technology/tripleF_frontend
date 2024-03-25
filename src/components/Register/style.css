@@ -366,7 +366,9 @@ margin-top: 1rem;
   box-shadow: 0 2px 12px 0 #dadada;
   width: 40rem;
 }
-
+.label{
+  width:'14rem'
+}
 
 
 }

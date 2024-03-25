@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useLayoutEffect} from "react";
 import { Form, Col } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -17,13 +17,25 @@ const Input = ({
 }) => {
 
   const [showPassword, setShowPassword] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isSmallScreen = windowWidth <= 360;
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
   return (
-    <Form.Group as={Col} md={4} className="mb-4">
+    <Form.Group as={Col} md={4} className={isSmallScreen?'':'mb-4'}>
       <Form.Label className={`text-capitalize text-black`}>{label}</Form.Label>
       <div className="position-relative me-3">
         <Form.Control

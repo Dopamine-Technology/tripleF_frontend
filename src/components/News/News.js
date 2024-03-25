@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useLayoutEffect} from 'react';
 import SingleOne from './SingleOne';
 import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
@@ -6,6 +6,19 @@ import { FaArrowRight } from "react-icons/fa";
 
 const News = () => {
   const [news, setNews] = useState([]);
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isSmallScreen = windowWidth <= 360;
 
   const axiosConfig = {
     headers: {
@@ -49,10 +62,10 @@ const News = () => {
   return (
     <div className='p-4 mt-5' id='News'>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <p className='about-h1' style={{ width: '30rem', marginLeft: '2.7rem' }}>Our Latest News</p>
+        <p className='news-h1' style={{ width: '30rem', marginLeft: isSmallScreen?'0.8rem':'2.7rem' }}>Our Latest News</p>
         <p><a href="/blogs" className='read-more-link mt-2'>View More</a> <FaArrowRight className='arrow-hidden' /></p>
       </div>
-      <Row className='mt-5 news-row' >
+      <Row className={isSmallScreen?`news-row`:`mt-5 news-row`} >
         {news2 && news2.length > 0 ? (
           news2.map((item, index) => (
             <Col key={index} md={4} xs={12}  className='col-single' style={{ paddingBottom: '16px' }}>

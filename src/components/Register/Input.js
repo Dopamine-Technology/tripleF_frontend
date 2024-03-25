@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useLayoutEffect} from "react";
 import { Form, Col } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { message } from "antd";
@@ -23,6 +23,20 @@ const Input = ({
   const [inputValue, setInputValue] = useState(defaultValue || ''); 
   const [isTyping, setIsTyping] = useState(false);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isSmallScreen = windowWidth <= 360;
+
+
   const handleInputChange = (event) => {
     const value = event.target.value;
     const emojiPattern = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/;
@@ -38,7 +52,7 @@ const Input = ({
   };
 
   return (
-    <Form.Group as={Col} md={4} className="mb-4">
+    <Form.Group as={Col} md={4} className={isSmallScreen?'':'mb-4'}>
       <Form.Label className={`text-capitalize text-black label`}>
         {label}
       </Form.Label>

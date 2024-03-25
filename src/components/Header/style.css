@@ -136,7 +136,8 @@
 }
 .custom-toggler .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-  border-color:transparent
+  border-color:transparent;
+
 }
 .scroll-navbar{
   position: fixed;
@@ -176,7 +177,7 @@ z-index:3;
 @media only screen and (max-width: 360px) {
   .logo-header{
     width:60%;
-    margin-left: -2rem;
+    margin-left: 0rem;
     margin-inline-end: 7rem;
   }
   .first-nav{
@@ -214,6 +215,10 @@ z-index:3;
       max-height: 1vh;
       margin-left: 2rem;
     }
+    .scroll-navbar2{
+
+    margin-top: 3rem;}
+
     .whole-div {
    
       background-position:0%;       /* if you want to fix the background remove this line */

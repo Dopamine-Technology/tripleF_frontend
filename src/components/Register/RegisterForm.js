@@ -552,6 +552,7 @@ function RegisterForm({ onLoadingChange }) {
                 label="I accept the Privacy Policies and Terms&Conditions Agreements."
                 onChange={handleTermsCheckbox}
                 checked={termsAccepted?true:false}
+                style={{marginLeft:isSmallScreen?'2rem':''}}
               />
             </Form.Group>
             <div className={isSmallScreen?"mt-3":"d-flex justify-content-between align-items-center"}>
@@ -698,7 +699,7 @@ function RegisterForm({ onLoadingChange }) {
 </div>
 
             
-<div className='form-group'>
+<div className='form-group d-flex'>
 <label htmlFor="height">Height (cm):</label>
                   <input type="number" id="height" {...register('height')}  min="25" max='250' />
        
@@ -1306,10 +1307,10 @@ function RegisterForm({ onLoadingChange }) {
                   <label htmlFor="birthdate">Date of Birth:</label>
                   <input type="date" id="birthdate"  {...register('birth_date')} max={maxDate} />
                 </div>
-                <div className='form-group'>
-                  <label htmlFor="height">Height (cm):</label>
+                <div className={isSmallScreen?'d-flex':'form-group'}>
+                  <label htmlFor="height" style={{display:'flex',flexDirection:'column'}}>Height (cm):</label>
                   <input type="number" id="height" {...register('height')}  min="25" max='250' />
-                  <label htmlFor="weight">Weight (kg):</label>
+                  <label htmlFor="weight" style={{display:isSmallScreen?'flex':'',flexDirection:isSmallScreen?'column':''}}>Weight (kg):</label>
                   <input type="number" id="weight" {...register('wight')} min="38" max='600' />
                 </div>
                 <div className='form-group'>

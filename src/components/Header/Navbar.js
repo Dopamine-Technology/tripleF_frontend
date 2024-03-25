@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useLayoutEffect} from 'react';
 import {Container,Row,Col} from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -68,12 +68,13 @@ const TopNavbar = ({content}) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+
   return (
     <>
     {isScrolled?
 <Navbar expand="lg" className='scroll-navbar' >
   <Container className='navbar-container'>
-    <Navbar.Brand href="/" className="d-flex align-items-center">
+    <Navbar.Brand href="/" className="d-flex align-items-center" style={{marginLeft:'5rem'}}>
       <img src={Logo} className='logo-register' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
     </Navbar.Brand>
@@ -159,6 +160,7 @@ const BottomNavbar = () => {
   
   const [activeLink, setActiveLink] = useState(1);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -237,13 +239,23 @@ const BottomNavbar = () => {
   };
   
 
+useLayoutEffect(() => {
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
+  const isSmallScreen = windowWidth <= 360;
+
 
   return (
     <>
     {isScrolled?<Navbar expand="lg" className='scroll-navbar2'>
     <Container >
     
-      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'14.5rem'}} className=""/>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'18.8rem':'14.5rem'}} className=""/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
         <Nav.Link href='/#homeSection' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')} className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</Nav.Link>
@@ -259,7 +271,7 @@ const BottomNavbar = () => {
   </Navbar>:<Navbar expand="lg" className='fixed-navbar2' >
     <Container style={{marginLeft:'1rem'}}>
     
-      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'13rem'}} className="custom-toggler"/>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'16rem':'13rem'}} className="custom-toggler"/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
         <Nav.Link href="/#homeSection"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}> Home</Nav.Link>
