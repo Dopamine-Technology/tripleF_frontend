@@ -29,8 +29,22 @@ function RegisterForm({ onLoadingChange }) {
       .required("Email is required")
       .email("Provide a valid email address ex:John@example.com")
       .required("Email is required"),
-    first_name: signedUpWithGoogle ? Yup.string():Yup.string().required("First name is required"),
-    last_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Last name is required"),
+      first_name: signedUpWithGoogle
+      ? Yup.string()
+      : Yup.string()
+          .required("First name is required")
+          .matches(
+            /^(?:[\u0600-\u06FF]+|[a-zA-Z]+)$/,
+            "First name can't contain mixed letters"
+          ),
+    last_name: signedUpWithGoogle
+      ? Yup.string()
+      : Yup.string()
+          .required("Last name is required")
+          .matches(
+            /^(?:[\u0600-\u06FF]+|[a-zA-Z]+)$/,
+            "Last name can't contain mixed letters"
+          ),
     user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required")
     .matches(
       /^[^\u0600-\u06FF\s]+$/, // Regular expression to disallow Arabic letters

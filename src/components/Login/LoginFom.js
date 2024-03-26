@@ -81,8 +81,7 @@ function LoginForm() {
     const onSubmit = async (data) => {
       data.email = data.email.toLowerCase();
       setError();
-      setErrorMessageDisplayed(false);
-  
+      
       try {
         setLoading(true);
   
@@ -106,26 +105,21 @@ function LoginForm() {
           if (!errorMessageDisplayed) {
             message.error('Invalid response from server');
             setErrorMessageDisplayed(true);
-  
-            // Reset errorMessageDisplayed after 5 seconds
-            setTimeout(() => {
-              setErrorMessageDisplayed(false);
-            }, 5000); // 5000 milliseconds = 5 seconds
           }
         }
       } catch (error) {
         if (!errorMessageDisplayed) {
           message.error('Your email or password is incorrect');
           setErrorMessageDisplayed(true);
-  
-          // Reset errorMessageDisplayed after 5 seconds
-          setTimeout(() => {
-            setErrorMessageDisplayed(false);
-          }, 6000); // 5000 milliseconds = 5 seconds
         }
       } finally {
         setLoading(false);
-      };
+      }
+    };
+
+    const handleChange = () => {
+      // Reset errorMessageDisplayed when form data changes
+      setErrorMessageDisplayed(false);
     };
   
     
@@ -189,7 +183,7 @@ function LoginForm() {
   <hr className=' mt-4' style={{width:'24%',color:'#7C7C7C'}} />
 </div>
 
-        <Form onSubmit={handleSubmit(onSubmit)} className='login-form'>
+        <Form onSubmit={handleSubmit(onSubmit)}  onChange={handleChange} className='login-form'>
           <Form.Group className='mb-3' controlId='formFile'>
    
             <Input
@@ -219,7 +213,8 @@ function LoginForm() {
  <Form.Group className='mb-3' controlId='formRememberMe'  >
   <Row>
     <Col xs={6}>
-      <Form.Check type='checkbox' label='Remember Me' onChange={handleRememberMeChange} checked={rememberMe} />
+      <Form.Check type='checkbox' label='Remember Me' onChange={handleRememberMeChange} checked={rememberMe}
+      className={rememberMe ? 'green-checkbox' : ''} />
     </Col>
     <Col xs={6}>
       <Form.Text>

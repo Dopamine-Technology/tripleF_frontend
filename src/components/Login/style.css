@@ -60,8 +60,19 @@ margin-left: 4rem;
     color: black;
     width: 30rem 
    }
+    input[type="text"]:focus,input[type="password"]:focus{
+      border: solid 1px #77dcbf !important;
+     box-shadow: none !important; /* Some browsers may apply box-shadow instead of outline */
+   }
    .forget-p{
     margin-left:7rem
+   }
+   .green-checkbox input[type="checkbox"] {
+    background-color: #5fb099    ;
+    border-color: #5fb099
+
+    ;
+  
    }
   @media (max-width: 360px) {
     .login-img{
