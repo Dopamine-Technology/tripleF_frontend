@@ -82,7 +82,7 @@ const TopNavbar = ({content}) => {
       <Nav className="ms-auto mt-2">
         <DropdownButton
           title={
-            <div className='d-flex align-items-center'>
+            <div className='d-flex align-items-center '>
               <img src={LanguageIconBlack} width='24px' height='24px' className='me-1 mb-4' />
               <span className='mb-4'>{currentLanguage}</span>
               <img src={ArrowDownImage} width='24px' height='24px' className='ms-1 mb-4' />
@@ -90,7 +90,7 @@ const TopNavbar = ({content}) => {
           }
           id="language-dropdown"
           variant=""
-          className=" bg-transparent mr-5 custom-dropdown mt-1 "
+          className=" bg-transparent mr-5 custom-dropdown mt-5"
         >
           {availableLanguages.map((lang) => (
             <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
@@ -247,7 +247,7 @@ useLayoutEffect(() => {
   return () => window.removeEventListener('resize', handleResize);
 }, []);
 
-  const isSmallScreen = windowWidth <= 360;
+  const isSmallScreen = windowWidth <= 600;
 
 
   return (

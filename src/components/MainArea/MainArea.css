@@ -135,6 +135,7 @@ font-family:  'Quicksand-Bold';
 font-weight: 500;
 font-style: normal;
 letter-spacing: 0px;
+width:40rem
 
 }
 .newPost-desc{
@@ -1091,7 +1092,7 @@ user-select: none;
     top: 0px; /* Adjust as necessary */
     right: 14px;
 }
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 600px) {
     .story-container{
         justify-content:start
 

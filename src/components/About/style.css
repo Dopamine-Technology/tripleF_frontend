@@ -41,24 +41,9 @@ margin-left: 2rem;
   height: 600px;
 }
 
-
-
-  /* @media only screen and (width: 1920px) and (height: 1080px) {
-    .image-container{
-    }
-    .about-p{
-      margin-left: 10rem;
-    }
-    .about-h1{
-      margin-left: 10rem;
-    }
-    .button-container{
-      margin-left: 10rem;
-    }
-  } */
-  @media only screen and (max-width: 360px) {
+  @media only screen and (max-width: 600px) {
     .aboutDesc-div{
-      margin-left: 0rem;
+      margin-left: 0.4rem;
     
     }
     .about-p{
@@ -88,20 +73,3 @@ margin-left: 2rem;
 
   }
   
-
-  /* @media only screen and (width: 1024px) and (height: 768px) {
-   .image2{
-    width:15rem;
-    height:30rem
-   }
-   .image1{
-    width:15rem;
-    height:24rem
-   }
-  }
-  @media only screen and (max-width: 768px) and (max-height: 1024px) {
-    .image-container{
-      margin-top: 4rem;
-      margin-left:4rem
-    }
-  } */

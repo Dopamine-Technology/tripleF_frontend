@@ -34,7 +34,7 @@ const Input = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const isSmallScreen = windowWidth <= 360;
+  const isSmallScreen = windowWidth <= 600;
 
 
   const handleInputChange = (event) => {

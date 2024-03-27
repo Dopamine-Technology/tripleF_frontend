@@ -51,13 +51,17 @@ function NotificationList() {
             <NavBar />
             <p className='notifiactionList-title'>Notifications</p>
          <div className='notification-container'>
-           {notifications.map((notification)=>(
+           {notifications.map((notification,index)=>(
               <div className='d-flex' style={{marginLeft:'5rem'}}>
               <img src={notification.userImg} className='notification-owner me-3 ' />
               <div>
-                  <p className='notificationList-content mt-2 ' style={{maxWidth:'200px'}}><span className='notification-owner-userName'>{notification.userName}</span>{notification.notificationContent}</p>
+                  <p className='notificationList-content mt-2 ' >
+                    <span className='notification-owner-userName me-1'>{notification.userName}</span>
+                    {notification.notificationContent}</p>
                   <p className='notification-content mb-1'>{notification.created_at}</p>
+                  {index !== notifications.length - 1 && <hr style={{ border:'solid 1px #ebeaed'}}/>}
               </div>
+              
           </div>
            ))}
          </div>

@@ -19,7 +19,8 @@ import 'react-phone-input-2/lib/style.css';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import startsWith from 'lodash.startswith';
 import { gapi } from "gapi-script";
-
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterForm({ onLoadingChange }) {
   const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
@@ -68,8 +69,16 @@ function RegisterForm({ onLoadingChange }) {
       parent_position: Yup.string().required('Position is required'),
       gender: Yup.string().required('Gender is required'),
       birth_date: Yup.date().typeError('Birth date must be a valid date').required('Birth date is required'),
-      height: Yup.number().typeError('Height must be a valid date').required('Height is required'),
-      wight: Yup.number().typeError('Weight must be a valid date').required('Height is required'),
+      height: Yup.number()
+    .typeError('Height must be a valid number')
+    .required('Height is required')
+    .min(1, 'Height must be greater than or equal to 1') 
+    .max(300, 'Height must be less than or equal to 300'), 
+    wight: Yup.number()
+    .typeError('Weight must be a valid number')
+    .required('Weight is required')
+    .min(1, 'Weight must be greater than or equal to 1') 
+    .max(900, 'Weight must be less than or equal to 1000'),
       country_id: Yup.string().required('Country is required'),
       mobile_number: Yup.string().required('Mobile number is required'),
     }),
@@ -145,6 +154,8 @@ function RegisterForm({ onLoadingChange }) {
       const [selectedCountryCode, setSelectedCountryCode] = useState('jo');
       const [windowWidth, setWindowWidth] = useState(window.innerWidth);
       const currentYear = new Date().getFullYear();
+      const [errorMessageDisplayed, setErrorMessageDisplayed] = useState(false);
+      const navigate=useNavigate();
 
       useLayoutEffect(() => {
         const handleResize = () => {
@@ -155,7 +166,7 @@ function RegisterForm({ onLoadingChange }) {
         return () => window.removeEventListener('resize', handleResize);
       }, []);
     
-      const isSmallScreen = windowWidth <= 360;
+      const isSmallScreen = windowWidth <= 600;
       
       const clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
 
@@ -170,6 +181,8 @@ function RegisterForm({ onLoadingChange }) {
         }
       };
 
+      
+    
       
       const onSuccess = (res) => {
         const userData = {
@@ -235,20 +248,20 @@ function RegisterForm({ onLoadingChange }) {
       }, [isFirstRender]);
     
 
-      useEffect(() => {
-        axios
-          .get('https://backend.triplef.group/api/app/get_user_types')
-          .then((response) => {
-            setAccountType(response.data.result);
-          })
-          .catch((error) => {
-            console.error("Error fetching Accounts data:", error);
-          })
-          .finally(() => {
-            setLoading(false);
-            onLoadingChange(false);
-          });
-      }, []);
+      // useEffect(() => {
+      //   axios
+      //     .get('https://backend.triplef.group/api/app/get_user_types')
+      //     .then((response) => {
+      //       setAccountType(response.data.result);
+      //     })
+      //     .catch((error) => {
+      //       console.error("Error fetching Accounts data:", error);
+      //     })
+      //     .finally(() => {
+      //       setLoading(false);
+      //       onLoadingChange(false);
+      //     });
+      // }, []);
 
 
       useEffect(() => {
@@ -305,6 +318,12 @@ function RegisterForm({ onLoadingChange }) {
         setTermsAccepted(e.target.checked); 
       };
 
+      const handleChange = () => {
+        // Reset errorMessageDisplayed when form data changes
+        setErrorMessageDisplayed(false);
+      };
+    
+
       const handlePositionSelect = async (selectedPositionId) => {
         try {
           const response = await axios.post('https://backend.triplef.group/api/app/get_sport_positions/1', {
@@ -344,7 +363,10 @@ function RegisterForm({ onLoadingChange }) {
         } else if (currentStep === 2) {
           try {
             await stepTwoSchema[accountType].validate(data, { abortEarly: false });
-      
+
+            if (!data.position) {
+              data.position = '1';
+            }
             const mergedData = {};
             for (const key in formData) {
               if (formData[key]) {
@@ -364,13 +386,20 @@ function RegisterForm({ onLoadingChange }) {
             }
             if (accountType === '3') {
               const logo = data.club_logo[0];
-              if (!logo) {
-                message.error('please upload club logo')
-                return;
+              if (!logo ) {
+                if (!errorMessageDisplayed) {
+                message.error('please, upload club logo')
+                setErrorMessageDisplayed(true);
               }
+            
+
+                return
+              }
+              
               formDataWithImage.delete('club_logo');
               formDataWithImage.append('club_logo', logo);
             }
+       
             for (const key in mergedData) {
               if (key !== 'image' && mergedData[key]) {
                 formDataWithImage.append(key, mergedData[key]);
@@ -383,25 +412,46 @@ function RegisterForm({ onLoadingChange }) {
               const response = await axios.post(`https://backend.triplef.group/api/user/auth/register`, formDataWithImage);
               if (response.status === 200) {
                 message.success('Registration successful! Please check your email to verify it.');
+                Cookies.set('token',response.data.result.token);
+                Cookies.set("token", response.data.result.token);
+                if (Cookies.get("token")) {
+                  navigate('/home');
+                  window.location.reload();
+              } 
               } else {
                 if (response.status === 422) {
                   const errors = response.data.errors;
                   if (errors && errors.email && Array.isArray(errors.email) && errors.email.length > 0) {
                     const emailErrorMessage = errors.email[0];
+                    if (!errorMessageDisplayed) {
                     message.error(emailErrorMessage);
+                    setErrorMessageDisplayed(true);
+                  }
                   } else {
+                    if (!errorMessageDisplayed) {
                     message.error('Unknown validation error. Please try again.');
+                    setErrorMessageDisplayed(true);
+                  }
                   }
                 } else {
+                  if (!errorMessageDisplayed) {
                   message.error('An error occurred. Please try again.');
+                  setErrorMessageDisplayed(true);
+                }
                 }
               }
             } catch (error) {
               if (error.response) {
+                if (!errorMessageDisplayed) {
                 const errorMessage = error.response.data.message || 'Unknown error occurred.';
                 message.error(errorMessage);
+                setErrorMessageDisplayed(true);
+              }
               } else {
+                if (!errorMessageDisplayed) {
                 message.error('Something went wrong. Please try again.');
+                setErrorMessageDisplayed(true);
+              }
               }
             }
           } catch (error) {
@@ -566,6 +616,7 @@ function RegisterForm({ onLoadingChange }) {
                 label="I accept the Privacy Policies and Terms&Conditions Agreements."
                 onChange={handleTermsCheckbox}
                 checked={termsAccepted?true:false}
+                className={termsAccepted ? 'green-checkbox' : ''} 
                 style={{marginLeft:isSmallScreen?'2rem':''}}
               />
             </Form.Group>
@@ -600,7 +651,8 @@ function RegisterForm({ onLoadingChange }) {
                       {accountTypes.map((account, index) => (
                         <label key={index} className="custom-radio-btn">
                           <span className="label">{account.name}</span>
-                          <input type="radio" value={account.id} name="user_type" />
+                          <input type="radio" value={account.id} name="user_type"
+                           defaultChecked={account.id == '1'}/>
                           <span className="checkmark"></span>
                         </label>
                       ))}
@@ -622,7 +674,7 @@ function RegisterForm({ onLoadingChange }) {
         switch (accountType) {
           case '1':
             return (
-              <form onSubmit={handleSubmit(onSubmit)} className='register-form'>
+              <form onSubmit={handleSubmit(onSubmit)}  onChange={handleChange} className='register-form'>
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Talent Type</label>
@@ -674,10 +726,13 @@ function RegisterForm({ onLoadingChange }) {
     )}
   </div>
 )}
+{subPositions?.length ==0 && (
+  <input type="hidden" name="position" value="1" /> 
+)}
 
             
             <div className='form-group'>
-  <label>Gender:</label>
+  <label>Gender</label>
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
       <span className="label">Male</span>
@@ -702,6 +757,32 @@ function RegisterForm({ onLoadingChange }) {
   )}
 </div>
 
+<div className='form-group'>
+  <label>Preferred Foot</label>
+  <div className="radio-buttons">
+    <label className='custom-radio-btn'>
+      <span className="label">Right</span>
+      <input type="radio" id="right" value="right" {...register('preferred_foot')} checked />
+      <span className="checkmark"></span>
+    </label>
+    <label className='custom-radio-btn'>
+      <span className="label">Left</span>
+      <input type="radio" id="left" value="left" {...register('preferred_foot')} />
+      <span className="checkmark"></span>
+    </label>
+    <label className='custom-radio-btn'>
+      <span className="label">Both</span>
+      <input type="radio" id="both" value="both" {...register('preferred_foot')}  />
+      <span className="checkmark"></span>
+    </label>
+  </div>
+  {/* {Object.keys(formErrors).length > 0 && formErrors.gender && (
+    <div className="text-danger">
+      <p>{formErrors.gender}</p>
+    </div>
+  )} */}
+</div>
+
             <div className='form-group'>
   <label htmlFor="birthdate">Date of Birth:</label>
   <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} />
@@ -715,7 +796,7 @@ function RegisterForm({ onLoadingChange }) {
             
 <div className='form-group d-flex'>
 <label htmlFor="height">Height (cm):</label>
-                  <input type="number" id="height" {...register('height')}  min="25" max='250' />
+                  <input type="number" id="height" {...register('height')} />
        
   {Object.keys(formErrors).length > 0 && formErrors.height && (
     <div className="text-danger">
@@ -724,7 +805,7 @@ function RegisterForm({ onLoadingChange }) {
   )}
 
 <label htmlFor="weight">Weight (kg):</label>
- <input type="number" id="weight" {...register('wight')} min="38" max='600' />
+ <input type="number" id="weight" {...register('wight')} />
   {Object.keys(formErrors).length > 0 && formErrors.wight && (
     <div className="text-danger">
       <p>{formErrors.wight}</p>
@@ -820,7 +901,7 @@ function RegisterForm({ onLoadingChange }) {
             );
           case '2':
             return (
-              <form onSubmit={handleSubmit(onSubmit)} className='register-form'>
+              <form onSubmit={handleSubmit(onSubmit)} onChange={handleChange} className='register-form'>
   <div className='form-container'>
     <div className='form-group'>
       <label htmlFor="talentType">Sport Type</label>
@@ -968,7 +1049,7 @@ function RegisterForm({ onLoadingChange }) {
             );
           case '4':
             return (
-              <form onSubmit={handleSubmit(onSubmit)}className='register-form'>
+              <form onSubmit={handleSubmit(onSubmit)} onChange={handleChange} className='register-form'>
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Sport Type</label>
@@ -1114,7 +1195,7 @@ function RegisterForm({ onLoadingChange }) {
             );
           case '3':
             return (
-              <form onSubmit={handleSubmit(onSubmit)} className='register-form'>
+              <form onSubmit={handleSubmit(onSubmit)} onChange={handleChange} className='register-form'>
       <div className='form-container'>
       <Form.Group className='mb-3' controlId='formFile'>
                   <EditImage
@@ -1323,9 +1404,9 @@ function RegisterForm({ onLoadingChange }) {
                 </div>
                 <div className={isSmallScreen?'d-flex':'form-group'}>
                   <label htmlFor="height" style={{display:'flex',flexDirection:'column'}}>Height (cm):</label>
-                  <input type="number" id="height" {...register('height')}  min="25" max='250' />
+                  <input type="number" id="height" {...register('height')}  />
                   <label htmlFor="weight" style={{display:isSmallScreen?'flex':'',flexDirection:isSmallScreen?'column':''}}>Weight (kg):</label>
-                  <input type="number" id="weight" {...register('wight')} min="38" max='600' />
+                  <input type="number" id="weight" {...register('wight')}  />
                 </div>
                 <div className='form-group'>
   <label htmlFor="country">Country:</label>

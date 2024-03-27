@@ -59,7 +59,7 @@
   }
 
 
-  @media only screen and (max-width: 360px) {
+  @media only screen and (max-width: 600px) {
     .who-h1{
       opacity: 1;
       color: rgba(70,70,70,1);

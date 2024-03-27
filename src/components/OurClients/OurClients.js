@@ -3,6 +3,7 @@ import { Row, Col } from 'react-bootstrap';
 import ClientTalk from './ClientTalk';
 import ClientImg from './ClientImg';
 import './style.css';
+import ClientImgResponsive from './ClientImgResponsive';
 
 const OurClients = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -17,7 +18,7 @@ const OurClients = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const isSmallScreen = windowWidth <= 360;
+  const isSmallScreen = windowWidth <= 600;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,7 +38,11 @@ const OurClients = () => {
     <div className='OurClientsWhole' id='Testimonial'>
       <Row>
         <Col><ClientTalk selectedImageIndex={selectedImageIndex} setSelectedImageIndex={setSelectedImageIndex} /></Col>
+        {isSmallScreen?
+        <Col><ClientImgResponsive selectedImageIndex={selectedImageIndex} onImageClick={handleImageChange} isSmallScreen={isSmallScreen} /></Col>:
         <Col><ClientImg selectedImageIndex={selectedImageIndex} onImageClick={handleImageChange} isSmallScreen={isSmallScreen} /></Col>
+        }
+        
       </Row>
     </div>
   );

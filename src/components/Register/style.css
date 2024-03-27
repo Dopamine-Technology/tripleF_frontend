@@ -339,7 +339,11 @@ margin-top: 1rem;
     padding-left: 0px; 
     margin-bottom: 10px; 
   }
-  @media (max-width: 360px) {
+  .custom-dropdown > .btn {
+    border: none !important; /* Remove the border */
+    /* Add any other custom styles you need */
+  }
+  @media (max-width: 600px) {
   .signup-img{
     display: none;
   }

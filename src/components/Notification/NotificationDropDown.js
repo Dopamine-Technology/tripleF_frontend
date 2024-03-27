@@ -53,8 +53,8 @@ function NotificationDropDown({ dropdownVisible, onClose }) {
 
     return (
         <Dropdown className="d-inline mx-2" drop='start' >
-            <Dropdown.Toggle id="dropdown-autoclose-true" className="bg-transparent border-white">
-                <img src={NotificationIcon} className="icon me-4" />
+            <Dropdown.Toggle id="dropdown-autoclose-true" className="bg-transparent border-white"  >
+                <img src={NotificationIcon} className=""   />
             </Dropdown.Toggle>
             <Dropdown.Menu  style={{ width: '28rem' }} className='mt-5'>
                 <p className='title'>Notifications</p>
@@ -64,14 +64,14 @@ function NotificationDropDown({ dropdownVisible, onClose }) {
                         <div className='d-flex'>
                             <img src={notification.userImg} className='notification-owner me-2' />
                             <div>
-                                <p className='notification-content mt-2 ' style={{maxWidth:'200px'}}><span className='notification-owner-userName'>{notification.userName}</span>{notification.notificationContent}</p>
+                                <p className='notification-content mt-2 ' style={{maxWidth:'200px'}}><span className='notification-owner-userName me-1'>{notification.userName}</span>{notification.notificationContent}</p>
                                 <p className='notification-content mb-1'>{notification.created_at}</p>
                                 
                             </div>
                          
                         </div>
                     </Dropdown.Item>
-                     {index !== displayedNotifications.length - 1 && <hr style={{ border:'solid 1px #ebeaed'}}/>}
+                     {/* {index !== displayedNotifications.length - 1 && <hr style={{ border:'solid 1px #ebeaed'}}/>} */}
                      </>
                 ))}
                 {notifications.length > 7 && (

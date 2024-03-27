@@ -8,11 +8,10 @@ body {
   font-family:'Quicksand-Bold';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: white
 
 }
 .App{
-  background: white;
+ 
 }
 
 code {

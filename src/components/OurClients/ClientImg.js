@@ -7,7 +7,7 @@ import Test4 from '../../assets/imgs/test4.png';
 import Test5 from '../../assets/imgs/test5.png';
 import Test6 from '../../assets/imgs/test6.png';
 
-const ClientImg = ({ onImageClick, selectedImageIndex }) => {
+const ClientImg = ({ onImageClick, selectedImageIndex,isSmallScreen }) => {
   const images = [
     Test1,
     Test2,
@@ -26,8 +26,8 @@ const ClientImg = ({ onImageClick, selectedImageIndex }) => {
   };
 
   const mainImageStyle = {
-    width: '230px',
-    height: '230px',
+    width: isSmallScreen?'72px':'230px',
+    height: isSmallScreen?'72px':'230px',
     borderRadius: '50%',
   };
 

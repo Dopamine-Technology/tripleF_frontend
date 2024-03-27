@@ -233,82 +233,59 @@ text-align: left;
 }
 
 
-@media (max-width: 360px) {
+@media (max-width: 600px) {
     .brand-wrapper {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+       flex-direction: column;
+       align-items: flex-start;
+   }
+   
+   
+   .right-content {
+    display: flex;
+    align-items: center;
+     
     
-    .right-content {
-        margin-top: 10px;
-    }
+   } 
     .icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
-    }
-    .brand-wrapper {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .right-content {
-        margin-top: 10px;
-    }
-    .icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
-    }
-    .dropdown-responsive {
-        display: none;
-    }
-    .story-section{
-        max-width: 80%;
-        overflow-x: scroll;
-    }
-    
+       width: 24px;
+       height: 24px;
+       display: inline-block;
+   } 
+   
+ 
+   .dropdown-responsive {
+       display: none;
+   }
+   .story-section{
+       max-width: 80%;
+       overflow-x: scroll;
+   } 
+   
+   
 }
 
 
 
-
-@media only screen and (max-width: 360px) {
-    .search-container{
-      display: none;
-    }
-    .navbar-nav{
-        /* display: flex;
-        flex-direction: row; */
-    }
-    .dropdown-responsive{
-        display: none;
-    }
-    .brand-wrapper {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .right-content {
-        margin-top: 10px;
-    }
-    .RightArea{
-     margin-left: 3.5rem;
-     width: 20rem;
-    }
-    /* .AntLayout{
-        margin-left:-3rem;
-    } */
-    
+@media only screen and (max-width: 600px) {
+   .search-container{
+     display: none;
+   }
+ 
+   .dropdown-responsive{
+       display: none;
+   }
+   .brand-wrapper {
+       flex-direction: column;
+       align-items: flex-start;
+   }
+ 
+   .RightArea{
+    margin-left: 3.5rem;
+    width: 20rem;
+   }
 }
 
-/* @media only screen and (max-width: 1024px) and (max-height: 768px) {
-    .AntLayout{
-        margin-left: 100px;
-    }
-    .search-container{
 
-    }
-} */
+
 
 
