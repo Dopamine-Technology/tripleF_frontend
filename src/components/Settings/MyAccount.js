@@ -444,19 +444,22 @@ function MyAccount() {
     return(
         <div className='edit-data'>
            <p className='title-editData'> My Account</p>
-           <Form className='signup-form' onSubmit={handleSubmit(onSubmit)}>
-            {user.userData.profile.type_name=='club'?<Input
-                        register={register}
-                        errors={errors}
-                        name="club_name"
-                        label="Club Name"
-                        placeholder=''
-                        className="form-control form-control-sm rounded"
-                        validation={{}}
-                        type="text"
-                        defaultValue={profileData?.profile.club_name}
-                        inputWidth='289px'
-                      />:     <div className={isSmallScreen ? 'mb-3' : 'mb-3 d-flex'}>
+           {loading?(
+            <LoadingScreen />
+           ):(
+            <Form className='signup-form' onSubmit={handleSubmit(onSubmit)}>
+            {user.userData.profile.type_name=='club'? <Input
+    register={register}
+    errors={errors}
+    name="club_name"
+    label="Club Name"
+    placeholder=""
+    className="form-control form-control-sm rounded"
+    validation={{}}
+    type="text"
+    defaultValue={profileData?.profile.club_name} // Set default value here
+    inputWidth="289px"
+  />:     <div className={isSmallScreen ? 'mb-3' : ' d-flex'}>
                       <div className={isSmallScreen ? 'mb-3' : 'flex-fill'} >
                         <Input
                           register={register}
@@ -487,7 +490,7 @@ function MyAccount() {
                       </div>
                     </div>}
       
-                  <Form.Group className='mb-3' controlId='email' style={{ position: 'relative' }}>
+                  <Form.Group className='' controlId='email' style={{ position: 'relative' }}>
   <Input
     register={register}
     errors={errors}
@@ -643,6 +646,8 @@ function MyAccount() {
   </Row>
 
            </Form>
+           )}
+          
         </div>
     )
 

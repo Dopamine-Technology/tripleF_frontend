@@ -309,6 +309,17 @@ margin-top: 1rem;
   margin-top: 0; 
 
 }
+.register-welcome{
+  color: rgba(70,70,70,1);
+font-family: "Quicksand-Medium";
+font-size: 40px;
+font-style: normal;
+letter-spacing: 0px;
+text-align: left;
+align-content: center;
+margin: auto;
+margin-left: 4rem;
+}
 
   .form-container {
     display: flex;
@@ -362,8 +373,8 @@ margin-top: 1rem;
   
   }
   .register-form{
-    align-items: center;
-    margin-left: 3rem;
+    /* align-items: center; */
+    margin-left: 0.5rem;
   }
 .navbar-container{
   margin-left: -2.3rem;
@@ -372,6 +383,17 @@ margin-top: 1rem;
 }
 .label{
   width:'14rem'
+}
+.register-welcome{
+  color: rgba(70,70,70,1);
+  font-family: "Quicksand-Medium";
+  font-size: 32px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
 }
 
 

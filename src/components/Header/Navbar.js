@@ -72,7 +72,7 @@ const TopNavbar = ({content}) => {
   return (
     <>
     {isScrolled?
-<Navbar expand="lg" className='scroll-navbar' >
+<Navbar expand="lg" className='scroll-navbar' style={{ zIndex: '1' }}  >
   <Container className='navbar-container'>
     <Navbar.Brand href="/" className="d-flex align-items-center" style={{marginLeft:'5rem'}}>
       <img src={Logo} className='logo-register' />
@@ -91,9 +91,10 @@ const TopNavbar = ({content}) => {
           id="language-dropdown"
           variant=""
           className=" bg-transparent mr-5 custom-dropdown mt-1"
+       
         >
           {availableLanguages.map((lang) => (
-            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
+            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}    style={{ zIndex: '999' }} >
               <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
               {lang.label}
             </Dropdown.Item>
@@ -252,7 +253,7 @@ useLayoutEffect(() => {
 
   return (
     <>
-    {isScrolled?<Navbar expand="lg" className='scroll-navbar2'>
+    {isScrolled?<Navbar expand="lg" className='scroll-navbar2' style={{ zIndex: '0' }}>
     <Container >
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'18.8rem':'14.5rem'}} className=""/>

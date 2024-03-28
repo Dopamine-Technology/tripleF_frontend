@@ -44,6 +44,7 @@ function App() {
         {user.isAuthenticated ? (
             <>
           <Route path='/' element={<Layout />}>
+          <Route path='/' element={<Home />} />
             <Route path='/home' element={<Home />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
             <Route path='/clubs' element={<ComingSoon />}  />

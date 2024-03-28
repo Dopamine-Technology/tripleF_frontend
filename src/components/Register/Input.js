@@ -52,7 +52,7 @@ const Input = ({
   };
 
   return (
-    <Form.Group as={Col} md={4} className={isSmallScreen?'':'mb-4'}>
+    <Form.Group as={Col} md={4} className={isSmallScreen?'':''}>
       <Form.Label className={`text-capitalize text-black label`}>
         {label}
       </Form.Label>
