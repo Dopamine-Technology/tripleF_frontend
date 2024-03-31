@@ -562,7 +562,7 @@ function RegisterForm({ onLoadingChange }) {
     className="custom-google-login"
   />
   <LoginSocialFacebook
-    appId="693137086287841"
+    appId="778472143865806"
     onResolve={(response) => {
       const userData = {
         first_name: response.data.first_name,
