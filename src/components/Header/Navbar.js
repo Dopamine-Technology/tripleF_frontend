@@ -76,7 +76,7 @@ const TopNavbar = ({content}) => {
   <Container className='navbar-container'>
     <Navbar.Brand href="/" className="d-flex align-items-center" style={{marginLeft:'5rem'}}>
       <img src={Logo} className='logo-register' />
-      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
+      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1"/>
     </Navbar.Brand>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ms-auto mt-2">

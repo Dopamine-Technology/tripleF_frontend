@@ -684,7 +684,7 @@ function RegisterForm({ onLoadingChange }) {
                 <p>Account Type</p>
                 <div className="account-type-options" onChange={handleAccountTypeChange} >
                   {isSmallScreen ? (
-                    <select className="form-select" style={{ width: isSmallScreen ? '70%' : '100%' }} >
+                    <select className="form-select" style={{ width: isSmallScreen ? '100%' : '100%' }} >
                       {accountTypes.map((account, index) => (
                         <option key={index} value={account.id}>
                           {account.name}
