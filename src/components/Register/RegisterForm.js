@@ -22,6 +22,8 @@ import { gapi } from "gapi-script";
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { UserDataContext } from "../UserContext/UserData.context";
+import { LoginSocialFacebook } from "reactjs-social-login";
+import { FacebookLoginButton } from "react-social-login-buttons";
 
 function RegisterForm({ onLoadingChange }) {
   const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
@@ -550,19 +552,42 @@ function RegisterForm({ onLoadingChange }) {
            
               <Col md={12}>
 
-              <GoogleLogin
-               clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
-               buttonText="Sign up with Google"
-               onSuccess={onSuccess}
-               onFailure={onFailure}
-               cookiePolicy={'single_host_origin'}
-               className="custom-google-login"
-                   />
-                
-                <Button variant="" className=' facebook-btn' >
-                  <img src={facebook} alt='search' className='me-2' />
-                  Sign up with Facebook
-                </Button>
+              <div className="social-login-container">
+  <GoogleLogin
+    clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
+    buttonText="Sign up with Google"
+    onSuccess={onSuccess}
+    onFailure={onFailure}
+    cookiePolicy={'single_host_origin'}
+    className="custom-google-login"
+  />
+  <LoginSocialFacebook
+    appId="693137086287841"
+    onResolve={(response) => {
+      const userData = {
+        first_name: response.data.first_name,
+        last_name: response.data.last_name,
+        user_name: response.data.email,
+        email: response.data.email,
+        social_image: response.data.picture.data.url, 
+        facebook_identifier: response.data.accessToken
+      };
+      setFormData(userData);
+      setAccessToken(response.accessToken); 
+      setCurrentStep(currentStep + 1);
+      setAccountType('1');
+      setSignedUpWithGoogle(true);
+    }}
+    onReject={(error) => {
+      console.log(error);
+    }}
+  >
+    <Button variant="" className='facebook-btn' >
+      <img src={facebook} alt='search' className='me-2' />
+      Sign up with Facebook
+    </Button>
+  </LoginSocialFacebook>
+</div>
 
                 
                 <div style={{ display: 'flex', alignItems: 'center' }} className='login-or'>
@@ -622,7 +647,7 @@ function RegisterForm({ onLoadingChange }) {
               className="form-control form-control-sm rounded"
               validation={{}}
               type="text"
-              inputWidth='31rem'
+              inputWidth={isSmallScreen?'15rem':'31rem'}
             />
                   </Form.Group>
         
@@ -636,7 +661,7 @@ function RegisterForm({ onLoadingChange }) {
                       className="form-control form-control-sm rounded"
                       validation={{}}
                       type="text"
-                      inputWidth='31rem'
+                      inputWidth={isSmallScreen?'15rem':'31rem'}
                     />
                      {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
                   </Form.Group>
@@ -651,7 +676,7 @@ function RegisterForm({ onLoadingChange }) {
                     validation={{ required: true }}
                     className={"py-2 rounded-sm"}
                     errors={bothErrors}
-                    inputWidth='31rem'
+                    inputWidth={isSmallScreen?'15rem':'31rem'}
                   />
         
                   </Form.Group>
@@ -684,7 +709,7 @@ function RegisterForm({ onLoadingChange }) {
                 <p>Account Type</p>
                 <div className="account-type-options" onChange={handleAccountTypeChange} >
                   {isSmallScreen ? (
-                    <select className="form-select" style={{ width: isSmallScreen ? '70%' : '100%' }} >
+                    <select className="form-select" style={{ width: isSmallScreen ? '100%' : '100%' }} >
                       {accountTypes.map((account, index) => (
                         <option key={index} value={account.id}>
                           {account.name}

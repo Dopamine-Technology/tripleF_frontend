@@ -212,11 +212,11 @@ function LoginForm() {
  </Form.Group>
  <Form.Group className='mb-3' controlId='formRememberMe'  >
   <Row>
-    <Col xs={6}>
+    <Col xs={5}>
       <Form.Check type='checkbox' label='Remember Me' onChange={handleRememberMeChange} checked={rememberMe}
       className={rememberMe ? 'green-checkbox' : ''} />
     </Col>
-    <Col xs={6}>
+    <Col xs={7}>
       <Form.Text>
         <a href='/reset-password/' className='text-black'>Forgot Password?</a>
       </Form.Text>

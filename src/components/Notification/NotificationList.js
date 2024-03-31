@@ -5,7 +5,7 @@ import NavBar from '../Layout/Navbar';
 
 function NotificationList() {
     const notifications=[
-        {userImg:'https://img.freepik.com/free-photo/view-child-hair-salon_23-2150462483.jpg',
+        {userImg:'https://media.gettyimages.com/id/200280798-001/photo/front-profile-of-a-boy-playing-football-in-a-garden.jpg?s=170667a&w=gi&k=20&c=4XuSBXViKEU7blJ4C_1VASVKQGJii0_cC1K3ubxEuos=',
          userName:'FarisJad',
          notificationContent:'share your challenge',
          created_at:'2 hours ago'
@@ -30,7 +30,7 @@ function NotificationList() {
          notificationContent:'added new opportunity',
          created_at:'2 hours ago'
          },
-         { userImg:'https://img.freepik.com/free-photo/front-view-happy-little-girl-home-during-online-school-with-laptop_23-2148827496.jpg',
+         { userImg:'https://c8.alamy.com/comp/2EFC9N1/side-profile-of-a-soccer-player-balancing-a-soccer-ball-on-his-thighs-2EFC9N1.jpg',
          userName:'FarisJad',
          notificationContent:'added a bronze medal to your challenge',
          created_at:'8 Mar, 2024  06:40 PM'
@@ -52,14 +52,11 @@ function NotificationList() {
             <p className='notifiactionList-title'>Notifications</p>
          <div className='notification-container'>
            {notifications.map((notification,index)=>(
-              <div className='d-flex' style={{marginLeft:'5rem'}}>
+              <div className='d-flex ' style={{marginLeft:'5rem'}}>
               <img src={notification.userImg} className='notification-owner me-3 ' />
               <div>
-                  <p className='notificationList-content mt-2 ' >
-                    <span className='notification-owner-userName me-1'>{notification.userName}</span>
-                    {notification.notificationContent}</p>
-                  <p className='notification-content mb-1'>{notification.created_at}</p>
-                  {index !== notifications.length - 1 && <hr style={{ border:'solid 1px #ebeaed'}}/>}
+                  <p className='notificationList-content mt-2 '><span className='notification-owner-userName'>{notification.userName}</span>{notification.notificationContent}  <br /> {notification.created_at}</p>
+                  {index !== notifications.length - 1 && <hr style={{ border:'solid 1px #e2e2ea'}}/>}
               </div>
               
           </div>

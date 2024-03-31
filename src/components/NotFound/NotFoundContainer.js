@@ -4,7 +4,7 @@ import './style.css';
 
 function NotFoundContainer() {
     return(
-        <div>
+        <div className='mt-5'>
              <div className='notFound-container'>
         <img src={notFoundImg} />
         <p className='notFound-word'>404</p>

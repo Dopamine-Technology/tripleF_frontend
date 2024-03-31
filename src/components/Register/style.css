@@ -309,6 +309,12 @@ margin-top: 1rem;
   margin-top: 0; 
 
 }
+.social-login-container {
+  display: flex;
+  gap: 10px; /* Adjust the gap between buttons */
+}
+
+
 .register-welcome{
   color: rgba(70,70,70,1);
 font-family: "Quicksand-Medium";
@@ -369,7 +375,7 @@ margin-left: 4rem;
   .form-container input[type='radio'],
   .form-container input[type='number']
  {
-    width: 70%;
+    width: 100%;
   
   }
   .register-form{

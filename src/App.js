@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LandingPage from './pages/LandingPage';
 import { Route, BrowserRouter as Router, Routes , Navigate} from "react-router-dom";
-import React,{useContext} from 'react';
+import React,{useContext, useEffect,useState} from 'react';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import VerifyPage from './components/Register/VerifyPage';
@@ -31,11 +31,22 @@ import ChangePassword from './components/Settings/ChangePassword';
 import Notification from './components/Settings/Notification';
 import ProfilesApplied from './components/Opportunities/ProfilesApplied';
 import NotificationList from './components/Notification/NotificationList';
+import {io} from 'socket.io-client';
+
 
 function App() {
   const { user } = useContext(UserDataContext);
   const checkRole = useRoleCheck();
+  // const [socket,setSocket]=useState();
 
+  // useEffect(()=>{
+  //   setSocket(io("https://server-domain.com"))
+
+  // },[])
+
+  // useEffect(()=>{
+  //   socket.emit('newUser',user);
+  // },[socket,user])
   return (
     <div className="App">
        <Router>

@@ -1111,8 +1111,8 @@ user-select: none;
     }
     .share-btn{
         margin-top: 0rem;
-        width: auto;
-        margin-left: 4rem;
+        width: 90px;
+        margin-left: 3rem;
     }
     .post-video{
         height: 30rem;
@@ -1121,6 +1121,12 @@ user-select: none;
     }
     .add-post{
         margin-left: 0rem;
+    }
+    .newPost-title{
+        width: 30rem;
+    }
+    .discover-btn{
+        width:114%;
     }
 }
 /* 

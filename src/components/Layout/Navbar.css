@@ -220,8 +220,8 @@ text-align: left;
 }
 
 .icon {
-    width: 30px;
-    height: 30px;
+    width: 23px;
+    height: 23px;
     margin-right: 10px;
     color:#979697
 }
@@ -247,21 +247,25 @@ text-align: left;
     
    } 
     .icon {
-       width: 24px;
-       height: 24px;
-       display: inline-block;
-   } 
-   
- 
-   .dropdown-responsive {
-       display: none;
-   }
-   .story-section{
-       max-width: 80%;
-       overflow-x: scroll;
-   } 
-   
-   
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+    }
+    .dropdown-responsive {
+        display: none;
+    }
+    .story-section{
+        max-width: 80%;
+        overflow-x: scroll;
+    }
+    .right-content{
+        display: flex;
+        flex-direction: row;
+    }
+    .navbar-brand{
+        margin-right: 0;
+    }
+    
 }
 
 

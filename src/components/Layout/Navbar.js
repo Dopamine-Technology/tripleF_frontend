@@ -1,10 +1,10 @@
-import React, { useContext,useState } from "react";
+import React, { useContext,useEffect,useState } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import Logo from '../../assets/imgs/Logo.png'
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdArrowDropDown } from "react-icons/md";
 import { AiOutlineMessage } from "react-icons/ai";
-import { Dropdown, Space, message } from "antd";
+import { Dropdown, Space, message, notification } from "antd";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -23,11 +23,29 @@ import NotificationIcon from '../../assets/imgs/notificationIcon.svg';
 import NotificationDropDown from "../Notification/NotificationDropDown";
 
 
-function NavBar({ toggleCollapse,isSmallScreen }) {
+function NavBar({ toggleCollapse,isSmallScreen,socket }) {
     const { user } = useContext(UserDataContext);
     const navigate=useNavigate();
     const axios=useAxios();
+    const [notifications,setNotifications]=useState([]);
     const [dropdownVisible, setDropdownVisible] = useState(false);
+
+    // useEffect(()=>{
+    //   socket.on('getNotification',(data)=>{
+    //    setNotifications((prev)=>[...prev,data]);
+    //   })
+    // },[socket])
+
+    // const displayNotification=({senderName, type})=>{
+    //   let action;
+
+    //   if(type==1){
+    //     action='liked';
+    //   }
+    //   return (
+    //     <span className="notification">{`${senderName} ${action} your post`}</span>
+    //   )
+    // }
 
     const toggleDropdown = () => {
       setDropdownVisible(!dropdownVisible);
@@ -150,10 +168,13 @@ function NavBar({ toggleCollapse,isSmallScreen }) {
                 </Nav>
        
                 <Nav className="right-content">
-                    <img src={messages} className="icon me-4" />
+                    <img src={messages} className="icon me-2" />
+                    {isSmallScreen?<img src={NotificationIcon} className="icon me-2" onClick={toggleDropdown} />:
+                          <NotificationDropDown />
+                    }
                     {/* <img src={NotificationIcon} className="icon me-4" onClick={toggleDropdown} /> */}
       
-               <NotificationDropDown />
+         
               
                 
                     <Dropdown menu={{ items }} className="dropdown-responsive">
