@@ -354,7 +354,7 @@ margin-top: 1rem;
   .form-container input[type='radio'],
   .form-container input[type='number']
  {
-    width: 70%;
+    width: 100%;
   
   }
   .register-form{
@@ -368,6 +368,17 @@ margin-top: 1rem;
 }
 .label{
   width:'14rem'
+}
+.register-welcome {
+  font-family: 'Quicksand-Bold';
+  font-size: 30px;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+  margin-left: 3rem;
+  margin-bottom: 2rem;
 }
 
 

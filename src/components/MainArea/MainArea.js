@@ -5,13 +5,13 @@ import NewPost from "./NewPost";
 import StorySection from "./StorySection";
 import { Row, Col } from 'react-bootstrap';
 
-function MainArea() {
+function MainArea({socket}) {
   return (
     <div className="Main">
    <Row>
     <StorySection />
    <NewPost />
-   <Post />
+   <Post  />
    </Row>
    
     </div>

@@ -4,10 +4,10 @@ import NotificationIcon from '../../assets/imgs/notificationIcon.svg';
 import NotificationActive from '../../assets/imgs/notificationIconActive.svg';
 import './style.css';
 
-function NotificationDropDown({ dropdownVisible, onClose }) {
+function NotificationDropDown() {
 
     const notifications=[
-        {userImg:'https://img.freepik.com/free-photo/view-child-hair-salon_23-2150462483.jpg',
+        {userImg:'https://media.gettyimages.com/id/200280798-001/photo/front-profile-of-a-boy-playing-football-in-a-garden.jpg?s=170667a&w=gi&k=20&c=4XuSBXViKEU7blJ4C_1VASVKQGJii0_cC1K3ubxEuos=',
          userName:'FarisJad',
          notificationContent:'share your challenge',
          created_at:'2 hours ago'
@@ -54,7 +54,7 @@ function NotificationDropDown({ dropdownVisible, onClose }) {
     return (
         <Dropdown className="d-inline mx-2" drop='start' >
             <Dropdown.Toggle id="dropdown-autoclose-true" className="bg-transparent border-white">
-                <img src={NotificationIcon} className="icon me-4" />
+                <img src={NotificationIcon} className="icon me-2" />
             </Dropdown.Toggle>
             <Dropdown.Menu  style={{ width: '28rem' }} className='mt-5'>
                 <p className='title'>Notifications</p>
@@ -63,15 +63,16 @@ function NotificationDropDown({ dropdownVisible, onClose }) {
                     <Dropdown.Item href="#" key={index}>
                         <div className='d-flex'>
                             <img src={notification.userImg} className='notification-owner me-2' />
+                            
                             <div>
-                                <p className='notification-content mt-2 ' style={{maxWidth:'200px'}}><span className='notification-owner-userName'>{notification.userName}</span>{notification.notificationContent}</p>
-                                <p className='notification-content mb-1'>{notification.created_at}</p>
-                                
+                                <p className='notification-content mt-2 ' style={{maxWidth:'200px'}}>
+                                <span className='notification-owner-userName'>{notification.userName}</span>
+                                {notification.notificationContent}  <br />   {notification.created_at}</p>
                             </div>
                          
                         </div>
                     </Dropdown.Item>
-                     {index !== displayedNotifications.length - 1 && <hr style={{ border:'solid 1px #ebeaed'}}/>}
+                     {/* {index !== displayedNotifications.length - 1 && <hr style={{ border:'solid 1px #ebeaed'}}/>} */}
                      </>
                 ))}
                 {notifications.length > 7 && (

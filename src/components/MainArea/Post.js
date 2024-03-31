@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import { MdMoreHoriz} from 'react-icons/md';
 import { IoShareSocialOutline } from "react-icons/io5";
 import { BsSave } from "react-icons/bs";
@@ -24,9 +24,10 @@ import Silver from '../../assets/imgs/silver.svg';
 import Gold from '../../assets/imgs/gold.svg';
 import Medal from '../../assets/imgs/Medal.svg';
 import UnFollowUser from '../../assets/imgs/UnfollowUser.svg';
+import { UserDataContext } from '../UserContext/UserData.context';
 
 
-function Post(){
+function Post({socket}){
     const [show, setShow] = useState(false);
     const [selectedMedal, setSelectedMedal] = useState(null);
     const [selectedMedalColor, setSelectedMedalColor] = useState(null);
@@ -35,6 +36,7 @@ function Post(){
     const [showReactionPopup,setShowReactionPop]=useState();
     const [showMedalPopups, setShowMedalPopups] = useState(Array(posts?.length).fill(false));
     const [selectedPostId, setSelectedPostId] = useState(null);
+    const { user } = useContext(UserDataContext);
     
     const axios=useAxios();
 
@@ -54,10 +56,16 @@ function Post(){
     
 
 
-      const likeHandle = (index) => {
+      const likeHandle = (index,type) => {
+        // socket.emit('sendNotification',{
+        //     senderName:user,
+        //     RecieverName:user,
+        //     type:type
+        // })
         const newShowMedalPopups = [...showMedalPopups];
         newShowMedalPopups[index] = !newShowMedalPopups[index];
         setShowMedalPopups(newShowMedalPopups);
+
       
       };
     
@@ -182,7 +190,7 @@ function Post(){
     <LiaMedalSolid color={selectedMedalColor || (post.is_reacted=='1' ? 'saddlebrown' : post.is_reacted=='2' ? 'silver' : post.is_reacted=='3' ? 'gold' : 'none')} className='me-2 2' size={20}/>
     Medal
 </div> */}
-<div className="Like" onClick={() => likeHandle(index)}>
+<div className="Like" onClick={() => likeHandle(index,1)}>
     {post.is_reacted=='1' ?<img src={Bronze} />:
       post.is_reacted=='2'?<img src={Silver} />:
       post.is_reacted=='3'? <img src={Gold} />: <img src={Medal} />

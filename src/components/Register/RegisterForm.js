@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useLayoutEffect} from 'react';
+import React,{useState,useEffect,useLayoutEffect,useContext} from 'react';
 import loginPic from '../../assets/imgs/login.png'
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import facebook from '../../assets/imgs/facebook.png';
@@ -19,7 +19,9 @@ import 'react-phone-input-2/lib/style.css';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import startsWith from 'lodash.startswith';
 import { gapi } from "gapi-script";
-
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import { UserDataContext } from "../UserContext/UserData.context";
 
 function RegisterForm({ onLoadingChange }) {
   const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
@@ -60,6 +62,14 @@ function RegisterForm({ onLoadingChange }) {
     )
   });
 
+  const MAX_FILE_SIZE = 102400; // 100KB
+
+  const validFileExtensions = ['jpg', 'gif', 'png', 'jpeg', 'svg', 'webp'];
+  
+  function isValidFileType(fileName) {
+    const extension = fileName.split('.').pop().toLowerCase();
+    return validFileExtensions.includes(extension);
+  }
   
 
   const stepTwoSchema = {
@@ -68,8 +78,16 @@ function RegisterForm({ onLoadingChange }) {
       parent_position: Yup.string().required('Position is required'),
       gender: Yup.string().required('Gender is required'),
       birth_date: Yup.date().typeError('Birth date must be a valid date').required('Birth date is required'),
-      height: Yup.number().typeError('Height must be a valid date').required('Height is required'),
-      wight: Yup.number().typeError('Weight must be a valid date').required('Height is required'),
+      height: Yup.number()
+    .typeError('Height must be a valid number')
+    .required('Height is required')
+    .min(1, 'Height must be greater than or equal to 1') 
+    .max(300, 'Height must be less than or equal to 300'), 
+    wight: Yup.number()
+    .typeError('Weight must be a valid number')
+    .required('Weight is required')
+    .min(1, 'Weight must be greater than or equal to 1') 
+    .max(900, 'Weight must be less than or equal to 1000'),
       country_id: Yup.string().required('Country is required'),
       mobile_number: Yup.string().required('Mobile number is required'),
     }),
@@ -82,18 +100,17 @@ function RegisterForm({ onLoadingChange }) {
       mobile_number: Yup.string().required('Mobile number is required'),
     }),
     3: Yup.object().shape({
+      club_logo: Yup.mixed().test('fileType', 'Image is required', (value) => {
+        if (!value) return true; // No file selected, hence no type issue
+        return value && value[0] && ['image/jpeg', 'image/png'].includes(value[0].type);
+      }).required('Image is required'),
       club_name: Yup.string().required('Club Name is required'),
       talent_type: Yup.string().required('Sport Type is required'),
       country_id: Yup.string().required('Country is required'),
       city_id: Yup.string().required('City is required'),
       mobile_number: Yup.string().required('Mobile number is required'),
       year_founded: Yup.number().typeError('year founded must be a valid date').required('year founded is required'),
-      // club_logo: Yup.mixed().test('fileRequired', 'Logo is required', value => {
-      //   if (!value || !value.length) {
-      //     return false;
-      //   }
-      //   return true;
-      // }),
+
     }),
     4: Yup.object().shape({
       talent_type: Yup.string().required('Sport Type is required'),
@@ -119,6 +136,8 @@ function RegisterForm({ onLoadingChange }) {
         reset,
         watch,
         setValue,
+        getValues,
+
         formState: { errors },
       } = useForm( { mode: "onChange",
       resolver: yupResolver(schema)});
@@ -145,6 +164,10 @@ function RegisterForm({ onLoadingChange }) {
       const [selectedCountryCode, setSelectedCountryCode] = useState('jo');
       const [windowWidth, setWindowWidth] = useState(window.innerWidth);
       const currentYear = new Date().getFullYear();
+      const [errorMessageDisplayed, setErrorMessageDisplayed] = useState(false);
+      const [imgErr,setImgErr]=useState('');
+      const { user, setUser } = useContext(UserDataContext);
+      const navigate=useNavigate();
 
       useLayoutEffect(() => {
         const handleResize = () => {
@@ -155,7 +178,7 @@ function RegisterForm({ onLoadingChange }) {
         return () => window.removeEventListener('resize', handleResize);
       }, []);
     
-      const isSmallScreen = windowWidth <= 360;
+      const isSmallScreen = windowWidth <= 600;
       
       const clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
 
@@ -170,6 +193,8 @@ function RegisterForm({ onLoadingChange }) {
         }
       };
 
+      
+    
       
       const onSuccess = (res) => {
         const userData = {
@@ -206,6 +231,8 @@ function RegisterForm({ onLoadingChange }) {
         console.log('Updated formData:', formData);
       }, [formData,accessToken]);
 
+
+
       const onFailure = (error) => {
         console.error('Google sign-in failed:', error);
       };
@@ -235,20 +262,20 @@ function RegisterForm({ onLoadingChange }) {
       }, [isFirstRender]);
     
 
-      useEffect(() => {
-        axios
-          .get('https://backend.triplef.group/api/app/get_user_types')
-          .then((response) => {
-            setAccountType(response.data.result);
-          })
-          .catch((error) => {
-            console.error("Error fetching Accounts data:", error);
-          })
-          .finally(() => {
-            setLoading(false);
-            onLoadingChange(false);
-          });
-      }, []);
+      // useEffect(() => {
+      //   axios
+      //     .get('https://backend.triplef.group/api/app/get_user_types')
+      //     .then((response) => {
+      //       setAccountType(response.data.result);
+      //     })
+      //     .catch((error) => {
+      //       console.error("Error fetching Accounts data:", error);
+      //     })
+      //     .finally(() => {
+      //       setLoading(false);
+      //       onLoadingChange(false);
+      //     });
+      // }, []);
 
 
       useEffect(() => {
@@ -305,6 +332,12 @@ function RegisterForm({ onLoadingChange }) {
         setTermsAccepted(e.target.checked); 
       };
 
+      const handleChange = () => {
+        // Reset errorMessageDisplayed when form data changes
+        setErrorMessageDisplayed(false);
+      };
+    
+
       const handlePositionSelect = async (selectedPositionId) => {
         try {
           const response = await axios.post('https://backend.triplef.group/api/app/get_sport_positions/1', {
@@ -336,15 +369,36 @@ function RegisterForm({ onLoadingChange }) {
       
     
       const [formErrors, setFormErrors] = useState({});
+      const [emailError, setEmailError] = useState('');
+
+      const validateEmail = async (email) => {
+    try {
+      const response = await axios.post(`https://backend.triplef.group/api/user/auth/unique_email`,{email});
+      if (response.data.result==false) {
+        setEmailError('Email already exists!');
+        return false;
+      }
+      return true;
+    } catch (error) {
+      console.error('Error checking email:', error);
+      return false;
+    }
+  };
 
       const onSubmit = async (data) => {
         if (currentStep === 1) {
           setFormData(data);
-          setCurrentStep(currentStep + 1);
+          const isEmailValid = await validateEmail(data.email);
+          if (isEmailValid) {
+            setCurrentStep(currentStep + 1);
+          }
         } else if (currentStep === 2) {
           try {
             await stepTwoSchema[accountType].validate(data, { abortEarly: false });
-      
+
+            if (!data.position) {
+              data.position = '1';
+            }
             const mergedData = {};
             for (const key in formData) {
               if (formData[key]) {
@@ -364,13 +418,20 @@ function RegisterForm({ onLoadingChange }) {
             }
             if (accountType === '3') {
               const logo = data.club_logo[0];
-              if (!logo) {
-                message.error('please upload club logo')
-                return;
+              if (!logo ) {
+              //   if (!errorMessageDisplayed) {
+              //   message.error('please, upload club logo')
+              //   setErrorMessageDisplayed(true);
+              // }
+            
+              setImgErr('club logo is required');
+                return
               }
+              
               formDataWithImage.delete('club_logo');
               formDataWithImage.append('club_logo', logo);
             }
+       
             for (const key in mergedData) {
               if (key !== 'image' && mergedData[key]) {
                 formDataWithImage.append(key, mergedData[key]);
@@ -383,25 +444,47 @@ function RegisterForm({ onLoadingChange }) {
               const response = await axios.post(`https://backend.triplef.group/api/user/auth/register`, formDataWithImage);
               if (response.status === 200) {
                 message.success('Registration successful! Please check your email to verify it.');
+                Cookies.set('token',response.data.result.token);
+                
+                setUser({
+                  isAuthenticated: true,
+                  userData: response.data.result.user,
+                });
+                navigate('/home');
               } else {
                 if (response.status === 422) {
                   const errors = response.data.errors;
                   if (errors && errors.email && Array.isArray(errors.email) && errors.email.length > 0) {
                     const emailErrorMessage = errors.email[0];
+                    if (!errorMessageDisplayed) {
                     message.error(emailErrorMessage);
+                    setErrorMessageDisplayed(true);
+                  }
                   } else {
+                    if (!errorMessageDisplayed) {
                     message.error('Unknown validation error. Please try again.');
+                    setErrorMessageDisplayed(true);
+                  }
                   }
                 } else {
+                  if (!errorMessageDisplayed) {
                   message.error('An error occurred. Please try again.');
+                  setErrorMessageDisplayed(true);
+                }
                 }
               }
             } catch (error) {
               if (error.response) {
+                if (!errorMessageDisplayed) {
                 const errorMessage = error.response.data.message || 'Unknown error occurred.';
                 message.error(errorMessage);
+                setErrorMessageDisplayed(true);
+              }
               } else {
+                if (!errorMessageDisplayed) {
                 message.error('Something went wrong. Please try again.');
+                setErrorMessageDisplayed(true);
+              }
               }
             }
           } catch (error) {
@@ -436,6 +519,20 @@ function RegisterForm({ onLoadingChange }) {
 
       const handleAccountTypeChange = (e) => {
         setAccountType(e.target.value);
+        resetSecondStepForm();
+       
+      };
+
+      const resetSecondStepForm = () => {
+        // reset({
+        //   years_of_experience: '', 
+        //   mobile_number: '',     
+        //   country_id: '',     
+        //   city_id: '',    
+        //   birth_date: '',      
+        //   gender: ''               
+     
+        // });
       };
 
       // if (loading) {
@@ -485,6 +582,7 @@ function RegisterForm({ onLoadingChange }) {
                   name={"image"}
                   label={"upload image"}
                       />
+                      
                   </Form.Group>
         
                   <div className={isSmallScreen ? 'mb-3' : 'mb-3 d-flex'}>
@@ -524,7 +622,7 @@ function RegisterForm({ onLoadingChange }) {
               className="form-control form-control-sm rounded"
               validation={{}}
               type="text"
-              inputWidth='31rem'
+              inputWidth={isSmallScreen?'15rem':'31rem'}
             />
                   </Form.Group>
         
@@ -538,10 +636,11 @@ function RegisterForm({ onLoadingChange }) {
                       className="form-control form-control-sm rounded"
                       validation={{}}
                       type="text"
-                      inputWidth='31rem'
+                      inputWidth={isSmallScreen?'15rem':'31rem'}
                     />
+                     {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
                   </Form.Group>
-        
+                 
                   <Form.Group className='mb-3' controlId='password'>
                   <Input
                     type="password"
@@ -552,13 +651,9 @@ function RegisterForm({ onLoadingChange }) {
                     validation={{ required: true }}
                     className={"py-2 rounded-sm"}
                     errors={bothErrors}
-                    inputWidth='31rem'
+                    inputWidth={isSmallScreen?'15rem':'31rem'}
                   />
-                  {/* <p className='fw-bold'>Passwrod must</p>
-                  <ul className='password-ul'>
-                    <li className='password-li' >Be a minimum of eight (8) charchters</li>
-                    <li className='password-li'>Contain at least one (1) uppercase letter (A-Z),lowercase letter (a-z) and special charchters</li>
-                  </ul> */}
+        
                   </Form.Group>
                   <Form.Group controlId="termsCheckbox" className="mb-3">
               <Form.Check
@@ -566,6 +661,7 @@ function RegisterForm({ onLoadingChange }) {
                 label="I accept the Privacy Policies and Terms&Conditions Agreements."
                 onChange={handleTermsCheckbox}
                 checked={termsAccepted?true:false}
+                className={termsAccepted ? 'green-checkbox' : ''} 
                 style={{marginLeft:isSmallScreen?'2rem':''}}
               />
             </Form.Group>
@@ -584,11 +680,11 @@ function RegisterForm({ onLoadingChange }) {
             );
             case 2:
               return (
-                <div className='register-form' >
+                <div className='register-form'   >
                 <p>Account Type</p>
-                <div className="account-type-options" onChange={handleAccountTypeChange}>
+                <div className="account-type-options" onChange={handleAccountTypeChange} >
                   {isSmallScreen ? (
-                    <select className="form-select" style={{ width: isSmallScreen ? '70%' : '100%' }}>
+                    <select className="form-select" style={{ width: isSmallScreen ? '70%' : '100%' }} >
                       {accountTypes.map((account, index) => (
                         <option key={index} value={account.id}>
                           {account.name}
@@ -600,7 +696,11 @@ function RegisterForm({ onLoadingChange }) {
                       {accountTypes.map((account, index) => (
                         <label key={index} className="custom-radio-btn">
                           <span className="label">{account.name}</span>
-                          <input type="radio" value={account.id} name="user_type" />
+                          <input type="radio" value={account.id} name="user_type"
+                              defaultChecked={account.id == '1'}/>
+                              
+                              
+              
                           <span className="checkmark"></span>
                         </label>
                       ))}
@@ -622,7 +722,7 @@ function RegisterForm({ onLoadingChange }) {
         switch (accountType) {
           case '1':
             return (
-              <form onSubmit={handleSubmit(onSubmit)} className='register-form'>
+              <form onSubmit={handleSubmit(onSubmit)}  onChange={handleChange} className='register-form'>
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Talent Type</label>
@@ -674,19 +774,22 @@ function RegisterForm({ onLoadingChange }) {
     )}
   </div>
 )}
+{subPositions?.length ==0 && (
+  <input type="hidden" name="position" value="1" /> 
+)}
 
             
             <div className='form-group'>
-  <label>Gender:</label>
+  <label>Gender</label>
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
       <span className="label">Male</span>
-      <input type="radio" id="male" value="male" {...register('gender')} checked />
+      <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={!formData.gender}   />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
       <span className="label">Female</span>
-      <input type="radio" id="female" value="female" {...register('gender')} />
+      <input type="radio" id="female" value="female" {...register('gender')}  />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
@@ -702,9 +805,36 @@ function RegisterForm({ onLoadingChange }) {
   )}
 </div>
 
+<div className='form-group'>
+  <label>Preferred Foot</label>
+  <div className="radio-buttons">
+    <label className='custom-radio-btn'>
+      <span className="label">Right</span>
+      <input type="radio" id="right" value="right" {...register('preferred_foot')} defaultChecked={!formData.preferred_foot} />
+      <span className="checkmark"></span>
+    </label>
+    <label className='custom-radio-btn'>
+      <span className="label">Left</span>
+      <input type="radio" id="left" value="left" {...register('preferred_foot')} />
+      <span className="checkmark"></span>
+    </label>
+    <label className='custom-radio-btn'>
+      <span className="label">Both</span>
+      <input type="radio" id="both" value="both" {...register('preferred_foot')}  />
+      <span className="checkmark"></span>
+    </label>
+  </div>
+  {/* {Object.keys(formErrors).length > 0 && formErrors.gender && (
+    <div className="text-danger">
+      <p>{formErrors.gender}</p>
+    </div>
+  )} */}
+</div>
+
             <div className='form-group'>
   <label htmlFor="birthdate">Date of Birth:</label>
-  <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} />
+  <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} 
+  className={`form-control py-1 rounded-sm ${formErrors.birth_date ? "border-danger" : ""}`} />
   {Object.keys(formErrors).length > 0 && formErrors.birth_date && (
     <div className="text-danger">
       <p>{formErrors.birth_date}</p>
@@ -715,7 +845,8 @@ function RegisterForm({ onLoadingChange }) {
             
 <div className='form-group d-flex'>
 <label htmlFor="height">Height (cm):</label>
-                  <input type="number" id="height" {...register('height')}  min="25" max='250' />
+                  <input type="number" id="height" {...register('height')} 
+                  className={`${formErrors.height ? "border-danger" : ""}`} />
        
   {Object.keys(formErrors).length > 0 && formErrors.height && (
     <div className="text-danger">
@@ -724,7 +855,8 @@ function RegisterForm({ onLoadingChange }) {
   )}
 
 <label htmlFor="weight">Weight (kg):</label>
- <input type="number" id="weight" {...register('wight')} min="38" max='600' />
+ <input type="number" id="weight" {...register('wight')}
+ className={`${formErrors.wight ? "border-danger" : ""}`}  />
   {Object.keys(formErrors).length > 0 && formErrors.wight && (
     <div className="text-danger">
       <p>{formErrors.wight}</p>
@@ -735,7 +867,9 @@ function RegisterForm({ onLoadingChange }) {
             
 <div className='form-group'>
   <label htmlFor="country">Country:</label>
-  <select id="country" {...register('country_id', { required: true })} onChange={(e) => handleCountrySelect(e.target.value)}>
+  <select id="country" {...register('country_id', { required: true })} 
+  onChange={(e) => handleCountrySelect(e.target.value)}
+  className={`${formErrors.country_id ? "border-danger" : ""}`} >
     <option value=""></option>
     {countries.map(country => (
       <option key={country.id} value={country.id}>
@@ -754,7 +888,7 @@ function RegisterForm({ onLoadingChange }) {
 {cities?.length > 0 && (
   <div className='form-group'>
     <label htmlFor="subPosition">City:</label>
-    <select id="subPosition" {...register('city_id')}>
+    <select id="subPosition" {...register('city_id')} className={`${formErrors.city_id ? "border-danger" : ""}`}>
       {cities?.map(city => (
         <option key={city.id} value={city.id}>
           {city.name}
@@ -773,7 +907,7 @@ function RegisterForm({ onLoadingChange }) {
 <div className='form-group'>
   <label htmlFor="mobile_number">Phone:</label>
   <PhoneInput
-  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+  className={`form-control py-1 rounded-sm ${formErrors.mobile_number ? "border-danger" : ""}`}
   inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
   country={selectedCountryCode}
@@ -820,7 +954,7 @@ function RegisterForm({ onLoadingChange }) {
             );
           case '2':
             return (
-              <form onSubmit={handleSubmit(onSubmit)} className='register-form'>
+              <form onSubmit={handleSubmit(onSubmit)} onChange={handleChange} className='register-form'>
   <div className='form-container'>
     <div className='form-group'>
       <label htmlFor="talentType">Sport Type</label>
@@ -843,7 +977,7 @@ function RegisterForm({ onLoadingChange }) {
       <div className="radio-buttons">
         <label className='custom-radio-btn'>
           <span className="label">Male</span>
-          <input type="radio" id="male" value="male" {...register('gender')} checked />
+          <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={!formData.gender} />
           <span className="checkmark"></span>
         </label>
         <label className='custom-radio-btn'>
@@ -867,7 +1001,8 @@ function RegisterForm({ onLoadingChange }) {
     <div className='mb-3 d-flex'>
       <div className='flex-fill form-group'>
         <label htmlFor="years_of_experience">Years of Experience:</label>
-        <input type="number" id="years_of_experience" {...register('years_of_experience')} min="0" style={{ padding: '8px' }} />
+        <input type="number" id="years_of_experience" {...register('years_of_experience')} min="0" style={{ padding: '8px' }} 
+        className={`${formErrors.years_of_experience ? "border-danger" : ""}`}/>
         {Object.keys(formErrors).length > 0 && formErrors.years_of_experience && (
     <div className="text-danger">
       <p>{formErrors.years_of_experience}</p>
@@ -876,7 +1011,7 @@ function RegisterForm({ onLoadingChange }) {
       </div>
       <div className='flex-fill form-group'>
         <label htmlFor="birthdate">Date of Birth:</label>
-        <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} />
+        <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} className={`${formErrors.birth_date ? "border-danger" : ""}`}  />
         {Object.keys(formErrors).length > 0 && formErrors.birth_date && (
     <div className="text-danger">
       <p>{formErrors.birth_date}</p>
@@ -888,7 +1023,8 @@ function RegisterForm({ onLoadingChange }) {
 
     <div className='form-group'>
       <label htmlFor="country">Place of Residence</label>
-      <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+      <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}
+      className={`${formErrors.country_id ? "border-danger" : ""}`}>
         <option value=" ">Select Country</option>
         {countries.map(country => (
           <option key={country.id} value={country.id}>
@@ -905,7 +1041,7 @@ function RegisterForm({ onLoadingChange }) {
     {cities?.length > 0 && (
       <div className='form-group'>
         <label htmlFor="city">City:</label>
-        <select id="city" {...register('city_id')}>
+        <select id="city" {...register('city_id')} className={`${formErrors.country_id ? "border-danger" : ""}`}>
           {cities?.map(city => (
             <option key={city.id} value={city.id}>
               {city.name}
@@ -922,7 +1058,7 @@ function RegisterForm({ onLoadingChange }) {
     <div className='form-group'>
       <label htmlFor="phone">Phone:</label>
       <PhoneInput
-        className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+        className={`form-control py-1 rounded-sm ${formErrors.mobile_number? "border-danger" : ""}`}
         inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
         buttonClass="border-0"
         country={selectedCountryCode || 'jo'}
@@ -968,7 +1104,7 @@ function RegisterForm({ onLoadingChange }) {
             );
           case '4':
             return (
-              <form onSubmit={handleSubmit(onSubmit)}className='register-form'>
+              <form onSubmit={handleSubmit(onSubmit)} onChange={handleChange} className='register-form'>
               <div className='form-container'>
                 <div className='form-group'>
                   <label htmlFor="talentType">Sport Type</label>
@@ -991,7 +1127,7 @@ function RegisterForm({ onLoadingChange }) {
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
       <span className="label">Male</span>
-      <input type="radio" id="male" value="male" {...register('gender')} checked />
+      <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={!formData.gender} />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
@@ -1014,7 +1150,8 @@ function RegisterForm({ onLoadingChange }) {
 <div className='mb-3 d-flex '>
                     <div className='flex-fill form-group' >
                     <label htmlFor="birthdate">years of experience:</label>
-                  <input type="number" id="years_of_experience" {...register('years_of_experience')} min="0"  style={{padding:'8px'}} />
+                  <input type="number" id="years_of_experience" {...register('years_of_experience')} 
+                  min="0"  style={{padding:'8px'}} className={`${formErrors.years_of_experience ? "border-danger" : ""}`}/>
                   {Object.keys(formErrors).length > 0 && formErrors.years_of_experience && (
     <div className="text-danger">
       <p>{formErrors.years_of_experience}</p>
@@ -1022,8 +1159,9 @@ function RegisterForm({ onLoadingChange }) {
   )}
                     </div>
                     <div className='flex-fill form-group'>
-                    <label htmlFor="birthdate">Date of Birth::</label>
-                  <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}  />
+                    <label htmlFor="birthdate">Date of Birth:</label>
+                  <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}
+                  className={`${formErrors.birth_date ? "border-danger" : ""}`}   />
                   {Object.keys(formErrors).length > 0 && formErrors.birth_date && (
     <div className="text-danger">
       <p>{formErrors.birth_date}</p>
@@ -1034,7 +1172,8 @@ function RegisterForm({ onLoadingChange }) {
    
                   <div className='form-group'>
   <label htmlFor="country">Place of Residence</label>
-  <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+  <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}
+  className={`${formErrors.country_id ? "border-danger" : ""}`}>
     <option value=" ">Select Country</option>
     {countries.map(country => (
       <option key={country.id} value={country.id}>
@@ -1051,7 +1190,8 @@ function RegisterForm({ onLoadingChange }) {
 {cities?.length > 0 && (
         <div className='form-group'>
           <label htmlFor="subPosition">City:</label>
-          <select id="subPosition" {...register('city_id')}>
+          <select id="subPosition" {...register('city_id')}
+          className={`${formErrors.city_id ? "border-danger" : ""}`}>
             {cities?.map(city => (
               <option key={city.id} value={city.id}>
                 {city.name}
@@ -1068,7 +1208,7 @@ function RegisterForm({ onLoadingChange }) {
         <div className='form-group'>
           <label htmlFor="phone">Phone:</label>
           <PhoneInput
-  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+  className={`form-control py-1 rounded-sm ${formErrors.mobile_number  ? "border-danger" : ""}`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
   country={selectedCountryCode||'jo'}
@@ -1114,7 +1254,7 @@ function RegisterForm({ onLoadingChange }) {
             );
           case '3':
             return (
-              <form onSubmit={handleSubmit(onSubmit)} className='register-form'>
+              <form onSubmit={handleSubmit(onSubmit)} onChange={handleChange} className='register-form'>
       <div className='form-container'>
       <Form.Group className='mb-3' controlId='formFile'>
                   <EditImage
@@ -1124,15 +1264,19 @@ function RegisterForm({ onLoadingChange }) {
                   label={"Logo"}
                   errors={errors}
        />
-       
-     {errors["club_logo"] && <p className="text-danger">{errors["club_logo"].message}</p>}
-     {console.log('errors',errors)}
-    
+
+
       </Form.Group>
+      {Object.keys(formErrors).length > 0 && formErrors.club_logo && (
+    <div className="text-danger">
+      <p>{formErrors.club_logo}</p>
+    </div>
+  )}
+      {imgErr!=''&&<p className='text-danger'>{imgErr}</p>}
             <div className='form-group'> 
           <label htmlFor="clubname">Club Name:</label>
           <input type="text" id="clube_name" {...register('club_name')}  value={clubName}  onChange={handleClubNameChange} 
-          style={{border:'1px solid #ccc',borderRadius:'5px',padding:'8px'}} />
+          style={{border:'1px solid #ccc',borderRadius:'5px',padding:'8px'}} className={`${formErrors.club_name ? "border-danger" : ""}`} />
           {Object.keys(formErrors).length > 0 && formErrors.club_name && (
     <div className="text-danger">
       <p>{formErrors.club_name}</p>
@@ -1156,7 +1300,8 @@ function RegisterForm({ onLoadingChange }) {
 </div>
 <div className='form-group'>
   <label htmlFor="country">Country:</label>
-  <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}>
+  <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)} 
+  className={`${formErrors.country_id ? "border-danger" : ""}`}>
     <option value=" ">Select Country</option>
     {countries.map(country => (
       <option key={country.id} value={country.id}>
@@ -1173,7 +1318,7 @@ function RegisterForm({ onLoadingChange }) {
 {cities?.length > 0 && (
         <div className='form-group'>
           <label htmlFor="subPosition">City:</label>
-          <select id="subPosition" {...register('city_id')}>
+          <select id="subPosition" {...register('city_id')} className={`${formErrors.city_id ? "border-danger" : ""}`}>
             {cities?.map(city => (
               <option key={city.id} value={city.id}>
                 {city.name}
@@ -1190,7 +1335,7 @@ function RegisterForm({ onLoadingChange }) {
   <div className='form-group'>
           <label htmlFor="phone">Phone Number:</label>
           <PhoneInput
-  className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
+  className={`form-control py-1 rounded-sm ${formErrors.mobile_number ? "border-danger" : ""}`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100'} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
   country={selectedCountryCode||'jo'}
@@ -1231,6 +1376,7 @@ function RegisterForm({ onLoadingChange }) {
             max={currentYear}
             style={{padding:'8px'}}
             {...register('year_founded')}
+            className={`${formErrors.year_founded ? "border-danger" : ""}`}
           />
           
           {Object.keys(formErrors).length > 0 && formErrors.year_founded && (
@@ -1300,7 +1446,7 @@ function RegisterForm({ onLoadingChange }) {
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
       <span className="label">Male</span>
-      <input type="radio" id="male" value="male" {...register('gender')} checked />
+      <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={!formData.gender} />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
@@ -1323,9 +1469,9 @@ function RegisterForm({ onLoadingChange }) {
                 </div>
                 <div className={isSmallScreen?'d-flex':'form-group'}>
                   <label htmlFor="height" style={{display:'flex',flexDirection:'column'}}>Height (cm):</label>
-                  <input type="number" id="height" {...register('height')}  min="25" max='250' />
+                  <input type="number" id="height" {...register('height')}  />
                   <label htmlFor="weight" style={{display:isSmallScreen?'flex':'',flexDirection:isSmallScreen?'column':''}}>Weight (kg):</label>
-                  <input type="number" id="weight" {...register('wight')} min="38" max='600' />
+                  <input type="number" id="weight" {...register('wight')}  />
                 </div>
                 <div className='form-group'>
   <label htmlFor="country">Country:</label>
@@ -1413,7 +1559,7 @@ function RegisterForm({ onLoadingChange }) {
       <img src={loginPic} alt="Your Image" className='signup-img'  />
     </Col>
     <Col md={6} className='mt-4'>
-        <p className='login-welcome fs-4' style={{marginBottom:'1rem'}}>Create an Account</p>
+        <p className='register-welcome ' style={{marginBottom:'1rem'}}>Create an Account</p>
         {renderFormStep()}
       </Col>
     

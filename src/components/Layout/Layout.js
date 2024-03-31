@@ -8,7 +8,7 @@ import { Outlet } from "react-router-dom";
 
 const { Header, Sider, Content } = AntLayout;
 
-const Layout = () => {
+const Layout = ({socket}) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleCollapse = () => {

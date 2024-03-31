@@ -2,10 +2,10 @@ import React from 'react'
 import Navbar from '../components/Navbar/Navbar';
 import MainArea from '../components/MainArea/MainArea';
 
-const Home = () => {
+const Home = ({socket}) => {
     return(
     <div>
-     <MainArea />
+     <MainArea  />
     </div>
     )
 }
