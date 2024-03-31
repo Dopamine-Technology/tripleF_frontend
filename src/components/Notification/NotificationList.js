@@ -58,6 +58,7 @@ function NotificationList() {
                   <p className='notificationList-content mt-2 '><span className='notification-owner-userName'>{notification.userName}</span>{notification.notificationContent}  <br /> {notification.created_at}</p>
                   {index !== notifications.length - 1 && <hr style={{ border:'solid 1px #e2e2ea'}}/>}
               </div>
+              
           </div>
            ))}
          </div>

@@ -76,6 +76,7 @@ function LoginForm() {
     const onFailure =()=>{
       // message.error('logged in failed, please try again')
     }
+    
 
 
     const onSubmit = async (data) => {
@@ -122,7 +123,6 @@ function LoginForm() {
       setErrorMessageDisplayed(false);
     };
   
-    
     
 
   useEffect(() => {

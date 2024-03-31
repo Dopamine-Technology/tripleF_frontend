@@ -32,8 +32,16 @@ function MyAccount() {
       .email("wrong email")
       .required("Email is required"),
           // mobile_number: Yup.string().required('Mobile number is required'),
-          height: Yup.number().typeError('Height must be a valid date').required('Height is required'),
-          wight: Yup.number().typeError('Weight must be a valid date').required('Height is required'),
+          height: Yup.number()
+          .typeError('Height must be a valid number')
+          .required('Height is required')
+          .min(0, 'Height must be greater than or equal to 0') // Set your minimum value here
+          .max(300, 'Height must be less than or equal to 300'), // Set your maximum value here
+        wight: Yup.number()
+          .typeError('Weight must be a valid number')
+          .required('Weight is required')
+          .min(0, 'Weight must be greater than or equal to 0') // Set your minimum value here
+          .max(1000, 'Weight must be less than or equal to 1000'),
             
         });
         setValidationSchema(clubSchema);
@@ -137,7 +145,7 @@ function MyAccount() {
             return () => window.removeEventListener('resize', handleResize);
           }, []);
         
-          const isSmallScreen = windowWidth <= 360;
+          const isSmallScreen = windowWidth <= 600;
           function calculateMaxDate() {
             const currentDate = new Date();
             const maxDate = new Date(currentDate);
@@ -241,11 +249,11 @@ function MyAccount() {
     <div className="d-flex">
         <div className="me-2">
             <label htmlFor="height">Height </label>
-            <input type="number" id="height" {...register('height')}  min="25" max='250' defaultValue={profileData?.profile.height} className="form-control" style={{width:'188px'}}/>
+            <input type="number" id="height" {...register('height')}   defaultValue={profileData?.profile.height} className="form-control" style={{width:'188px'}}/>
         </div>
         <div>
             <label htmlFor="weight">Weight </label>
-            <input type="number" id="weight" {...register('wight')} min="38" max='600' className="form-control"defaultValue={profileData?.profile.wight}  style={{width:'188px'}} />
+            <input type="number" id="weight" {...register('wight')}  className="form-control"defaultValue={profileData?.profile.wight}  style={{width:'188px'}} />
         </div>
     </div>
 </Form.Group> 
@@ -436,19 +444,22 @@ function MyAccount() {
     return(
         <div className='edit-data'>
            <p className='title-editData'> My Account</p>
-           <Form className='signup-form' onSubmit={handleSubmit(onSubmit)}>
-            {user.userData.profile.type_name=='club'?<Input
-                        register={register}
-                        errors={errors}
-                        name="club_name"
-                        label="Club Name"
-                        placeholder=''
-                        className="form-control form-control-sm rounded"
-                        validation={{}}
-                        type="text"
-                        defaultValue={profileData?.profile.club_name}
-                        inputWidth='289px'
-                      />:     <div className={isSmallScreen ? 'mb-3' : 'mb-3 d-flex'}>
+           {loading?(
+            <LoadingScreen />
+           ):(
+            <Form className='signup-form' onSubmit={handleSubmit(onSubmit)}>
+            {user.userData.profile.type_name=='club'? <Input
+    register={register}
+    errors={errors}
+    name="club_name"
+    label="Club Name"
+    placeholder=""
+    className="form-control form-control-sm rounded"
+    validation={{}}
+    type="text"
+    defaultValue={profileData?.profile.club_name} // Set default value here
+    inputWidth="289px"
+  />:     <div className={isSmallScreen ? 'mb-3' : ' d-flex'}>
                       <div className={isSmallScreen ? 'mb-3' : 'flex-fill'} >
                         <Input
                           register={register}
@@ -479,7 +490,7 @@ function MyAccount() {
                       </div>
                     </div>}
       
-                  <Form.Group className='mb-3' controlId='email' style={{ position: 'relative' }}>
+                  <Form.Group className='' controlId='email' style={{ position: 'relative' }}>
   <Input
     register={register}
     errors={errors}
@@ -635,6 +646,8 @@ function MyAccount() {
   </Row>
 
            </Form>
+           )}
+          
         </div>
     )
 

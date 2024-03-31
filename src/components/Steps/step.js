@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 
 const Step = ({ step, content, stepNum, isSmallScreen }) => {
   return (
-    <Card style={{ width: isSmallScreen ? '100%' : '30rem', borderRadius: '10px' }}>
+    <Card style={{ width: isSmallScreen ? '100%' : '30rem', borderRadius: '10px' ,height: isSmallScreen ? '80%' : ''}}>
       <Card.Body>
         {isSmallScreen ? (
           <>

@@ -33,7 +33,7 @@ const Steps = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const isSmallScreen = windowWidth <= 360;
+  const isSmallScreen = windowWidth <= 600;
 
   return (
     <div className='steps-div' id='How'>

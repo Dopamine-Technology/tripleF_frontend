@@ -113,7 +113,7 @@ opacity: 0.8;
     font-family:"Quicksand-Bold";;
   }
 
-   @media (max-width: 360px) {
+   @media (max-width: 600px) {
     .social-icons{
       margin-right: 10rem;
       margin-bottom: 2rem;

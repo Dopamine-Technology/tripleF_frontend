@@ -72,7 +72,7 @@ const TopNavbar = ({content}) => {
   return (
     <>
     {isScrolled?
-<Navbar expand="lg" className='scroll-navbar' >
+<Navbar expand="lg" className='scroll-navbar' style={{ zIndex: '1' }}  >
   <Container className='navbar-container'>
     <Navbar.Brand href="/" className="d-flex align-items-center" style={{marginLeft:'5rem'}}>
       <img src={Logo} className='logo-register' />
@@ -82,7 +82,7 @@ const TopNavbar = ({content}) => {
       <Nav className="ms-auto mt-2">
         <DropdownButton
           title={
-            <div className='d-flex align-items-center'>
+            <div className='d-flex align-items-center '>
               <img src={LanguageIconBlack} width='24px' height='24px' className='me-1 mb-4' />
               <span className='mb-4'>{currentLanguage}</span>
               <img src={ArrowDownImage} width='24px' height='24px' className='ms-1 mb-4' />
@@ -90,10 +90,11 @@ const TopNavbar = ({content}) => {
           }
           id="language-dropdown"
           variant=""
-          className=" bg-transparent mr-5 custom-dropdown mt-1 "
+          className=" bg-transparent mr-5 custom-dropdown mt-1"
+       
         >
           {availableLanguages.map((lang) => (
-            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
+            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}    style={{ zIndex: '999' }} >
               <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
               {lang.label}
             </Dropdown.Item>
@@ -129,7 +130,7 @@ const TopNavbar = ({content}) => {
           }
           id="language-dropdown"
           variant=""
-          className="text-white bg-transparent mr-5 custom-dropdown  "
+          className="text-white bg-transparent mr-5 custom-dropdown  mt-1 "
         >
           {availableLanguages.map((lang) => (
             <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
@@ -247,12 +248,12 @@ useLayoutEffect(() => {
   return () => window.removeEventListener('resize', handleResize);
 }, []);
 
-  const isSmallScreen = windowWidth <= 360;
+  const isSmallScreen = windowWidth <= 600;
 
 
   return (
     <>
-    {isScrolled?<Navbar expand="lg" className='scroll-navbar2'>
+    {isScrolled?<Navbar expand="lg" className='scroll-navbar2' style={{ zIndex: '0' }}>
     <Container >
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'18.8rem':'14.5rem'}} className=""/>

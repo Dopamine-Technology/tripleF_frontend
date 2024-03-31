@@ -18,7 +18,7 @@ const SingleOne = ({ img, content, category }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const isSmallScreen = windowWidth <= 360;
+  const isSmallScreen = windowWidth <= 600;
   return (
     <Link to="/blogs/1" style={{ textDecoration: 'none' }}>
     <Card

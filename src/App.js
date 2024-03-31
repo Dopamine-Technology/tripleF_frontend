@@ -54,8 +54,9 @@ function App() {
         <Routes>
         {user.isAuthenticated ? (
             <>
-          <Route path='/' element={<Layout  />}>
-            <Route path='/home' element={<Home  />}  />
+          <Route path='/' element={<Layout />}>
+          <Route path='/' element={<Home />} />
+            <Route path='/home' element={<Home />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
             <Route path='/clubs' element={<ComingSoon />}  />
             <Route path='/Scouts' element={<ComingSoon />}  />
