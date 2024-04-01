@@ -36,7 +36,9 @@ function ProfileCard({id,profileData}) {
 ];
 
   const [activeKey,setActiveKey]=useState();
-
+  const [followersCount, setFollowersCount] = useState(profileData.followers_count);
+  const [followingCount, setFollowingCount] = useState(profileData.following_count);
+  const [isFollowed, setIsFollowed] = useState(profileData.is_followed);
 
 
   const [show, setShow] = useState(false);
@@ -45,6 +47,20 @@ function ProfileCard({id,profileData}) {
   { setShow(true)
   setActiveKey(whichOne)
   };
+
+  const updateFollowersCount = (count) => {
+    setFollowersCount(prevCount => prevCount + count);
+
+};
+const updateFollowingCount = (count) => {
+  setFollowersCount(prevCount => prevCount + count);
+
+};
+
+const handleUpdateIsFollowed = (value) => {
+  setIsFollowed(value);
+};
+
 
 
 
@@ -67,12 +83,15 @@ function ProfileCard({id,profileData}) {
 </Card.Title>
       <Card.Subtitle className='card-subTitle'>{profileData.profile.type_name}</Card.Subtitle>
       <p className='followers-number'>
-        <span className='followers-span me-2' onClick={() => handleShow('followers')}>{profileData.followers_count} followers</span>
+        <span className='followers-span me-2' onClick={() => handleShow('followers')}>{followersCount} followers</span>
         <span className='me-2'>.</span>
-        <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} following</span>
+        <span className='followers-span' onClick={() => handleShow('following')}> {followingCount} following</span>
       </p>
       {profileData.id!=user.userData.id?  
-       <FollowBtn id={id} is_followed={profileData.is_followed} />:null}
+       <FollowBtn id={id} is_followed={isFollowed}
+        updateFollowersCount={updateFollowersCount}
+        updateFollowingCount={updateFollowingCount}
+        updateIsFollowed={setIsFollowed} />:null}
    
       {profileData.profile.type_name == 'talent' && profileData.profile.parent_position.name=='goalkeeper'&&
         <Card.Img src={GoalKeeper} className='mt-4' />

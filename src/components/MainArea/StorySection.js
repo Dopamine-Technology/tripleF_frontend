@@ -142,10 +142,10 @@ function StorySection() {
                             ? 'none'
                             : '', 
                 }}/>
-                                            <div className='time-username' >
-                                                <span className='username'>{user2.user_name}</span>
-                                                <span className='time'>2 Hours ago</span>
-                                            </div>
+<div className='time-username' >
+   <span className='username'>{user2.user_name}</span>
+   <span className='time' style={{ whiteSpace: 'nowrap' }}>{user2.stories[userIndex].created_at}</span>
+ </div>
                                             {seenStories.includes(user2.id) || user2.seen ?  <p className='seen'><FcApproval />seen</p> :null}
                                  
                                         </div>
@@ -167,7 +167,7 @@ function StorySection() {
                                   <img src={timelineStories[currentUserIndex].image} alt="Story" />                   
                                     <div className='time-username'>
                                         <span className='username'>{timelineStories[currentUserIndex].user_name}</span>
-                                        <span className='time'>2 Hours ago</span>
+                                        <span className='time' style={{ whiteSpace: 'nowrap' }}>{timelineStories[currentUserIndex].stories[currentUserIndex].created_at}</span>
                                     </div>
                                 </div>
                             )}

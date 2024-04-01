@@ -14,7 +14,7 @@ import OppPost from '../ClubProfile/OppPost';
 import CoachProfileCard from '../CoachProfile/CoachProfileCard';
 import OppProfileScout from '../ScoutProfile/OppProfileScout';
 import Certifications from '../CoachProfile/Certifications';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import ProfileStrongView from './ProfileStrongView';
 import LoadingScreen from '../../LoadingScreen/LoadingScreen';
 
@@ -22,9 +22,14 @@ function WholeProfile(){
     const axios=useAxios();
     const { id } = useParams();
     const { user } = useContext(UserDataContext);
-
     const [profileData,setProfileData]=useState();
     const [loading, setLoading] = useState(true);
+    const navigate=useNavigate();
+
+    useEffect(() => {
+        // Programmatically reload the page when the `id` parameter changes
+        navigate(`/profile/${id}`);
+      }, [id]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,8 +45,9 @@ function WholeProfile(){
                 setLoading(false); 
             }
         };
-    
+      
         fetchData();
+       
     }, [id]);
     
 

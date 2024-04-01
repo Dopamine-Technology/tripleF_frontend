@@ -25,7 +25,7 @@ import Gold from '../../assets/imgs/gold.svg';
 import Medal from '../../assets/imgs/Medal.svg';
 import UnFollowUser from '../../assets/imgs/UnfollowUser.svg';
 import { UserDataContext } from '../UserContext/UserData.context';
-
+import SaveFilled from '../../assets/imgs/save-filled.svg';
 
 function Post({socket}){
     const [show, setShow] = useState(false);
@@ -41,7 +41,6 @@ function Post({socket}){
     const axios=useAxios();
 
     useEffect(() => {
-    
         const fetchPostsData = async () => {
           try {
             const response = await axios.get('status/timeline');
@@ -52,10 +51,8 @@ function Post({socket}){
         };
         fetchPostsData()
         
-      }, []);
+      }, [posts]);
     
-
-
       const likeHandle = (index,type) => {
         // socket.emit('sendNotification',{
         //     senderName:user,
@@ -69,11 +66,11 @@ function Post({socket}){
       
       };
     
-    const handleSelectMedal = async (id, medal, is_reacted) => {
-        const medalColors = {
-            gold: 'gold',
-            silver: 'silver',
-            saddlebrown: 'saddlebrown',
+      const handleSelectMedal = async (id, medal, is_reacted) => {
+        const medalPoints = {
+            gold: 3,
+            silver: 2,
+            saddlebrown: 1, // Assuming saddlebrown represents bronze
         };
     
         const requestBody = {
@@ -82,19 +79,45 @@ function Post({socket}){
         };
     
         const response = await axios.post('status/react', requestBody);
-        
+        const updatedPosts = posts.map(post => {
+            if (post.id === id) {
+              
+                return {
+                    ...post,
+                    is_reacted: medalPoints[medal], 
+                    reaction_count: is_reacted=='0'?post.reaction_count+1:post.reaction_count
+                    
+
+                };
+                
+            }
+            return post;
+        });
+    
         setSelectedMedal(medal);
-        setSelectedMedalColor(medalColors[medal]);
+        setSelectedMedalColor(medalPoints[medal]);
+        setPosts(updatedPosts);
         setShow(false);
     };
+    
     
     const clearSelection = () => {
         setShowMedalPopups(Array(posts.length).fill(false));
     };
 
+
     const handleShare = (id) => {
-       axios.post(`status/toggle_save/${id}`);
+        
+       axios.get(`status/toggle_save/${id}`);
        console.log('post saved',id)
+       setPosts(prevPosts => {
+        return prevPosts.map(post => {
+          if (post.id === id) {
+            return { ...post, is_saved: !post.is_saved }; // Toggle is_saved
+          }
+          return post;
+        });
+      });
     }
 
     const handleClose = () => setShowPopup(false);
@@ -171,29 +194,24 @@ function Post({socket}){
 
     <div className="MedalOptions" onMouseLeave={clearSelection}>
         <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'gold', post.is_reacted)}>
-            {/* <LiaMedalSolid color="gold" className='me-2' size={40}/> */}
             <img src={Gold} className='me-2' />
         </div>
         <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'silver', post.is_reacted)}>
-            {/* <LiaMedalSolid color="silver" className='me-2' size={40}/> */}
             <img src={Silver} className='me-2' />
         </div>
         <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'saddlebrown', post.is_reacted)}>
-            {/* <LiaMedalSolid color="saddlebrown" className='me-2' size={40}/> */}
             <img src={Bronze} className='me-2' />
         </div>
     </div>
 )}
         
     <div className="Comment">
-    {/* <div className="Like" onClick={() => likeHandle(index)}>
-    <LiaMedalSolid color={selectedMedalColor || (post.is_reacted=='1' ? 'saddlebrown' : post.is_reacted=='2' ? 'silver' : post.is_reacted=='3' ? 'gold' : 'none')} className='me-2 2' size={20}/>
-    Medal
-</div> */}
+    
 <div className="Like" onClick={() => likeHandle(index,1)}>
     {post.is_reacted=='1' ?<img src={Bronze} />:
       post.is_reacted=='2'?<img src={Silver} />:
-      post.is_reacted=='3'? <img src={Gold} />: <img src={Medal} />
+      post.is_reacted=='3'? <img src={Gold} />: 
+      <img src={Medal} />
     }
    
     
@@ -206,7 +224,7 @@ function Post({socket}){
         </div>
         {showPopup&& <SocialPopup handleClose={handleClose} show={showPopup} id={post.id}/>}
         <div className="Like" onClick={() => handleShare(post.id)}>
-            <img src={savedIcon} className='me-2'/>
+        <img src={post.is_saved?SaveFilled:savedIcon} className='me-2'/>
             Save
         </div>
     

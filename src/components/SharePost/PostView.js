@@ -13,6 +13,8 @@ import Bronze from '../../assets/imgs/bronze.svg';
 import Silver from '../../assets/imgs/silver.svg';
 import Gold from '../../assets/imgs/gold.svg';
 import Medal from '../../assets/imgs/Medal.svg';
+import SaveFilled from '../../assets/imgs/save-filled.svg';
+import savedIcon from '../../assets/imgs/Saved.svg';
 
 
 function PostView() {
@@ -52,7 +54,7 @@ function PostView() {
             </div>;
     }
       const handleShare = () => {
-        axios.post(`status/toggle_save/${id}`);
+        axios.get(`status/toggle_save/${id}`);
         console.log('post saved',id)
      }
     
@@ -168,8 +170,9 @@ function PostView() {
             <IoShareSocialOutline color="grey" className='me-2' size={20}/>Share
         </div>
         {showPopup&& <SocialPopup handleClose={handleClose} show={showPopup} id={post.id}/>}
-        <div className="Like">
-            <BsSave color="grey" className='me-2' size={20} onClick={() => handleShare()} />Save
+        <div className="Like" onClick={() => handleShare(post.id)}>
+        <img src={post.is_saved?SaveFilled:savedIcon} className='me-2'/>
+            Save
         </div>
     
     </div> 
