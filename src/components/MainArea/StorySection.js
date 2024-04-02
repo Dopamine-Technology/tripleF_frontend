@@ -13,6 +13,7 @@ import ListImage from '../../assets/imgs/listImg.svg';
 import { FcApproval } from "react-icons/fc";
 import { Link } from 'react-router-dom';
 
+
 function StorySection() {
     const [timelineStories, setTimelineStories] = useState([]);
     const [myStories, setMyStories] = useState([]);
@@ -23,7 +24,9 @@ function StorySection() {
     const [currentUserIndex, setCurrentUserIndex] = useState(0); 
     const [currentStoryIndex, setCurrentStoryIndex] = useState(0); 
     const [seenStories, setSeenStories] = useState([]);
+    const [viewedWithinModal, setViewedWithinModal] = useState(false);
     const storyContainerRef = useRef(null);
+
 
     const axios = useAxios();
 
@@ -51,12 +54,34 @@ function StorySection() {
         fetchMyStoriesData();
     }, []);
 
+    useEffect(() => {
+        const currentUser = timelineStories[currentUserIndex];
+        if (currentUser && currentStoryIndex >= currentUser.userStories?.length) {
+            if (currentUserIndex < timelineStories?.length - 1) {
+                setCurrentUserIndex(currentUserIndex + 1);
+                setCurrentStoryIndex(0); 
+                setSeenStories(prevSeenStories => [...prevSeenStories, user.userData.id]); 
+            } else {
+                if (currentStoryIndex === currentUser.userStories.length - 1) {
+                    setShow(false); 
+                }
+            }
+        } else {
+            const timer = setTimeout(() => {
+                goToNextStory();
+            }, 30000); 
+            return () => clearTimeout(timer);
+        }
+    }, [currentStoryIndex, currentUserIndex, timelineStories]);
+    
+
+    
     const handleStoryClick = (userIndex, storyIndex) => {
         if (userIndex === null) {
             setShow(true);
             setSelectedStory(userIndex); 
             setCurrentUserIndex(user.userData.id); 
-            setSeenStories(prevSeenStories => [...prevSeenStories, user.userData.id]); 
+            setSeenStories(prevSeenStories => [...prevSeenStories, user.userData.id]);
         } else {
             setCurrentUserIndex(userIndex); 
             setCurrentStoryIndex(storyIndex); 
@@ -67,27 +92,30 @@ function StorySection() {
         }
     };
 
-    const handleCloseList = () => {
-        setShowUserList(false);
-    };
+   
 
     const goToNextStory = () => {
         const currentUser = timelineStories[currentUserIndex];
         if (currentUser && currentUser.userStories && currentStoryIndex < currentUser.userStories.length - 1) {
             setCurrentStoryIndex(currentStoryIndex + 1);
+            setSeenStories(prevSeenStories => [...prevSeenStories, currentUser.id]); // Use currentUser.id
         } else if (currentUserIndex < timelineStories.length - 1) {
             setCurrentUserIndex(currentUserIndex + 1);
             setCurrentStoryIndex(0);
+            setSeenStories(prevSeenStories => [...prevSeenStories, timelineStories[currentUserIndex + 1].id]); // Use the next user's ID
         } else {
             setShow(false);
         }
     };
-
+    
+    const handleCloseList = () => {
+        setShowUserList(false);
+    };
     return (
         <div className="story-section">
             <div className="story-container" ref={storyContainerRef}>
                 <div className="story" onClick={() => handleStoryClick(null, null)}>
-                    <img src={user.userData.image} alt="Story" style={{ border: 'white',boxShadow:
+                    <img src={user.userData.image} alt="Story" style={{ border: 'white',backgroundColor:'#979797',boxShadow:
                         seenStories.includes(user.userData.id) || myStories.is_seen
                             ? 'none'
                             : '', }} />
@@ -100,7 +128,8 @@ function StorySection() {
                     boxShadow:
                         seenStories.includes(user2.id) || user2.is_seen
                             ? 'none'
-                            : '',
+                            : ''
+                            ,backgroundColor:'#979797'
                 }} />
                             <span>{user2.user_name}</span>
                         </div>
@@ -121,7 +150,8 @@ function StorySection() {
                   boxShadow:
                       seenStories.includes(user.userData.id) 
                           ? 'none'
-                          : '', 
+                          : ''
+                          ,backgroundColor:'#979797'
               }}/>
                <Link to={`/profile/${user.userData.id}`} style={{textDecoration:'none'}}>
                                           <div className='time-username' >
@@ -140,11 +170,14 @@ function StorySection() {
   boxShadow:
  seenStories.includes(user2.id) || user2.seen
                             ? 'none'
-                            : '', 
+                            : ''
+                            ,backgroundColor:'#979797'
                 }}/>
 <div className='time-username' >
    <span className='username'>{user2.user_name}</span>
-   <span className='time' style={{ whiteSpace: 'nowrap' }}>{user2.stories[userIndex].created_at}</span>
+   <span className='time' style={{ whiteSpace: 'nowrap' }}>
+    {/* {user2.stories[userIndex].created_at} */}
+    </span>
  </div>
                                             {seenStories.includes(user2.id) || user2.seen ?  <p className='seen'><FcApproval />seen</p> :null}
                                  
@@ -167,15 +200,17 @@ function StorySection() {
                                   <img src={timelineStories[currentUserIndex].image} alt="Story" />                   
                                     <div className='time-username'>
                                         <span className='username'>{timelineStories[currentUserIndex].user_name}</span>
-                                        <span className='time' style={{ whiteSpace: 'nowrap' }}>{timelineStories[currentUserIndex].stories[currentUserIndex].created_at}</span>
+                                        <span className='time' style={{ whiteSpace: 'nowrap' }}>
+                                            {/* {timelineStories[currentUserIndex].stories[currentUserIndex].created_at} */}
+                                            </span>
                                     </div>
                                 </div>
                             )}
                             <div style={{
                                 zIndex: '1',
                                 padding:'2rem',
-                                overflowX: 'auto', // Allow horizontal scrolling
-                                whiteSpace: 'nowrap' // Prevent wrapping of story elements
+                                overflowX: 'auto', 
+                                whiteSpace: 'nowrap' 
                             }}>
                                 {selectedStory === null ? (
                                     <Stories
@@ -184,6 +219,7 @@ function StorySection() {
                                         stories={myStories.map(story => ({
                                             url: story.video,
                                             type: 'video', 
+                                            duration: 30000,
                                         })) || []}
                                     />
                                 ) : (
@@ -193,6 +229,7 @@ function StorySection() {
                                         stories={timelineStories[currentUserIndex]?.stories?.map(story => ({
                                             url: story.video,
                                             type: 'video', 
+                                            duration: 30000,
                                         })) || []}
                                     />
                                 )}

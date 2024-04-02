@@ -26,6 +26,7 @@ import Medal from '../../assets/imgs/Medal.svg';
 import UnFollowUser from '../../assets/imgs/UnfollowUser.svg';
 import { UserDataContext } from '../UserContext/UserData.context';
 import SaveFilled from '../../assets/imgs/save-filled.svg';
+import { MdDeleteOutline } from "react-icons/md";
 
 function Post({socket}){
     const [show, setShow] = useState(false);
@@ -113,11 +114,15 @@ function Post({socket}){
        setPosts(prevPosts => {
         return prevPosts.map(post => {
           if (post.id === id) {
-            return { ...post, is_saved: !post.is_saved }; // Toggle is_saved
+            return { ...post, is_saved: !post.is_saved }; 
           }
           return post;
         });
       });
+    }
+    const handleDelete =(id)=>{
+      axios.get(`status/toggle_save/${id}`);
+      
     }
 
     const handleClose = () => setShowPopup(false);
@@ -160,12 +165,13 @@ function Post({socket}){
         <Dropdown.Item href="" className='mt-1 p-2'> <img src={notInterested} className='me-2' />I don’t want to see <br /> this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'><img src={UnFollowUser} className='me-2' />Unfollow user</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' ><img src={report} className='me-2' />Report Post</Dropdown.Item>
+        <hr />
+        <Dropdown.Item href="" className=' p-2' ><MdDeleteOutline color='#979797' size='24px' className='me-2' onclick={() => handleDelete(post.id)} /> Delete Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>
 
-    {post.is_opp?   <OpportunityPost post={post} />:<TimlinePost post={post}/>}
-
+    {post.is_opp? <OpportunityPost post={post} />:<TimlinePost post={post}/>}
 
     <div>
     <hr style={{ color: '#A3A3A3' }} />

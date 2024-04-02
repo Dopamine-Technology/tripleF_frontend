@@ -6,7 +6,7 @@ import './style.css';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { message } from 'antd';
-import dropdownImg from '../../assets/imgs/dropdown.svg'
+import dropdownImg from '../../assets/imgs/dropdown.svg';
 
 function ChallengesList({ handleClose, show }) {
   const [loading, setLoading] = useState(true);
@@ -23,14 +23,32 @@ function ChallengesList({ handleClose, show }) {
   };
 
   const handleFileChange = (event) => {
-
     const selectedFile = event.target.files[0];
     if (selectedFile) {
-      uploadVideo(selectedFile);
-      setVideoUploaded(true);
-      console.log('file2',selectedFile)
+      // Check if the selected file is a video
+      if (selectedFile.type.startsWith('video/')) {
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+        video.onloadedmetadata = function() {
+          // Check the duration of the video
+          if (video.duration <= 30) {
+            uploadVideo(selectedFile);
+            setVideoUploaded(true);
+          } else {
+            // Video duration exceeds 10 seconds, show an error message
+            message.error('Video duration should not exceed 10 seconds.');
+          }
+          // Clean up
+          URL.revokeObjectURL(video.src);
+        };
+        video.src = URL.createObjectURL(selectedFile);
+      } else {
+        // Selected file is not a video, show an error message
+        message.error('Please select a valid video file.');
+      }
     }
   };
+  
 
   const uploadVideo = (file) => {
     const formData = new FormData();
