@@ -25,6 +25,7 @@ function StorySection() {
     const [currentStoryIndex, setCurrentStoryIndex] = useState(0); 
     const [seenStories, setSeenStories] = useState([]);
     const [viewedWithinModal, setViewedWithinModal] = useState(false);
+    const [myStoryTime,setMyStoryTime]=useState('');
     const storyContainerRef = useRef(null);
 
 
@@ -47,6 +48,11 @@ function StorySection() {
             try {
                 const response = await axios.get(`status/user_stories/${user.userData.id}`);
                 setMyStories(response.data.result);
+                if (response.data.result.length > 0) {
+                    const lastStoryCreatedAt = response.data.result[response.data.result.length - 1].created_at;
+                    setMyStoryTime(lastStoryCreatedAt);
+                    console.log('Last story time:', lastStoryCreatedAt);
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -154,38 +160,31 @@ function StorySection() {
                           ,backgroundColor:'#979797'
               }}/>
                <Link to={`/profile/${user.userData.id}`} style={{textDecoration:'none'}}>
-                                          <div className='time-username' >
+                                          <div className='time-username'>
                                               <span className='username'>Me</span>
-                                              <span className='time'>2 Hours ago</span>
+                                              <span className='time'>{myStoryTime}</span>
                                           </div>
                   </Link>
                                       
                                       </div>
-                                    {timelineStories.map((user2, userIndex) => (
-                                        <>
-                                        <Link to={`/profile/${user2.id}`} style={{textDecoration:'none'}}>
-  <div className="profiles-stories d-flex" key={userIndex} style={userIndex === currentUserIndex && currentStoryIndex > 0 ? {backgroundColor: '#ebeaed'} : null}>
-                                          
-  <img src={user2.image} alt="Story"  style={{
-  boxShadow:
- seenStories.includes(user2.id) || user2.seen
-                            ? 'none'
-                            : ''
-                            ,backgroundColor:'#979797'
-                }}/>
-<div className='time-username' >
-   <span className='username'>{user2.user_name}</span>
-   <span className='time' style={{ whiteSpace: 'nowrap' }}>
-    {/* {user2.stories[userIndex].created_at} */}
-    </span>
- </div>
-                                            {seenStories.includes(user2.id) || user2.seen ?  <p className='seen'><FcApproval />seen</p> :null}
-                                 
-                                        </div>
-                                        </Link>
-                                        </>
-                                        
-                                    ))}
+                                      {timelineStories.map((user2, userIndex) => (
+    <Link to={`/profile/${user2.id}`} style={{ textDecoration: 'none' }} key={userIndex}>
+        <div className="profiles-stories d-flex" style={userIndex === currentUserIndex && currentStoryIndex > 0 ? { backgroundColor: '#ebeaed' } : null}>
+            <img src={user2.image} alt="Story" style={{
+                boxShadow: seenStories.includes(user2.id) || user2.seen ? 'none' : '',
+                backgroundColor: '#979797'
+            }} />
+            <div className='time-username'>
+                <span className='username'>{user2.user_name}</span>
+                <span className='time' style={{ whiteSpace: 'nowrap' }}>
+                {user2.stories[currentStoryIndex] && user2.stories[currentStoryIndex].created_at}
+                </span>
+            </div>
+            {seenStories.includes(user2.id) || user2.seen ? <p className='seen'><FcApproval />seen</p> : null}
+        </div>
+    </Link>
+))}
+
                                 </div>
                             </Col>
                         )}
@@ -201,7 +200,7 @@ function StorySection() {
                                     <div className='time-username'>
                                         <span className='username'>{timelineStories[currentUserIndex].user_name}</span>
                                         <span className='time' style={{ whiteSpace: 'nowrap' }}>
-                                            {/* {timelineStories[currentUserIndex].stories[currentUserIndex].created_at} */}
+                                        {timelineStories[currentUserIndex].stories[currentStoryIndex].created_at}
                                             </span>
                                     </div>
                                 </div>
