@@ -8,7 +8,7 @@ import useAxios from '../Auth/useAxiosHook.interceptor';
 import { message } from 'antd';
 import dropdownImg from '../../assets/imgs/dropdown.svg';
 
-function ChallengesList({ handleClose, show }) {
+function ChallengesList({ handleClose, show,onNewPostCreated }) {
   const [loading, setLoading] = useState(true);
   const [challenges, setChallenges] = useState([]);
   const [selectedChallenge, setSelectedChallenge] = useState(null);
@@ -48,6 +48,8 @@ function ChallengesList({ handleClose, show }) {
       }
     }
   };
+
+
   
 
   const uploadVideo = (file) => {
@@ -62,6 +64,7 @@ function ChallengesList({ handleClose, show }) {
     })
     .then((response) => {
       message.success('file uploded successfully');
+      onNewPostCreated();
     })
   };
 
@@ -174,7 +177,9 @@ function ChallengesList({ handleClose, show }) {
         </div>
       </Modal.Body>
       <Modal.Footer className='challenge-footer'>
-      <Button className={` ${videoUploaded ? 'afterSubmit-btn' : 'submit-btn'}`} onClick={handleClose}>
+      <Button className={` ${videoUploaded ? 'afterSubmit-btn' : 'submit-btn'}`} 
+      onClick={handleClose} 
+>
       Submit
         </Button>
       </Modal.Footer>

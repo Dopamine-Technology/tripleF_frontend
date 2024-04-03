@@ -15,7 +15,7 @@ import Gold from '../../assets/imgs/gold.svg';
 import Medal from '../../assets/imgs/Medal.svg';
 import SaveFilled from '../../assets/imgs/save-filled.svg';
 import savedIcon from '../../assets/imgs/Saved.svg';
-
+import { MdDeleteOutline } from "react-icons/md";
 
 function PostView() {
     const [show, setShow] = useState(false);
@@ -67,6 +67,10 @@ function PostView() {
             setShow(true);
         }
     }
+    const handleDelete =(id)=>{
+        axios.delete(`status/delete/${id}`);
+        
+      }
     const handleSelectMedal = (medal) => {
         setSelectedMedal(medal);
         setShow(false);
@@ -97,6 +101,8 @@ function PostView() {
         <Dropdown.Item href="" className='mt-1 p-2'>I don’t want to see this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'>Unfollow user</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'>Report Post</Dropdown.Item>
+        <hr />
+        <Dropdown.Item href="" className=' p-2' ><MdDeleteOutline color='#979797' size='24px' className='me-2' onclick={() => handleDelete(post.id)} /> Delete Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>

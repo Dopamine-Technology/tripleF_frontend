@@ -28,7 +28,8 @@ import { UserDataContext } from '../UserContext/UserData.context';
 import SaveFilled from '../../assets/imgs/save-filled.svg';
 import { MdDeleteOutline } from "react-icons/md";
 
-function Post({socket}){
+
+function Post({socket,newPostCreated}){
     const [show, setShow] = useState(false);
     const [selectedMedal, setSelectedMedal] = useState(null);
     const [selectedMedalColor, setSelectedMedalColor] = useState(null);
@@ -37,22 +38,25 @@ function Post({socket}){
     const [showReactionPopup,setShowReactionPop]=useState();
     const [showMedalPopups, setShowMedalPopups] = useState(Array(posts?.length).fill(false));
     const [selectedPostId, setSelectedPostId] = useState(null);
+    const [fetchPosts, setFetchPosts] = useState(true);
     const { user } = useContext(UserDataContext);
     
     const axios=useAxios();
 
     useEffect(() => {
-        const fetchPostsData = async () => {
-          try {
-            const response = await axios.get('status/timeline');
-            setPosts(response.data.result);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-        fetchPostsData()
-        
-      }, [posts]);
+      const fetchPostsData = async () => {
+        try {
+          const response = await axios.get('status/timeline');
+          setPosts(response.data.result);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+  
+      if (newPostCreated) {
+        fetchPostsData();
+      }
+    }, [newPostCreated]);
     
       const likeHandle = (index,type) => {
         // socket.emit('sendNotification',{
@@ -63,8 +67,6 @@ function Post({socket}){
         const newShowMedalPopups = [...showMedalPopups];
         newShowMedalPopups[index] = !newShowMedalPopups[index];
         setShowMedalPopups(newShowMedalPopups);
-
-      
       };
     
       const handleSelectMedal = async (id, medal, is_reacted) => {
@@ -121,8 +123,8 @@ function Post({socket}){
       });
     }
     const handleDelete =(id)=>{
-      axios.get(`status/toggle_save/${id}`);
-      
+      axios.delete(`status/delete/${id}`);
+      setPosts(posts.filter(post => post.id !== id));
     }
 
     const handleClose = () => setShowPopup(false);
@@ -166,7 +168,7 @@ function Post({socket}){
         <Dropdown.Item href="" className='mt-1 p-2'><img src={UnFollowUser} className='me-2' />Unfollow user</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' ><img src={report} className='me-2' />Report Post</Dropdown.Item>
         <hr />
-        <Dropdown.Item href="" className=' p-2' ><MdDeleteOutline color='#979797' size='24px' className='me-2' onclick={() => handleDelete(post.id)} /> Delete Post</Dropdown.Item>
+        <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)}  ><MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>

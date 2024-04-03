@@ -18,6 +18,7 @@ import Medal from '../../../assets/imgs/Medal.svg';
 import { useParams } from 'react-router-dom';
 import savedIcon from '../../../assets/imgs/Saved.svg';
 import SaveFilled from '../../../assets/imgs/save-filled.svg';
+import { MdDeleteOutline } from "react-icons/md";
 
 function Post(){
     const [show, setShow] = useState(false);
@@ -89,7 +90,11 @@ function Post(){
        });
      });
    }
-
+   const handleDelete =(id)=>{
+    axios.delete(`status/delete/${id}`);
+  
+    
+  }
 
     const handleClose = () => setShowPopup(false);
     const handleShow = () => setShowPopup(true);
@@ -130,6 +135,8 @@ function Post(){
         <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' />I don’t want to see <br />  this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
+        <hr />
+        <Dropdown.Item href="" className=' p-2' ><MdDeleteOutline color='#979797' size='24px' className='me-2' onclick={() => handleDelete(post.id)} /> Delete Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>
