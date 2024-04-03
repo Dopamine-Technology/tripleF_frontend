@@ -16,6 +16,8 @@ import { message } from 'antd';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import * as yup from "yup"; // Import Yup
 import { yupResolver } from "@hookform/resolvers/yup";
+import { LoginSocialFacebook } from "reactjs-social-login";
+import { FacebookLoginButton } from "react-social-login-buttons";
 
 function LoginForm() {
 
@@ -70,7 +72,8 @@ function LoginForm() {
     })
     .catch((error) => {
       console.error('Error sending data to other API:', error);
-    });}
+    });
+  }
   
 
     const onFailure =()=>{
@@ -160,7 +163,8 @@ function LoginForm() {
           <p className='login-welcome'>Welcome Back</p>
           <p  className='login-p'>Welcome Back, please enter your details</p>
         </div>
-        <div className='social-login'>
+        <div className='social-login social-login-container'>
+       
         <GoogleLogin
                clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
                buttonText="    Login with Google"
@@ -169,11 +173,51 @@ function LoginForm() {
                cookiePolicy={'single_host_origin'}
                className="custom-google-login"
                    />
+                   <LoginSocialFacebook
+    appId="778472143865806"
+    onResolve={(response) => {
+      
+      const dataToSend = {
+        email: response.data.email,
+        facebook_identifier: response.data.accessToken,
+      };
+    
+      axios.post('https://backend.triplef.group/api/user/auth/facebook_login', dataToSend)
+      .then((response) => {
+        if (response.data.result) {
+          setUser(response.data.result.user);
+          Cookies.set('token', response.data.result.token);
+          message.success('Logged in successfully');
+  
+          const savedToken = Cookies.get('token');
+          if (savedToken === response.data.result.token) {
+            navigate('/home');
+            window.location.reload();
+          } else {
+            console.error('Token not saved correctly');
+          }
+        } else {
+          message.error('Invalid response from server');
+        }
+      })
+      .catch((error) => {
+        console.error('Error sending data to other API:', error);
+      });
+    }}
+    onReject={(error) => {
+      console.log(error);
+    }}
+  >
+    <Button variant="" className='facebook-btn' >
+      <img src={facebook} alt='search' className='me-2' />
+      Sign up with Facebook
+    </Button>
+  </LoginSocialFacebook>
                 
-         <Button variant="" className=' facebook-btn' >
+         {/* <Button variant="" className=' facebook-btn' >
                   <img src={facebook} alt='search' className='me-2' />
                   Sign up with Facebook
-          </Button>
+          </Button> */}
           </div>
           <div style={{ display: 'flex', alignItems: 'center' }} className='login-or'>
   <hr className='mt-4' style={{width:'24%',color:'#7C7C7C'}} />

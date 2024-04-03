@@ -459,7 +459,8 @@ text-align: left;
 
 .story-container {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    margin-inline-end: 7rem;
    
     
 }
@@ -530,11 +531,12 @@ margin-left: 2rem;
     box-shadow: 
     0 0 0 3px black,
     0 0 0 6px #73CFB4;
+    margin-inline-end: 1rem;
     
 }
 
 .story-section.added {
-    border-color: #ff6347; /* Change to the desired color */
+    border-color: #ff6347;
 }
 
 .challenges-p{

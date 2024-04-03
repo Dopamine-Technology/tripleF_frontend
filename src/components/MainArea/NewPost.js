@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
-function NewPost({profileData}){
+function NewPost({onNewPostCreated  }){
   
     const [show, setShow] = useState(false);
     const location=useLocation();
@@ -37,7 +37,7 @@ return(
         </Col>
         <Col xs={6} sm={4} md={12} lg={2}>
             <Button className='share-btn' onClick={handleShow}>Share</Button>
-            {show && <ChallengesList handleClose={handleClose} show={show} />}
+            {show && <ChallengesList handleClose={handleClose} show={show}  onNewPostCreated={onNewPostCreated}   />}
         </Col>
     </Row>
     ) : (

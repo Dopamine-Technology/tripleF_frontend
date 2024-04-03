@@ -17,11 +17,10 @@ import { Link ,useNavigate} from 'react-router-dom';
 import Cookies from "js-cookie";
 import useAxios from "../Auth/useAxiosHook.interceptor";
 import { RxHamburgerMenu } from "react-icons/rx";
-import india from '../../assets/imgs/india.svg'
 import messages from '../../assets/imgs/messages.svg';
 import NotificationIcon from '../../assets/imgs/notificationIcon.svg';
 import NotificationDropDown from "../Notification/NotificationDropDown";
-
+import { SearchResultsList } from "./SearchResultsList";
 
 function NavBar({ toggleCollapse,isSmallScreen,socket }) {
     const { user } = useContext(UserDataContext);
@@ -29,7 +28,29 @@ function NavBar({ toggleCollapse,isSmallScreen,socket }) {
     const axios=useAxios();
     const [notifications,setNotifications]=useState([]);
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [input, setInput] = useState("");
+    const [results,setResults]=useState([])
 
+    const fetchData = (value) => {
+      fetch("https://jsonplaceholder.typicode.com/users")
+        .then((response) => response.json())
+        .then((json) => {
+          const results = json.filter((user) => {
+            return (
+              value &&
+              user &&
+              user.name &&
+              user.name.toLowerCase().includes(value)
+            );
+          });
+          setResults(results);
+        });
+    };
+
+    const handleChange = (value) => {
+      setInput(value);
+      fetchData(value);
+    };
     // useEffect(()=>{
     //   socket.on('getNotification',(data)=>{
     //    setNotifications((prev)=>[...prev,data]);
@@ -51,6 +72,11 @@ function NavBar({ toggleCollapse,isSmallScreen,socket }) {
       setDropdownVisible(!dropdownVisible);
       console.log("Toggling dropdown visibility",dropdownVisible);
   };
+
+  const handleProfileClick = () => {
+    navigate(`/profile/${user.userData.id}`)
+    window.location.reload();
+  };
   
   function logout() {
     axios
@@ -68,21 +94,8 @@ function NavBar({ toggleCollapse,isSmallScreen,socket }) {
           );
         }
       })
-      // .catch((error) => {
-      //   if (error.response) {
-      //     console.error("Failed to log out client-side:", error);
-      //     message.error(
-      //       "An error occurred while logging out. Please try again later."
-      //     );
-      //   } else {
-      //     message.error(
-      //       "Failed to log out. Please check your internet connection and try again later."
-      //     );
-      //     navigate('/');
-      //     window.location.reload();
-      //   }
-      // });
   }
+  
   
     const items = [
       {
@@ -90,9 +103,10 @@ function NavBar({ toggleCollapse,isSmallScreen,socket }) {
         label: (
           <>
           <Link
-          to={`/profile/${user.userData.id}`}
+          // to={`/profile/${user.userData.id}`}
           className='d-flex' 
           style={{textDecoration:'none',width:'13rem'}}
+          onClick={handleProfileClick}
         >
           <img src={Profile} className="me-2" />
           <p className='mt-3'>My Profile</p>
@@ -162,9 +176,11 @@ function NavBar({ toggleCollapse,isSmallScreen,socket }) {
                 </Navbar.Brand>
                 <Nav className="me-auto">
                     <div className="search-container">
-                        <input type="text" placeholder="Search" className="search-input" />
+                        <input type="text" placeholder="Search" className="search-input" onChange={(e) => handleChange(e.target.value)} />
                         <AiOutlineSearch className="search-icon" />
+                        {results && results.length > 0 && <SearchResultsList results={results} />}
                     </div>
+                   
                 </Nav>
        
                 <Nav className="right-content">
@@ -192,7 +208,9 @@ function NavBar({ toggleCollapse,isSmallScreen,socket }) {
         
                 </Nav>
             </Container>
+            
         </Navbar>
+    
     )
 }
 

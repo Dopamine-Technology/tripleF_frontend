@@ -8,16 +8,17 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegCopy,FaRegEyeSlash } from "react-icons/fa";
 import { RiUserUnfollowLine } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
-import savedIcon from '../../../assets/imgs/Saved.svg';
 import ShareIcon from '../../../assets/imgs/Share.svg';
 import OpportunityPost from '../../Opportunities/OpportunityPost';
 import TimlinePost from '../../Post/TimlinePost';
 import Bronze from '../../../assets/imgs/bronze.svg';
 import Silver from '../../../assets/imgs/silver.svg';
 import Gold from '../../../assets/imgs/gold.svg';
-import Medal from '../../../assets/imgs/Medal.svg'
+import Medal from '../../../assets/imgs/Medal.svg';
 import { useParams } from 'react-router-dom';
-
+import savedIcon from '../../../assets/imgs/Saved.svg';
+import SaveFilled from '../../../assets/imgs/save-filled.svg';
+import { MdDeleteOutline } from "react-icons/md";
 
 function Post(){
     const [show, setShow] = useState(false);
@@ -52,6 +53,8 @@ function Post(){
         setShowMedalPopups(newShowMedalPopups);
       
       };
+
+     
     
     const handleSelectMedal = async (id, medal, is_reacted) => {
         const medalColors = {
@@ -77,9 +80,22 @@ function Post(){
     };
 
     const handleShare = (id) => {
-       axios.post(`status/toggle_save/${id}`);
-       console.log('post saved',id)
-    }
+        
+      axios.get(`status/toggle_save/${id}`);
+      console.log('post saved',id)
+      setPosts(prevPosts => {
+       return prevPosts.map(post => {
+         if (post.id === id) {
+           return { ...post, is_saved: !post.is_saved }; // Toggle is_saved
+         }
+         return post;
+       });
+     });
+   }
+   const handleDelete =(id)=>{
+    axios.delete(`status/delete/${id}`);
+    setPosts(posts.filter(post => post.id !== id));
+  }
 
     const handleClose = () => setShowPopup(false);
     const handleShow = () => setShowPopup(true);
@@ -117,9 +133,11 @@ function Post(){
 
       <Dropdown.Menu>
         <Dropdown.Item href="" className='p-2' ><FaRegCopy className='me-2' />Copy link to Post</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' />I don’t want to see this</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' />I don’t want to see <br />  this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
+        <hr />
+        <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)} ><MdDeleteOutline color='#979797' size='24px' className='me-2'  /> Delete Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>
@@ -185,7 +203,7 @@ function Post(){
         </div>
         {showPopup&& <SocialPopup handleClose={handleClose} show={showPopup} id={post.id}/>}
         <div className="Like" onClick={() => handleShare(post.id)}>
-            <img src={savedIcon} className='me-2'/>
+            <img src={post.is_saved?SaveFilled:savedIcon} className='me-2'/>
             Save
         </div>
     
