@@ -108,6 +108,10 @@ function Post({socket,newPostCreated}){
         setShowMedalPopups(Array(posts.length).fill(false));
     };
 
+    const handleDelete =(id)=>{
+      axios.delete(`status/delete/${id}`);
+      setPosts(posts.filter(post => post.id !== id));
+    }
 
     const handleShare = (id) => {
         
@@ -122,10 +126,7 @@ function Post({socket,newPostCreated}){
         });
       });
     }
-    const handleDelete =(id)=>{
-      axios.delete(`status/delete/${id}`);
-      setPosts(posts.filter(post => post.id !== id));
-    }
+ 
 
     const handleClose = () => setShowPopup(false);
     const handleShow = () => setShowPopup(true);

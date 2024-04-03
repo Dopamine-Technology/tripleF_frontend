@@ -53,6 +53,8 @@ function Post(){
         setShowMedalPopups(newShowMedalPopups);
       
       };
+
+     
     
     const handleSelectMedal = async (id, medal, is_reacted) => {
         const medalColors = {
@@ -92,8 +94,7 @@ function Post(){
    }
    const handleDelete =(id)=>{
     axios.delete(`status/delete/${id}`);
-  
-    
+    setPosts(posts.filter(post => post.id !== id));
   }
 
     const handleClose = () => setShowPopup(false);
@@ -136,7 +137,7 @@ function Post(){
         <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
         <hr />
-        <Dropdown.Item href="" className=' p-2' ><MdDeleteOutline color='#979797' size='24px' className='me-2' onclick={() => handleDelete(post.id)} /> Delete Post</Dropdown.Item>
+        <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)} ><MdDeleteOutline color='#979797' size='24px' className='me-2'  /> Delete Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>

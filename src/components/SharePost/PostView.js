@@ -6,7 +6,7 @@ import { LiaMedalSolid } from "react-icons/lia";
 import { Row,Col } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SocialPopup from '../SharePost/Popup';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import Bronze from '../../assets/imgs/bronze.svg';
@@ -16,6 +16,7 @@ import Medal from '../../assets/imgs/Medal.svg';
 import SaveFilled from '../../assets/imgs/save-filled.svg';
 import savedIcon from '../../assets/imgs/Saved.svg';
 import { MdDeleteOutline } from "react-icons/md";
+import { message } from 'antd';
 
 function PostView() {
     const [show, setShow] = useState(false);
@@ -25,6 +26,7 @@ function PostView() {
     const {id}=useParams();
     const axios=useAxios();
     const [post,setPost]=useState();
+    const navigate=useNavigate();
 
     useEffect(() => {
         axios
@@ -69,6 +71,9 @@ function PostView() {
     }
     const handleDelete =(id)=>{
         axios.delete(`status/delete/${id}`);
+        // setPosts(posts.filter(post => post.id !== id));
+        message.success('post deleted successfully');
+        navigate('/home');
         
       }
     const handleSelectMedal = (medal) => {
@@ -102,7 +107,7 @@ function PostView() {
         <Dropdown.Item href="" className='mt-1 p-2'>Unfollow user</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'>Report Post</Dropdown.Item>
         <hr />
-        <Dropdown.Item href="" className=' p-2' ><MdDeleteOutline color='#979797' size='24px' className='me-2' onclick={() => handleDelete(post.id)} /> Delete Post</Dropdown.Item>
+        <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)} ><MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>
