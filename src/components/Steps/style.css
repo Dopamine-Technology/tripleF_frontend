@@ -37,9 +37,7 @@
     line-height: normal;
     letter-spacing: normal;
     color: #464646;
-  margin-left: 3rem;
-   
-  
+    margin-left: 3rem;
   
 }
 .steps-content{
@@ -89,10 +87,41 @@
 
   }
  }
-/* 
-@media only screen and (width: 1920px) and (height: 1080px) {
-  .about-h1{
-    font-size: 4rem;
+ @media only screen and (min-width: 601px) and (max-width: 820px) {
+  .how-h1{
+    width: 204px;
+    height: 40px;
+    margin: 0 85px 24px 0;
+    font-family: Quicksand;
+    font-size: 32px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: white
   }
-  
-} */
+  .Lorem-responsive{
+    width: 289px;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: var(--fill-white-white);
+  }
+  .steps-content{
+    width: 251px;
+    height: 47px;
+    margin: 4px 0 0 12px;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: rgba(70, 70, 70, 0.8);
+  }
+ }
+

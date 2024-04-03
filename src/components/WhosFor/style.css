@@ -100,15 +100,21 @@
    }
   }
 
-  /* @media only screen and (width: 1920px) and (height: 1080px) {
-    .card-container {
-      margin-left:10rem;
+  @media only screen and (min-width: 601px) and (max-width: 820px) {
+    .who-h1{
+      width: 270px;
+      height: 40px;
+      margin: 0 60px 40px 74px;
+      font-size: 32px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #464646;
+      margin-bottom: 3rem;
     }
-
+    .whos-card{
+      margin-top: 3rem;
+     }
   }
-  @media only screen and (width: 1024px) and (height: 768px) {
-    .card-container {
-      margin-left:0;
-    }
-
-  } */

@@ -104,15 +104,10 @@
         padding:1rem;
     }
   }
-/* 
-@media only screen and (max-width: 768px) and (max-height: 1024px) {
-  .contactForm-img{
-   visibility:hidden;
+  @media only screen and (min-width: 601px) and (max-width: 820px) {
+    .becomeClient-div{
+        width: 385px;
+        
+    }
+
   }
- .form-contact{
-    margin-left: 5rem;
- }
- .submit-button{
-    margin-right: -3rem;
- }
-} */

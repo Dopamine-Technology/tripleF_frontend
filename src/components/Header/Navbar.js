@@ -1,10 +1,7 @@
 import React,{useState,useEffect,useLayoutEffect} from 'react';
-import {Container,Row,Col} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { GrLanguage } from 'react-icons/gr';
-import tton from './RegisterButton';
-import { useTranslation } from 'react-i18next';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { GoPerson } from "react-icons/go";
@@ -182,32 +179,6 @@ const BottomNavbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // const hashToSectionId = {
-  //   '1': 'homeSection',
-  //   '2': 'about',
-  //   '3': 'Who',
-  //   '4': 'How',
-  //   '5': 'Testimonial',
-  //   '6': 'Contact',
-  //   '7': 'News',
-  //   // Add more mappings as needed
-  // };
-
-  // useEffect(() => {
-  //   const handleHashChange = () => {
-  //     const hash = window.location.hash.substring(1);
-  //     setActiveLink(hashToSectionId[hash]);
-  //     console.log('hash',activeLink)
-  //   };
-
-  //   window.addEventListener('hashchange', handleHashChange);
-  //   handleHashChange(); 
-
-  
-  //   return () => {
-  //     window.removeEventListener('hashchange', handleHashChange);
-  //   };
-  // }, []);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -219,9 +190,6 @@ const BottomNavbar = () => {
       else if(hash=='Testimonial') setActiveLink(5);
       else if(hash=='Contact') setActiveLink(6);
       else if(hash=='News') setActiveLink(7);
-
-      
-      
     };
 
     window.addEventListener('hashchange', handleHashChange);
@@ -249,6 +217,7 @@ useLayoutEffect(() => {
 }, []);
 
   const isSmallScreen = windowWidth <= 600;
+  const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
 
   return (
@@ -293,7 +262,7 @@ useLayoutEffect(() => {
 
 const CombinedNavbars = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
 
   useEffect(() => {
@@ -313,12 +282,97 @@ const CombinedNavbars = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+    const isSmallScreen = windowWidth <= 600;
+    const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
+
+    const currentLanguage = Cookies.get('language') || 'En';
+
+  const changeLanguage = (lng) => {
+    window.location.reload();
+    Cookies.set('language', lng);
+  };
+  const availableLanguages = [
+    { code: 'En', label: 'English',img:En },
+    { code: 'Ar', label: 'Arabic' ,img:Ar },
+  ];
+
+  const [activeLink, setActiveLink] = useState(1);
+
+  const handleNavLinkClick = (index,sectionId) => {
+    setActiveLink(index);
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div>
+
+   {
+    isTabletScreen?(
+      <Navbar expand="lg" className='p-0' >
+  <Container className='navbar-container' style={{backgroundColor:'white',paddingLeft:'2rem'}}>
+    <Navbar.Brand href="" className="d-flex align-items-center">
+      <img src={Logo} className='logo-register' />
+      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
+    </Navbar.Brand>
+    <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="mt-1">
+        <DropdownButton
+          title={
+            <div className='d-flex align-items-center'>
+              <img src={LanguageIcon} width='24px' height='24px' className='me-1 mb-4' />
+              <span className='mb-4'>{currentLanguage}</span>
+              <img src={ArrowDownImage} width='24px' height='24px' className='ms-1 mb-4' />
+            </div>
+          }
+          id="language-dropdown"
+          variant=""
+          className=" bg-transparent mr-5 custom-dropdown mt-1"
+        >
+          {availableLanguages.map((lang) => (
+            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
+              <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
+              {lang.label}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+        
+        <Link to='/login' className='text-black d-flex mt-2' style={{ textDecoration: 'none', }}>
+          <img src={profileIcon} width='24px' height='24px' className='me-1' />
+          Login
+        </Link>
+      </Nav>
+      <Nav className="me-auto">
+        <Nav.Link href='/#section1' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</p></Nav.Link>
+            <Nav.Link href="/#about"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>AboutUs</p></Nav.Link>
+            <Nav.Link href="/#Who"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >Who is TripleF for</p></Nav.Link>
+             <Nav.Link href="/#How" className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>How it works</p></Nav.Link>
+             <Nav.Link href="/#Testimonial" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</p></Nav.Link>
+             <Nav.Link href="/#Contact" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</p></Nav.Link>
+             <Nav.Link href="/#News" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>News</p></Nav.Link>
+        </Nav>
+    </Navbar.Collapse>
+  </Container>
+</Navbar>
+
+    ):
+  (
     <Container  style={{marginRight:isScrolled?'14rem':'2.5rem'}}>
       <TopNavbar />
       <BottomNavbar />
     </Container>
+  )
+   }
      
     </div>
   );

@@ -34,6 +34,7 @@ const Steps = () => {
   }, []);
 
   const isSmallScreen = windowWidth <= 600;
+  const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
   return (
     <div className='steps-div' id='How'>
@@ -42,8 +43,9 @@ const Steps = () => {
         <Col md={6} className="order-md-1 order-2">
           <Row className='mb-3'>
             {stepsArray.map((step, index) => (
-              <Col key={index} md={12} style={{ marginLeft: isSmallScreen ? 0 : (index % 2 === 0 ? '5.3rem' : '2.3rem') }}>
-                <Step step={step.step} content={step.content} stepNum={step.stepNum} isSmallScreen={isSmallScreen} />
+              <Col key={index} md={12} style={{ marginLeft: isSmallScreen ? 0 : (index % 2 === 0 ? isTabletScreen?'0.7rem':'5.3rem' : isTabletScreen?'-2rem':'2.3rem') }}>
+                <Step step={step.step} content={step.content} stepNum={step.stepNum} isSmallScreen={isSmallScreen}
+                 isTabletScreen={isTabletScreen} />
               </Col>
             ))}
           </Row>
@@ -57,7 +59,8 @@ const Steps = () => {
                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              Duis aute irure.</p>
+              Duis aute irure.
+              </p>
               <RegisterButton />
           </div>
         </Col>

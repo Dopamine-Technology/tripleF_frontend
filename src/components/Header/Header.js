@@ -1,11 +1,25 @@
-import React from 'react';
+import React,{useEffect,useState,useLayoutEffect} from 'react';
 import NavBar from './Navbar';
 import { Row, Col } from 'react-bootstrap';
 import HeaderDesc from './HeaderDesc';
 import HeaderImg from './HeaderImg';
 import './style.css';
+import CombinedNavbars from '../Register/Navbar';
 
 const Header = ({ content }) => {
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
+    useLayoutEffect(() => {
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+      };
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    
+      const isSmallScreen = windowWidth <= 600;
+      const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
+  
     return (
         <div className='whole-div'>
             <div className="background-overlay"  id='homeSection'></div>

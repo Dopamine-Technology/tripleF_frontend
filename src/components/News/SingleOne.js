@@ -19,6 +19,8 @@ const SingleOne = ({ img, content, category }) => {
   }, []);
 
   const isSmallScreen = windowWidth <= 600;
+  const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
+  
   return (
     <Link to="/blogs/1" style={{ textDecoration: 'none' }}>
     <Card
@@ -29,7 +31,7 @@ const SingleOne = ({ img, content, category }) => {
       }}
       cover={
         <img alt={img} src={img}
-          style={{ borderRadius: '16px', width: !isSmallScreen?'391px':'300px', height: !isSmallScreen?'347px':'300px' }}
+          style={{ borderRadius: '16px', width: isSmallScreen?'300px':isTabletScreen?'281px':'391px', height: !isSmallScreen?'347px':'300px' }}
         />
       }
     >
