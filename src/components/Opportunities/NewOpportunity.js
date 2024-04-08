@@ -5,41 +5,116 @@ import useAxios from '../Auth/useAxiosHook.interceptor';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import {  Form,Row,Col } from 'react-bootstrap';
 import './style.css';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import NavBar from '../Layout/Navbar';
 import {Button} from 'react-bootstrap';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { UserDataContext } from '../../components/UserContext/UserData.context';
 import { message } from 'antd';
 import JoditEditor from "jodit-react";
 import makeAnimated from 'react-select/animated';
 import { IoIosArrowBack } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import SelectComponent from './Test';
-import { BounceLoader } from 'react-spinners';
-
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 function NewOpportunity(){
+  const [accountType, setAccountType] = useState('1');
+  const [editorContent, setEditorContent] = useState('');
+  const [editorContent2,setEditorContent2]=useState('');
+
+  const talentSchema = Yup.object().shape({
+    title: Yup.string().required("Opportunity Title is required"),
+    position_id:Yup.string().required("Position is required"),
+    from_age:Yup.string().required("Starting age is required"),
+    to_age:Yup.string().required("End age is required"),
+    gender:Yup.string().required("Gender is required"),
+    from_height:Yup.number()
+    .typeError('Height must be a valid number')
+    .required("Height is required")
+    .min(1, 'Height must be greater than to 0') 
+    .max(300, 'Height must be less than or equal to 300'), 
+    to_height:Yup.number()
+    .typeError('Height must be a valid number')
+    .required("Height is required")
+    .min(1, 'Height must be greater than to 0') 
+    .max(300, 'Height must be less than or equal to 300'), 
+    from_weight:Yup.number()
+    .typeError('Height must be a valid number')
+    .required("Weight is required")  
+    .min(1, 'Weight must be greater than 0') 
+    .max(300, 'Weight must be less than or equal to 300'), 
+    to_weight:Yup.number()
+    .typeError('Height must be a valid number')
+    .required("Weight is required")
+    .min(1, 'Weight must be greater than 0') 
+    .max(300, 'Weight must be less than or equal to 300'), 
+    foot:Yup.string().required("Foot is required"),
+    country_id:Yup.string().required("Country is required"),
+    city_id:Yup.string().required("City is required"),
+ 
+  });
+    
+  
+
+  const scoutSchema = Yup.object().shape({
+    title: Yup.string().required("Opportunity Title is required"),
+    targeted_type:Yup.string().required("Targeted Type is required"),
+    from_exp:Yup.number()
+    .typeError('Years must be a valid number')
+    .required("Years is required")  
+    .min(0, 'Years must be greater than 0') 
+    .max(300, 'Years must be less than or equal to 300'),
+    to_exp:Yup.number()
+    .typeError('Years must be a valid number')
+    .required("Years is required")  
+    .min(0, 'Years must be greater than 0') ,
+    gender:Yup.string().required("Gender is required"),
+    country_id:Yup.string().required("Country is required"),
+    city_id:Yup.string().required("City is required"),
+
+  });
+
+ 
+
+  const getValidationSchema = () => {
+    switch (accountType) {
+      case '1':
+        return talentSchema;
+      case '2':
+        return scoutSchema;
+      case '3':
+        return scoutSchema;
+      default:
+        return talentSchema;
+    }
+  };
+
+
     const {
         register,
         handleSubmit,
         reset,
         watch,
         setValue,
-        formState: { errors },
-      } = useForm();
+        formState: { errors  },
+      } = useForm({
+        mode: "onChange",
+        resolver: yupResolver(getValidationSchema()), // Dynamically select schema
+      });
     
       const { user } = useContext(UserDataContext);
       
       const axios=useAxios();
+      const navigate=useNavigate();
       const [positions,setPositions]=useState();
       const [countries,setCountries]=useState();
       const [cities,setCities]=useState();
       const [loading, setLoading] = useState(true);
-      const [accountType, setAccountType] = useState('1');
+      const [requirementError,setRequirementError]=useState('');
+      // const [disableAddButton, setDisableAddButton] = useState(false);
       const MAX_COUNT = 3;
     
       const options=
@@ -64,8 +139,8 @@ function NewOpportunity(){
     
       const [selectedOptions, setSelectedOptions] = useState([]);
 
-      
-    
+
+
       const handleMultiSelectChange = (selectedOptions) => {
         setSelectedOptions(selectedOptions);
       };
@@ -92,6 +167,7 @@ function NewOpportunity(){
 
       const [receivedData, setReceivedData] = useState(null);
       const [selectedLanguages, setSelectedLanguages] = useState([]);
+      const [disableBtn,setDisableBtn]=useState(false);
 
       const handleSelectLanguages = (languages) => {
         setSelectedLanguages(languages); 
@@ -112,8 +188,7 @@ EditorState.createEmpty()
 );
 
 
-const [editorContent, setEditorContent] = useState('');
-const [editorContent2,setEditorContent2]=useState('');
+
 
       
 
@@ -165,11 +240,20 @@ const [editorContent2,setEditorContent2]=useState('');
       
 
       const onSubmit = async (data) => {
+        
         try {
+              // Validate editor content
+    if (!editorContent.trim()) {
+      setRequirementError('Requirements are required');
+      return; // Exit function if requirements are empty
+    }
+
+ 
+          setDisableBtn(true);
           const formData = {
             ...data,
             requirements: editorContent,
-            additional_info: editorContent2,
+            ...(editorContent2 && { additional_info: editorContent2 }),
             languages: selectedLanguages 
           };
           if (accountType !== '1') {
@@ -186,11 +270,12 @@ const [editorContent2,setEditorContent2]=useState('');
         if(user.userData.profile.type_name=='scout'){
           formData.targeted_type='1'
         }
-      
+   
           const response = await axios.post('opportunities/create', formData)
           .then((response) => {
             if (response.status === 200) {
               message.success('New Opportunity uploded successfully!');
+              navigate('/applied/list')
             } else {
               if (response.status === 422) {
                 const errors = response.data.errors;
@@ -212,6 +297,10 @@ const [editorContent2,setEditorContent2]=useState('');
           console.error('Error submitting data:', error);
     
         }
+        finally {
+          setLoading(false); // Set loading to false when request completes (success or error)
+          setDisableBtn(false);
+      }
       };
       const onEditorChange = (newContent) => {
         setEditorContent(newContent);
@@ -358,7 +447,7 @@ const [editorContent2,setEditorContent2]=useState('');
               label="Country"
               name="country_id"
               register={register}
-              errors={{}} 
+              errors={errors} 
               selectOptions={countries}
               onChange={(e) => handleCountrySelect(e.target.value)}
             />
@@ -381,6 +470,9 @@ const [editorContent2,setEditorContent2]=useState('');
            
             <JoditEditor value={editorContent} onChange={onEditorChange} />
       
+            {requirementError && (
+      <p className="text-danger text-start">{requirementError}</p>
+    )}
       </Col>
       <Col md={4} col={4}></Col>
 
@@ -469,7 +561,7 @@ const [editorContent2,setEditorContent2]=useState('');
        label="Country"
        name="country_id"
        register={register}
-       errors={{}} 
+       errors={errors} 
        selectOptions={countries}
        onChange={(e) => handleCountrySelect(e.target.value)}
      />
@@ -490,7 +582,9 @@ const [editorContent2,setEditorContent2]=useState('');
      </Form.Label>
     
      <JoditEditor value={editorContent} onChange={onEditorChange} />
-
+     {requirementError && (
+      <p className="text-danger text-start">{requirementError}</p>
+    )}
 </Col>
 <Col md={4} col={4}></Col>
 
@@ -580,7 +674,7 @@ const [editorContent2,setEditorContent2]=useState('');
               label="Country"
               name="country_id"
               register={register}
-              errors={{}} 
+              errors={errors} 
               selectOptions={countries}
               onChange={(e) => handleCountrySelect(e.target.value)}
             />
@@ -601,7 +695,9 @@ const [editorContent2,setEditorContent2]=useState('');
             </Form.Label>
            
             <JoditEditor value={editorContent} onChange={onEditorChange} />
-      
+            {requirementError && (
+      <p className="text-danger text-start">{requirementError}</p>
+    )}
       </Col>
       <Col md={4} col={4}></Col>
       
@@ -616,7 +712,7 @@ const [editorContent2,setEditorContent2]=useState('');
               
             
             <JoditEditor value={editorContent2} onChange={onEditorChange2} />
-      
+        
       
       
       </Col>
@@ -629,9 +725,9 @@ const [editorContent2,setEditorContent2]=useState('');
       
     
 
-      if (loading) {
-        return  <LoadingScreen  />;
-      }
+      // if (loading) {
+      //   return  <LoadingScreen  />;
+      // }
 
 
 
@@ -643,9 +739,6 @@ const [editorContent2,setEditorContent2]=useState('');
       <p className='addOpp-title'><Link style={{textDecoration:'none',color:'#464646'}} to='/home'><div className='back-arrow me-3' ><IoIosArrowBack color='#979797' size={20}/> </div>Add opportunity</Link></p>
         <Col md={4} lg={4}></Col>
         <Col md={8} lg={8}>
-      
-                  
- 
         <Row>
           <Col md={4} lg={4}>
       <Input
@@ -684,10 +777,15 @@ const [editorContent2,setEditorContent2]=useState('');
                  label="Position"
                  name="position_id"
                  register={register} 
-                 errors={{}}
+                 errors={errors}
                  selectOptions={positions} 
                  className='mt-1'
+                 
                    />
+       {errors && errors.position_id && (
+  <div className="text-danger text-start">{errors['position_id']?.message}</div>
+)}
+
       </Col>:null}
     
         </Row>
@@ -696,7 +794,9 @@ const [editorContent2,setEditorContent2]=useState('');
       <Row>
         <Col></Col>
         <Col>
-        <Button className='add-btn' type='submit' >Add</Button>
+        <Button className='add-btn' type='submit'
+         disabled={disableBtn}
+         >Add</Button>
         </Col>
       <Col></Col>
       </Row>

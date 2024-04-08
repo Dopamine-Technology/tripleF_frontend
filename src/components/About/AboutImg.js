@@ -20,7 +20,7 @@ const AboutImg = () => {
     const isSmallScreen = windowWidth <= 600;
 
     return ( <div className="image-container">
-      <Row>
+      <Row className='row-responsive'>
         <Col>
     <img src={isSmallScreen?image1:football} alt="Image 2" className="me-1 image2" />
     </Col>

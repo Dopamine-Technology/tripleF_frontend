@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useLayoutEffect,useState} from 'react'
 import Navbar from '../components/Register/Navbar';
 import { Row, Col } from 'react-bootstrap';
 import BlogsSet from '../components/Blogs/BlogsSet';
@@ -8,6 +8,19 @@ import Footer from '../components/Footer/Footer'
 
 const Blogs = () => {
     const tags=['#hashtag','#hashtag'];
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useLayoutEffect(() => {
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+      };
+  
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+  
+    const isSmallScreen = windowWidth <= 600;
+    const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
     return(
         <div>
@@ -21,8 +34,8 @@ const Blogs = () => {
             </Col>
 
         
-            <Col sm={4}>
-           <Row>
+            <Col sm={4} style={{ display: isTabletScreen ? 'none' : 'block' }}>
+           <Row >
             <div>
   <p className='Col-title' >Recent posts</p>
   <hr className='hr-title' />

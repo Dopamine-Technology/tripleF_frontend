@@ -26,7 +26,7 @@ const SingleOne = ({ img, content, category }) => {
     <Card
       hoverable
       style={{
-        width: 391,
+        width: isTabletScreen?200:391,
         border: 0,
       }}
       cover={

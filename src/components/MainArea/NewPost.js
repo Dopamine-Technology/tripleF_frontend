@@ -67,7 +67,7 @@ return(
                         <p className='newPost-desc'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed</p>
                     </div>
                 </Col>
-                <Col xs={6} sm={6} md={6} lg={2}><Button className='share-btn' onClick={() => { navigate('add/opportunity') }}>Add</Button></Col>
+                <Col xs={6} sm={6} md={6} lg={2}><Button className='share-btn' onClick={() => { navigate('/home/add/opportunity') }}>Add</Button></Col>
             </Row>
         )
     )}

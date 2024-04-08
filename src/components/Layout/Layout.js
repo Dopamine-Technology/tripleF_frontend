@@ -27,7 +27,7 @@ useLayoutEffect(() => {
 }, []);
 
 const isSmallScreen = windowWidth <= 600;
-
+const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
   return (
     <AntLayout style={{ minHeight: "100vh" }}>
       <NavBar toggleCollapse={toggleCollapse} isSmallScreen={isSmallScreen}  />
@@ -41,7 +41,8 @@ const isSmallScreen = windowWidth <= 600;
           
           <LeftArea isCollapsed={isCollapsed} toggleCollapse={toggleCollapse}  />
         </Sider>
-        <AntLayout style={{ transition: 'margin-left 0.3s' }} className="AntLayout" style={{marginLeft:isSmallScreen ?(isCollapsed?'-3rem':'100rem'):''}}>
+        <AntLayout style={{ transition: 'margin-left 0.3s' }} className="AntLayout" 
+        style={{marginLeft:isSmallScreen ?(isCollapsed?'-3rem':'100rem'):isTabletScreen?'4rem':''}}>
                                                     {/* marginLeft: isSmallScreen ? (isCollapsed ? '-3rem' : '0') : '100rem' */}
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
             <Row justify="center">

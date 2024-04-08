@@ -4,7 +4,14 @@
       "aboutus":"About Us ",
       "whoFor": "Who is TripleF For",
       "howItWorks": "How it works",
+      "testimonial":"Testimonial",
       "contactUs": "Contact us",
-      "blog": "Blog"
+      "news": "News",
+      "login":"Login"
+    },
+    "header":{
+        "title":"What We Do In Life Echoes In Eternity",
+        "subTitle":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+        "Register":"Register now"
     }
   }

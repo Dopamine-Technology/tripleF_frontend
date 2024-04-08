@@ -181,6 +181,7 @@ function RegisterForm({ onLoadingChange }) {
       }, []);
     
       const isSmallScreen = windowWidth <= 600;
+      const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
       
       const clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
 
@@ -591,11 +592,11 @@ function RegisterForm({ onLoadingChange }) {
 
                 
                 <div style={{ display: 'flex', alignItems: 'center' }} className='login-or'>
-  <hr className='mt-4' style={{width:'24%',color:'#7C7C7C'}} />
+  <hr className='mt-4' style={{width:isTabletScreen?'40%':'24%',color:'#7C7C7C'}} />
 
   <p style={{ margin: '0 10px' }}>OR</p>
 
-  <hr className=' mt-4' style={{width:'24%',color:'#7C7C7C'}} />
+  <hr className=' mt-4' style={{width:isTabletScreen?'40%':'24%',color:'#7C7C7C'}} />
 </div>
 
                 
@@ -1579,11 +1580,13 @@ function RegisterForm({ onLoadingChange }) {
       };
 
   return (
-    <Row>
-    <Col md={6}>
-      <img src={loginPic} alt="Your Image" className='signup-img'  />
-    </Col>
-    <Col md={6} className='mt-4'>
+    <Row style={{justifyContent:isTabletScreen?'center':''}}>
+      {!isTabletScreen?
+       <Col md={6}>
+       <img src={loginPic} alt="Your Image" className='signup-img'  />
+     </Col>:null}
+   
+    <Col md={6} className='mt-4 register-div'>
         <p className='register-welcome ' style={{marginBottom:'1rem'}}>Create an Account</p>
         {renderFormStep()}
       </Col>

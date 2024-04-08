@@ -35,6 +35,7 @@ function Opportunity({data}){
    
     const handleApply = (id) => {
         axios.get(`/opportunities/apply/${id}`);
+        message.success('you application sent successfully');
         console.log('apply saved',id)
      }
  
@@ -86,10 +87,10 @@ function Opportunity({data}){
          <BsThreeDotsVertical fontSize="1.5rem"  />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="" className='p-2' ><CiLink className='me-2' color='#9D9C9D'/>Copy link to Post</Dropdown.Item>
+      <Dropdown.Menu className='w-auto'>
+        <Dropdown.Item href="" className='p-2' ><CiLink className='me-1' color='#9D9C9D'/>Copy link to Post</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleChangeState(data.id)}> 
-        {data.status=='open'?   <><MdOutlineCancel className='me-2' color='#9D9C9D' />Discard Opportunity</>:
+        {data.status=='open'?   <><MdOutlineCancel className='me-1' color='#9D9C9D' />Discard Opportunity</>:
         <><AiOutlineReload className='me-2' color='#9D9C9D' />Reopen Opportunity</>}
 
         </Dropdown.Item>
@@ -126,7 +127,7 @@ function Opportunity({data}){
                 <ul dangerouslySetInnerHTML={{ __html: data.requirements }}></ul>
 
                 <p className='postOpp-title'>Additional Information</p>
-                <ul dangerouslySetInnerHTML={{ __html: data.requirements }}></ul>
+                <ul dangerouslySetInnerHTML={{ __html: data.additional_info }}></ul>
                 </div>
             ):(null)
         }
