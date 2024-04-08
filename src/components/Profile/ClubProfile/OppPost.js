@@ -44,7 +44,12 @@ function OppPost(){
 
     const opportunityData='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi  ut aliquip ex ea commodo consequat. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
    
- 
+    const handleApply = (id) => {
+        axios.get(`/opportunities/apply/${id}`);
+        message.success('you application sent successfully');
+        console.log('apply saved',id)
+     }
+     
     const handleExpandClick = () => {
         setIsExpanded(!isExpanded);
     };
@@ -106,7 +111,7 @@ function OppPost(){
     <div className='opp-container mt-1' style={{border: '1px solid rgba(225, 225, 225, 1)',padding:'2rem'}}>
     <div className="d-flex justify-content-between align-items-center">
         <h5 className='postOpp-title'>{data.title}</h5>
-        {id!=null? <Button className='apply-btn h-auto m-0' >Apply Now</Button>:null}
+        {id!=null? <Button className='apply-btn h-auto m-0' onClick={() => handleApply(data.id)} >Apply Now</Button>:null}
        
     </div>
     <div className='d-flex'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { Tab } from 'react-bootstrap';
 import Input from './Input';
@@ -15,7 +15,11 @@ function ScoutOppFilter(props) {
     { id: 'published', name: 'published', label: 'Published' },
     { id: 'applied', name: 'applied', label: 'Applied' },
   ];
-  const [activeTab, setActiveTab] = useState("applied");
+  const [activeTab, setActiveTab] = useState("published");
+
+  useEffect(()=>{
+    props.filterTypeSelected('published');
+  },[])
 
   function onFilterTypeChanged(eventKey) {
     console.log(eventKey);

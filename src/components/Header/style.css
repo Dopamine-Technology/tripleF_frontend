@@ -171,20 +171,7 @@ z-index:3;
   border: none !important; /* Remove the border */
   /* Add any other custom styles you need */
 }
-/* .navbar-container {
-  display: flex;
-  flex-direction: column;
-}
 
-.fixed-navbar {
-  flex-shrink: 0; 
-  height: 3rem;
-}
-
-.fixed-navbar2 {
-  flex-shrink: 0; 
-  height: 3rem; 
-} */
 
 
 @media only screen and (max-width: 600px) {
@@ -234,7 +221,58 @@ z-index:3;
 
     .whole-div {
 
-      background-position:0%;       /* if you want to fix the background remove this line */
+      background-position:0%; 
+    }
+    .whole-div{
+     height:80vh
     }
  
+}
+
+@media only screen and (width: 412px) and (height: 892px) {
+  .scroll-navbar2{
+    margin-top: 4rem;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 820px) {
+  .header-h1{
+    width: 400px;
+    height: 80px;
+    margin: 0 0 12px;
+    font-size: 32px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+    }
+    .header-p2{
+      width: 360px;
+     height: 92px;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+    }
+    .Register-button{
+      width: 195px;
+  height: 64px;
+  border-radius: 32.5px;
+  box-shadow: 0 32px 54px 0 rgba(3, 3, 3, 0.14);
+  background-color: #77dcbf;
+    }
+    .whole-div {
+      height: 83vh;
+      background-position:0%;       /* if you want to fix the background remove this line */
+    }
+    .header-div {
+
+      margin-left: 3rem;
+    }
+
 }

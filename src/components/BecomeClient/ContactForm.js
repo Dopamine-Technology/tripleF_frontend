@@ -8,7 +8,7 @@ import { message } from 'antd';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const ContactForm = () => {
+const ContactForm = ({isTabletScreen}) => {
   const schema = Yup.object().shape({
     email: Yup.string()
       .required("Email is required")

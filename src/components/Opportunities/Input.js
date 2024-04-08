@@ -67,34 +67,40 @@ const Input = ({
           </div>
         ) : type === 'select' ? (
           <Form.Control
-            as="select"
-            multiple={multiple}
-            size="sm"
-            {...register(name)}
-            className={`${className}  ${
-              errors && errors[name]?.message ? "border-danger" : ""
-            } `}
-            style={{
-              backgroundColor: "white",
-              border: "1px solid rgba(144,144,144, 0.3)",
-              color: "black",
-              width: inputWidth || "15rem",
-              borderRadius:borderRadius|| "10px",
-            }}
-            onChange={onChange}
-          >
-                        <option value="gender">{placeholder}</option>
-            {selectOptions &&
-              selectOptions.map((option) => (
-                
-                <option key={option.id} value={option.id} >
-                  {option.name}
-                </option>
-              ))}
-          </Form.Control>
+  as="select"
+  multiple={multiple}
+  size="sm"
+  {...register(name, { required: true })} // Include required validation
+  className={`${className} ${
+    errors && errors[name] ? "border-danger" : "" // Check if there's an error for the field
+  }`}
+  style={{
+    backgroundColor: "white",
+    border: "1px solid rgba(144,144,144, 0.3)",
+    color: "black",
+    width: inputWidth || "15rem",
+    borderRadius: borderRadius || "10px",
+  }}
+  onChange={onChange}
+>
+  <option value="">{placeholder}</option> {/* Empty option for placeholder */}
+  {selectOptions &&
+    selectOptions.map((option) => (
+      <option key={option.id} value={option.id}>
+        {option.name}
+      </option>
+    ))}
+</Form.Control>
+// {errors[name] && ( // Display error message if there's a validation error for the field
+//   <div className="text-danger">
+//     <p>{errors[name].message}</p>
+//   </div>
+// )}
+
+          
         ) : null}
       </div>
-      {errors && (
+      {errors && errors[name]?.message && (
         <div className="text-danger text-start">{errors[name]?.message}</div>
       )}
     </Form.Group>

@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useLayoutEffect} from 'react';
 import {Container,Row,Col} from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -32,13 +32,31 @@ const TopNavbar = ({content}) => {
     { code: 'En', label: 'English',img:En },
     { code: 'Ar', label: 'Arabic' ,img:Ar },
   ];
+  
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isSmallScreen = windowWidth <= 600;
+  const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
+
+
+
 
   return (
 <Navbar expand="lg" className=''>
   <Container className='navbar-container'>
     <Navbar.Brand href="/" className="d-flex align-items-center">
       <img src={Logo} className='logo-register' />
-      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
+      <Navbar.Toggle aria-controls="basic-navbar-nav"
+       style={{ borderColor: 'transparent',marginLeft:isTabletScreen?'33rem':'1rem' }}  />
     </Navbar.Brand>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ms-auto mt-2">
@@ -77,6 +95,19 @@ const TopNavbar = ({content}) => {
 const BottomNavbar = () => {
   
   const [activeLink, setActiveLink] = useState(1);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isSmallScreen = windowWidth <= 600;
+  const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
   const handleNavLinkClick = (index,sectionId) => {
     setActiveLink(index);
@@ -90,7 +121,7 @@ const BottomNavbar = () => {
 
   return (
     <Navbar expand="lg" className=''>
-    <Container style={{marginLeft:'1rem'}}>
+    <Container style={{marginLeft:isTabletScreen?'30rem':'1rem'}}>
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:'14.5rem'}} className=""/>
       <Navbar.Collapse id="basic-navbar-nav">

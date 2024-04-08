@@ -16,14 +16,12 @@ function OpportunityList(){
   const navigate=useNavigate();
   const { user } = useContext(UserDataContext);
 
-        
-
       const axios=useAxios();
       const [opportunities,setOpportunities]=useState();
       const[newDataList,setNewDataList]=useState(opportunities);
       const [filterTextValue,setFilterTextValue]=useState('preferredFoot');
       const [filterTextGender,setFilterTextGender]=useState('gender');
-      const [filterTextType,setFilterTextType]=useState('applied');
+      const [filterTextType,setFilterTextType]=useState('published');
       const [filterTextPosition,setFilterTextPosition]=useState('position');
       const [filteredListPosition,setFilteredListPosition]=useState(opportunities);
       const [filterTextCountry, setFilterTextCountry] = useState('');
@@ -70,9 +68,12 @@ function OpportunityList(){
   
         if (user.userData.profile.type_name == "talent") {
           setFilterTextType('applied')
-          } else  {
-            setFilterTextType('published');
-          }
+          } 
+          // else  {
+        //     setFilterTextType('published');
+        //   }
+        
+        
       
         const type = { "type": filterTextType };
         try {

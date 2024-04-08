@@ -132,6 +132,15 @@
    }
 
 }
+@media only screen and (min-width: 601px) and (max-width: 820px) {
+  .description-text{
+    width: 280px;
+  }
+  .col-single{
+    margin-left: -2rem;
+}
+    
+   }
 /* @media only screen and (max-width: 768px) and (max-height: 1024px) {
     .col-single{
         margin-left: 12rem;

@@ -169,6 +169,7 @@ function NavBar({ toggleCollapse,isSmallScreen,socket }) {
 
 
     return (
+      <div>
         <Navbar expand="lg" className="bg-body-tertiary" style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)" }}>
             <Container>
                 <Navbar.Brand href="/home">
@@ -178,7 +179,7 @@ function NavBar({ toggleCollapse,isSmallScreen,socket }) {
                     <div className="search-container">
                         <input type="text" placeholder="Search" className="search-input" onChange={(e) => handleChange(e.target.value)} />
                         <AiOutlineSearch className="search-icon" />
-                        {results && results.length > 0 && <SearchResultsList results={results} />}
+                       
                     </div>
                    
                 </Nav>
@@ -210,7 +211,8 @@ function NavBar({ toggleCollapse,isSmallScreen,socket }) {
             </Container>
             
         </Navbar>
-    
+     {results && results.length > 0 && <SearchResultsList results={results} />}
+     </div>
     )
 }
 

@@ -33,7 +33,7 @@ function ProfilesApplied() {
 
     return (
         <div style={{ backgroundColor: 'white', marginLeft: '7rem', padding: '3rem' }}>
-            <p><img src={LeftArrow} className='me-3 ' /><span className='applied-title'>{name}</span></p>
+            <p><img src={LeftArrow} className='me-3 ' style={{cursor:'pointer'}} onClick={()=>navigate('/applied/list')} /><span className='applied-title'>{name}</span></p>
             <p className='applicants-num'>{profiles.length} Applicants</p>
             <div className="search-container mt-4" style={{ marginLeft: '2rem' }}>
                 <input type="text" placeholder="Search" className="search-input" />

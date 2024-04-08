@@ -1,10 +1,7 @@
 import React,{useState,useEffect,useLayoutEffect} from 'react';
-import {Container,Row,Col} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { GrLanguage } from 'react-icons/gr';
-import tton from './RegisterButton';
-import { useTranslation } from 'react-i18next';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { GoPerson } from "react-icons/go";
@@ -25,17 +22,26 @@ import Logo from '../../assets/imgs/Logo.png'
 import LanguageIconBlack from '../../assets/imgs/langauge-icon.svg';
 import profileIconBlack from '../../assets/imgs/profile-black-icon.svg';
 import btnIconHover from '../../assets/imgs/btnIconHover.svg';
+import { useTranslation } from 'react-i18next';
 
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'En';
+  const [t,i18n]=useTranslation();
 
+
+  // const changeLanguage = (lng) => {
+  //   window.location.reload();
+  //   Cookies.set('language', lng);
+  // };
   const changeLanguage = (lng) => {
-    window.location.reload();
+    i18n.changeLanguage(lng);
     Cookies.set('language', lng);
+    console.log('language',i18n.language)
   };
+  
   const availableLanguages = [
-    { code: 'En', label: 'English',img:En },
-    { code: 'Ar', label: 'Arabic' ,img:Ar },
+    { code: 'en', label: 'English',img:En },
+    { code: 'ar', label: 'Arabic' ,img:Ar },
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -104,7 +110,7 @@ const TopNavbar = ({content}) => {
         <Link to='/login' className='text-black d-flex mt-2' style={{ textDecoration: 'none' }}>
       <div onMouseOver={handleHover} onMouseOut={handleHoverOut} className='text-black d-flex'>
         <img src={isHovering ? btnIconHover : profileIconBlack} width='24px' height='24px' className='me-1' alt='Profile Icon' />
-        <p style={{color:isHovering?'#77dcbf':'black'}}>Login</p>
+        <p style={{color:isHovering?'#77dcbf':'black'}}>{t('navbar.login')}</p>
         <p></p>
       </div>
     </Link>
@@ -113,7 +119,7 @@ const TopNavbar = ({content}) => {
   </Container>
 </Navbar>:
 <Navbar expand="lg" className='fixed-navbar' >
-  <Container style={{ marginLeft: '-1rem' }}>
+  <Container style={{ marginLeft: currentLanguage === 'ar' ? '0rem' : '-1rem', marginRight: currentLanguage === 'ar' ? '-9rem' : '-1rem' }}>
     <Navbar.Brand href="/" className="d-flex align-items-center">
       <img src={LogoWhite} className='logo-header' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className="custom-toggler ms-5" />
@@ -143,7 +149,7 @@ const TopNavbar = ({content}) => {
         <Link to='/login' className='text-black d-flex' style={{ textDecoration: 'none' }}>
       <div onMouseOver={handleHover} onMouseOut={handleHoverOut} className='text-black d-flex mt-2'>
         <img src={isHovering ? btnIconHover : profileIcon} width='24px' height='24px' className='me-1' alt='Profile Icon' />
-        <p style={{color:isHovering?'#77dcbf':'white'}}>Login</p>
+        <p style={{color:isHovering?'#77dcbf':'white'}}>{t('navbar.login')}</p>
         <p></p>
       </div>
     </Link>
@@ -162,6 +168,7 @@ const BottomNavbar = () => {
   const [activeLink, setActiveLink] = useState(1);
   const [isScrolled, setIsScrolled] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [t,i18n]=useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -182,32 +189,6 @@ const BottomNavbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // const hashToSectionId = {
-  //   '1': 'homeSection',
-  //   '2': 'about',
-  //   '3': 'Who',
-  //   '4': 'How',
-  //   '5': 'Testimonial',
-  //   '6': 'Contact',
-  //   '7': 'News',
-  //   // Add more mappings as needed
-  // };
-
-  // useEffect(() => {
-  //   const handleHashChange = () => {
-  //     const hash = window.location.hash.substring(1);
-  //     setActiveLink(hashToSectionId[hash]);
-  //     console.log('hash',activeLink)
-  //   };
-
-  //   window.addEventListener('hashchange', handleHashChange);
-  //   handleHashChange(); 
-
-  
-  //   return () => {
-  //     window.removeEventListener('hashchange', handleHashChange);
-  //   };
-  // }, []);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -219,9 +200,6 @@ const BottomNavbar = () => {
       else if(hash=='Testimonial') setActiveLink(5);
       else if(hash=='Contact') setActiveLink(6);
       else if(hash=='News') setActiveLink(7);
-
-      
-      
     };
 
     window.addEventListener('hashchange', handleHashChange);
@@ -249,6 +227,7 @@ useLayoutEffect(() => {
 }, []);
 
   const isSmallScreen = windowWidth <= 600;
+  const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
 
   return (
@@ -259,13 +238,15 @@ useLayoutEffect(() => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'18.8rem':'14.5rem'}} className=""/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-        <Nav.Link href='/#homeSection' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')} className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>Home</Nav.Link>
-            <Nav.Link href="/#about"className='' style={{textDecoration:'none'}} className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>AboutUs</Nav.Link>
-            <Nav.Link href="/#Who"className='' style={{textDecoration:'none'}} className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >Who is TripleF for</Nav.Link>
-             <Nav.Link href="/#How" className='' style={{textDecoration:'none'}} className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}> How it works</Nav.Link>
-             <Nav.Link href="/#Testimonial" className='' style={{textDecoration:'none'}} className={` ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</Nav.Link>
-             <Nav.Link href="/#Contact" className='' style={{textDecoration:'none'}} className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</Nav.Link>
-             <Nav.Link href="/#News" className='' style={{textDecoration:'none'}} className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}><p>News</p></Nav.Link>
+        <Nav.Link href='/#homeSection' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')} className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>
+        {t('navbar.home')}
+        </Nav.Link>
+            <Nav.Link href="/#about"className='' style={{textDecoration:'none'}} className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}> {t('navbar.aboutus')}</Nav.Link>
+            <Nav.Link href="/#Who"className='' style={{textDecoration:'none'}} className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >{t('navbar.whoFor')}</Nav.Link>
+             <Nav.Link href="/#How" className='' style={{textDecoration:'none'}} className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}> {t('navbar.howItWorks')}</Nav.Link>
+             <Nav.Link href="/#Testimonial" className='' style={{textDecoration:'none'}} className={` ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>{t('navbar.testimonial')}</Nav.Link>
+             <Nav.Link href="/#Contact" className='' style={{textDecoration:'none'}} className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>{t('navbar.contactUs')}</Nav.Link>
+             <Nav.Link href="/#News" className='' style={{textDecoration:'none'}} className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}><p>{t('navbar.news')}</p></Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Container>
@@ -275,13 +256,14 @@ useLayoutEffect(() => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'16rem':'13rem'}} className="custom-toggler"/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-        <Nav.Link href="/#homeSection"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}> Home</Nav.Link>
-            <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}> About Us</Nav.Link>
-            <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} > Who is TripleF for</Nav.Link>
-             <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}> How it works</Nav.Link>
-             <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>Testimonial</Nav.Link>
-             <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>Contact Us</Nav.Link>
-             <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>News</Nav.Link>
+        <Nav.Link href="/#homeSection"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}> {t('navbar.home')}
+</Nav.Link>
+            <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}> {t('navbar.aboutus')}</Nav.Link>
+            <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} > {t('navbar.whoFor')}</Nav.Link>
+             <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>{t('navbar.howItWorks')}</Nav.Link>
+             <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>{t('navbar.testimonial')}</Nav.Link>
+             <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>{t('navbar.contactUs')}</Nav.Link>
+             <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>{t('navbar.news')}</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Container>
@@ -293,6 +275,9 @@ useLayoutEffect(() => {
 
 const CombinedNavbars = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [t,i18n]=useTranslation();
+
 
   
 
@@ -313,12 +298,110 @@ const CombinedNavbars = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+    const isSmallScreen = windowWidth <= 600;
+    const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
+
+    const currentLanguage = Cookies.get('language') || 'en';
+    const [direction, setDirection] = useState('ltr');
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    Cookies.set('language', lng);
+}
+  const availableLanguages = [
+    { code: 'en', label: 'English',img:En },
+    { code: 'ar', label: 'Arabic' ,img:Ar },
+  ];
+
+  const [activeLink, setActiveLink] = useState(1);
+
+  const handleNavLinkClick = (index,sectionId) => {
+    setActiveLink(index);
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    // Change direction based on the selected language
+    if (currentLanguage === 'ar') {
+      setDirection('rtl');
+    } else {
+      setDirection('ltr');
+    }
+  }, [currentLanguage]);
+
+ 
+
   return (
-    <div>
+    <div style={{ direction: direction }}>
+   {
+    isTabletScreen?(
+      <Navbar expand="lg" className='p-0' >
+  <Container className='navbar-container' style={{backgroundColor:'white',paddingLeft:'2rem'}}>
+    <Navbar.Brand href="" className="d-flex align-items-center">
+      <img src={Logo} className='logo-register' />
+      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
+    </Navbar.Brand>
+    <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="mt-1">
+        <DropdownButton
+          title={
+            <div className='d-flex align-items-center'>
+              <img src={LanguageIcon} width='24px' height='24px' className='me-1 mb-4' />
+              <span className='mb-4'>{currentLanguage}</span>
+              <img src={ArrowDownImage} width='24px' height='24px' className='ms-1 mb-4' />
+            </div>
+          }
+          id="language-dropdown"
+          variant=""
+          className=" bg-transparent mr-5 custom-dropdown mt-1"
+        >
+          {availableLanguages.map((lang) => (
+            <Dropdown.Item key={lang.code} 
+            onClick={() => changeLanguage(lang.code)}
+       >
+              <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
+              {lang.label}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+        
+        <Link to='/login' className='text-black d-flex mt-2' style={{ textDecoration: 'none', }}>
+          <img src={profileIcon} width='24px' height='24px' className='me-1' />
+          {t('navbar.login')}
+        </Link>
+      </Nav>
+      <Nav className="me-auto">
+        <Nav.Link href='/#section1' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>{t('navbar.home')}</p></Nav.Link>
+            <Nav.Link href="/#about"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>{t('navbar.aboutus')}</p></Nav.Link>
+            <Nav.Link href="/#Who"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >{t('navbar.whoFor')}</p></Nav.Link>
+             <Nav.Link href="/#How" className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>{t('navbar.howItWorks')}</p></Nav.Link>
+             <Nav.Link href="/#Testimonial" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>{t('navbar.testimonial')}</p></Nav.Link>
+             <Nav.Link href="/#Contact" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>{t('navbar.contactUs')}</p></Nav.Link>
+             <Nav.Link href="/#News" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>{t('navbar.news')}</p></Nav.Link>
+        </Nav>
+    </Navbar.Collapse>
+  </Container>
+</Navbar>
+
+    ):
+  (
     <Container  style={{marginRight:isScrolled?'14rem':'2.5rem'}}>
       <TopNavbar />
       <BottomNavbar />
     </Container>
+  )
+   }
      
     </div>
   );

@@ -108,7 +108,6 @@ function OpportunityList(){
       };
 
       useEffect(() => {
-    
         const fetchOppData = async () => {
           try {
             const response = await axios.get('opportunities/find');
@@ -124,7 +123,6 @@ function OpportunityList(){
       }, []);
 
       useEffect(() => {
-        // Set filteredListPosition to the full list of opportunities when component mounts
         setFilteredListPosition(opportunities || []);
       }, [opportunities]);
 
