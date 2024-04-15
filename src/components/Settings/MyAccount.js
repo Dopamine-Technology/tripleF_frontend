@@ -13,13 +13,15 @@ import useAxios from '../Auth/useAxiosHook.interceptor';
 import { UserDataContext } from '../UserContext/UserData.context';
 import CheckCircleFill from '../../assets/imgs/checkCircleFill.svg';
 import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
+
 
 
 function MyAccount() {
 
   const [validationSchema, setValidationSchema] = useState(null);
 
-
+  const navigate=useNavigate();
   const {user}=useContext(UserDataContext);
 
   useEffect(() => {
@@ -119,7 +121,6 @@ function MyAccount() {
         const onSubmit = async (data) => {
           // Add the sport_id=1 to the form data
           data.talent_type = '1';
-      
           // Add the mobile number from profileData or from the form state if changed
           data.mobile_number = watch("mobile_number") || profileData?.profile.mobile_number || '';
           if(user.userData.profile.type_name=='talent'){
@@ -129,13 +130,12 @@ function MyAccount() {
               const response = await axios.put('user/edit', data);
               console.log("Form submitted successfully", response.data);
               message.success('Your account data updated successfully');
+              navigate(`/profile/${user.userData.id}`)
           } catch (error) {
               console.error("Error submitting form", error);
           }
       };
       
-      
-
           useLayoutEffect(() => {
             const handleResize = () => {
               setWindowWidth(window.innerWidth);
@@ -213,6 +213,7 @@ function MyAccount() {
 
           
           const handleVerifyClick =()=>{
+
             setVerificationEmail(true);
              const watchEmail = watch('email', ''); 
             axios.post('/your-api-endpoint', watchEmail)
@@ -338,28 +339,7 @@ function MyAccount() {
         </select>
     </div>
 </Form.Group>}
-{/* <Form.Group controlId='gender' className='me-2'>
-<label>Position</label>
-<div className="d-flex" onChange={(e) => handlePositionSelect(e.target.value)}>
-    {positions?.map((position) => (
-        <label key={position.id} className='custom-radio-btn me-2'>
-            <span className="label">{position.name}</span>
-            <input 
-                type="radio" 
-                id={position.id}
-                value={position.id}
-                {...register('parent_position')}
-                defaultChecked={position.id === profileData?.profile.parent_position?.id}
-        
-                
-            />
-            {console.log('the data',position.id, profileData?.profile.parent_position?.id)}
-            <span className="checkmark"></span>
-        </label>
-    ))}
-</div>
-    
-    </Form.Group> */}
+
     <div className='mt-3 d-flex  '>
     {/* <Form.Group controlId='subPosition' className='mb-3 me-4'>
     <div className='form-group'>
@@ -438,7 +418,7 @@ function MyAccount() {
         if(loading){
             return <LoadingScreen />
           }
-    
+    else{
     return(
         <div className='edit-data'>
            <p className='title-editData'> My Account</p>
@@ -503,8 +483,8 @@ function MyAccount() {
 
   />
   {profileData?.is_email_verified? null:
-  verificationEmail? <p className='sent-verify'  style={{ position: 'absolute', right: '15rem', bottom: '-2.5rem' }} ><img src={CheckCircleFill}  className='me-1'/>Verification email sent</p>:
-  <p className='need-verify' onClick={handleVerifyClick} style={{ position: 'absolute', right: '15rem', bottom: '-2.5rem' }} >Verify your email</p>
+  verificationEmail? <p className='sent-verify'  style={{ position: 'absolute', right: '7rem', bottom: '-1rem' }} ><img src={CheckCircleFill}  className='me-1'/>Verification email sent</p>:
+  <p className='need-verify' onClick={handleVerifyClick} style={{ position: 'absolute', right: '7rem', bottom: '-1rem' }} >Verify your email</p>
 
 }
 
@@ -647,7 +627,7 @@ function MyAccount() {
            )}
           
         </div>
-    )
+    )}
 
 }
 export default MyAccount;
