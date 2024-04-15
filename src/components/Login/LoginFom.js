@@ -160,14 +160,13 @@ function LoginForm() {
       </Col>
       <Col md={6} className='login-col'>
         <div>
-          <p className='login-welcome'>Welcome Back</p>
+          <p className='login-welcome'> Welcome Back </p>
           <p  className='login-p'>Welcome Back, please enter your details</p>
         </div>
         <div className='social-login social-login-container'>
-       
         <GoogleLogin
                clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
-               buttonText="    Login with Google"
+               buttonText="Login with Google"
                onSuccess={onSuccess}
                onFailure={onFailure}
                cookiePolicy={'single_host_origin'}

@@ -218,11 +218,9 @@ function MyAccount() {
             axios.post('/your-api-endpoint', watchEmail)
             .then(response => {
               console.log("Email sent successfully:", response.data);
-              // setVerificationEmail(true); I have to put it here 
             })
             .catch(error => {
               console.error("Error sending email:", error);
-              // Optionally, you can add logic here to handle errors
             });
         
           }

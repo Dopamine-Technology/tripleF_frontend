@@ -266,3 +266,21 @@ text-align: left;
     letter-spacing: normal;
     color: #464646;
   }
+  .follow-button{
+    height: 32px;
+    margin: 16px 17px 0 22px;
+    padding: 4px 16px 5px;
+    border-radius: 18px;
+    border: solid 1px #5fb099;
+    background-color: var(--fill-white-white);
+    color:#5fb099
+  }
+  .follow-button:hover{
+    height: 32px;
+    margin: 16px 17px 0 22px;
+    padding: 4px 16px 5px;
+    border-radius: 18px;
+    border: solid 1px #5fb099;
+    background-color: var(--fill-white-white);
+    color:#5fb099
+  }

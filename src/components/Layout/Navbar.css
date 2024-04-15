@@ -339,6 +339,10 @@ text-align: left;
     }
     .navbar-brand{
         margin-right: 0;
+        /* width: 60rem */
+    }
+    .navbar-brand2{
+        margin-right: 0;
         width: 60rem
     }
     

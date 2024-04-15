@@ -29,6 +29,7 @@ function Post(){
     const [showReactionPopup,setShowReactionPop]=useState();
     const [showMedalPopups, setShowMedalPopups] = useState(Array(posts?.length).fill(false));
     const [selectedPostId, setSelectedPostId] = useState(null);
+    const [hasMore, setHasMore] = useState(true);
     const axios=useAxios();
     const { id } = useParams();
 
@@ -45,6 +46,41 @@ function Post(){
         fetchPostsData()
         
       }, []);
+
+      // useEffect(() => {
+      //   const fetchData = async () => {
+      //     setLoading(true);
+      //     try {
+      //       const response = await axios.get(`status/user_statuses/${id}?page=${page}`);
+      //       const newPosts = response.data.result;
+      //       setPosts(prevPosts => [...prevPosts, ...newPosts]);
+      //       setHasMore(newPosts.length > 0);
+      //     } catch (error) {
+      //       console.error('Error fetching data:', error);
+      //     }
+      //     setLoading(false);
+      //   };
+    
+      //   if (hasMore && !loading) {
+      //     fetchData();
+      //   }
+      // }, [page, id, loading, hasMore]);
+    
+      // const handleScroll = () => {
+      //   if (
+      //     window.innerHeight + document.documentElement.scrollTop ===
+      //     document.documentElement.offsetHeight
+      //   ) {
+      //     setPage(prevPage => prevPage + 1);
+      //   }
+      // };
+    
+      // useEffect(() => {
+      //   window.addEventListener('scroll', handleScroll);
+      //   return () => {
+      //     window.removeEventListener('scroll', handleScroll);
+      //   };
+      // }, []);
     
 
       const likeHandle = (index) => {

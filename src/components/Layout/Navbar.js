@@ -22,11 +22,11 @@ import NotificationIcon from '../../assets/imgs/notificationIcon.svg';
 import NotificationDropDown from "../Notification/NotificationDropDown";
 import { SearchResultsList } from "./SearchResultsList";
 
-function NavBar({ toggleCollapse,isSmallScreen,socket }) {
+function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
     const { user } = useContext(UserDataContext);
     const navigate=useNavigate();
     const axios=useAxios();
-    const [notifications,setNotifications]=useState([]);
+    // const [notifications,setNotifications]=useState([]);
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [input, setInput] = useState("");
     const [results,setResults]=useState([])
@@ -187,7 +187,7 @@ function NavBar({ toggleCollapse,isSmallScreen,socket }) {
                 <Nav className="right-content">
                     <img src={messages} className="icon me-2" />
                     {isSmallScreen?<img src={NotificationIcon} className="icon me-2" onClick={toggleDropdown} />:
-                          <NotificationDropDown />
+                          <NotificationDropDown notifications={notifications} />
                     }
                     {/* <img src={NotificationIcon} className="icon me-4" onClick={toggleDropdown} /> */}
       
