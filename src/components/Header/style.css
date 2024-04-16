@@ -142,6 +142,7 @@
   border-color:transparent;
 
 }
+
 .scroll-navbar{
   position: fixed;
   background-color: white;
@@ -172,7 +173,17 @@ z-index:3;
   /* Add any other custom styles you need */
 }
 
+@media only screen and (width: 412px) and (height: 892px) {
+  .scroll-navbar2{
+    margin-top: 4rem;
+  }
+}
 
+@media only screen and (width: 430px) and (height: 932px){
+ 
+
+
+}
 
 @media only screen and (max-width: 600px) {
   .logo-header{
@@ -226,14 +237,16 @@ z-index:3;
     .whole-div{
      height:80vh
     }
+    .scroll-navbar2{
+
+    margin-top: 3.4rem;
  
+    }
+
 }
 
-@media only screen and (width: 412px) and (height: 892px) {
-  .scroll-navbar2{
-    margin-top: 4rem;
-  }
-}
+
+
 
 @media only screen and (min-width: 601px) and (max-width: 820px) {
   .header-h1{
@@ -268,11 +281,18 @@ z-index:3;
     }
     .whole-div {
       height: 83vh;
-      background-position:0%;       /* if you want to fix the background remove this line */
+      background-position:0%;  
     }
     .header-div {
 
       margin-left: 3rem;
     }
+    .container{
+      max-width: 900px;
+    }
+    .navbar-container{
+      width:100rem
+    }
 
 }
+

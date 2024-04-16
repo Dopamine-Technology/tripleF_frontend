@@ -8,12 +8,8 @@ import { Outlet } from "react-router-dom";
 
 const { Header, Sider, Content } = AntLayout;
 
-const Layout = ({socket}) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+const Layout = ({socket,notifications}) => {
 
-  const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
-};
 
 const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -28,9 +24,15 @@ useLayoutEffect(() => {
 
 const isSmallScreen = windowWidth <= 600;
 const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
+
+const [isCollapsed, setIsCollapsed] = useState(isSmallScreen?true:false);
+
+const toggleCollapse = () => {
+  setIsCollapsed(!isCollapsed);
+};
   return (
     <AntLayout style={{ minHeight: "100vh" }}>
-      <NavBar toggleCollapse={toggleCollapse} isSmallScreen={isSmallScreen}  />
+      <NavBar toggleCollapse={toggleCollapse} isSmallScreen={isSmallScreen} notifications={notifications}  />
       <AntLayout>
         <Sider
           width={isCollapsed?0:80}

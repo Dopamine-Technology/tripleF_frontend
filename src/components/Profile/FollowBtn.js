@@ -19,8 +19,8 @@ const FollowBtn = ({ id, is_followed, updateFollowersCount ,updateIsFollowed,upd
     };
 
     return (  
-        <Button className='Register-button' onClick={handleFollow}>
-            <Link to='' className='Register-link'>{is_followed ? 'Unfollow' : 'Follow +'}</Link>
+        <Button className='follow-button' onClick={handleFollow}>
+            {is_followed ? 'Unfollow' : 'Follow +'}
         </Button> 
     );
 };

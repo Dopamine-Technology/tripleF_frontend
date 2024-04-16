@@ -17,6 +17,7 @@ import HomeIcon from '../../assets/imgs/home.svg';
 import dropdownImg from '../../assets/imgs/dropdown.svg';
 import ChallengesIcon from '../../assets/imgs/ChallengesIcon.svg';
 import ClubIcon from '../../assets/imgs/clubIcon.svg';
+import coach from '../../assets/imgs/coaches.png'
 
 
 function LeftArea({ isCollapsed, toggleCollapse }) {
@@ -49,7 +50,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
             </div>}
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             {!isCollapsed && 
-            <div className="Pro" onClick={() => handleNavLinkClick(2,'/clubs')}>
+            <div className="Pro" onClick={() => handleNavLinkClick(2,'/clubs/profiles/list')}>
                 <img src={ClubIcon} />
                 <div>
                 {!isCollapsed && <div >Clubs</div>}
@@ -57,10 +58,28 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
             </div>}
             <hr style={{color:'#B0B0B0',width:'130%'}} />
             {!isCollapsed && 
-            <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts')}>
+            <div className="Pro" onClick={() => handleNavLinkClick(3, '/scouts/profiles/list')}>
                 <img src={scoutIcon} />
                 <div>
                 {!isCollapsed && <div >Scouts</div>}
+                </div>
+            </div>}
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+
+            {!isCollapsed && 
+            <div className="Pro" onClick={() => handleNavLinkClick(3, '/coaches/profiles/list')}>
+                <img src={coach} />
+                <div>
+                {!isCollapsed && <div >Coaches</div>}
+                </div>
+            </div>}
+            <hr style={{color:'#B0B0B0',width:'130%'}} />
+
+            {!isCollapsed && 
+            <div className="Pro" onClick={() => handleNavLinkClick(3, '/talents/profiles/list')}>
+                <img src={coach} />
+                <div>
+                {!isCollapsed && <div >Talents</div>}
                 </div>
             </div>}
             <hr style={{color:'#B0B0B0',width:'130%'}} />

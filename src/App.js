@@ -31,22 +31,18 @@ import ChangePassword from './components/Settings/ChangePassword';
 import Notification from './components/Settings/Notification';
 import ProfilesApplied from './components/Opportunities/ProfilesApplied';
 import NotificationList from './components/Notification/NotificationList';
+import SearchAccounts from './components/SearchAccounts/SearchAccounts';
 import {io} from 'socket.io-client';
+
 
 
 function App() {
   const { user } = useContext(UserDataContext);
   const checkRole = useRoleCheck();
-  // const [socket,setSocket]=useState();
 
-  // useEffect(()=>{
-  //   setSocket(io("https://server-domain.com"))
 
-  // },[])
+  
 
-  // useEffect(()=>{
-  //   socket.emit('newUser',user);
-  // },[socket,user])
   return (
     <div className="App">
        <Router>
@@ -54,24 +50,23 @@ function App() {
         <Routes>
         {user.isAuthenticated ? (
             <>
-          <Route path='/' element={<Layout />}>
+          <Route path='/' element={<Layout  />}>
           <Route path='/' element={<Home />} />
             <Route path='/home' element={<Home />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
             <Route path='/clubs' element={<ComingSoon />}  />
             <Route path='/Scouts' element={<ComingSoon />}  />
             <Route path='/Opportunities' element={<ComingSoon />}  />
-          
             <Route path='/challenges' element={<ComingSoon />}  />
             <Route path='/saved' element={<ComingSoon />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
             <Route path='/loading' element={<LoadingScreen />}  />
-      
           </Route>
           <Route path='/' element={<LayoutWithoutRight />}>
           <Route path='/opportunity/list' element={<OpportunityList />} />
             <Route path='/applied/list' element={<MyOpportunities />} />
             <Route path='/profiles/applied/:name/:id' element={<ProfilesApplied />}  />
+            <Route path='/:type/profiles/list' element={<SearchAccounts />}  />
           
            </Route>
            <Route path='/' element={<SettingsLayout />}>
@@ -81,7 +76,6 @@ function App() {
            </Route>
            {checkRole(["scout","coach","club"]) && (
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />
-          
           )}
           <Route path='/my/notifications' element={<NotificationList />}  />
           {/* <Route path='/profile' element={<WholeProfile />} /> */}

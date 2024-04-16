@@ -553,7 +553,7 @@ function RegisterForm({ onLoadingChange }) {
            
               <Col md={12}>
 
-              <div className="social-login-container">
+              <div className="social-login social-login-container">
   <GoogleLogin
     clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
     buttonText="Sign up with Google"

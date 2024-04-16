@@ -1,80 +1,103 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import NotificationIcon from '../../assets/imgs/notificationIcon.svg';
+import morethanone from '../../assets/imgs/morethanzeronotificaion.png';
 import NotificationActive from '../../assets/imgs/notificationIconActive.svg';
 import './style.css';
+import Pusher from 'pusher-js'; 
+import { UserDataContext } from '../UserContext/UserData.context';
+import useAxios from '../Auth/useAxiosHook.interceptor';
 
 function NotificationDropDown() {
+    const [notifications, setNotifications] = useState([]);
+    const [allNotifications, setAllNotifications] = useState([]);
+    const [unreadCount, setUnreadCount] = useState(0);
+    const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
+    const { user } = useContext(UserDataContext);
+    const axios = useAxios();
 
-    const notifications=[
-        {userImg:'https://media.gettyimages.com/id/200280798-001/photo/front-profile-of-a-boy-playing-football-in-a-garden.jpg?s=170667a&w=gi&k=20&c=4XuSBXViKEU7blJ4C_1VASVKQGJii0_cC1K3ubxEuos=',
-         userName:'FarisJad',
-         notificationContent:'share your challenge',
-         created_at:'2 hours ago'
-         },
-         {userImg:'https://media.istockphoto.com/id/1400839503/photo/adorable-little-mixed-race-child-thinking-at-home-one-small-cute-hispanic-girl-sitting-alone.jpg?s=612x612&w=0&k=20&c=j17E794oSimfKA_BP55FWRuyl04hdnkoC0UnbJ4UYnc=',
-         userName:'FarisJad',
-         notificationContent:'share your challenge',
-         created_at:'Yesterday'
-         },
-         { userImg:'https://img.freepik.com/free-photo/front-view-happy-little-girl-home-during-online-school-with-laptop_23-2148827496.jpg',
-         userName:'FarisJad',
-         notificationContent:'added a bronze medal to your challenge',
-         created_at:'8 Mar, 2024  06:40 PM'
-         },
-         { userImg:'https://tmssl.akamaized.net/images/wappen/big/583.png?lm=1522312728',
-         userName:'Club Name',
-         notificationContent:'added new opportunity',
-         created_at:'2 hours ago'
-         },
-         { userImg:'https://tmssl.akamaized.net/images/wappen/big/583.png?lm=1522312728',
-         userName:'Club Name',
-         notificationContent:'added new opportunity',
-         created_at:'2 hours ago'
-         },
-         { userImg:'https://img.freepik.com/free-photo/front-view-happy-little-girl-home-during-online-school-with-laptop_23-2148827496.jpg',
-         userName:'FarisJad',
-         notificationContent:'added a bronze medal to your challenge',
-         created_at:'8 Mar, 2024  06:40 PM'
-         },
-         { userImg:'https://img.freepik.com/free-photo/front-view-happy-little-girl-home-during-online-school-with-laptop_23-2148827496.jpg',
-         userName:'FarisJad',
-         notificationContent:'added a bronze medal to your challenge',
-         created_at:'8 Mar, 2024  06:40 PM'
-         },
-         { userImg:'https://img.freepik.com/free-photo/front-view-happy-little-girl-home-during-online-school-with-laptop_23-2148827496.jpg',
-         userName:'FarisJad',
-         notificationContent:'added a bronze medal to your challenge',
-         created_at:'8 Mar, 2024  06:40 PM'
-         },
-    ];
+    useEffect(() => {
+        const pusher = new Pusher('323996d4cfab0016889a', {
+            cluster: 'ap2',
+        });
 
-    const displayedNotifications = notifications.slice(0, 7);
+        console.log('Pusher connected:', pusher.connection.state)
+
+        const channel = pusher.subscribe('notification-channel');
+
+        console.log('Subscribed to channel:', channel.name);
+
+        channel.bind('new-notification-event', (data) => {
+            setNotifications((prevNotifications) => [...prevNotifications, data]);
+            setUnreadCount((prevCount) => prevCount + 1);
+            setHasUnreadNotifications(true);
+            if (user.userData.id === data.notifiable_id) { // Check if the new notification is for the current user
+                setHasUnreadNotifications(true);
+            }
+        });
+
+        return () => {
+            channel.unbind();
+            pusher.unsubscribe('notification-channel');
+            console.log('Disconnected from Pusher');
+        };
+    }, [notifications]);
+
+    useEffect(() => {
+        console.log('notification', notifications);
+    }, [notifications]);
+
+    const handleToggleClick = () => {
+        axios.get('notifications/all')
+            .then(response => {
+                setAllNotifications(response.data.result);
+                setNotifications([]);
+            })
+            .catch(error => {
+                console.error('Error fetching notifications:', error);
+            });
+    };
+
+    const displayedNotifications = allNotifications?.length > 0 ? allNotifications.slice(0, 7) : [];
+    console.log('notification here', notifications);
 
     return (
-        <Dropdown className="d-inline mx-2" drop='start' >
+        <Dropdown className="d-inline mx-2" drop='start' onClick={handleToggleClick} >
             <Dropdown.Toggle id="dropdown-autoclose-true" className="bg-transparent border-white">
-                <img src={NotificationIcon} className="icon me-2" />
+            {(notifications.some(notification => notification.notifiable_id === user.userData.id) && hasUnreadNotifications) ? (
+    <img src={morethanone} className="icon me-2" />
+) : (
+    <img src={NotificationIcon} className="icon me-2" />
+)}
+
             </Dropdown.Toggle>
-            <Dropdown.Menu  style={{ width: '28rem' }} className='mt-5'>
+            <Dropdown.Menu style={{ width: '28rem' }} className='mt-5'>
                 <p className='title'>Notifications</p>
-                {displayedNotifications.map((notification, index) => (
-                    <>
-                    <Dropdown.Item href="#" key={index}>
-                        <div className='d-flex'>
-                            <img src={notification.userImg} className='notification-owner me-2' />
-                            
-                            <div>
-                                <p className='notification-content mt-2 ' style={{maxWidth:'200px'}}>
-                                <span className='notification-owner-userName'>{notification.userName}</span>
-                                {notification.notificationContent}  <br />   {notification.created_at}</p>
-                            </div>
-                         
-                        </div>
+                {displayedNotifications.length > 0 ? (
+                    displayedNotifications.map((notification, index) => (
+                        <Dropdown.Item href="#" key={index}>
+                            {notification.data.notification_type === 'new_follower' ? (
+                                <div className='d-flex' style={{backgroundColor:notification.is_read?'white':'rgba(235, 234, 237, 0.3)', padding:'12px 2px 3px 8px'}}>
+                                    {notification.data.image && (
+                                        <img src={notification.data.image} className='notification-owner me-2' />
+                                    )}
+                                    <div>
+                                        <p className='notification-content mt-2 ' style={{ maxWidth: '200px' }}>
+                                            <span className='notification-owner-userName'>{notification.data.name}</span>
+                                            {' '}started following you<br />{notification.created_at}
+                                        </p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <p>No Notifications</p>
+                            )}
+                        </Dropdown.Item>
+                    ))
+                ) : (
+                    <Dropdown.Item>
+                        No notifications
                     </Dropdown.Item>
-                     {/* {index !== displayedNotifications.length - 1 && <hr style={{ border:'solid 1px #ebeaed'}}/>} */}
-                     </>
-                ))}
+                )}
                 {notifications.length > 7 && (
                     <>
                         <Dropdown.Divider />

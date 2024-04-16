@@ -56,7 +56,7 @@ const TopNavbar = ({content}) => {
     <Navbar.Brand href="/" className="d-flex align-items-center">
       <img src={Logo} className='logo-register' />
       <Navbar.Toggle aria-controls="basic-navbar-nav"
-       style={{ borderColor: 'transparent',marginLeft:isTabletScreen?'33rem':'1rem' }}  />
+       style={{ borderColor: 'transparent',marginLeft:isTabletScreen?'38rem':'1rem' }}  />
     </Navbar.Brand>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ms-auto mt-2">

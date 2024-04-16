@@ -587,3 +587,8 @@ Link{
 .go-profile:hover{
   cursor: pointer;
 }
+@media only screen and (max-width: 600px) {
+  .newOpp-form{
+    margin: 2rem;
+  }
+}
