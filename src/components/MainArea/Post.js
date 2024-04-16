@@ -53,10 +53,11 @@ function Post({socket,newPostCreated}){
         }
       };
   
-      if (newPostCreated) {
-        fetchPostsData();
-      }
-    }, [newPostCreated]);
+      // if (newPostCreated) {
+      //   fetchPostsData();
+      // }
+      fetchPostsData();
+    }, []);
     
       const likeHandle = (index,type) => {
         // socket.emit('sendNotification',{
