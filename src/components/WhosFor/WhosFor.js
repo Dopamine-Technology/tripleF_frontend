@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { Row, Col } from 'react-bootstrap';
 import WhosForDesc from './WhosForDec'
 import WhosForImg from './WhosForImg';
@@ -7,31 +7,45 @@ import club from '../../assets/imgs/football-club.png';
 import coach from '../../assets/imgs/coach.svg'
 import icon from '../../assets/imgs/binoculars.png';
 import Football from '../../assets/imgs/football@2x.png';
-import './style.css'
+import './style.css';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
 
 const WhosFor = () => {
-  const types = [
-    {
-      img: Football,
-      title: "Talents",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    },
-    {
-      img: coach,
-      title: "Coaches",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    },
-    {
-      img: club,
-      title: "Clubs",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    },
-    {
-      img: icon,
-      title: "Scouts",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-    }
-  ];
+  const currentLanguage = Cookies.get('language') || 'en';
+    const [direction, setDirection] = useState('ltr');
+    const [t,i18n]=useTranslation();
+
+    useEffect(() => {
+      if (currentLanguage === 'ar') {
+        setDirection('rtl');
+      } 
+      else{
+        setDirection('ltr')
+      }
+    }, [currentLanguage]);
+    const types = [
+      {
+        img: Football,
+        title: t('whos.cards.0.title'),
+        desc: t('whos.cards.0.desc'),
+      },
+      {
+        img: coach,
+        title: t('whos.cards.1.title'),
+        desc: t('whos.cards.1.desc'),
+      },
+      {
+        img: club,
+        title: t('whos.cards.2.title'),
+        desc: t('whos.cards.2.desc'),
+      },
+      {
+        img: icon,
+        title: t('whos.cards.3.title'),
+        desc: t('whos.cards.3.desc'),
+      },
+    ];
 
   return (
     <div className=' whos-for-container  ' id='#whoSection'>

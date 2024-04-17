@@ -121,7 +121,7 @@ function WholeProfile(){
                 <NewPost profileData={profileData} />:null}
                 {
                 profileData.profile.type_name=='talent'? <Post />:
-                profileData.profile.type_name=='scout'? <OppProfileScout  profileData={profileData}/>:
+                profileData.profile.type_name=='scout'||profileData.profile.type_name=='club'? <OppProfileScout  profileData={profileData}/>:
                 profileData.profile.type_name=='coach'?  <Post />:
                 <OppProfileScout  profileData={profileData}/>
                 }

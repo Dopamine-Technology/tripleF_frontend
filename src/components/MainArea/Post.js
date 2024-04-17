@@ -27,6 +27,7 @@ import UnFollowUser from '../../assets/imgs/UnfollowUser.svg';
 import { UserDataContext } from '../UserContext/UserData.context';
 import SaveFilled from '../../assets/imgs/save-filled.svg';
 import { MdDeleteOutline } from "react-icons/md";
+import { message } from 'antd';
 
 
 function Post({socket,newPostCreated}){
@@ -39,6 +40,7 @@ function Post({socket,newPostCreated}){
     const [showMedalPopups, setShowMedalPopups] = useState(Array(posts?.length).fill(false));
     const [selectedPostId, setSelectedPostId] = useState(null);
     const [fetchPosts, setFetchPosts] = useState(true);
+    const [copied, setCopied] = useState(false);
     const { user } = useContext(UserDataContext);
     
     const axios=useAxios();
@@ -74,7 +76,7 @@ function Post({socket,newPostCreated}){
         const medalPoints = {
             gold: 3,
             silver: 2,
-            saddlebrown: 1, // Assuming saddlebrown represents bronze
+            saddlebrown: 1, 
         };
     
         const requestBody = {
@@ -103,6 +105,33 @@ function Post({socket,newPostCreated}){
         setPosts(updatedPosts);
         setShow(false);
     };
+
+    const handleCopyLink = (postId) => {
+      // Construct the link with the post ID
+      const postLink = `${window.location.origin}/view/post/${postId}`;
+      console.log("Copying link:", postLink);
+  
+      // Check if the Clipboard API is available
+      if (navigator.clipboard) {
+          // Copy the link to the clipboard
+          navigator.clipboard.writeText(postLink)
+              .then(() => {
+                  console.log("Link copied to clipboard:", postLink);
+                  // Set state to indicate that the link has been copied
+                  setCopied(true);
+                  message.success('link copied')
+                  // Reset the copied state after a short delay
+                  setTimeout(() => {
+                      setCopied(false);
+                  }, 2000);
+              })
+              .catch((error) => {
+                  console.error("Failed to copy link to clipboard:", error);
+              });
+      } else {
+          console.error("Clipboard API not available");
+      }
+  };
     
     
     const clearSelection = () => {
@@ -165,7 +194,7 @@ function Post({socket,newPostCreated}){
       </Dropdown.Toggle>
 
       <Dropdown.Menu style={{width:'14rem'}}>
-        <Dropdown.Item href="" className='p-2' ><img src={copyLink} className='me-2' />Copy link to Post</Dropdown.Item>
+        <Dropdown.Item href="" className='p-2'  onClick={() => handleCopyLink(post.id)}  ><img src={copyLink} className='me-2'/>{copied ? 'Link Copied' : 'Copy post link'}</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'> <img src={notInterested} className='me-2' />I don’t want to see <br /> this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'><img src={UnFollowUser} className='me-2' />Unfollow user</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' ><img src={report} className='me-2' />Report Post</Dropdown.Item>

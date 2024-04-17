@@ -76,15 +76,14 @@ function OppPost(){
        <div className='d-flex justify-content-between' >
        <div className="poster">
        <div className="Simplilearn" style={{marginTop:'0.7rem'}}>
-           <img src={user.userData.profile.club_logo}
+           <img src={data.user.profile.club_logo}
             alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
-           <p className='post-username'>{user.userData.profile.club_name} <br /> 
+           <p className='post-username'>{data.user.profile.club_name} <br /> 
     
            </p> 
         
        </div>
        
-    
     </div>
      <Dropdown>
           <Dropdown.Toggle variant=""  className="edit">
