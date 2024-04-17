@@ -12,13 +12,13 @@ const Steps = () => {
     const [t,i18n]=useTranslation();
 
     useEffect(() => {
-      // Change direction based on the selected language
       if (currentLanguage === 'ar') {
         setDirection('rtl');
       }       else{
         setDirection('ltr')
       }
     }, [currentLanguage]);
+    
   const stepsArray = [
     {
       stepNum:'01',

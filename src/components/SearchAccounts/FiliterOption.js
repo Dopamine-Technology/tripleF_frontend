@@ -20,10 +20,18 @@ function FiliterOption(props) {
   const axios = useAxios();
   const { user } = useContext(UserDataContext);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState({
+    country: '',
+    gender: '',
+    position: '',
+    preferred_foot: '',
+  });
+
   const [countries, setCountries] = useState([]);
   const [languages, setLanguages] = useState([]);
   const location = useLocation();
 
+ 
   const currentYear = new Date().getFullYear();
   const yearOptions = [];
   for (let year = 1880; year <= currentYear; year++) {
@@ -90,11 +98,12 @@ function FiliterOption(props) {
       });
   }, []);
 
-  function onFilterValueChanged(event){
-        console.log(event.target.value);
-        props.filterValueSelected(event.target.value)
-  }
-
+  const handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    props.onFilterChange(name, value); // Pass filter name and value to parent component
+  };
+  
+ 
   function onFilterGenderChanged(event){
     console.log(event.target.value);
     props.filterGenderSelected(event.target.value)
@@ -124,10 +133,10 @@ function onFilterLocationChanged(event) {
           register={register} 
           errors={errors} 
           selectOptions={countries}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='country'
           borderRadius='18px'
-          onChange={onFilterLocationChanged}
+          onChange={handleFilterChange}
         />
       </Col>
       {user.userData.profile.type_name=='talent'?(<><Col md={6} lg={3}>
@@ -138,10 +147,10 @@ function onFilterLocationChanged(event) {
           register={register}
           errors={errors}
           selectOptions={positions}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='position'
           borderRadius='18px'
-          onChange={onFilterPositionChanged}
+          onChange={handleFilterChange}
         />
       </Col>
       <Col md={6} lg={3}>
@@ -152,10 +161,10 @@ function onFilterLocationChanged(event) {
           register={register}
           errors={errors}
           selectOptions={genderOptions}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='Gender'
           borderRadius='18px'
-          onChange={onFilterGenderChanged}
+          onChange={handleFilterChange}
         />
       </Col> 
       <Col md={6} lg={3}>
@@ -166,10 +175,10 @@ function onFilterLocationChanged(event) {
           register={register}
           errors={errors}
           selectOptions={preferredFoot}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='Preferred Foot'
           borderRadius='18px'
-          onChange={onFilterValueChanged}
+          onChange={handleFilterChange}
         />
       </Col>
       </> ):(
@@ -181,10 +190,10 @@ function onFilterLocationChanged(event) {
           register={register}
           errors={errors}
           selectOptions={genderOptions}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='Gender'
           borderRadius='18px'
-          onChange={onFilterGenderChanged}
+          onChange={handleFilterChange}
         />
       </Col> 
       <Col md={6} lg={3}>
@@ -195,10 +204,10 @@ function onFilterLocationChanged(event) {
           register={register}
           errors={errors}
           selectOptions={expYears}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='experience years'
           borderRadius='18px'
-          onChange={onFilterGenderChanged}
+          onChange={handleFilterChange}
         />
       </Col>
       </>
@@ -215,10 +224,10 @@ function onFilterLocationChanged(event) {
            register={register} 
            errors={errors} 
            selectOptions={countries}
-           inputWidth='10rem'
+           inputWidth='13rem'
            placeholder='country'
            borderRadius='18px'
-           onChange={onFilterLocationChanged}
+           onChange={handleFilterChange}
          />
        </Col>
         <Col md={6} lg={3}>
@@ -229,10 +238,10 @@ function onFilterLocationChanged(event) {
            register={register}
            errors={errors}
            selectOptions={genderOptions}
-           inputWidth='10rem'
+           inputWidth='13rem'
            placeholder='Gender'
            borderRadius='18px'
-           onChange={onFilterGenderChanged}
+           onChange={handleFilterChange}
          />
        </Col> 
        <Col md={6} lg={3}>
@@ -243,10 +252,10 @@ function onFilterLocationChanged(event) {
            register={register}
            errors={errors}
            selectOptions={expYears}
-           inputWidth='10rem'
+           inputWidth='13rem'
            placeholder='experience years'
            borderRadius='18px'
-           onChange={onFilterGenderChanged}
+           onChange={handleFilterChange}
          />
        </Col>
        <Col md={6} lg={3}>
@@ -257,9 +266,10 @@ function onFilterLocationChanged(event) {
            register={register}
            errors={errors}
            selectOptions={languages}
-           inputWidth='10rem'
+           inputWidth='13rem'
            placeholder='language'
            borderRadius='18px'
+           onChange={handleFilterChange}
          />
        </Col>
        </>):
@@ -273,10 +283,10 @@ function onFilterLocationChanged(event) {
           register={register} 
           errors={errors} 
           selectOptions={countries}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='country'
           borderRadius='18px'
-          onChange={onFilterLocationChanged}
+          onChange={handleFilterChange}
         />
       </Col>
        <Col md={6} lg={4}>
@@ -287,10 +297,10 @@ function onFilterLocationChanged(event) {
           register={register}
           errors={errors}
           selectOptions={genderOptions}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='Gender'
           borderRadius='18px'
-          onChange={onFilterGenderChanged}
+          onChange={handleFilterChange}
         />
       </Col> 
       <Col md={6} lg={4}>
@@ -301,10 +311,10 @@ function onFilterLocationChanged(event) {
           register={register}
           errors={errors}
           selectOptions={expYears}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='experience years'
           borderRadius='18px'
-          onChange={onFilterGenderChanged}
+          onChange={handleFilterChange}
         />
       </Col>
       </>):
@@ -317,10 +327,10 @@ function onFilterLocationChanged(event) {
           register={register} 
           errors={errors} 
           selectOptions={countries}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='country'
           borderRadius='18px'
-          onChange={onFilterLocationChanged}
+          onChange={handleFilterChange}
         />
       </Col>
       <Col md={6} lg={6}>
@@ -331,10 +341,10 @@ function onFilterLocationChanged(event) {
           register={register} 
           errors={errors} 
           selectOptions={yearOptions}
-          inputWidth='10rem'
+          inputWidth='13rem'
           placeholder='year founded'
           borderRadius='18px'
-          onChange={onFilterLocationChanged}
+          onChange={handleFilterChange}
         />
       </Col>
       </>):

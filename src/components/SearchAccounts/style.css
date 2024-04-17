@@ -19,3 +19,9 @@ margin-top:1.9rem
     border: solid 6px white;
     
 }
+.no-profiles-message {
+    font-size: 24px;
+    color: #999999; /* Light gray color */
+    text-align: center;
+    margin-top: 50px; /* Adjust as needed */
+}

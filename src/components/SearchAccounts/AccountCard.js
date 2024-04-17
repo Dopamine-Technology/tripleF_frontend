@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import FollowBtn from '../Profile/FollowBtn';
 import { useLocation } from 'react-router-dom';
 
-function AccountCard({id,profileData}) {
+function AccountCard({id,profileData,profile}) {
   const currentYear = new Date().getFullYear();
   const location = useLocation();
 
@@ -23,19 +23,13 @@ function AccountCard({id,profileData}) {
 
 
 
-
-
-
-
-
-
   return (
     <Card className='account-card' style={{padding:'0'}} >
     <div className='images-container'>
       <Card.Img
         roundedCircle
         className='account-img'
-        src='https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0='
+        src={profile.image?profile.image:profile.social_image}
       />
       <Card.Img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSUTrQQCHy49vdbx3hLlJqZHuzyw0NST783T1B4XqEtA&s" 
@@ -44,26 +38,27 @@ function AccountCard({id,profileData}) {
     </div>
     <Card.Body className='mt-3'>
     <Card.Title className='card-title'>
-     Name here
+      
+     {profile.first_name} {profile.last_name} 
     </Card.Title>
     {location.pathname === '/clubs/profiles/list'?( 
         <Card.Subtitle className='card-subTitle'>
-          <p>Country</p>
+          <p>{profile?.profile.country.name}</p>
 </Card.Subtitle>):(
   location.pathname === '/scouts/profiles/list'?(
     <Card.Subtitle className='card-subTitle'>
-    <p>3 Years Experience</p>
+    <p>{profile?.profile.years_of_experience} Years Experience</p>
 </Card.Subtitle>
   ):(
     location.pathname === '/coaches/profiles/list'?(
       <Card.Subtitle className='card-subTitle'>
-     <p>3 Years Experience</p>
+     <p>{profile?.profile.years_of_experience} ears Experience</p>
  </Card.Subtitle>
     ):(
       <Card.Subtitle className='card-subTitle'>
       <p>Talent</p> 
        
-    <p> Goal Keeper</p>
+    <p> {profile?.profile.parent_position?.name}</p>
  </Card.Subtitle>
     )
   
