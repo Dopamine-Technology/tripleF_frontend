@@ -15,7 +15,7 @@ function Reaction({users}) {
           <div className="ms-2 me-5 d-flex " >
             <div className="fw-bold me-3">
 
-                <img src={user.image}   className='user-img' />
+                <img src={user.image}  className='user-img' />
                 
                   <LiaMedalSolid color="saddlebrown" className='me-2 rectangleOn'  size={30}/>
                 

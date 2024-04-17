@@ -114,7 +114,7 @@ function MyAccount() {
             };
         
             fetchData();
-        }, []);
+        },[]);
  
 
      
@@ -226,6 +226,23 @@ function MyAccount() {
         
           }
 
+          useEffect(() => {
+            const fetchSubPositions = async () => {
+              try {
+                const response = await axios.post('https://backend.triplef.group/api/app/get_sport_positions/1', {
+                  parent_id: user.userData.profile.parent_position.id,
+                  name: ''
+                });
+                setSubPositions(response.data.result);
+              } catch (error) {
+                console.error('Error fetching sub-positions:', error);
+              }
+            };
+          
+            fetchSubPositions(); // Call the function to fetch sub-positions when the component mounts
+          }, []); // Empty dependency array ensures this effect runs only once after the initial render
+          
+
           const handlePositionSelect = async (selectedPositionId) => {
             try {
               const response = await axios.post('https://backend.triplef.group/api/app/get_sport_positions/1', {
@@ -293,7 +310,8 @@ function MyAccount() {
         </div>
     </div>
 </Form.Group> 
-{user.userData.profile.type_name=='talent'&&<Form.Group controlId='gender' className='me-2'>
+{user.userData.profile.type_name=='talent'&&
+<Form.Group controlId='gender' className='me-2'>
 <label>Position</label>
 <div className="d-flex" onChange={(e) => handlePositionSelect(e.target.value)}>
     {positions?.map((position) => (
@@ -304,7 +322,7 @@ function MyAccount() {
                 id={position.id}
                 value={position.id}
                 {...register('parent_position')}
-                defaultChecked={position.id === profileData?.profile.parent_position?.id}
+                defaultChecked={position.id == profileData?.profile.parent_position?.id}
         
                 
             />
@@ -316,7 +334,7 @@ function MyAccount() {
     
     </Form.Group>}
 
-    {user.userData.profile.type_name=='talent'&&<Form.Group controlId='subPosition' className='mb-3 me-4'>
+    {watch('parent_position') != '1' && user.userData.profile.type_name=='talent'&&<Form.Group controlId='subPosition' className='mb-3 me-4'>
     <div className='form-group'>
         <Form.Label htmlFor="subPosition">Sub Position</Form.Label>
         <select 
@@ -324,11 +342,11 @@ function MyAccount() {
             {...register('position')} 
             className='form-control' 
             style={{width:'391px'}} 
-            defaultValue={profileData?.profile.parent_position?.id === watch('parent_position') ? profileData?.profile.position.id : ''}
+            defaultValue={profileData?.profile.parent_position?.id == watch('parent_position') ? profileData?.profile.position.id : ''}
         >
-            {profileData?.profile.parent_position.id == watch('parent_position')? 
-                <option value={profileData?.profile.position.id}>{profileData?.profile.position.name}</option>:
-                <option value=""></option>
+            {profileData?.profile.parent_position.id == watch('parent_position')&&
+                <option value={profileData?.profile.position.id}>{profileData?.profile.position.name}</option>
+                // <option value=""></option>
             }
           
             {subPositions?.map(subPosition => (

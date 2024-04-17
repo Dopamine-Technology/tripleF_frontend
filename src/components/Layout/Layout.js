@@ -8,7 +8,7 @@ import { Outlet } from "react-router-dom";
 
 const { Header, Sider, Content } = AntLayout;
 
-const Layout = ({socket,notifications}) => {
+const Layout = ({notifications}) => {
 
 
 const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -45,7 +45,7 @@ const toggleCollapse = () => {
         </Sider>
         <AntLayout style={{ transition: 'margin-left 0.3s' }} className="AntLayout" 
         style={{marginLeft:isSmallScreen ?(isCollapsed?'-3rem':'100rem'):isTabletScreen?'4rem':''}}>
-                                                    {/* marginLeft: isSmallScreen ? (isCollapsed ? '-3rem' : '0') : '100rem' */}
+                                                    
           <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
             <Row justify="center">
               <Col xs={24} md={24} lg={16}>

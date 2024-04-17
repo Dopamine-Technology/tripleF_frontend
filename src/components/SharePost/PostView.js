@@ -17,6 +17,10 @@ import SaveFilled from '../../assets/imgs/save-filled.svg';
 import savedIcon from '../../assets/imgs/Saved.svg';
 import { MdDeleteOutline } from "react-icons/md";
 import { message } from 'antd';
+import report from '../../assets/imgs/Report.svg';
+import UnFollowUser from '../../assets/imgs/UnfollowUser.svg';
+import notInterested from '../../assets/imgs/notInterested.svg';
+import copyLink from '../../assets/imgs/copyLink.svg';
 
 function PostView() {
     const [show, setShow] = useState(false);
@@ -26,6 +30,7 @@ function PostView() {
     const {id}=useParams();
     const axios=useAxios();
     const [post,setPost]=useState();
+    const [copied, setCopied] = useState(false);
     const navigate=useNavigate();
 
     useEffect(() => {
@@ -80,7 +85,32 @@ function PostView() {
         setSelectedMedal(medal);
         setShow(false);
     };
-
+    const handleCopyLink = (postId) => {
+        // Construct the link with the post ID
+        const postLink = `${window.location.origin}/view/post/${postId}`;
+        console.log("Copying link:", postLink);
+    
+        // Check if the Clipboard API is available
+        if (navigator.clipboard) {
+            // Copy the link to the clipboard
+            navigator.clipboard.writeText(postLink)
+                .then(() => {
+                    console.log("Link copied to clipboard:", postLink);
+                    // Set state to indicate that the link has been copied
+                    setCopied(true);
+                    message.success('link copied')
+                    // Reset the copied state after a short delay
+                    setTimeout(() => {
+                        setCopied(false);
+                    }, 2000);
+                })
+                .catch((error) => {
+                    console.error("Failed to copy link to clipboard:", error);
+                });
+        } else {
+            console.error("Clipboard API not available");
+        }
+    };
     const clearSelection = () => {
         setShow(false);
     };
@@ -101,13 +131,13 @@ function PostView() {
          <MdMoreHoriz fontSize="1.5rem"  />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="" className='p-2' >Copy link to Post</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'>I don’t want to see this</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'>Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'>Report Post</Dropdown.Item>
+      <Dropdown.Menu style={{width:'14rem'}}>
+        <Dropdown.Item href="" className='p-2'  onClick={() => handleCopyLink(post.id)}  ><img src={copyLink} className='me-2'/>{copied ? 'Link Copied' : 'Copy post link'}</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'> <img src={notInterested} className='me-2' />I don’t want to see <br /> this</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'><img src={UnFollowUser} className='me-2' />Unfollow user</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' ><img src={report} className='me-2' />Report Post</Dropdown.Item>
         <hr />
-        <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)} ><MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item>
+        <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)}  ><MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </div>

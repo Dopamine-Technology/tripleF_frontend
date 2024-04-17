@@ -81,7 +81,7 @@ function Opportunity({data}){
 </div>
 {isAppliedPath?( 
     <div className='d-flex'>
-        <Link className='seeApplicants' to={`/profiles/applied/${data.title}/${data.id}`}>32 Applicants <FaArrowRight color='#1d71b8' /></Link>
+        <Link className='seeApplicants' to={`/profiles/applied/${data.title}/${data.id}`}>{data.applicants_count} Applicants<FaArrowRight color='#1d71b8' /></Link>
 <Dropdown >
       <Dropdown.Toggle variant=""  className="edit">
          <BsThreeDotsVertical fontSize="1.5rem"  />

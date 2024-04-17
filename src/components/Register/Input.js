@@ -1,9 +1,7 @@
-import React, { useState ,useLayoutEffect} from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Form, Col } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { message } from "antd";
-
-// ... other imports
 
 const Input = ({
   register,
@@ -12,15 +10,15 @@ const Input = ({
   label,
   placeholder,
   className,
-  validation, 
+  validation,
   type,
   rows,
   inputWidth,
   defaultValue,
   disabled,
 }) => {
-  const [showPassword, setShowPassword] = useState('');
-  const [inputValue, setInputValue] = useState(defaultValue || ''); 
+  const [showPassword, setShowPassword] = useState("");
+  const [inputValue, setInputValue] = useState(defaultValue);
   const [isTyping, setIsTyping] = useState(false);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -30,12 +28,15 @@ const Input = ({
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isSmallScreen = windowWidth <= 600;
+  useEffect(() => {
+    setInputValue(defaultValue);
+  }, [defaultValue]);
 
+  const isSmallScreen = windowWidth <= 600;
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -52,7 +53,7 @@ const Input = ({
   };
 
   return (
-    <Form.Group as={Col} md={4} className={isSmallScreen?'':''}>
+    <Form.Group as={Col} md={4} className={isSmallScreen ? "" : ""}>
       <Form.Label className={`text-capitalize text-black label`}>
         {label}
       </Form.Label>
@@ -65,7 +66,7 @@ const Input = ({
             errors && errors[name]?.message ? "border-danger" : ""
           } `}
           style={{
-            backgroundColor: disabled ? "#f2f2f2" : "transparent", 
+            backgroundColor: disabled ? "#f2f2f2" : "transparent",
             border: "1px solid rgba(144,144,144, 0.3)",
             color: "black",
             width: inputWidth || "15rem",
@@ -73,10 +74,9 @@ const Input = ({
             outline: "none",
           }}
           placeholder={placeholder}
-          defaultValue={defaultValue}
-          value={inputValue}
+          value={inputValue} // Use inputValue instead of defaultValue
           type={showPassword ? "text" : type}
-          disabled={disabled} 
+          disabled={disabled}
         />
         {type === "password" && (
           <div
@@ -98,7 +98,12 @@ const Input = ({
         )}
       </div>
       {errors && (
-        <div className="text-danger text-start d-inline-block" style={{ whiteSpace: 'nowrap' }}>{errors[name]?.message}</div>
+        <div
+          className="text-danger text-start d-inline-block"
+          style={{ whiteSpace: "nowrap" }}
+        >
+          {errors[name]?.message}
+        </div>
       )}
     </Form.Group>
   );

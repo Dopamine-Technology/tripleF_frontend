@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-function CardsList({id,profileData}) {
+function CardsList({id,profileData,isSmallScreen}) {
 
     const DummyProfiles=[
         {userImg:'https://media.gettyimages.com/id/200280798-001/photo/front-profile-of-a-boy-playing-football-in-a-garden.jpg?s=170667a&w=gi&k=20&c=4XuSBXViKEU7blJ4C_1VASVKQGJii0_cC1K3ubxEuos=',
@@ -54,7 +54,7 @@ function CardsList({id,profileData}) {
     <Container>
     {DummyProfiles.map((profile, index) => (
         (index % numColumns === 0 || index === DummyProfiles.length - 1) && (
-            <Row key={index}>
+            <Row key={index} style={{marginLeft:isSmallScreen?'3rem':''}}>
                 {DummyProfiles.slice(index, index + numColumns).map((profile, i) => (
                     <Col key={i} md={3}>
                         <AccountCard profile={profile} />

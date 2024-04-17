@@ -40,9 +40,6 @@ function App() {
   const { user } = useContext(UserDataContext);
   const checkRole = useRoleCheck();
 
-
-  
-
   return (
     <div className="App">
        <Router>

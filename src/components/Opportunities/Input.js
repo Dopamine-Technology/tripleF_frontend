@@ -72,7 +72,7 @@ const Input = ({
   size="sm"
   {...register(name, { required: true })} // Include required validation
   className={`${className} ${
-    errors && errors[name] ? "border-danger" : "" // Check if there's an error for the field
+    errors && errors[name] ? "border-danger" : "" 
   }`}
   style={{
     backgroundColor: "white",
@@ -83,19 +83,15 @@ const Input = ({
   }}
   onChange={onChange}
 >
-  <option value="">{placeholder}</option> {/* Empty option for placeholder */}
+  <option value="">{placeholder}</option> 
   {selectOptions &&
     selectOptions.map((option) => (
-      <option key={option.id} value={option.id}>
+      <option key={option.id} value={option.id} >
         {option.name}
       </option>
     ))}
 </Form.Control>
-// {errors[name] && ( // Display error message if there's a validation error for the field
-//   <div className="text-danger">
-//     <p>{errors[name].message}</p>
-//   </div>
-// )}
+
 
           
         ) : null}
