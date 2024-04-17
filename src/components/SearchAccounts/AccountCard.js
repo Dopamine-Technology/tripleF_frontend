@@ -3,10 +3,11 @@ import { Row, Col, Container } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import FollowBtn from '../Profile/FollowBtn';
+import { useLocation } from 'react-router-dom';
 
 function AccountCard({id,profileData}) {
   const currentYear = new Date().getFullYear();
-
+  const location = useLocation();
 
   const [activeKey,setActiveKey]=useState();
  
@@ -43,13 +44,33 @@ function AccountCard({id,profileData}) {
     </div>
     <Card.Body className='mt-3'>
     <Card.Title className='card-title'>
-    Talent Name here
+     Name here
     </Card.Title>
-      <Card.Subtitle className='card-subTitle'>
-       <p>Talent</p> 
-        
-     <p> Goal Keeper</p>
+    {location.pathname === '/clubs/profiles/list'?( 
+        <Card.Subtitle className='card-subTitle'>
+          <p>Country</p>
+</Card.Subtitle>):(
+  location.pathname === '/scouts/profiles/list'?(
+    <Card.Subtitle className='card-subTitle'>
+    <p>3 Years Experience</p>
 </Card.Subtitle>
+  ):(
+    location.pathname === '/coaches/profiles/list'?(
+      <Card.Subtitle className='card-subTitle'>
+     <p>3 Years Experience</p>
+ </Card.Subtitle>
+    ):(
+      <Card.Subtitle className='card-subTitle'>
+      <p>Talent</p> 
+       
+    <p> Goal Keeper</p>
+ </Card.Subtitle>
+    )
+  
+  )
+     
+)}
+   
      
 <FollowBtn id={id} is_followed={false}
         updateFollowersCount={1}

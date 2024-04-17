@@ -1,35 +1,29 @@
-import { doc, onSnapshot } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { ChatContext } from "../context/ChatContext";
-import { db } from "../firebase";
+import React from "react";
 
 const Chats = () => {
-  const [chats, setChats] = useState([]);
-
-  const { currentUser } = useContext(AuthContext);
-  const { dispatch } = useContext(ChatContext);
-
+  const chats = []; // Dummy chats for design purposes
 
   const handleSelect = (u) => {
-    dispatch({ type: "CHANGE_USER", payload: u });
+    // Dummy handleSelect function
   };
 
   return (
     <div className="chats">
-      {Object.entries(chats)?.sort((a,b)=>b[1].date - a[1].date).map((chat) => (
-        <div
-          className="userChat"
-          key={chat[0]}
-          onClick={() => handleSelect(chat[1].userInfo)}
-        >
-          <img src={chat[1].userInfo.photoURL} alt="" />
-          <div className="userChatInfo">
-            <span>{chat[1].userInfo.displayName}</span>
-            <p>{chat[1].lastMessage?.text}</p>
+      {Object.entries(chats)
+        ?.sort((a, b) => b[1].date - a[1].date)
+        .map((chat) => (
+          <div
+            className="userChat"
+            key={chat[0]}
+            onClick={() => handleSelect(chat[1].userInfo)}
+          >
+            <img src="" alt="" />
+            <div className="userChatInfo">
+              <span>User Name</span>
+              <p>Last message</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };

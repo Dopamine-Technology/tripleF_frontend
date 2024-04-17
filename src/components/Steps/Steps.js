@@ -1,25 +1,39 @@
-import React,{useLayoutEffect,useState} from 'react';
+import React,{useLayoutEffect,useState,useEffect} from 'react';
 import './style.css';
 import Step from './step';
 import { Row, Col } from 'react-bootstrap';
 import RegisterButton from '../Header/RegisterButton';
+import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 
 const Steps = () => {
+  const currentLanguage = Cookies.get('language') || 'en';
+    const [direction, setDirection] = useState('ltr');
+    const [t,i18n]=useTranslation();
+
+    useEffect(() => {
+      // Change direction based on the selected language
+      if (currentLanguage === 'ar') {
+        setDirection('rtl');
+      }       else{
+        setDirection('ltr')
+      }
+    }, [currentLanguage]);
   const stepsArray = [
     {
       stepNum:'01',
-      step: 'One',
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+      step: t('howItWorks.cards.0.title'),
+      content: t('howItWorks.cards.0.desc')
     },
     {
       stepNum:'02',
-      step: 'Two',
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+      step: t('howItWorks.cards.0.title'),
+      content: t('howItWorks.cards.0.desc')
     },
     {
       stepNum:'03',
-      step: 'Three',
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+      step: t('howItWorks.cards.0.title'),
+      content: t('howItWorks.cards.0.desc')
     },
   ];
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -37,7 +51,7 @@ const Steps = () => {
   const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
   return (
-    <div className='steps-div' id='How'>
+    <div className='steps-div' id='How' style={{direction:direction}}>
    <div className="Shape"></div>
       <Row style={{marginTop:'2rem'}}>
         <Col md={6} className="order-md-1 order-2">
@@ -52,14 +66,8 @@ const Steps = () => {
         </Col>
         <Col md={6} className="order-md-2 order-1">
           <div className='desc-responsive' >
-            <p className='text-white how-h1 mt-5 mb-4' >How it works</p>
-            <p style={{color:"white"}} className='mb-5 Lorem-responsive'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              Duis aute irure.
+            <p className='text-white how-h1 mt-5 mb-4' >{t('howItWorks.title')}</p>
+            <p style={{color:"white"}} className='mb-5 Lorem-responsive'>{t('howItWorks.desc')}
               </p>
               <RegisterButton />
           </div>
