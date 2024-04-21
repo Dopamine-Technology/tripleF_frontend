@@ -53,7 +53,7 @@ const Steps = () => {
   return (
     <div className='steps-div' id='How' style={{direction:direction}}>
    <div className="Shape"></div>
-      <Row style={{marginTop:'2rem'}}>
+      <Row style={{marginTop:'2rem',marginRight:currentLanguage=='ar'?'10rem':''}}>
         <Col md={6} className="order-md-1 order-2">
           <Row className='mb-3'>
             {stepsArray.map((step, index) => (

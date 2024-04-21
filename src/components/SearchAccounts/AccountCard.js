@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import FollowBtn from '../Profile/FollowBtn';
 import { useLocation } from 'react-router-dom';
 
-function AccountCard({id,profileData,profile}) {
+function AccountCard({profile}) {
   const currentYear = new Date().getFullYear();
   const location = useLocation();
 
   const [activeKey,setActiveKey]=useState();
+  
  
-  const [isFollowed, setIsFollowed] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(profile.is_followed);
 
 
   const [show, setShow] = useState(false);
@@ -24,7 +25,8 @@ function AccountCard({id,profileData,profile}) {
 
 
   return (
-    <Card className='account-card' style={{padding:'0'}} >
+   
+    <Card className='account-card' style={{padding:'0'}}>
     <div className='images-container'>
       <Card.Img
         roundedCircle
@@ -38,8 +40,13 @@ function AccountCard({id,profileData,profile}) {
     </div>
     <Card.Body className='mt-3'>
     <Card.Title className='card-title'>
-      
-     {profile.first_name} {profile.last_name} 
+    <Link to={`/profile/${profile.id}`} style={{ textDecoration: 'none', cursor: 'pointer',color:'black' }}>
+    {location.pathname === '/clubs/profiles/list' ? (
+  profile.profile.club_name
+) : (
+  profile.first_name + ' ' + profile.last_name
+)}
+  </Link>
     </Card.Title>
     {location.pathname === '/clubs/profiles/list'?( 
         <Card.Subtitle className='card-subTitle'>
@@ -52,7 +59,7 @@ function AccountCard({id,profileData,profile}) {
   ):(
     location.pathname === '/coaches/profiles/list'?(
       <Card.Subtitle className='card-subTitle'>
-     <p>{profile?.profile.years_of_experience} ears Experience</p>
+     <p>{profile?.profile.years_of_experience} years Experience</p>
  </Card.Subtitle>
     ):(
       <Card.Subtitle className='card-subTitle'>
@@ -67,16 +74,17 @@ function AccountCard({id,profileData,profile}) {
 )}
    
      
-<FollowBtn id={id} is_followed={false}
-        updateFollowersCount={1}
-        updateFollowingCount={1}
-        updateIsFollowed={false} />
+<FollowBtn id={profile.id} is_followed={profile.is_followed}
+        // updateFollowersCount={updateFollowersCount}
+        // updateFollowingCount={updateFollowingCount}
+        updateIsFollowed={setIsFollowed} />
    
       
     </Card.Body>
    
    
   </Card>
+
   );
 }
 

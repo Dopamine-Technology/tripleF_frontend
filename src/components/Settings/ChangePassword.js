@@ -6,6 +6,8 @@ import './style.css';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {Button,Row,Col} from 'react-bootstrap';
+import useAxios from '../Auth/useAxiosHook.interceptor';
+import { message } from 'antd';
 
 function ChangePassword() {
     const schema = Yup.object().shape({
@@ -39,9 +41,29 @@ function ChangePassword() {
       } = useForm( { mode: "onChange",
       resolver: yupResolver(schema)});    
 
-      const onSubmit = (data) => {
-        console.log(data);
-        // Here you can perform any action with the submitted data
+      const axios=useAxios();
+
+      const onSubmit = async (data) => {
+        try {
+    
+            const requestData = {
+    
+                old_password: data.current_password,
+                new_password:data.new_password,
+                new_password_confirmation:data.confirmPassword
+
+            };
+            const response = await axios.post('user/edit_password', requestData);
+
+            if (response.status === 200) {
+                message.success('Password changed successfully');
+                reset();
+            } else {
+                message.error('please try again');
+            }
+        } catch (error) {
+            console.error('Error occurred while changing password:', error);
+        }
     };
 
     return(

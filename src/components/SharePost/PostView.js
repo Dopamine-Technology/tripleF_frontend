@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import { MdMoreHoriz} from 'react-icons/md';
 import { IoShareSocialOutline } from "react-icons/io5";
 import { BsSave } from "react-icons/bs";
@@ -21,6 +21,8 @@ import report from '../../assets/imgs/Report.svg';
 import UnFollowUser from '../../assets/imgs/UnfollowUser.svg';
 import notInterested from '../../assets/imgs/notInterested.svg';
 import copyLink from '../../assets/imgs/copyLink.svg';
+import ReportPostPopup from '../Post/ReportPostPopup';
+import { UserDataContext } from '../UserContext/UserData.context';
 
 function PostView() {
     const [show, setShow] = useState(false);
@@ -32,6 +34,11 @@ function PostView() {
     const [post,setPost]=useState();
     const [copied, setCopied] = useState(false);
     const navigate=useNavigate();
+    const [showReportPopup, setShowReportPopup] = useState(false);
+    const { user } = useContext(UserDataContext);
+
+    const handleCloseReportPopup = () => setShowReportPopup(false);
+    const handleShowReportPopup = () => setShowReportPopup(true);
 
     useEffect(() => {
         axios
@@ -135,9 +142,14 @@ function PostView() {
         <Dropdown.Item href="" className='p-2'  onClick={() => handleCopyLink(post.id)}  ><img src={copyLink} className='me-2'/>{copied ? 'Link Copied' : 'Copy post link'}</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'> <img src={notInterested} className='me-2' />I don’t want to see <br /> this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2'><img src={UnFollowUser} className='me-2' />Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2' ><img src={report} className='me-2' />Report Post</Dropdown.Item>
-        <hr />
-        <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)}  ><MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleShowReportPopup()} ><img src={report} className='me-2' />Report Post</Dropdown.Item>
+   {post.user.id==user.userData.id && 
+        <>
+             <hr />
+             <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)}  >
+            <MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item> 
+         </>
+          }
       </Dropdown.Menu>
     </Dropdown>
     </div>
@@ -216,7 +228,8 @@ function PostView() {
             Save
         </div>
     
-    </div> 
+    </div>
+    {showReportPopup && <ReportPostPopup handleClose={handleCloseReportPopup} show={showReportPopup} id={post.id} setShow={setShowReportPopup} />} 
     </div>
     )
 }

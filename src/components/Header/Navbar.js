@@ -115,7 +115,7 @@ const TopNavbar = ({content}) => {
   </Container>
 </Navbar>:
 <Navbar expand="lg" className='fixed-navbar' >
-  <Container style={{ marginLeft: currentLanguage === 'ar' ? '0rem' : '-1rem', marginRight: currentLanguage === 'ar' ? '-9rem' : '-1rem' }}>
+  <Container style={{ marginLeft: currentLanguage === 'ar' ? '0rem' : '-1rem', marginRight: currentLanguage === 'ar' ? '5rem' : '-1rem' }}>
     <Navbar.Brand  className="d-flex align-items-center navbar-brand2">
       <img src={LogoWhite} className='logo-header' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className="custom-toggler ms-5" />
@@ -169,10 +169,8 @@ const BottomNavbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight; // Height of the viewport
-  
-      // Calculate the threshold where you want to change the navbar
-      const threshold = windowHeight * 1; // For example, change the navbar when the user scrolls past half of the viewport height
+      const windowHeight = window.innerHeight; 
+      const threshold = windowHeight * 1; 
   
       if (scrollTop ) {
         setIsScrolled(true);
@@ -212,8 +210,16 @@ const BottomNavbar = () => {
       section.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  
+  const currentLanguage = Cookies.get('language') || 'en';
+  const [direction, setDirection] = useState('ltr');
 
+  useEffect(() => {
+    if (currentLanguage === 'ar') {
+      setDirection('rtl');
+    } else {
+      setDirection('ltr');
+    }
+  }, [currentLanguage]);
 useLayoutEffect(() => {
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
@@ -228,7 +234,8 @@ useLayoutEffect(() => {
 
   return (
     <>
-    {isScrolled?<Navbar expand="lg" className='scroll-navbar2' style={{ zIndex: '0' }}>
+    {isScrolled?
+    <Navbar expand="lg" className='scroll-navbar2' style={{ zIndex: '0',direction:direction }}>
     <Container className='container-tablet-responsive'>
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'18.8rem':'14.5rem'}} className=""/>
       <Navbar.Collapse id="basic-navbar-nav">
@@ -245,8 +252,8 @@ useLayoutEffect(() => {
         </Nav>
       </Navbar.Collapse>
     </Container>
-  </Navbar>:<Navbar expand="lg" className='fixed-navbar2' >
-    <Container style={{marginLeft:'1rem'}}>
+  </Navbar>:<Navbar expand="lg" className='fixed-navbar2' style={{ direction:direction }} >
+    <Container style={{marginLeft:direction=='rtl'?'25rem':'1rem'}}>
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'16rem':'13rem'}} className="custom-toggler"/>
       <Navbar.Collapse id="basic-navbar-nav">
@@ -328,7 +335,6 @@ const CombinedNavbars = () => {
   };
 
   useEffect(() => {
-    // Change direction based on the selected language
     if (currentLanguage === 'ar') {
       setDirection('rtl');
     } else {
@@ -337,7 +343,6 @@ const CombinedNavbars = () => {
   }, [currentLanguage]);
 
  
-
   return (
     <div style={{ direction: direction }}>
    {
@@ -443,7 +448,8 @@ const CombinedNavbars = () => {
     )
 :
   (
-    <Container  style={{marginRight:isScrolled?'14rem':'2.5rem'}}>
+<Container style={{ marginRight: isScrolled && currentLanguage === 'ar' ? '-7rem' : isScrolled ? '14rem' : '2.5rem' }}>
+
       <TopNavbar />
       <BottomNavbar />
     </Container>

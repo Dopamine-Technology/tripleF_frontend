@@ -1,17 +1,10 @@
 import React,{useState,useEffect,useContext} from 'react';
-import { MdMoreHoriz} from 'react-icons/md';
-import { IoShareSocialOutline } from "react-icons/io5";
-import { BsSave } from "react-icons/bs";
-import { LiaMedalSolid } from "react-icons/lia";
 import { Row,Col } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SocialPopup from '../SharePost/Popup';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import ReactionPopup from '../Post/ReactionPopup';
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaRegCopy,FaRegEyeSlash } from "react-icons/fa";
-import { RiUserUnfollowLine } from "react-icons/ri";
-import { MdOutlineCancel } from "react-icons/md";
 import savedIcon from '../../assets/imgs/Saved.svg';
 import ShareIcon from '../../assets/imgs/Share.svg';
 import OpportunityPost from '../Opportunities/OpportunityPost';
@@ -28,7 +21,8 @@ import { UserDataContext } from '../UserContext/UserData.context';
 import SaveFilled from '../../assets/imgs/save-filled.svg';
 import { MdDeleteOutline } from "react-icons/md";
 import { message } from 'antd';
-
+import ReportPostPopup from '../Post/ReportPostPopup';
+import { useLocation } from 'react-router-dom';
 
 function Post({socket,newPostCreated}){
     const [show, setShow] = useState(false);
@@ -42,31 +36,33 @@ function Post({socket,newPostCreated}){
     const [fetchPosts, setFetchPosts] = useState(true);
     const [copied, setCopied] = useState(false);
     const { user } = useContext(UserDataContext);
+    const [showReportPopup, setShowReportPopup] = useState(false);
+    const location = useLocation();
     
     const axios=useAxios();
 
     useEffect(() => {
       const fetchPostsData = async () => {
-        try {
-          const response = await axios.get('status/timeline');
-          setPosts(response.data.result);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
+          try {
+              let endpoint = 'status/timeline'; // Default endpoint
+
+              // Check if the URL is (/saved), then change the endpoint
+              if (location.pathname === '/saved') {
+                  endpoint = 'status/get_saved';
+              }
+
+              const response = await axios.get(endpoint);
+              setPosts(response.data.result);
+          } catch (error) {
+              console.error('Error fetching data:', error);
+          }
       };
-  
-      // if (newPostCreated) {
-      //   fetchPostsData();
-      // }
+
       fetchPostsData();
-    }, []);
+  }, [location]); 
     
       const likeHandle = (index,type) => {
-        // socket.emit('sendNotification',{
-        //     senderName:user,
-        //     RecieverName:user,
-        //     type:type
-        // })
+     
         const newShowMedalPopups = [...showMedalPopups];
         newShowMedalPopups[index] = !newShowMedalPopups[index];
         setShowMedalPopups(newShowMedalPopups);
@@ -107,7 +103,6 @@ function Post({socket,newPostCreated}){
     };
 
     const handleCopyLink = (postId) => {
-      // Construct the link with the post ID
       const postLink = `${window.location.origin}/view/post/${postId}`;
       console.log("Copying link:", postLink);
   
@@ -132,6 +127,16 @@ function Post({socket,newPostCreated}){
           console.error("Clipboard API not available");
       }
   };
+
+  const unfollowUser = async (id) => {
+    try {
+      const response = await axios.get(`follow/toggle/${id}`);
+      message.success(response.data.message);
+
+  } catch (error) {
+      console.error('Error toggling follow status:', error);
+  }
+  }
     
     
     const clearSelection = () => {
@@ -160,6 +165,9 @@ function Post({socket,newPostCreated}){
 
     const handleClose = () => setShowPopup(false);
     const handleShow = () => setShowPopup(true);
+
+    const handleCloseReportPopup = () => setShowReportPopup(false);
+    const handleShowReportPopup = () => setShowReportPopup(true);
 
     const handleShowPopup = (postId) => {
         setSelectedPostId(postId);
@@ -195,11 +203,22 @@ function Post({socket,newPostCreated}){
 
       <Dropdown.Menu style={{width:'14rem'}}>
         <Dropdown.Item href="" className='p-2'  onClick={() => handleCopyLink(post.id)}  ><img src={copyLink} className='me-2'/>{copied ? 'Link Copied' : 'Copy post link'}</Dropdown.Item>
+        {post.user.id!=user.userData.id &&
+        <>
         <Dropdown.Item href="" className='mt-1 p-2'> <img src={notInterested} className='me-2' />I don’t want to see <br /> this</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'><img src={UnFollowUser} className='me-2' />Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2' ><img src={report} className='me-2' />Report Post</Dropdown.Item>
-        <hr />
-        <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)}  ><MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => unfollowUser(post.user.id)} ><img src={UnFollowUser} className='me-2' />Unfollow user</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleShowReportPopup()} ><img src={report} className='me-2' />Report Post</Dropdown.Item>
+        </> }
+        
+   
+        {post.user.id==user.userData.id && 
+        <>
+             <hr />
+             <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)}  >
+            <MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item> 
+         </>
+          }
+      
       </Dropdown.Menu>
     </Dropdown>
     </div>
@@ -270,6 +289,7 @@ function Post({socket,newPostCreated}){
     </div> 
            
     {selectedPostId === post.id && showReactionPopup && <ReactionPopup handleClose={handleClosePopup} show={showReactionPopup} id={post.id} />}
+    {showReportPopup && <ReportPostPopup handleClose={handleCloseReportPopup} show={showReportPopup} id={post.id} setShow={setShowReportPopup} />}
     </div>
     
                 ))}

@@ -34,6 +34,8 @@ function CardsList({ isSmallScreen, filters }) {
             .then((response) => {
                 setProfiles(response.data.result);
                 console.log('aya', response.data.result);
+
+                console.log('Filters:', filters);
             })
             .catch((error) => {
                 console.error("Error fetching profiles data:", error);

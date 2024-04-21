@@ -26,6 +26,7 @@ function FiliterOption(props) {
     position: '',
     preferred_foot: '',
   });
+  const [expYear, setExpYear] = useState('');
 
   const [countries, setCountries] = useState([]);
   const [languages, setLanguages] = useState([]);
@@ -34,8 +35,8 @@ function FiliterOption(props) {
  
   const currentYear = new Date().getFullYear();
   const yearOptions = [];
-  for (let year = 1880; year <= currentYear; year++) {
-    yearOptions.unshift({ id: 'year', name: year.toString() });
+  for (let year = 1800; year <= currentYear; year++) {
+    yearOptions.unshift({ id: year.toString(), name: year.toString() });
   }
   
   const genderOptions = [
@@ -49,10 +50,12 @@ function FiliterOption(props) {
     { id: 'both', name: 'both' },
   ];
   const expYears = [
-    { id: '0-1', name: '0-1 years' },
-    { id: '2-4', name: '2-4 years' },
-    { id: '5-8', name: '5-8 years' },
-    { id: '+9', name: 'more than 9 years' },
+    { id: '0-3', name: '0-3 years', from_years_exp: 0, to_years_exp: 3 },
+    { id: '4-6', name: '4-6 years', from_years_exp: 4, to_years_exp: 6},
+    { id: '7-9', name: '7-9 years', from_years_exp: 7, to_years_exp: 9 },
+    { id: '10-12', name: '10-12 years', from_years_exp: 10, to_years_exp:12 },
+    { id: '13- 15', name: '13- 15 years', from_years_exp: 13, to_years_exp: 15 },
+    { id: '16+', name: 'more than 15 year', from_years_exp: 16, to_years_exp: null },
   ];
   const {isSmallScreen}=props;
   
@@ -100,27 +103,19 @@ function FiliterOption(props) {
 
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
-    props.onFilterChange(name, value); // Pass filter name and value to parent component
+    props.onFilterChange(name, value); 
+  };
+
+  const handleExpYearChange = (event) => {
+    const selectedExpYear = expYears.find(year => year.id === event.target.value);
+    if (selectedExpYear) {
+      const { from_years_exp, to_years_exp } = selectedExpYear;
+      props.onFilterChange('experience_from', from_years_exp);
+      props.onFilterChange('experience_to', to_years_exp);
+      props.onFilterChange('exp_year', event.target.value);
+    }
   };
   
- 
-  function onFilterGenderChanged(event){
-    console.log(event.target.value);
-    props.filterGenderSelected(event.target.value)
-}
-
-function onFilterPositionChanged(event){
-  console.log(event.target.value);
-  props.filterPositionSelected(event.target.value)
-}
-
-
-function onFilterLocationChanged(event) {
-  console.log(event.target.value);
-  props.filterCountrySelected(event.target.value);
-}
-
-
 
   return (
     <Row className='' style={{ marginLeft: isSmallScreen?'6rem':'1rem' }}>
@@ -139,7 +134,8 @@ function onFilterLocationChanged(event) {
           onChange={handleFilterChange}
         />
       </Col>
-      {user.userData.profile.type_name=='talent'?(<><Col md={6} lg={3}>
+      {user.userData.profile.type_name=='talent'?(
+      <><Col md={6} lg={3}>
         <Input
           type='select'
           label=''
@@ -207,7 +203,7 @@ function onFilterLocationChanged(event) {
           inputWidth='13rem'
           placeholder='experience years'
           borderRadius='18px'
-          onChange={handleFilterChange}
+          onChange={handleExpYearChange}
         />
       </Col>
       </>
@@ -231,18 +227,18 @@ function onFilterLocationChanged(event) {
          />
        </Col>
         <Col md={6} lg={3}>
-         <Input
-           type='select'
-           label=''
-           name='gender'
-           register={register}
-           errors={errors}
-           selectOptions={genderOptions}
-           inputWidth='13rem'
-           placeholder='Gender'
-           borderRadius='18px'
-           onChange={handleFilterChange}
-         />
+        <Input
+          type='select'
+          label=''
+          name='gender'
+          register={register}
+          errors={errors}
+          selectOptions={genderOptions}
+          inputWidth='13rem'
+          placeholder='Gender'
+          borderRadius='18px'
+          onChange={handleFilterChange}
+        />
        </Col> 
        <Col md={6} lg={3}>
        <Input
@@ -255,7 +251,7 @@ function onFilterLocationChanged(event) {
            inputWidth='13rem'
            placeholder='experience years'
            borderRadius='18px'
-           onChange={handleFilterChange}
+           onChange={handleExpYearChange}
          />
        </Col>
        <Col md={6} lg={3}>
@@ -290,7 +286,7 @@ function onFilterLocationChanged(event) {
         />
       </Col>
        <Col md={6} lg={4}>
-        <Input
+       <Input
           type='select'
           label=''
           name='gender'
@@ -314,7 +310,7 @@ function onFilterLocationChanged(event) {
           inputWidth='13rem'
           placeholder='experience years'
           borderRadius='18px'
-          onChange={handleFilterChange}
+          onChange={handleExpYearChange}
         />
       </Col>
       </>):
