@@ -179,11 +179,6 @@ z-index:3;
   }
 }
 
-@media only screen and (width: 430px) and (height: 932px){
- 
-
-
-}
 
 @media only screen and (max-width: 600px) {
   .logo-header{
@@ -294,5 +289,12 @@ z-index:3;
       width:100rem
     }
 
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1366px) {
+  .whole-div {
+    height: 63vh;
+    background-position:0%;  
+  }
 }
 

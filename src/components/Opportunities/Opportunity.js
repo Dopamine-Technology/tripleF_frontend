@@ -1,4 +1,4 @@
-import React,{useState,useContext} from 'react';
+import React,{useState,useContext,useLayoutEffect} from 'react';
 import { RxDividerVertical } from "react-icons/rx";
 import { Button } from 'react-bootstrap';
 import { IoMdArrowDropdown,IoMdArrowDropup } from "react-icons/io";
@@ -54,6 +54,17 @@ function Opportunity({data}){
             window.location.reload();
         })
     }
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useLayoutEffect(() => {
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+      };
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    
+      const isSmallScreen = windowWidth <= 600;
 
     return(
         <div>
@@ -62,7 +73,7 @@ function Opportunity({data}){
         {isAppliedPath?(<p className='time-applied'>{data.created_at}</p>):(null)}
    
    <div className='text2'>
-   <div className='d-flex justify-content-between'>
+   <div className={isSmallScreen ? "" : "d-flex justify-content-between"}>
    <div className="poster">
    <div className="Simplilearn">
        <img src={user.userData.profile.type_name=="club"?data.user.profile.club_logo:data.user.image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
@@ -82,24 +93,28 @@ function Opportunity({data}){
 {isAppliedPath?( 
     <div className='d-flex'>
         <Link className='seeApplicants' to={`/profiles/applied/${data.title}/${data.id}`}>{data.applicants_count} Applicants<FaArrowRight color='#1d71b8' /></Link>
-<Dropdown >
+<Dropdown>
       <Dropdown.Toggle variant=""  className="edit">
          <BsThreeDotsVertical fontSize="1.5rem"  />
-         {/* mmmmm */}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='w-auto'>
         <Dropdown.Item href="" className='p-2' ><CiLink className='me-1' color='#9D9C9D'/>Copy link to Post</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleChangeState(data.id)}> 
-        {data.status=='open'?   <><MdOutlineCancel className='me-1' color='#9D9C9D' />Discard Opportunity</>:
+        {data.status=='open'? 
+        <><MdOutlineCancel className='me-1' color='#9D9C9D' />Discard Opportunity</>:
         <><AiOutlineReload className='me-2' color='#9D9C9D' />Reopen Opportunity</>}
-
         </Dropdown.Item>
        
       </Dropdown.Menu>
     </Dropdown>
     </div>
-    ):(<Button className='apply-btn' onClick={() => handleApply(data.id)}>Apply Now</Button>  )}
+    ):(
+        <>
+     
+    <Button className='apply-btn' onClick={() => handleApply(data.id)}>Apply Now</Button> 
+    </>
+     )}
    
 
 </div>
@@ -135,7 +150,7 @@ function Opportunity({data}){
         </p>
 
        <div className="center-icon" >
-        {/* {isExpanded?<IoMdArrowDropup onClick={handleExpandClick} color='gray' fontSize={30} />:<IoMdArrowDropdown onClick={handleExpandClick} color='gray' fontSize={30} />} */}
+       
         {isExpanded? <img src={UnCollpase} onClick={handleExpandClick} />:<img src={collpase} onClick={handleExpandClick} />}
         </div>
 

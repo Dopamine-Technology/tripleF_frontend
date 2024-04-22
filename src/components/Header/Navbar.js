@@ -258,14 +258,14 @@ useLayoutEffect(() => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'16rem':'13rem'}} className="custom-toggler"/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-        <Nav.Link href="/#homeSection"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}> {t('navbar.home')}
+        <Nav.Link href="/#homeSection"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: isTabletScreen?'0rem':'0rem' }}> {t('navbar.home')}
 </Nav.Link>
-            <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}> {t('navbar.aboutus')}</Nav.Link>
-            <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} > {t('navbar.whoFor')}</Nav.Link>
-             <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>{t('navbar.howItWorks')}</Nav.Link>
-             <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>{t('navbar.testimonial')}</Nav.Link>
-             <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>{t('navbar.contactUs')}</Nav.Link>
-             <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>{t('navbar.news')}</Nav.Link>
+            <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: isTabletScreen?'0rem':'0rem' }}> {t('navbar.aboutus')}</Nav.Link>
+            <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: isTabletScreen?'0rem':'2rem' }} > {t('navbar.whoFor')}</Nav.Link>
+             <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: isTabletScreen?'0rem':'2rem' }}>{t('navbar.howItWorks')}</Nav.Link>
+             <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: isTabletScreen?'0rem':'2rem' }}>{t('navbar.testimonial')}</Nav.Link>
+             <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: isTabletScreen?'0rem':'2rem' }}>{t('navbar.contactUs')}</Nav.Link>
+             <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: isTabletScreen?'0rem':'2rem' }}>{t('navbar.news')}</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Container>

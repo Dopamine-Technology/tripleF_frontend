@@ -58,7 +58,6 @@ function App() {
             <Route path='/challenges' element={<ComingSoon />}  />
             <Route path='/saved' element={<Home />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
-      
             <Route path='/loading' element={<LoadingScreen />}  />
           </Route>
           <Route path='/' element={<LayoutWithoutRight />}>
@@ -81,8 +80,6 @@ function App() {
           <Route path='/profile/:id' element={<WholeProfile />} />
           <Route path='/test' element={<Test />}  />
           <Route path='/chatBox' element={<ChatBox />}  />
-          
-   
           </>
         ):(
           <Route>

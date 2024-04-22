@@ -18,10 +18,11 @@ const AboutImg = () => {
   }, []);
   
     const isSmallScreen = windowWidth <= 600;
+    const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
     return ( <div className="image-container">
       <Row className='row-responsive'>
-        <Col>
+     <Col>
     <img src={isSmallScreen?image1:football} alt="Image 2" className="me-1 image2" />
     </Col>
     <Col className='p-0'>

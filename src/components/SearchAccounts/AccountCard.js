@@ -8,21 +8,24 @@ import { useLocation } from 'react-router-dom';
 function AccountCard({profile}) {
   const currentYear = new Date().getFullYear();
   const location = useLocation();
-
   const [activeKey,setActiveKey]=useState();
-  
- 
+  const [followersCount, setFollowersCount] = useState(profile.followers_count);
+  const [followingCount, setFollowingCount] = useState(profile.following_count);
   const [isFollowed, setIsFollowed] = useState(profile.is_followed);
-
-
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = (whichOne) =>
   { setShow(true)
   setActiveKey(whichOne)
   };
+  const updateFollowersCount = (count) => {
+    setFollowersCount(prevCount => prevCount + count);
 
+};
+const updateFollowingCount = (count) => {
+  setFollowersCount(prevCount => prevCount + count);
 
+};
 
   return (
    
@@ -34,8 +37,9 @@ function AccountCard({profile}) {
         src={profile.image?profile.image:profile.social_image}
       />
       <Card.Img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSUTrQQCHy49vdbx3hLlJqZHuzyw0NST783T1B4XqEtA&s" 
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHAQtNjjewe_ekXHvG5oZ4W7bOAt6qpk3LQzx-bkO6WGg3oJlZakcAB6DL3jG76IHFZfU&usqp=CAU" 
         className='cover-img'
+        style={{height:'8rem'}}
       />
     </div>
     <Card.Body className='mt-3'>
@@ -74,9 +78,9 @@ function AccountCard({profile}) {
 )}
    
      
-<FollowBtn id={profile.id} is_followed={profile.is_followed}
-        // updateFollowersCount={updateFollowersCount}
-        // updateFollowingCount={updateFollowingCount}
+<FollowBtn id={profile.id} is_followed={isFollowed}
+        updateFollowersCount={updateFollowersCount}
+        updateFollowingCount={updateFollowingCount}
         updateIsFollowed={setIsFollowed} />
    
       
