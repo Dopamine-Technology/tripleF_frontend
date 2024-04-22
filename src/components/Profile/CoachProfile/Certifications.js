@@ -35,7 +35,7 @@ function Certifications({ sectionName, id }) {
     
     useEffect(() => {
         // if (id == user.userData.id) {
-            axios.get(`profiles/get_license/${id}`)
+            axios.get(`profiles/get_licences/${id}`)
                 .then(response => {
                     setLicense(response.data.result);
                 })
@@ -56,7 +56,7 @@ function Certifications({ sectionName, id }) {
 
                 </div>
             </div>
-            {certifications.map((certificate, index) => (
+            {sectionName === 'Certifications' && certifications.map((certificate, index) => (
                 <Row key={index}>
                     <div className='d-flex'>
                         <img src='https://c8.alamy.com/comp/T9M6KX/soccer-club-emblem-design-element-for-logo-label-sign-poster-vector-illustration-T9M6KX.jpg' width='40px' height='40px' className='me-2' />
@@ -70,6 +70,22 @@ function Certifications({ sectionName, id }) {
                     </div>
                     {index !== certifications.length - 1 && <hr className='line mb-3' />}
                 </Row>
+            ))}
+            {sectionName === 'Coaching License' && license.map((license, index) => (
+                 <Row key={index}>
+                 <div className='d-flex'>
+                     <img src='https://c8.alamy.com/comp/T9M6KX/soccer-club-emblem-design-element-for-logo-label-sign-poster-vector-illustration-T9M6KX.jpg' width='40px' height='40px' className='me-2' />
+
+                     <div>
+                         <p className='license-name'>{license.name}</p>
+                         <p className='issued-by-name-here'>Issued by {license.issued_by}</p>
+                         <p className='issued-by-name-here'>Issued date {license.issued_date}</p>
+                         <p className='issued-by-name-here'>Expired Date {license.expiration_date}</p>
+                         <p className='issued-by-name-here'>License no {license.licence_id}</p>
+                     </div>
+                 </div>
+                 {index !== certifications.length - 1 && <hr className='line mb-3' />}
+             </Row>
             ))}
             {show && <AddCertificate handleClose={handleClose} show={show} />}
             {showEdit && <EditCertificate handleClose={handleCloseEdit} show={showEdit} data={certifications} />}

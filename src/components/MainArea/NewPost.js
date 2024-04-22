@@ -6,7 +6,6 @@ import { UserDataContext } from '../UserContext/UserData.context';
 import ChallengesList from '../CreateChallenge/ChallengesList';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 
 function NewPost({onNewPostCreated  }){
   
@@ -29,13 +28,11 @@ function NewPost({onNewPostCreated  }){
         return () => window.removeEventListener('resize', handleResize);
       }, []);
     
-      const isSmallScreen = windowWidth <= 600;
-      const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
       const isProScreen = windowWidth > 820 && windowWidth <= 1025;
 
 
 return(
-<Container className='new-post' style={{ marginLeft: isProScreen&&isProfilePath? '6rem' : isProScreen? '0rem':'4rem' }}>
+<Container className='new-post' style={{ marginLeft: isProScreen&&isProfilePath? '6rem' : isProScreen? '0rem':isProfilePath?'0rem':'4rem' }}>
     {user.userData.profile.type_name === "talent" ? (
         <Row>
         <Col xs={6} sm={8} md={6} lg={9} xl={10}>

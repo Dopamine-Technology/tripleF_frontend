@@ -137,6 +137,15 @@ function Post({socket,newPostCreated}){
       console.error('Error toggling follow status:', error);
   }
   }
+
+  const BlockPost = async (id) => {
+    try {
+      const response = await axios.get(`status/status/${id}`);
+      message.success(response.data.message);
+  } catch (error) {
+      console.error('Error toggling follow status:', error);
+  }
+  }
     
     
     const clearSelection = () => {
@@ -205,7 +214,7 @@ function Post({socket,newPostCreated}){
         <Dropdown.Item href="" className='p-2'  onClick={() => handleCopyLink(post.id)}  ><img src={copyLink} className='me-2'/>{copied ? 'Link Copied' : 'Copy post link'}</Dropdown.Item>
         {post.user.id!=user.userData.id &&
         <>
-        <Dropdown.Item href="" className='mt-1 p-2'> <img src={notInterested} className='me-2' />I don’t want to see <br /> this</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => BlockPost(post.id)}> <img src={notInterested} className='me-2' />I don’t want to see <br /> this</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' onClick={() => unfollowUser(post.user.id)} ><img src={UnFollowUser} className='me-2' />Unfollow user</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleShowReportPopup()} ><img src={report} className='me-2' />Report Post</Dropdown.Item>
         </> }

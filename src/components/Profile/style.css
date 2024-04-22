@@ -208,7 +208,8 @@ text-align: left;
   color: #1a2a44;
 }
 .issued-by-name-here{
-  margin: 2px 112.5px 6px 5px;
+  margin: 2px 112.5px 6px 7px;
+  /* margin-right:5rem; */
   opacity: 0.8;
   font-family: 'Poppins-Regular';
   font-size: 14px;
@@ -218,6 +219,7 @@ text-align: left;
   line-height: normal;
   letter-spacing: normal;
   color: #464646;
+  max-width:15rem
 }
 .line{
     width: 325px;
