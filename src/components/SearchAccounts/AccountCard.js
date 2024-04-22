@@ -5,65 +5,71 @@ import { Link } from 'react-router-dom';
 import FollowBtn from '../Profile/FollowBtn';
 import { useLocation } from 'react-router-dom';
 
-function AccountCard({id,profileData}) {
+function AccountCard({profile}) {
   const currentYear = new Date().getFullYear();
   const location = useLocation();
-
   const [activeKey,setActiveKey]=useState();
- 
-  const [isFollowed, setIsFollowed] = useState(false);
-
-
+  const [followersCount, setFollowersCount] = useState(profile.followers_count);
+  const [followingCount, setFollowingCount] = useState(profile.following_count);
+  const [isFollowed, setIsFollowed] = useState(profile.is_followed);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = (whichOne) =>
   { setShow(true)
   setActiveKey(whichOne)
   };
+  const updateFollowersCount = (count) => {
+    setFollowersCount(prevCount => prevCount + count);
 
+};
+const updateFollowingCount = (count) => {
+  setFollowersCount(prevCount => prevCount + count);
 
-
-
-
-
-
-
+};
 
   return (
-    <Card className='account-card' style={{padding:'0'}} >
+   
+    <Card className='account-card' style={{padding:'0'}}>
     <div className='images-container'>
       <Card.Img
         roundedCircle
         className='account-img'
-        src='https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0='
+        src={profile.image?profile.image:profile.social_image}
       />
       <Card.Img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSUTrQQCHy49vdbx3hLlJqZHuzyw0NST783T1B4XqEtA&s" 
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHAQtNjjewe_ekXHvG5oZ4W7bOAt6qpk3LQzx-bkO6WGg3oJlZakcAB6DL3jG76IHFZfU&usqp=CAU" 
         className='cover-img'
+        style={{height:'8rem'}}
       />
     </div>
     <Card.Body className='mt-3'>
     <Card.Title className='card-title'>
-     Name here
+    <Link to={`/profile/${profile.id}`} style={{ textDecoration: 'none', cursor: 'pointer',color:'black' }}>
+    {location.pathname === '/clubs/profiles/list' ? (
+  profile.profile.club_name
+) : (
+  profile.first_name + ' ' + profile.last_name
+)}
+  </Link>
     </Card.Title>
     {location.pathname === '/clubs/profiles/list'?( 
         <Card.Subtitle className='card-subTitle'>
-          <p>Country</p>
+          <p>{profile?.profile.country.name}</p>
 </Card.Subtitle>):(
   location.pathname === '/scouts/profiles/list'?(
     <Card.Subtitle className='card-subTitle'>
-    <p>3 Years Experience</p>
+    <p>{profile?.profile.years_of_experience} Years Experience</p>
 </Card.Subtitle>
   ):(
     location.pathname === '/coaches/profiles/list'?(
       <Card.Subtitle className='card-subTitle'>
-     <p>3 Years Experience</p>
+     <p>{profile?.profile.years_of_experience} years Experience</p>
  </Card.Subtitle>
     ):(
       <Card.Subtitle className='card-subTitle'>
       <p>Talent</p> 
        
-    <p> Goal Keeper</p>
+    <p> {profile?.profile.parent_position?.name}</p>
  </Card.Subtitle>
     )
   
@@ -72,16 +78,17 @@ function AccountCard({id,profileData}) {
 )}
    
      
-<FollowBtn id={id} is_followed={false}
-        updateFollowersCount={1}
-        updateFollowingCount={1}
-        updateIsFollowed={false} />
+<FollowBtn id={profile.id} is_followed={isFollowed}
+        updateFollowersCount={updateFollowersCount}
+        updateFollowingCount={updateFollowingCount}
+        updateIsFollowed={setIsFollowed} />
    
       
     </Card.Body>
    
    
   </Card>
+
   );
 }
 

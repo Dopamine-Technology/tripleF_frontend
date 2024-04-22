@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { useForm } from 'react-hook-form';
 import Input from './Input';
 import { Button } from 'react-bootstrap';
@@ -7,6 +7,8 @@ import axios from 'axios';
 import { message } from 'antd';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
 
 const ContactForm = ({isTabletScreen}) => {
   const schema = Yup.object().shape({
@@ -27,6 +29,21 @@ const ContactForm = ({isTabletScreen}) => {
     formState: { errors },
   } = useForm({ mode: "onChange",
   resolver: yupResolver(schema)});
+
+  const currentLanguage = Cookies.get('language') || 'en';
+  const [direction, setDirection] = useState('ltr');
+    const [t,i18n]=useTranslation();
+
+    useEffect(() => {
+      // Change direction based on the selected language
+      if (currentLanguage === 'ar') {
+        setDirection('rtl');
+      } 
+      else{
+        setDirection('ltr')
+      }
+    }, [currentLanguage]);
+
 
   const onSubmit = async (data) => {
     try {
@@ -55,15 +72,15 @@ const ContactForm = ({isTabletScreen}) => {
   };
   
   return (
-    <div className='form-contact'>
+    <div className='form-contact' style={{direction:direction}}>
       <h2 className='become-h1 text-white' >
-      Become a client Do you have any questions? Talk to our analysts
+      {t('ContactUs.title')}
       </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Row className='mt-4'>
           <Col>
             <Input
-              label='Name'
+              label={t('ContactUs.contactUs_name')}
               name='name'
               type='text'
               placeholder=''
@@ -74,7 +91,7 @@ const ContactForm = ({isTabletScreen}) => {
           </Col>
           <Col>
             <Input
-              label='Email'
+               label={t('ContactUs.contactUs_email')}
               name='email'
               type='text'
               placeholder=''
@@ -85,7 +102,7 @@ const ContactForm = ({isTabletScreen}) => {
           </Col>
         </Row>
         <Input
-          label='Message'
+          label={t('ContactUs.contactUs_message')}
           name='message'
           type='textarea'
           placeholder=''
@@ -96,7 +113,7 @@ const ContactForm = ({isTabletScreen}) => {
          
         />
         <Button type='submit' className='submit-button hover-element'>
-          Send Message
+        {t('ContactUs.contactUs_btn')}
         </Button>
       </form>
     </div>

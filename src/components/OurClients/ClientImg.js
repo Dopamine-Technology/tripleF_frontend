@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { FaLongArrowAltRight, FaLongArrowAltLeft } from 'react-icons/fa';
 import Test1 from '../../assets/imgs/test1.png';
 import Test2 from '../../assets/imgs/test2.png';
@@ -7,7 +7,9 @@ import Test4 from '../../assets/imgs/test4.png';
 import Test5 from '../../assets/imgs/test5.png';
 import Test6 from '../../assets/imgs/test6.png';
 
+
 const ClientImg = ({ onImageClick, selectedImageIndex,isSmallScreen }) => {
+
   const images = [
     Test1,
     Test2,
@@ -57,7 +59,7 @@ const ClientImg = ({ onImageClick, selectedImageIndex,isSmallScreen }) => {
   };
 
   return (
-    <div className="client-img-container">
+    <div className="client-img-container" >
       <div className="main-image">
         <img
           src={images[selectedImageIndex]}

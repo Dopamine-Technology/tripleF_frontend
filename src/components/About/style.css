@@ -120,4 +120,18 @@ margin-left: 2rem;
 
    }
   }
+
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    .image2{
+      width: 190px;
+      height: 340px;
+      
+     }
+     .image1{
+      width: 190px;
+      height: 270px;
+  
+     }
+  }
+  
   

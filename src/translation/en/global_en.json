@@ -16,7 +16,7 @@
     },
     "About":{
       "title":"We Unlock Potential",
-      "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
     },
     "whos":{
       "title":"Who is TripleF for",
@@ -55,6 +55,44 @@
           "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
         }
       ]
+    },
+    "ourClients":{
+      "title":"What people are saying"
+      
+  },
+  "ContactUs":{
+    "title":"Become a client Do you have any questions? Talk to our analysts",
+    "contactUs_name":"name",
+    "contactUs_email":"email",
+    "contactUs_message":"message",
+    "contactUs_btn":"Send Message"
+},
+"News":{
+  "title":"Our Latest News",
+  "view_more":"view more"
+},
+
+"Footer":{
+  "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "headTitles": [
+    {
+      "title": "Useful Links",
+      "subLinks": [" About Us", "How it works", "How TripleF for","Register Now"]
+    },
+    {
+      "title": "Help & Support",
+      "subLinks": ["Contact Us ", " Privacy Policy ", "Terms & Conditions"]
+    },
+    {
+      "title": "Who is TripleF for",
+      "subLinks": ["   Talented", "    Coaches ", "   Clubs","  Companies"]
     }
+  ],
+  "copyRight":"© 2023 Dopamine All Rights Reserved."
+  
+  
+}
+
+
     
   }

@@ -3,9 +3,9 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-const Step = ({ step, content, stepNum, isSmallScreen,isTabletScreen }) => {
+const Step = ({ step, content, stepNum, isSmallScreen,isTabletScreen,isProScreen }) => {
   return (
-    <Card style={{ width: isSmallScreen ? '100%' : isTabletScreen?'342px':'30rem', borderRadius: '10px' ,height: isSmallScreen ? '80%' : ''}}>
+    <Card style={{ width: isSmallScreen ? '100%' : isTabletScreen?'342px':isProScreen?'27rem':'30rem', borderRadius: '10px' ,height: isSmallScreen ? '80%' : ''}}>
       <Card.Body>
         {isSmallScreen ? (
           <>
@@ -28,7 +28,7 @@ const Step = ({ step, content, stepNum, isSmallScreen,isTabletScreen }) => {
         ) : (
           <Row>
             <Col xs={2} className="text-center" style={{ position: 'relative' }}>
-              <h4 style={{ color: "#356255", zIndex: '1', fontSize:isTabletScreen?'23px': '30px' }}>{stepNum}</h4>
+              <h4 style={{ color: "#356255", zIndex: '1', fontSize:isTabletScreen||isProScreen?'23px': '30px' }}>{stepNum}</h4>
               <div style={{
                 width: '20px',
                 height: '20px',

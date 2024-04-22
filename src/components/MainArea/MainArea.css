@@ -21,13 +21,14 @@
     left:0;
     flex-wrap: wrap;
 }
+
 .Profile{
     display: flex;
     align-items: center;
     font-size: 1rem;
     font-weight: 500;
 }
-.Profile >img{
+.Profile > img{
     border-radius: 50%;
     width: 10%;
 }
@@ -139,7 +140,7 @@ width:40rem
 
 }
 .newPost-desc{
-    opacity: 1;
+opacity: 1;
 color: rgba(151,151,151,1);
 font-family: 'Quicksand-Medium';
 font-size: 14px;
@@ -148,7 +149,6 @@ font-style: normal;
 letter-spacing: 0px;
 text-align: left;
 max-width: 19rem;
-
 }
 
 .Profilee >img{
@@ -1150,4 +1150,47 @@ user-select: none;
         width: 90px;
         margin-left: 3rem;
     }
+}
+@media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    .story-section {
+        padding: 20px;
+        border-radius: 10px;
+        border-radius: 53.5px;
+        box-shadow: 0px 2px 16px rgba(151,151,151, 0.2);
+        opacity: 1;
+       background-color: rgba(255,255,255, 1);
+       margin-top: 2rem;
+       margin-left: 0rem;
+       max-width: 90%;
+      
+    }
+    .new-post{
+        border-radius: 16px;
+        border: 1px solid rgba(226,226,234, 1);
+        opacity: 1;
+        background-color: rgba(255,255,255, 1);
+        margin-top: 2rem;
+        padding: 0.8rem;
+        border-radius: 20px;
+       border: 1px solid rgba(226,226,234, 1);
+       opacity: 1;
+       background-color: white;
+       width: 90%;
+       margin-left: 0rem;
+       
+    }
+    .newPost-desc{
+        opacity: 1;
+        color: rgba(151,151,151,1);
+        font-family: 'Quicksand-Medium';
+        font-size: 14px;
+        font-weight: 300;
+        font-style: normal;
+        letter-spacing: 0px;
+        text-align: left;
+        max-width: 10rem;
+        }
+        .share-btn{
+            width: 70px;
+        }
 }

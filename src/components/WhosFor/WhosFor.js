@@ -57,7 +57,7 @@ const WhosFor = () => {
       <Row className="justify-content-center card-container  " >
 
         {types.map((type, index) => (
-          <Col key={index} xs={12} sm={6} md={6} lg={3} className='card-responsive' >
+          <Col key={index} xs={12} sm={6} md={6} lg={6} xl={3} className='card-responsive' >
             <WhosForImg img={type.img} title={type.title} desc={type.desc} />
           </Col>
         ))}

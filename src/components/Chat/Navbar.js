@@ -1,16 +1,18 @@
 import React from 'react';
 
-const Navbar = () => {
+function Navbar() {
+  // Dummy data for user
+  const user = {
+    name: "John Doe",
+    image: "https://randomuser.me/api/portraits/men/1.jpg" 
+  };
+
   return (
-    <div className='navbar'>
-      <span className="logo">Lama Chat</span>
-      <div className="user">
-        <img src="" alt="" />
-        <span>User Name</span>
-        <button>logout</button>
-      </div>
+    <div className="navbar">
+      <img src={user.image} alt={user.name} className="user-avatar" />
+      <h2 className="user-name">{user.name}</h2>
     </div>
   );
-};
+}
 
 export default Navbar;

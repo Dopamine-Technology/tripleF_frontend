@@ -4,10 +4,13 @@ import ClientTalk from './ClientTalk';
 import ClientImg from './ClientImg';
 import './style.css';
 import ClientImgResponsive from './ClientImgResponsive';
+import Cookies from 'js-cookie';
 
 const OurClients = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const currentLanguage = Cookies.get('language') || 'en';
+  const [direction, setDirection] = useState('ltr');
 
   useLayoutEffect(() => {
     const handleResize = () => {
@@ -33,6 +36,15 @@ const OurClients = () => {
     setSelectedImageIndex(index);
    
   };
+  useEffect(() => {
+    // Change direction based on the selected language
+    if (currentLanguage === 'ar') {
+      setDirection('rtl');
+    } 
+    else{
+      setDirection('ltr')
+    }
+  }, [currentLanguage]);
 
   return (
     <div className='OurClientsWhole' id='Testimonial'>

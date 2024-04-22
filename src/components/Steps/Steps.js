@@ -12,13 +12,13 @@ const Steps = () => {
     const [t,i18n]=useTranslation();
 
     useEffect(() => {
-      // Change direction based on the selected language
       if (currentLanguage === 'ar') {
         setDirection('rtl');
       }       else{
         setDirection('ltr')
       }
     }, [currentLanguage]);
+    
   const stepsArray = [
     {
       stepNum:'01',
@@ -49,17 +49,18 @@ const Steps = () => {
 
   const isSmallScreen = windowWidth <= 600;
   const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
+  const isProScreen = windowWidth > 820 && windowWidth <= 1025;
 
   return (
     <div className='steps-div' id='How' style={{direction:direction}}>
    <div className="Shape"></div>
-      <Row style={{marginTop:'2rem'}}>
+      <Row style={{marginTop:'2rem',marginRight:currentLanguage=='ar'?'10rem':''}}>
         <Col md={6} className="order-md-1 order-2">
           <Row className='mb-3'>
             {stepsArray.map((step, index) => (
-              <Col key={index} md={12} style={{ marginLeft: isSmallScreen ? 0 : (index % 2 === 0 ? isTabletScreen?'0.7rem':'5.3rem' : isTabletScreen?'-2rem':'2.3rem') }}>
-                <Step step={step.step} content={step.content} stepNum={step.stepNum} isSmallScreen={isSmallScreen}
-                 isTabletScreen={isTabletScreen} />
+              <Col key={index} md={12} style={{ marginLeft: isSmallScreen ? 0 : (index % 2 === 0 ? isTabletScreen||isProScreen?'0.7rem':'5.3rem' : isTabletScreen||isProScreen?'-2rem':'2.3rem') }}>
+                <Step step={step.step} content={step.content} stepNum={step.stepNum} isSmallScreen={isSmallScreen} 
+                 isTabletScreen={isTabletScreen} isProScreen={isProScreen} />
               </Col>
             ))}
           </Row>

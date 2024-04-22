@@ -105,12 +105,12 @@ function WholeProfile(){
             }
         {
      id == user.userData.id ? (
-    <ProfileStrong />
+    <ProfileStrong profileData={profileData} />
      ) : (
         id != user.userData.id && profileData.profile.type_name === 'club' ? null : 
 
 
-    <ProfileStrongView />
+    <ProfileStrongView profileData={profileData} />
     )
    }
                   

@@ -115,7 +115,7 @@ const TopNavbar = ({content}) => {
   </Container>
 </Navbar>:
 <Navbar expand="lg" className='fixed-navbar' >
-  <Container style={{ marginLeft: currentLanguage === 'ar' ? '0rem' : '-1rem', marginRight: currentLanguage === 'ar' ? '-9rem' : '-1rem' }}>
+  <Container style={{ marginLeft: currentLanguage === 'ar' ? '0rem' : '-1rem', marginRight: currentLanguage === 'ar' ? '5rem' : '-1rem' }}>
     <Navbar.Brand  className="d-flex align-items-center navbar-brand2">
       <img src={LogoWhite} className='logo-header' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className="custom-toggler ms-5" />
@@ -169,10 +169,8 @@ const BottomNavbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight; // Height of the viewport
-  
-      // Calculate the threshold where you want to change the navbar
-      const threshold = windowHeight * 1; // For example, change the navbar when the user scrolls past half of the viewport height
+      const windowHeight = window.innerHeight; 
+      const threshold = windowHeight * 1; 
   
       if (scrollTop ) {
         setIsScrolled(true);
@@ -212,8 +210,16 @@ const BottomNavbar = () => {
       section.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  
+  const currentLanguage = Cookies.get('language') || 'en';
+  const [direction, setDirection] = useState('ltr');
 
+  useEffect(() => {
+    if (currentLanguage === 'ar') {
+      setDirection('rtl');
+    } else {
+      setDirection('ltr');
+    }
+  }, [currentLanguage]);
 useLayoutEffect(() => {
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
@@ -228,7 +234,8 @@ useLayoutEffect(() => {
 
   return (
     <>
-    {isScrolled?<Navbar expand="lg" className='scroll-navbar2' style={{ zIndex: '0' }}>
+    {isScrolled?
+    <Navbar expand="lg" className='scroll-navbar2' style={{ zIndex: '0',direction:direction }}>
     <Container className='container-tablet-responsive'>
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'18.8rem':'14.5rem'}} className=""/>
       <Navbar.Collapse id="basic-navbar-nav">
@@ -245,20 +252,20 @@ useLayoutEffect(() => {
         </Nav>
       </Navbar.Collapse>
     </Container>
-  </Navbar>:<Navbar expand="lg" className='fixed-navbar2' >
-    <Container style={{marginLeft:'1rem'}}>
+  </Navbar>:<Navbar expand="lg" className='fixed-navbar2' style={{ direction:direction }} >
+    <Container style={{marginLeft:direction=='rtl'?'25rem':'1rem'}}>
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'16rem':'13rem'}} className="custom-toggler"/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-        <Nav.Link href="/#homeSection"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}> {t('navbar.home')}
+        <Nav.Link href="/#homeSection"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: isTabletScreen?'0rem':'0rem' }}> {t('navbar.home')}
 </Nav.Link>
-            <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}> {t('navbar.aboutus')}</Nav.Link>
-            <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} > {t('navbar.whoFor')}</Nav.Link>
-             <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>{t('navbar.howItWorks')}</Nav.Link>
-             <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>{t('navbar.testimonial')}</Nav.Link>
-             <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>{t('navbar.contactUs')}</Nav.Link>
-             <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>{t('navbar.news')}</Nav.Link>
+            <Nav.Link href="#about"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: isTabletScreen?'0rem':'0rem' }}> {t('navbar.aboutus')}</Nav.Link>
+            <Nav.Link href="#Who"className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: isTabletScreen?'0rem':'2rem' }} > {t('navbar.whoFor')}</Nav.Link>
+             <Nav.Link href="#How" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: isTabletScreen?'0rem':'2rem' }}>{t('navbar.howItWorks')}</Nav.Link>
+             <Nav.Link href="#Testimonial" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: isTabletScreen?'0rem':'2rem' }}>{t('navbar.testimonial')}</Nav.Link>
+             <Nav.Link href="#Contact" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: isTabletScreen?'0rem':'2rem' }}>{t('navbar.contactUs')}</Nav.Link>
+             <Nav.Link href="#News" className='text-white' style={{textDecoration:'none'}} className={`text-white ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: isTabletScreen?'0rem':'2rem' }}>{t('navbar.news')}</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Container>
@@ -328,7 +335,6 @@ const CombinedNavbars = () => {
   };
 
   useEffect(() => {
-    // Change direction based on the selected language
     if (currentLanguage === 'ar') {
       setDirection('rtl');
     } else {
@@ -337,7 +343,6 @@ const CombinedNavbars = () => {
   }, [currentLanguage]);
 
  
-
   return (
     <div style={{ direction: direction }}>
    {
@@ -443,7 +448,8 @@ const CombinedNavbars = () => {
     )
 :
   (
-    <Container  style={{marginRight:isScrolled?'14rem':'2.5rem'}}>
+<Container style={{ marginRight: isScrolled && currentLanguage === 'ar' ? '-7rem' : isScrolled ? '14rem' : '2.5rem' }}>
+
       <TopNavbar />
       <BottomNavbar />
     </Container>

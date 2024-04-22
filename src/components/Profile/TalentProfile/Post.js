@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import { Row,Col } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SocialPopup from '../../SharePost/Popup';
@@ -19,6 +19,9 @@ import { useParams } from 'react-router-dom';
 import savedIcon from '../../../assets/imgs/Saved.svg';
 import SaveFilled from '../../../assets/imgs/save-filled.svg';
 import { MdDeleteOutline } from "react-icons/md";
+import ReportPostPopup from '../../Post/ReportPostPopup';
+import { UserDataContext } from '../../UserContext/UserData.context';
+import { message } from 'antd';
 
 function Post(){
     const [show, setShow] = useState(false);
@@ -31,7 +34,9 @@ function Post(){
     const [selectedPostId, setSelectedPostId] = useState(null);
     const [hasMore, setHasMore] = useState(true);
     const axios=useAxios();
+    const { user } = useContext(UserDataContext);
     const { id } = useParams();
+    const [showReportPopup, setShowReportPopup] = useState(false);
 
     useEffect(() => {
     
@@ -90,6 +95,16 @@ function Post(){
       
       };
 
+      const unfollowUser = async (id) => {
+        try {
+          const response = await axios.get(`follow/toggle/${id}`);
+          message.success(response.data.message);
+    
+      } catch (error) {
+          console.error('Error toggling follow status:', error);
+      }
+      }
+
      
     
     const handleSelectMedal = async (id, medal, is_reacted) => {
@@ -114,7 +129,14 @@ function Post(){
     const clearSelection = () => {
         setShowMedalPopups(Array(posts.length).fill(false));
     };
-
+    const BlockPost = async (id) => {
+      try {
+        const response = await axios.get(`status/status/${id}`);
+        message.success(response.data.message);
+    } catch (error) {
+        console.error('Error toggling follow status:', error);
+    }
+    }
     const handleShare = (id) => {
         
       axios.get(`status/toggle_save/${id}`);
@@ -128,6 +150,8 @@ function Post(){
        });
      });
    }
+   const handleCloseReportPopup = () => setShowReportPopup(false);
+   const handleShowReportPopup = () => setShowReportPopup(true);
    const handleDelete =(id)=>{
     axios.delete(`status/delete/${id}`);
     setPosts(posts.filter(post => post.id !== id));
@@ -169,11 +193,16 @@ function Post(){
 
       <Dropdown.Menu>
         <Dropdown.Item href="" className='p-2' ><FaRegCopy className='me-2' />Copy link to Post</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' />I don’t want to see <br />  this</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2' ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
-        <hr />
-        <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)} ><MdDeleteOutline color='#979797' size='24px' className='me-2'  /> Delete Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' onClick={() => BlockPost(post.id)} />I don’t want to see <br />  this</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => unfollowUser(post.user.id)}><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleShowReportPopup()} ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
+        {post.user.id==user.userData.id && 
+        <>
+             <hr />
+             <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)}  >
+            <MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item> 
+         </>
+          }
       </Dropdown.Menu>
     </Dropdown>
     </div>
@@ -245,7 +274,8 @@ function Post(){
     
     </div> 
            
-    {selectedPostId === post.id && showReactionPopup && <ReactionPopup handleClose={handleClosePopup} show={showReactionPopup} id={post.id} />}
+    {selectedPostId === post.id && showReactionPopup && <ReactionPopup handleClose={handleClosePopup} show={showReactionPopup} id={post.id}  />}
+    {showReportPopup && <ReportPostPopup handleClose={handleCloseReportPopup} show={showReportPopup} id={post.id} setShow={setShowReportPopup} />}
     </div>
     
                 ))}

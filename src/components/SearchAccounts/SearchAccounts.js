@@ -7,6 +7,7 @@ import CardsList from './CardsList';
 
 function SearchAccounts() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [searchInput, setSearchInput] = useState('');
 
 useLayoutEffect(() => {
   const handleResize = () => {
@@ -20,6 +21,27 @@ useLayoutEffect(() => {
 const isSmallScreen = windowWidth <= 600;
 const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
+const [filters, setFilters] = useState({
+  country: '',
+  gender: '',
+  position: '',
+  preferred_foot: '',
+  name: ''
+});
+
+const handleFilterChange = (filterName, filterValue) => {
+  setFilters(prevFilters => ({
+      ...prevFilters,
+      [filterName]: filterValue
+  }));
+};
+const handleSearchInputChange = (event) => {
+  setSearchInput(event.target.value);
+  // Update the name filter in filters state
+  handleFilterChange('name', event.target.value);
+};
+
+
     return(
         <div style={{  backgroundColor: 'white',
         display: 'flex',
@@ -29,13 +51,12 @@ const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
         marginLeft:isSmallScreen?'1rem':'',
         width:isSmallScreen?'100%':'70rem'
          }}>
-  <div class="search-container2 ">
-          <input type="text" placeholder="Search" class="search-input" />
-          <AiOutlineSearch className="search-icon2" />
-          
+<div className="search-container2" style={{ width: '83%' }}>
+                <input type="text" placeholder="Search" className="search-input" value={searchInput} onChange={handleSearchInputChange} />
+                <AiOutlineSearch className="search-icon2" />
 </div>
-        <FiliterOption isSmallScreen={isSmallScreen} />
-        <CardsList isSmallScreen={isSmallScreen} />
+        <FiliterOption isSmallScreen={isSmallScreen}  onFilterChange={handleFilterChange}/>
+        <CardsList isSmallScreen={isSmallScreen} filters={filters} />
         </div>
     )
 }

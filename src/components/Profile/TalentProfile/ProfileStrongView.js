@@ -4,8 +4,8 @@ import Card from 'react-bootstrap/Card';
 import PercentageLine from './PercentageLine';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
-function ProfileStrongView(){
-    const now = 90;
+function ProfileStrongView({profileData}){
+    const now = parseInt(profileData.profile_progress.progress_percentage.replace('%', ''), 10);
     return(
         
         <div>

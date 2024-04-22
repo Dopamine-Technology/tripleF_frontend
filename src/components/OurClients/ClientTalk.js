@@ -1,24 +1,40 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Button } from 'react-bootstrap';
 import { FaLongArrowAltRight, FaLongArrowAltLeft } from 'react-icons/fa';
 import LeftVector from '../../assets/imgs/vectorLeft.svg';
 import RightVector from '../../assets/imgs/vectorRight.svg';
 import { ImQuotesLeft } from "react-icons/im";
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
 
 const ClientTalk = ({ selectedImageIndex, setSelectedImageIndex }) => {
   let description = '';
   let name='';
   let job ='';
 
+  const currentLanguage = Cookies.get('language') || 'en';
+    const [direction, setDirection] = useState('ltr');
+    const [t,i18n]=useTranslation();
+
+    useEffect(() => {
+      // Change direction based on the selected language
+      if (currentLanguage === 'ar') {
+        setDirection('rtl');
+      } 
+      else{
+        setDirection('ltr')
+      }
+    }, [currentLanguage]);
+
   const handleNextButtonClick = () => {
-    // Logic to handle incrementing the selectedImageIndex
-    const newIndex = (selectedImageIndex + 1) % 5; // Assuming a totalNumberOfTalks variable is defined
+   
+    const newIndex = (selectedImageIndex + 1) % 5; 
     setSelectedImageIndex(newIndex);
   };
 
   const handlePrevButtonClick = () => {
-    // Logic to handle decrementing the selectedImageIndex
-    const newIndex = (selectedImageIndex - 1 + 5) % 5; // Assuming a totalNumberOfTalks variable is defined
+  
+    const newIndex = (selectedImageIndex - 1 + 5) % 5; 
     setSelectedImageIndex(newIndex);
   };
 
@@ -53,8 +69,8 @@ const ClientTalk = ({ selectedImageIndex, setSelectedImageIndex }) => {
   }
 
   return (
-    <div className='bg-gray mb-4 clientTalk-container'>
-      <p className=' mt-5 test-h1'>What people are saying</p>
+    <div className='bg-gray mb-4 clientTalk-container' style={{direction:direction}}>
+      <p className=' mt-5 test-h1'>    {t('ourClients.title')}</p>
       <p className='' style={{ width: '30rem',marginLeft:'-1rem' }}>
         <span style={{  color: '#213555' }} className='talkQ '>
           <ImQuotesLeft size={40} className='mb-1 mt-3'/>

@@ -17,7 +17,8 @@ const AboutDesc = () => {
         setDirection('ltr')
       }
     }, [currentLanguage]);
-    return ( <div className='aboutDesc-div' id='about'>
+
+    return ( <div className='aboutDesc-div' id='about' style={{marginRight:currentLanguage=='ar'?'3rem':''}}>
         <p className='about-h1' >{t('About.title')}</p>
         <p className='about-p'>{t('About.desc')}</p>
                <div className='button-container'>

@@ -2,11 +2,23 @@ import React,{useEffect,useLayoutEffect,useState} from 'react';
 import { Row, Col } from 'react-bootstrap';
 import ContactForm from './ContactForm';
 import './style.css';
-import boy from '../../assets/imgs/boy.png'
-
+import boy from '../../assets/imgs/boy.png';
+import Cookies from 'js-cookie';
 
 const BecomeClient = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const currentLanguage = Cookies.get('language') || 'en';
+    const [direction, setDirection] = useState('ltr');
+
+    useEffect(() => {
+      // Change direction based on the selected language
+      if (currentLanguage === 'ar') {
+        setDirection('rtl');
+      } 
+      else{
+        setDirection('ltr')
+      }
+    }, [currentLanguage]);
   
   useLayoutEffect(() => {
     const handleResize = () => {
@@ -20,7 +32,7 @@ const BecomeClient = () => {
     const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
     
   return (
-    <div className="becomeClient-div" id='Contact'>
+    <div className="becomeClient-div" id='Contact' style={{direction:direction}}>
       <Row>
         <Col md={7} >
           <ContactForm isTabletScreen={isTabletScreen} />

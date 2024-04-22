@@ -33,7 +33,7 @@ import ProfilesApplied from './components/Opportunities/ProfilesApplied';
 import NotificationList from './components/Notification/NotificationList';
 import SearchAccounts from './components/SearchAccounts/SearchAccounts';
 import {io} from 'socket.io-client';
-import ChatTest from './pages/ChatTest';
+import ChatBox from './components/Chat/ChatBox';
 
 
 
@@ -56,9 +56,8 @@ function App() {
             <Route path='/Scouts' element={<ComingSoon />}  />
             <Route path='/Opportunities' element={<ComingSoon />}  />
             <Route path='/challenges' element={<ComingSoon />}  />
-            <Route path='/saved' element={<ComingSoon />}  />
+            <Route path='/saved' element={<Home />}  />
             <Route path='/view/post/:id' element={<PostView />}  />
-      
             <Route path='/loading' element={<LoadingScreen />}  />
           </Route>
           <Route path='/' element={<LayoutWithoutRight />}>
@@ -80,7 +79,7 @@ function App() {
           {/* <Route path='/profile' element={<WholeProfile />} /> */}
           <Route path='/profile/:id' element={<WholeProfile />} />
           <Route path='/test' element={<Test />}  />
-          <Route path='/chat' element={<ChatTest />}  />
+          <Route path='/chatBox' element={<ChatBox />}  />
           </>
         ):(
           <Route>

@@ -13,7 +13,6 @@ import ScoutOppFilter from './ScoutOppFilter';
 
 
 function OpportunityList(){
-
   const location = useLocation();
   const navigate=useNavigate();
   const isAppliedPath = location.pathname != '/applied/list';
@@ -87,7 +86,6 @@ function OpportunityList(){
       }, [filterTextValue, filterTextGender, filterTextPosition,filterTextCountry,filterTextType]);
       
    
-
       const onFilterValueSelected =(filterValue)=>{
         console.log('filtervalue',filterValue);
         setFilterTextValue(filterValue);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef,useLayoutEffect } from 'react';
 import { FaPlus } from "react-icons/fa6";
 import useAxios from "../Auth/useAxiosHook.interceptor";
 import Stories from 'stories-react';
@@ -27,9 +27,19 @@ function StorySection() {
     const [viewedWithinModal, setViewedWithinModal] = useState(false);
     const [myStoryTime,setMyStoryTime]=useState('');
     const storyContainerRef = useRef(null);
-
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     const axios = useAxios();
+
+    useLayoutEffect(() => {
+        const handleResize = () => {
+          setWindowWidth(window.innerWidth);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+      
+        const isSmallScreen = windowWidth <= 600;
 
     useEffect(() => {
         const fetchStoriesData = async () => {
@@ -146,7 +156,7 @@ function StorySection() {
                 <Modal.Body style={{ backgroundColor: showUserList ? "white" : "black", padding: 0 }}> 
                     <Row className='row-profiles' style={{ margin: 0 }}>
                         {showUserList && (
-                            <Col sm={6} lg={4} className='bg-white h-100 m-0 p-0'>
+                            <Col sm={6} lg={4} className='bg-white h-100 m-0 p-0'  style={{ display: isSmallScreen ? 'none' : 'block' }}>
                                 <div className="user-list" >
                                     <img src={close} className='mb-4' style={{ marginLeft: '1.5rem', marginTop: '2rem' }} onClick={handleCloseList} />
                                     <p className='all-challenges'>All Challenges</p>

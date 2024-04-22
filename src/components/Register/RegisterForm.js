@@ -182,6 +182,7 @@ function RegisterForm({ onLoadingChange }) {
     
       const isSmallScreen = windowWidth <= 600;
       const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
+      const isProScreen = windowWidth > 820 && windowWidth <= 1025;
       
       const clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
 
@@ -263,22 +264,7 @@ function RegisterForm({ onLoadingChange }) {
           setIsFirstRender(false); 
         }
       }, [isFirstRender]);
-    
 
-      // useEffect(() => {
-      //   axios
-      //     .get('https://backend.triplef.group/api/app/get_user_types')
-      //     .then((response) => {
-      //       setAccountType(response.data.result);
-      //     })
-      //     .catch((error) => {
-      //       console.error("Error fetching Accounts data:", error);
-      //     })
-      //     .finally(() => {
-      //       setLoading(false);
-      //       onLoadingChange(false);
-      //     });
-      // }, []);
 
 
       useEffect(() => {
@@ -336,7 +322,6 @@ function RegisterForm({ onLoadingChange }) {
       };
 
       const handleChange = () => {
-        // Reset errorMessageDisplayed when form data changes
         setErrorMessageDisplayed(false);
       };
     
@@ -359,7 +344,7 @@ function RegisterForm({ onLoadingChange }) {
             setSelectedCountryCode(selectedCountry.iso);
             console.log('selectedCoutryCode',selectedCountry.iso ) // Assuming iso property contains the country code
           }
-          // Optionally, you can also set the cities based on the selected country
+        
           const response = await axios.get(`https://backend.triplef.group/api/app/get_cities/${selectedCountryId}`);
           setCities(response.data.result);
         } catch (error) {
@@ -592,11 +577,11 @@ function RegisterForm({ onLoadingChange }) {
 
                 
                 <div style={{ display: 'flex', alignItems: 'center' }} className='login-or'>
-  <hr className='mt-4' style={{width:isTabletScreen?'40%':'24%',color:'#7C7C7C'}} />
+  <hr className='mt-4' style={{width:isTabletScreen||isProScreen?'40%':'24%',color:'#7C7C7C'}} />
 
   <p style={{ margin: '0 10px' }}>OR</p>
 
-  <hr className=' mt-4' style={{width:isTabletScreen?'40%':'24%',color:'#7C7C7C'}} />
+  <hr className=' mt-4' style={{width:isTabletScreen||isProScreen?'40%':'24%',color:'#7C7C7C'}} />
 </div>
 
                 
@@ -696,7 +681,7 @@ function RegisterForm({ onLoadingChange }) {
 <Button className='btn-tall' variant='' type='submit' disabled={!termsAccepted}>
   Next <FaArrowRight color='white'/>
 </Button>
-<p style={{marginRight:'12rem',marginTop:'1rem'}}>Step 1/2</p>
+<p style={{marginRight:isProScreen?'12rem':'7rem',marginTop:'1rem',width:isProScreen?'7rem':''}}>Step 1/2</p>
 </div>
                 
                 </Form>
@@ -1580,8 +1565,8 @@ function RegisterForm({ onLoadingChange }) {
       };
 
   return (
-    <Row style={{justifyContent:isTabletScreen?'center':''}}>
-      {!isTabletScreen?
+    <Row style={{justifyContent:isTabletScreen||isProScreen?'center':''}}>
+      {!isTabletScreen||isProScreen?
        <Col md={6}>
        <img src={loginPic} alt="Your Image" className='signup-img'  />
      </Col>:null}

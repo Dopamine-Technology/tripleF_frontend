@@ -5,7 +5,6 @@ opacity: 1;
 background-color: rgba(255, 255, 255, 1);
 border:none;
 width: 15rem;
-
 margin-top:1.9rem
 }
 
@@ -18,4 +17,15 @@ margin-top:1.9rem
     border-radius: 50%;
     border: solid 6px white;
     
+}
+.no-profiles-message {
+    font-size: 24px;
+    color: #999999; /* Light gray color */
+    text-align: center;
+    margin-top: 50px; /* Adjust as needed */
+}
+@media only screen and (max-width: 600px) {
+    .account-card{
+        width: 11rem;
+    }
 }

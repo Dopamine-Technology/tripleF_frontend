@@ -5,7 +5,7 @@ import { PermDataContext } from '../PermContext/PermData.context';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 
-const HeaderDesc = ({translatedText}) => {
+const HeaderDesc = () => {
 
   const { permData } = useContext(PermDataContext);
   const isViewingTalent = permData?.find(item => item.name === 'view_talent' && item.value === true);
@@ -26,7 +26,6 @@ const HeaderDesc = ({translatedText}) => {
     const [t,i18n]=useTranslation();
 
     useEffect(() => {
-      // Change direction based on the selected language
       if (currentLanguage === 'ar') {
         setDirection('rtl');
       } 
@@ -36,10 +35,9 @@ const HeaderDesc = ({translatedText}) => {
     }, [currentLanguage]);
   return (
     <div className='header-div' style={{direction:direction}} >
-      <Row >
+      <Row style={{marginRight:currentLanguage=='ar'?'-25rem':''}} >
         <Col md={6} className={isSmallScreen ? '':'mt-5'} >
           <p className='header-h1'>
-            {/* What We Do In Life Echoes In Eternity */}
             {t('header.title')}
           </p>
           <p className='mt-4 mb-4 header-p2' >

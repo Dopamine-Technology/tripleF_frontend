@@ -146,6 +146,47 @@
         padding:1.3rem;
     }
   }
-    
+ 
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    .contactForm-img{
+        visibility:visible;
+        width: 390px;
+        height: 717px;
+        margin: 0 0 0 160px;
+        border-radius: 12px;
+       }
+       .becomeClient-div{
+        margin-left: 4rem;
+        width: 431px;
+        height: 717px;
+       }
+       .become-h1{
+        width: 385px;
+        height: 90px;
+        margin: 0 49px 38px 0;
+        font-family: Quicksand;
+        font-size: 24px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+       }
+       .textarea-input,.text-input{
+        width: 19rem ;
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+   
+    .submit-button {
+        /* margin-right: 4rem; */
+        float:right;
+        margin-right: -7rem;
+      
+
+    }
+    .form-contact{
+        padding:1.3rem;
+    }
+  }
 
   

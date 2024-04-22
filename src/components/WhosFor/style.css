@@ -125,3 +125,12 @@
       margin-top: 3rem;
      }
   }
+
+  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+    .who2-h1{
+      margin: 0 93px 53px 0px;
+    }
+    .card-container{
+      margin-left: 10rem;
+    }
+  }

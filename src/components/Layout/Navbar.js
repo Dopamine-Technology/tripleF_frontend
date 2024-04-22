@@ -26,7 +26,6 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
     const { user } = useContext(UserDataContext);
     const navigate=useNavigate();
     const axios=useAxios();
-    // const [notifications,setNotifications]=useState([]);
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [input, setInput] = useState("");
     const [results,setResults]=useState([])
@@ -51,22 +50,7 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
       setInput(value);
       fetchData(value);
     };
-    // useEffect(()=>{
-    //   socket.on('getNotification',(data)=>{
-    //    setNotifications((prev)=>[...prev,data]);
-    //   })
-    // },[socket])
 
-    // const displayNotification=({senderName, type})=>{
-    //   let action;
-
-    //   if(type==1){
-    //     action='liked';
-    //   }
-    //   return (
-    //     <span className="notification">{`${senderName} ${action} your post`}</span>
-    //   )
-    // }
 
     const toggleDropdown = () => {
       setDropdownVisible(!dropdownVisible);
@@ -103,7 +87,6 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
         label: (
           <>
           <Link
-          // to={`/profile/${user.userData.id}`}
           className='d-flex' 
           style={{textDecoration:'none',width:'13rem'}}
           onClick={handleProfileClick}
