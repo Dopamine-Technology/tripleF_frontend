@@ -4,8 +4,13 @@ import Input from './Input';
 import { useForm } from 'react-hook-form';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { UserDataContext } from '../UserContext/UserData.context';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function FiliterOption(props) {
+  const { language, changeLanguage } = useLanguage(); 
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
   const {
     register,
     handleSubmit,
@@ -20,23 +25,28 @@ function FiliterOption(props) {
   const { user } = useContext(UserDataContext);
   const [loading, setLoading] = useState(true);
   const [countries, setCountries] = useState([]);
+  const genderOptions2 = t('Register.genderOptions', { returnObjects: true });
+  const preferredFootOptions = t('Register.preferredFootOptions', { returnObjects: true });
+
   const genderOptions = [
-    { id: 'female', name: 'female'},
-    { id: 'male', name: 'male'},
-    { id: 'other', name: 'rather not to say'},
+    { id: 'female', name: genderOptions2[0]},
+    { id: 'male', name: genderOptions2[1]},
+    { id: 'other', name: genderOptions2[2]},
   ];
   const preferredFoot = [
-    { id: 'right', name: 'right' },
-    { id: 'left', name: 'left' },
-    { id: 'both', name: 'both' },
+    { id: 'right', name: preferredFootOptions[0] },
+    { id: 'left', name: preferredFootOptions[1] },
+    { id: 'both', name: preferredFootOptions[2] },
   ];
+  
   const expYears = [
-    { id: '0-1', name: '0-1 years' },
-    { id: '2-4', name: '2-4 years' },
-    { id: '5-8', name: '5-8 years' },
-    { id: '+9', name: 'more than 9 years' },
+    { id: '0-3', name: '0-3 years', from_years_exp: 0, to_years_exp: 3 },
+    { id: '4-6', name: '4-6 years', from_years_exp: 4, to_years_exp: 6},
+    { id: '7-9', name: '7-9 years', from_years_exp: 7, to_years_exp: 9 },
+    { id: '10-12', name: '10-12 years', from_years_exp: 10, to_years_exp:12 },
+    { id: '13- 15', name: '13- 15 years', from_years_exp: 13, to_years_exp: 15 },
+    { id: '16+', name: 'more than 15 year', from_years_exp: 16, to_years_exp: null },
   ];
-
   useEffect(() => {
     axios
       .post('https://backend.triplef.group/api/app/get_sport_positions/1')
@@ -90,7 +100,7 @@ function onFilterLocationChanged(event) {
 
   return (
     <Row className='' style={{ marginLeft: '1rem' }}>
-      <Col md={6} lg={3}>
+      <Col md={6} lg={6} xl={3}>
         <Input
           type='select'
           label=''
@@ -99,7 +109,7 @@ function onFilterLocationChanged(event) {
           errors={errors} 
           selectOptions={countries}
           inputWidth='10rem'
-          placeholder='country'
+          placeholder={t('Register.country')}
           borderRadius='18px'
           onChange={onFilterLocationChanged}
         />
@@ -113,12 +123,12 @@ function onFilterLocationChanged(event) {
           errors={errors}
           selectOptions={positions}
           inputWidth='10rem'
-          placeholder='position'
+          placeholder={t('Register.position')}
           borderRadius='18px'
           onChange={onFilterPositionChanged}
         />
       </Col>
-      <Col md={6} lg={3}>
+      <Col md={6} lg={6} xl={3}>
         <Input
           type='select'
           label=''
@@ -127,12 +137,12 @@ function onFilterLocationChanged(event) {
           errors={errors}
           selectOptions={genderOptions}
           inputWidth='10rem'
-          placeholder='Gender'
+          placeholder={t('Register.gender')}
           borderRadius='18px'
           onChange={onFilterGenderChanged}
         />
       </Col> 
-      <Col md={6} lg={3}>
+      <Col md={6} lg={6} xl={3}>
         <Input
           type='select'
           label=''
@@ -141,13 +151,13 @@ function onFilterLocationChanged(event) {
           errors={errors}
           selectOptions={preferredFoot}
           inputWidth='10rem'
-          placeholder='Preferred Foot'
+          placeholder={t('Register.preferredFoot')}
           borderRadius='18px'
           onChange={onFilterValueChanged}
         />
       </Col>
       </> ):(
-        <>    <Col md={6} lg={3}>
+        <>    <Col md={6} lg={6} xl={3}>
         <Input
           type='select'
           label=''
@@ -156,12 +166,12 @@ function onFilterLocationChanged(event) {
           errors={errors}
           selectOptions={genderOptions}
           inputWidth='10rem'
-          placeholder='Gender'
+          placeholder={t('Register.gender')}
           borderRadius='18px'
           onChange={onFilterGenderChanged}
         />
       </Col> 
-      <Col md={6} lg={3}>
+      <Col md={6} lg={6} xl={3}>
       <Input
           type='select'
           label=''
@@ -170,7 +180,7 @@ function onFilterLocationChanged(event) {
           errors={errors}
           selectOptions={expYears}
           inputWidth='10rem'
-          placeholder='experience years'
+          placeholder={t('Register.exp_years')}
           borderRadius='18px'
           onChange={onFilterGenderChanged}
         />

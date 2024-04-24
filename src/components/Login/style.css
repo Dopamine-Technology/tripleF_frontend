@@ -29,6 +29,18 @@ align-content: center;
 margin: auto;
 margin-left: 4rem;
   }
+  .login-welcome-ar{
+    color: rgba(70,70,70,1);
+    font-family: "Quicksand-Medium";
+    font-size: 40px;
+    font-style: normal;
+    letter-spacing: 0px;
+    text-align: center;
+    align-content: center;
+    margin: auto;
+    margin-left: -12rem;
+    margin-right: 10rem;
+      }
   .login-p{
     opacity: 1;
     color: rgba(70,70,70,0.8);
@@ -41,11 +53,23 @@ margin-left: 4rem;
     margin-left: 3rem;
 
   }
+  .login-p-ar{
+    opacity: 1;
+    color: rgba(70,70,70,0.8);
+    font-family: "Quicksand-Regular";
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0px;
+    text-align: center;
+    margin-left: -12rem;
+    margin-right: 10rem;
+  }
   .login-col{
     margin-top: 3rem;
   }
   .logo-register{
-    width:36%;
+    width:100%;
     margin-left: 2rem;
    }
    .facebook-btn{
@@ -201,5 +225,9 @@ padding: 0rem;
       width:56%;
       margin-left: 2rem;
      }
+     .login-welcome,.login-p{
+      margin-left: 7rem;
+        }
+
    }
    

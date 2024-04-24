@@ -1,14 +1,29 @@
-import React,{useLayoutEffect,useState} from 'react'
+import React,{useLayoutEffect,useState,useEffect} from 'react'
 import Navbar from '../components/Register/Navbar';
 import { Row, Col } from 'react-bootstrap';
 import BlogsSet from '../components/Blogs/BlogsSet';
 import RecentPosts from '../components/Blogs/RecentPosts';
 import '../components/Blogs/style.css';
-import Footer from '../components/Footer/Footer'
+import Footer from '../components/Footer/Footer';
+import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 
 const Blogs = () => {
     const tags=['#hashtag','#hashtag'];
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    const currentLanguage = Cookies.get('language') || 'en';
+  const [direction, setDirection] = useState('ltr');
+  const [t,i18n]=useTranslation()
+
+  useEffect(() => {
+    // Change direction based on the selected language
+    if (currentLanguage === 'ar') {
+      setDirection('rtl');
+    }       else{
+      setDirection('ltr')
+    }
+  }, [currentLanguage]);
 
     useLayoutEffect(() => {
       const handleResize = () => {
@@ -23,12 +38,12 @@ const Blogs = () => {
     const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
     return(
-        <div>
+        <div style={{direction:direction}}>
         <Navbar />
-        <Row>
+        <Row style={{direction:direction}}>
             <Col sm={8}  >
                 <div >
-                    <p className='Col-title'>News</p>
+                    <p className='Col-title'>{t('BlogsList.news')}</p>
                     <BlogsSet  />
                 </div>
             </Col>
@@ -37,14 +52,14 @@ const Blogs = () => {
             <Col sm={4} style={{ display: isTabletScreen ? 'none' : 'block' }}>
            <Row >
             <div>
-  <p className='Col-title' >Recent posts</p>
+  <p className='Col-title' >{t('BlogsList.recentPosts')}</p>
   <hr className='hr-title' />
   <RecentPosts />
 </div>
 </Row>
 <Row>
 <div>
-  <p className='Col-title' >Categories</p>
+  <p className='Col-title' >{t('BlogsList.categories')}</p>
   <hr className='hr-title' />
   <div style={{marginLeft:'4rem'}}>
   <p className='category-name'>Category Name</p>
@@ -59,7 +74,7 @@ const Blogs = () => {
 </Row>
 <Row>
 <div>
-  <p className='Col-title' >Tags</p>
+  <p className='Col-title' >{t('BlogsList.Tags')}</p>
   <hr className='hr-title' />
   <div style={{marginLeft:'4rem'}}>
   {tags.map((tag, index) => (

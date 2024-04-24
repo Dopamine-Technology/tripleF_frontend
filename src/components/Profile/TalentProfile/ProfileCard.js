@@ -18,27 +18,42 @@ import useAxios from '../../Auth/useAxiosHook.interceptor';
 import nationlaity from '../../../assets/imgs/group-11@3x.webp';
 import prefferedFoot from '../../../assets/imgs/run-outlined.svg';
 import FollowBtn from '../FollowBtn';
+import { useLanguage } from '../../LanguageContext/LanguageProvider';
+import { useTranslation } from 'react-i18next';
 
 function ProfileCard({id,profileData}) {
   const axios  = useAxios();
+  const { language, changeLanguage } = useLanguage(); // Access language context
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
   const currentYear = new Date().getFullYear();
   const {user}=useContext(UserDataContext);
   const TalentData= [
-    { title: 'gender', value: profileData.profile.gender, svg: Heart },
-    { title: 'Nationality', value: profileData.profile.country.name, svg: nationlaity },
-    { title: 'position', value: profileData.profile.position.name, svg: Positon },
-    { title: 'Preferred Foot', value: 'Left', svg: prefferedFoot },
-    { title: 'Date Of Birth', value: profileData.profile.birth_date, svg: Calendar },
-    { title: 'Height', value: profileData.profile.height, svg: Height },
-    { title: 'Weight', value: profileData.profile.wight, svg: Weight },
-    { title: 'Place of Residence', value: profileData.profile.country.name, svg: Place },
-    { title: 'Mobile Number', value: profileData.profile.mobile_number, svg: Call },
+    { title: t('Profile.gender'), value: profileData.profile.gender, svg: Heart },
+    { title: t('Profile.nationality'), value: profileData.profile.country.name, svg: nationlaity },
+    { title: t('Profile.position'), value: profileData.profile.position.name, svg: Positon },
+    { title: t('Profile.preferredFoot'), value: 'Left', svg: prefferedFoot },
+    { title: t('Profile.birthDate'), value: profileData.profile.birth_date, svg: Calendar },
+    { title: t('Profile.height'), value: profileData.profile.height, svg: Height },
+    { title: t('Profile.weight'), value: profileData.profile.wight, svg: Weight },
+    { title: t('Profile.residencePlace'), value: profileData.profile.country.name, svg: Place },
+    { title: t('Profile.mobileNumber'), value: profileData.profile.mobile_number, svg: Call },
 ];
 
   const [activeKey,setActiveKey]=useState();
   const [followersCount, setFollowersCount] = useState(profileData.followers_count);
   const [followingCount, setFollowingCount] = useState(profileData.following_count);
   const [isFollowed, setIsFollowed] = useState(profileData.is_followed);
+ 
+
+  useEffect(() => {
+    // Use the language obtained from the context
+    if (language === 'ar') {
+        setDirection('rtl');
+    } else {
+        setDirection('ltr');
+    }
+}, [language]);
 
 
   const [show, setShow] = useState(false);
@@ -83,9 +98,9 @@ const handleUpdateIsFollowed = (value) => {
 </Card.Title>
       <Card.Subtitle className='card-subTitle'>{profileData.profile.type_name}</Card.Subtitle>
       <p className='followers-number'>
-        <span className='followers-span me-2' onClick={() => handleShow('followers')}>{followersCount} followers</span>
+        <span className='followers-span me-2' onClick={() => handleShow('followers')}>{followersCount} {t('Profile.followers')}</span>
         <span className='me-2'>.</span>
-        <span className='followers-span' onClick={() => handleShow('following')}> {followingCount} following</span>
+        <span className='followers-span' onClick={() => handleShow('following')}> {followingCount} {t('Profile.following')}</span>
       </p>
       {profileData.id!=user.userData.id?  
        <FollowBtn id={id} is_followed={isFollowed}

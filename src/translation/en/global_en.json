@@ -91,8 +91,163 @@
   "copyRight":"© 2023 Dopamine All Rights Reserved."
   
   
-}
+},
 
+"Login":{
+  "title":"Welcome Back",
+  "desc":"Welcome Back, please enter your details",
+  "or":"or",
+  "emailAddress":"Email Address",
+  "Password":"Password",
+  "remmeberMe":"Remmeber Me",
+  "forgotPassword":"Forgot password?",
+  "signIn":"Sign in",
+  "dont_have_account":"Don’t have an account?",
+  "signup":"Sign Up"
+},
+"Register":{
+  "title":"Create an Account",
+  "or":"or",
+  "new_image":"upload image",
+  "first_name":"First Name",
+  "last_name":"Last Name",
+  "user_name":"UserName",
+  "email_address":"Email Address",
+  "password":"Create Password",
+  "validation":"8+ Characters",
+  "next":"Next",
+  "stepNum1":"Step 1 / 2",
+  "need_account":"Already have an account?",
+  "sign_in":"Sign in",
+  "agreements":"I accept the Privacy Policies and Terms&Conditions Agreements.",
+  "account_type":"Account Type",
+  "talent_type":"Talent Type",
+  "position":"Position",
+  "subPosition":"Sub Position",
+  "gender":"Gender",
+  "genderOptions":["Male","Female","Rather not to say"],
+  "preferredFoot":"Preferred Foot",
+  "preferredFootOptions":["Right","Left","Both"],
+  "birthDate":"Date Of Birth",
+  "height":"Height",
+  "weight":"Weight",
+  "country":"country",
+  "city":"city",
+  "residencePlace":"Place of Residence",
+  "mobileNumber":"Mobile Number",
+  "back":"Back",
+  "getStarted":"Get Started",
+  "stepNum2":"Step 2 / 2",
+  "exp_years":"Years of experience",
+  "year_founded":"Year Founded",
+  "logo":"Logo",
+  "clubName":"Club Name",
+  "saveChanges":"Save Changes",
+  "myAccount":"My Account",
+  "verifyEmail":"Verify your email",
+  "SendVerification":"Verification email sent"
 
-    
+},
+"BlogsList":{
+  "news":"News",
+  "recentPosts":"Recent posts",
+  "categories":"Categories",
+  "Tags":"Tags",
+  "noBlogs":"No blogs available"
+},
+"LayoutNavbar":{
+  "myProfile":"My Profile",
+  "settings":"Settings",
+  "language":"Languages",
+  "signOut":"sign out"
+},
+"leftArea":{
+  "home":"Home",
+  "clubs":"Clubs",
+  "scouts":"Scouts",
+  "coaches":"Coaches",
+  "talents":"Talents",
+  "opportunities":"Opportunities",
+  "myOpportunities":"My Opportunities",
+  "findOpportunities":"Find Opportunity",
+  "challenges":"Challenges",
+  "saved":"Saved"
+},
+"mainarea":{
+  "me":"me",
+  "shareChallenge":"Share your challenges",
+  "shareChallengeDesc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed",
+  "shareBtn":"Share",
+  "medal":"medal",
+  "share":"share",
+  "save":"save",
+  "recommendedChallenges":"Recommended Challenges",
+  "followClubs":"Clubs to Follow",
+  "followScouts":"Scouts to Follow",
+  "discoverBtn":"Discover more",
+  "allChallenges":"All Challenges",
+  "postOpportunities":"Post your Opportunities",
+  "add":"Add",
+  "shareTrainingSession":"Share your Training sessions"
+ }
+ ,
+ "Profile":{
+  "followers":"followers",
+  "following":"following",
+  "gender":"Gender",
+  "nationality":"Nationality",
+  "position":"Position",
+  "languages":"Languages",
+  "preferredFoot":"Preferred Foot",
+  "birthDate":"Date Of Birth",
+  "exp_years":"Years of experience",
+  "residencePlace":"Place of Residence",
+  "mobileNumber":"Mobile Number",
+  "certifications":"Certifications",
+  "profileStrength":"Complete your profile",
+  "verifyEmail":"Verify Email",
+  "personalPhoto":"Personal Photo",
+  "coverPhoto":"Cover Photo",
+  "personalInfo":"Personal Info",
+  "height":"Height",
+  "weight":"Weight",
+  "coachingLicense":"Coaching License",
+  "follow":"Follow"
+ },
+  
+ "SettingsSidebar":{
+   "myAccount":"My Account",
+   "changePassword":"Change Password",
+   "notifications":"Notifications"
+ },
+ "ChangePassword":{
+  "ChangePassword":"Change Password",
+  "currentPassword":"Current Password",
+  "NewPassword":"New Password",
+  "ConfirmPassword":"Confirm Password"
+},
+"notificationToggle":{
+ "newFollowers":"New Followers",
+ "followersChallenges":"Follower’s Challenges",
+ "followersOpportunities":"Follower’s Opportunities",
+ "newMessage":"New Message",
+ "emailNotfications":"Email Notfications"
+},
+"accounts":{
+  "newFollowers":"New Followers",
+  "followersChallenges":"Follower’s Challenges",
+  "followersOpportunities":"Follower’s Opportunities",
+  "newMessage":"New Message",
+  "emailNotfications":"Email Notfications"
+ },
+ "Opportunity":{
+  "applyNow":"Apply Now",
+  "age":"Age",
+  "requirements":"Requirements",
+  "additionalInformation":"Additional Information",
+  "search":"Search",
+  "applicants":"Applicants"
+ }
+ 
+
   }

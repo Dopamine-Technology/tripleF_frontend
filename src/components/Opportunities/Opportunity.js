@@ -16,9 +16,14 @@ import collpase from '../../assets/imgs/collapse.svg';
 import UnCollpase from '../../assets/imgs/unCollapse.svg';
 import { UserDataContext } from '../UserContext/UserData.context';
 import { FaArrowRight } from "react-icons/fa";
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function Opportunity({data}){
-
+    const { language, changeLanguage } = useLanguage(); 
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
     const location = useLocation();
     const { user } = useContext(UserDataContext);
     const isAppliedPath = location.pathname === '/applied/list';
@@ -26,11 +31,11 @@ function Opportunity({data}){
     const [isExpanded, setIsExpanded] = useState(false);
     const opportunityData='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi  ut aliquip ex ea commodo consequat. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
     const titles=[
-        {title:'Age',name:`${data.from_age}-${data.to_age}`},
-        {title:'Height',name:`${data.from_height}-${data.to_height}`},
-        {title:'Weight',name:`${data.from_weight}-${data.to_weight}`},
-        {title:'gender',name:data.gender},
-        {title:'Preferred Foot',name:data.foot}
+        {title:t('Opportunity.age'),name:`${data.from_age}-${data.to_age}`},
+        {title:t('Register.height'),name:`${data.from_height}-${data.to_height}`},
+        {title:t('Register.weight'),name:`${data.from_weight}-${data.to_weight}`},
+        {title:t('Register.gender'),name:data.gender},
+        {title:t('Register.preferredFoot'),name:data.foot}
     ]
    
     const handleApply = (id) => {
@@ -54,17 +59,8 @@ function Opportunity({data}){
             window.location.reload();
         })
     }
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
-    useLayoutEffect(() => {
-      const handleResize = () => {
-        setWindowWidth(window.innerWidth);
-      };
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-    
-      const isSmallScreen = windowWidth <= 600;
 
     return(
         <div>
@@ -92,7 +88,7 @@ function Opportunity({data}){
 </div>
 {isAppliedPath?( 
     <div className='d-flex'>
-        <Link className='seeApplicants' to={`/profiles/applied/${data.title}/${data.id}`}>{data.applicants_count} Applicants<FaArrowRight color='#1d71b8' /></Link>
+        <Link className='seeApplicants' to={`/profiles/applied/${data.title}/${data.id}`}>{data.applicants_count} {t('Opportunity.applicants')}<FaArrowRight color='#1d71b8' /></Link>
 <Dropdown>
       <Dropdown.Toggle variant=""  className="edit">
          <BsThreeDotsVertical fontSize="1.5rem"  />
@@ -112,7 +108,7 @@ function Opportunity({data}){
     ):(
         <>
      
-    <Button className='apply-btn' onClick={() => handleApply(data.id)}>Apply Now</Button> 
+    <Button className='apply-btn' onClick={() => handleApply(data.id)}>{t('Opportunity.applyNow')}</Button> 
     </>
      )}
    
@@ -139,10 +135,10 @@ function Opportunity({data}){
         {
             isExpanded?(
                 <div className='mt-4'>
-                <p className='postOpp-title'>Requirements</p>
+                <p className='postOpp-title'>{t('Opportunity.requirements')}</p>
                 <ul dangerouslySetInnerHTML={{ __html: data.requirements }}></ul>
 
-                <p className='postOpp-title'>Additional Information</p>
+                <p className='postOpp-title'>{t('Opportunity.additionalInformation')}</p>
                 <ul dangerouslySetInnerHTML={{ __html: data.additional_info }}></ul>
                 </div>
             ):(null)

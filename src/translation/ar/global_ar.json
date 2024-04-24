@@ -91,5 +91,151 @@
     ],
     "copyRight":"© 2023 الدوبامين جميع الحقوق محفوظة."
     
-  }
+  },
+  "Login":{
+    "title":"مرحبًا بعودتك",
+    "desc":"مرحبًا بعودتك، يرجى إدخال بياناتك",
+    "or":"او",
+    "emailAddress":"البريد الإلكتروني",
+    "Password":"كلمة المرور",
+    "remmeberMe":"تذكرني",
+    "forgotPassword":"هل نسيت كلمة المرور؟",
+    "signIn":"تسجيل الدخول",
+    "dont_have_account":"ليس لديك حساب؟",
+    "signup":"انشاء حساب"
+  },
+  "Register":{
+    "title":"إنشاء حساب",
+    "or":"او",
+    "first_name":"الاسم الأول",
+    "last_name":"الاسم الأخير",
+    "user_name":"اسم المستخدم",
+    "email_address":" البريد الإلكتروني",
+    "password":"إنشاء كلمة المرور",
+    "validation":"8+ أحرف",
+    "next":"التالي",
+    "stepNum1":"الخطوة 1 / 2",
+    "need_account":"هل لديك حساب؟",
+    "sign_in":"تسجيل الدخول",
+    "agreements":"أوافق على سياسات الخصوصية واتفاقيات الشروط والأحكام.",
+    "new_image":"تحميل صورة",
+    "account_type":"نوع الحساب",
+    "talent_type":"نوع الموهبة",
+    "position":"الموقف",
+    "subPosition":"المناصب الفرعية",
+    "gender":"الجنس",
+    "genderOptions":["ذكر","أنثى","لا أفضل القول"],
+    "preferredFoot":"القدم المفضلة",
+    "preferredFootOptions":["يمين","يسار","كلاهما"],
+    "birthDate":"تاريخ الميلاد",
+    "height":"الطول",
+    "weight":"الوزن",
+    "country":"البلد",
+    "city":"المدينة",
+    "residencePlace":"مكان الإقامة",
+    "mobileNumber":"رقم الجوال",
+    "back":"رجوع",
+    "getStarted":"ابدأ",
+    "stepNum2":"الخطوة 2 / 2",
+    "exp_years":"عدد سنوات الخبرة",
+    "year_founded":"سنة التأسيس",
+    "logo":"الشعار",
+    "clubName":"اسم النادي",
+    "saveChanges":"حفظ التغييرات",
+    "myAccount":"حسابي",
+    "verifyEmail":"التحقق من بريدك الإلكتروني",
+    "SendVerification":"تم إرسال بريد إلكتروني للتحقق"
+  },
+  "BlogsList":{
+    "news":"أخبار",
+    "recentPosts":"المشاركات الأخيرة",
+    "categories":"الفئات",
+    "Tags":"العلامات",
+    "noBlogs":"لا توجد مدونات"
+  },
+
+  "LayoutNavbar":{
+    "myProfile":"ملفي الشخصي",
+    "settings":"الإعدادات",
+    "language":"اللغات",
+    "signOut":"تسجيل الخروج"
+  },
+  "leftArea":{
+    "home":"الرئيسية",
+    "clubs":"الأندية",
+    "scouts":"الكشافة",
+    "coaches":"المدربين",
+    "talents":"المواهب",
+    "opportunities":"الفرص",
+    "myOpportunities":"فرصي",
+    "findOpportunities":"البحث عن فرصة",
+    "challenges":"التحديات",
+    "saved":"تم الحفظ"
+  },
+  "mainarea":{
+    "me":"حسابي",
+    "shareChallenge":"شارك تحدياتك",
+    "shareChallengeDesc":"لوريم إيبسوم آلام الجلوس أميت،كونسيل إيليت، سيد",
+    "shareBtn":"مشاركة",
+    "medal":"ميدالية",
+    "share":"مشاركة",
+    "save":"حفظ",
+    "recommendedChallenges":"التحديات الموصى بها",
+    "followClubs":"الأندية التي يجب متابعتها",
+    "followScouts":"الكشافة التي يجب متابعتها",
+    "discoverBtn":"اكتشف المزيد",
+    "allChallenges":"جميع التحديات",
+    "shareTrainingSession":"مشاركة المقاطع التدريبية الخاصة بك"
+   },
+   "Profile":{
+    "followers":"المتابعين",
+    "following":"متابعة",
+    "gender":"الجنس",
+    "nationality":"الجنسية",
+    "position":"موضع",
+    "preferredFoot":"القدم المفضلة",
+    "languages":"اللغات",
+    "birthDate":"تاريخ الميلاد",
+    "exp_years":"سنوات الخبرة",
+    "residencePlace":"مكان الإقامة",
+    "mobileNumber":"رقم الموبايل",
+    "certifications":"الشهادات",
+    "profileStrength":"أكمل ملفك الشخصي",
+    "verifyEmail":"التحقق من البريد الإلكتروني",
+    "personalPhoto":"صورة شخصية",
+    "coverPhoto":"صورة الغلاف",
+    "personalInfo":"صورة الغلاف",
+    "height":"الطول",
+    "weight":"الوزن",
+    "coachingLicense":"رخصة التدريب",
+    "follow":"متابعة"
+   },
+   "SettingsSidebar":{
+    "myAccount":"حسابي",
+    "changePassword":"تغيير كلمة المرور",
+    "notifications":"الاشعارات"
+  },
+  "ChangePassword":{
+    "ChangePassword":"تغيير كلمة المرور",
+    "currentPassword":"كلمة المرور الحالية",
+    "NewPassword":"كلمة المرور الجديدة",
+    "ConfirmPassword":"تأكيد كلمة المرور"
+  },
+  "notificationToggle":{
+    "newFollowers":"متابعين جدد",
+    "followersChallenges":"تحديات المتابعين",
+    "followersOpportunities":"فرص المتابعين",
+    "newMessage":"رسالة جديدة",
+    "emailNotfications":"إشعارات البريد الإلكتروني"
+   },
+   "Opportunity":{
+    "applyNow":"قدم الآن",
+    "age":"العمر",
+    "requirements":"المتطلبات",
+    "additionalInformation":"معلومات إضافية",
+    "search":"بحث",
+    "applicants":"المتقدمين"
+   }
+   
+  
   }

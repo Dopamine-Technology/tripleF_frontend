@@ -4,21 +4,21 @@ import football from '../../assets/imgs/football.png';
 import image1 from '../../assets/imgs/image1Responsive.webp';
 import image2 from '../../assets/imgs/image2Responsive.webp';
 import { Container,Row,Col } from 'react-bootstrap';
-
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const AboutImg = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  // useLayoutEffect(() => {
+  //   const handleResize = () => {
+  //     setWindowWidth(window.innerWidth);
+  //   };
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
   
-    const isSmallScreen = windowWidth <= 600;
-    const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
+    // const isSmallScreen = windowWidth <= 600;
+    // const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
     return ( <div className="image-container">
       <Row className='row-responsive'>

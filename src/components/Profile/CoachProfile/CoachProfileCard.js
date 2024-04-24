@@ -19,10 +19,15 @@ import nationlaity from '../../../assets/imgs/group-11@3x.webp';
 import LanguageIcon from '../../../assets/imgs/languageIconProfile.svg';
 import exp from '../../../assets/imgs/sport-filled-soccer.svg';
 import FollowBtn from '../FollowBtn';
+import { useLanguage } from '../../LanguageContext/LanguageProvider';
+import { useTranslation } from 'react-i18next';
 
 
 function CoachProfileCard({profileData,id}) {
 
+  const { language, changeLanguage } = useLanguage(); // Access language context
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
   const { user } = useContext(UserDataContext);
 
   const birthDate = new Date(profileData.profile.birth_date);
@@ -35,13 +40,13 @@ const hasBirthdayOccurred = today.getMonth() >= birthDate.getMonth() &&
 const finalAge = hasBirthdayOccurred ? age : age - 1;
  
   const CoachData=[
-    { title: 'Gender', value:profileData.profile.gender, svg: Heart },
-    { title: 'Nationality', value: profileData.profile.country.name, svg: nationlaity },
-    { title: 'Languages', value: 'Arabic, English', svg: LanguageIcon },
-    { title: 'Date Of Birth', value: `${profileData.profile.birth_date} (${finalAge} years) `, svg: Calendar },
-    { title: 'Years of experience ', value: profileData.profile.years_of_experience, svg:exp  },
-    { title: 'Place of Residence', value: profileData.profile.country.name, svg: Place },
-    { title: 'Mobile Number', value: profileData.profile.mobile_number, svg: Call },
+    { title: t('Profile.gender'), value:profileData.profile.gender, svg: Heart },
+    { title: t('Profile.nationality'), value: profileData.profile.country.name, svg: nationlaity },
+    { title: t('Profile.languages'), value: 'Arabic, English', svg: LanguageIcon },
+    { title: t('Profile.birthDate'), value: `${profileData.profile.birth_date} (${finalAge} years) `, svg: Calendar },
+    { title: t('Profile.exp_years'), value: profileData.profile.years_of_experience, svg:exp  },
+    { title: t('Profile.residencePlace'), value: profileData.profile.country.name, svg: Place },
+    { title: t('Profile.mobileNumber'), value: profileData.profile.mobile_number, svg: Call },
  
   ]
 

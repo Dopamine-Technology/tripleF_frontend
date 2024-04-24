@@ -4,9 +4,10 @@ import ContactForm from './ContactForm';
 import './style.css';
 import boy from '../../assets/imgs/boy.png';
 import Cookies from 'js-cookie';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const BecomeClient = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
   const currentLanguage = Cookies.get('language') || 'en';
     const [direction, setDirection] = useState('ltr');
 
@@ -20,16 +21,6 @@ const BecomeClient = () => {
       }
     }, [currentLanguage]);
   
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  
-    const isSmallScreen = windowWidth <= 600;
-    const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
     
   return (
     <div className="becomeClient-div" id='Contact' style={{direction:direction}}>

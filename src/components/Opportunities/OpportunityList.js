@@ -10,9 +10,14 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import { UserDataContext } from '../UserContext/UserData.context';
 import ScoutOppFilter from './ScoutOppFilter';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 
 function OpportunityList(){
+  const { language, changeLanguage } = useLanguage(); 
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
   const location = useLocation();
   const navigate=useNavigate();
   const isAppliedPath = location.pathname != '/applied/list';
@@ -134,7 +139,7 @@ function OpportunityList(){
           <Col lg={7} >
   
        <div class="search-container2 w-100">
-          <input type="text" placeholder="Search" class="search-input" />
+          <input type="text" placeholder={t('Opportunity.search')} class="search-input" />
           <AiOutlineSearch className="search-icon2" />
           
 </div>

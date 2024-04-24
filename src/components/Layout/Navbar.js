@@ -21,6 +21,9 @@ import messages from '../../assets/imgs/messages.svg';
 import NotificationIcon from '../../assets/imgs/notificationIcon.svg';
 import NotificationDropDown from "../Notification/NotificationDropDown";
 import { SearchResultsList } from "./SearchResultsList";
+import { useLanguage } from '../LanguageContext/LanguageProvider';
+import { useTranslation } from 'react-i18next';
+
 
 function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
     const { user } = useContext(UserDataContext);
@@ -29,6 +32,9 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [input, setInput] = useState("");
     const [results,setResults]=useState([])
+    const { language, changeLanguage } = useLanguage(); // Access language context
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
 
     const fetchData = (value) => {
       fetch("https://jsonplaceholder.typicode.com/users")
@@ -50,7 +56,6 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
       setInput(value);
       fetchData(value);
     };
-
 
     const toggleDropdown = () => {
       setDropdownVisible(!dropdownVisible);
@@ -79,7 +84,20 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
         }
       })
   }
-  
+
+  useEffect(() => {
+    // Use the language obtained from the context
+    if (language === 'ar') {
+        setDirection('rtl');
+    } else {
+        setDirection('ltr');
+    }
+}, [language]);
+
+const changeLanguageHandler = () => {
+  const newLanguage = language == 'en' ? 'ar' : 'en'; // Toggle between English and Arabic
+  changeLanguage(newLanguage); // Pass the new language to the context function
+};
   
     const items = [
       {
@@ -92,7 +110,7 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
           onClick={handleProfileClick}
         >
           <img src={Profile} className="me-2" />
-          <p className='mt-3'>My Profile</p>
+          <p className='mt-3'>{t('LayoutNavbar.myProfile')}</p>
         </Link>
         <hr className='line-dropdown'/>
         </>
@@ -109,7 +127,7 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
           style={{textDecoration:'none'}}
         >
           <img src={Settings}  className="me-2"/>
-          <p className='mt-3'>Settings</p>
+          <p className='mt-3'>{t('LayoutNavbar.settings')}</p>
         </Link>
         <hr className='line-dropdown'/>
         </>
@@ -119,14 +137,14 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
         key: "3",
         label: (
           <>
-          <Link
-          to='/profile'
+          <div
+          onClick={changeLanguageHandler}
           className=' d-flex ' 
           style={{textDecoration:'none'}}
         >
           <img src={Language} className="me-2" />
-          <p className='mt-3'>Language (English)</p>
-        </Link>
+          <p className='mt-3'>{t('LayoutNavbar.language')}</p>
+        </div>
         <hr className='line-dropdown'/>
         </>
         ),
@@ -141,7 +159,7 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
           onClick={logout}
         >
           <img src={signOut} className="me-2" />
-          <p className='mt-3'>Sing Out </p>
+          <p className='mt-3'>{t('LayoutNavbar.signOut')} </p>
         </Link>
       
         </>
@@ -152,8 +170,8 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
 
 
     return (
-      <div>
-        <Navbar expand="lg" className="bg-body-tertiary" style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)" }}>
+      <div style={{direction:direction}}>
+        <Navbar expand="lg" className="bg-body-tertiary" style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)" ,direction:direction}}>
             <Container>
                 <Navbar.Brand href="/home">
                     <img src={Logo} width='40%' alt="Logo" />

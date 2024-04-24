@@ -1,8 +1,14 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import { FaRegCalendarAlt } from "react-icons/fa";
+import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 
 const RecentPosts = () => {
+  const currentLanguage = Cookies.get('language') || 'en';
+  const [direction, setDirection] = useState('ltr');
+  const [t,i18n]=useTranslation();
+
     const posts=[
         {
           img:"https://media.istockphoto.com/id/510398566/photo/the-most-famous-sports.jpg?s=612x612&w=0&k=20&c=4luU-DrHEakY-5VL4TgAPgOAGzeN-l9IpmxpUriW2a4=",

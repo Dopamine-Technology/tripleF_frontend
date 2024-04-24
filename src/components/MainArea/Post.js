@@ -23,6 +23,8 @@ import { MdDeleteOutline } from "react-icons/md";
 import { message } from 'antd';
 import ReportPostPopup from '../Post/ReportPostPopup';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function Post({socket,newPostCreated}){
     const [show, setShow] = useState(false);
@@ -38,15 +40,24 @@ function Post({socket,newPostCreated}){
     const { user } = useContext(UserDataContext);
     const [showReportPopup, setShowReportPopup] = useState(false);
     const location = useLocation();
+    const { language, changeLanguage } = useLanguage(); 
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
+  
+    useEffect(() => {
+      if (language === 'ar') {
+          setDirection('rtl');
+      } else {
+          setDirection('ltr');
+      }
+  }, [language]);
     
     const axios=useAxios();
 
     useEffect(() => {
       const fetchPostsData = async () => {
           try {
-              let endpoint = 'status/timeline'; // Default endpoint
-
-              // Check if the URL is (/saved), then change the endpoint
+              let endpoint = 'status/timeline';
               if (location.pathname === '/saved') {
                   endpoint = 'status/get_saved';
               }
@@ -147,7 +158,6 @@ function Post({socket,newPostCreated}){
   }
   }
     
-    
     const clearSelection = () => {
         setShowMedalPopups(Array(posts.length).fill(false));
     };
@@ -237,7 +247,7 @@ function Post({socket,newPostCreated}){
     <div>
     <hr style={{ color: '#A3A3A3' }} />
     <Row>
-        <Col xs={6}>
+        <Col xs={6} md={6} lg={4} xl={6}>
         <div className="d-flex align-items-center"  onClick={() => handleShowPopup(post.id)}>
     <img className="stacked-image" src={Bronze} />
     <img className="stacked-image" src={Silver} />
@@ -245,13 +255,13 @@ function Post({socket,newPostCreated}){
     <p className="share-time m-0">{post.reaction_count}</p>
 </div>
         </Col>
-        <Col xs={6}>
+        <Col xs={6} md={6} lg={8} xl={6}>
          
             <Row>
                 <Col></Col>
     
-                <Col className="share-time"> <span className='me-3'>{post.shares} Share</span>
-                                             <span>{post.saves} Saved</span></Col>
+                <Col className="share-time"> <span className='me-3'>{post.shares} {t('mainarea.share')}</span>
+                                             <span>{post.saves} {t('mainarea.save')}</span></Col>
             </Row>
         </Col>
     </Row>
@@ -282,17 +292,17 @@ function Post({socket,newPostCreated}){
     }
    
     
-    Medal
+   {t('mainarea.medal')}
     </div>
         
         <div className="Like" onClick={handleShow}>
         <img src={ShareIcon} className='me-2'/>
-            Share
+        {t('mainarea.share')}
         </div>
         {showPopup&& <SocialPopup handleClose={handleClose} show={showPopup} id={post.id}/>}
         <div className="Like" onClick={() => handleShare(post.id)}>
         <img src={post.is_saved?SaveFilled:savedIcon} className='me-2'/>
-            Save
+        {t('mainarea.save')}
         </div>
     
     </div> 

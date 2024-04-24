@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Col } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { message } from "antd";
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const Input = ({
   register,
@@ -16,35 +17,30 @@ const Input = ({
   inputWidth,
   defaultValue,
   disabled,
+  onChange
 }) => {
   const [showPassword, setShowPassword] = useState("");
   const [inputValue, setInputValue] = useState(defaultValue);
   const [isTyping, setIsTyping] = useState(false);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
   useEffect(() => {
     setInputValue(defaultValue);
   }, [defaultValue]);
 
-  const isSmallScreen = windowWidth <= 600;
-
   const handleInputChange = (event) => {
     const value = event.target.value;
+
     const emojiPattern = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/;
 
     if (!emojiPattern.test(value)) {
       setInputValue(value);
       setIsTyping(true);
+      // Reset error message when user starts typing
+      if (errors && errors[name]) {
+        errors[name].message = ""; // Reset error message
+      }
     }
   };
 
@@ -74,7 +70,7 @@ const Input = ({
             outline: "none",
           }}
           placeholder={placeholder}
-          value={inputValue} // Use inputValue instead of defaultValue
+          value={inputValue}
           type={showPassword ? "text" : type}
           disabled={disabled}
         />

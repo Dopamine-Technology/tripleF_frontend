@@ -9,7 +9,8 @@ import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 import UserProvider from './components/UserContext/UserProvider';
 import PermProvider from './components/PermContext/PermProvider';
-
+import ScreenProvider from './components/ScreenWidthContext/ScreenProvider';
+import { LanguageProvider } from './components/LanguageContext/LanguageProvider';
 
 // i18next.init({
 //   interpolation: {
@@ -35,8 +36,12 @@ root.render(
   <React.StrictMode>
     <UserProvider>
       <PermProvider>
+        <ScreenProvider>
+          <LanguageProvider>
       <App />
-      </PermProvider>
+          </LanguageProvider>
+        </ScreenProvider>
+       </PermProvider>
       </UserProvider>
   </React.StrictMode>
 );

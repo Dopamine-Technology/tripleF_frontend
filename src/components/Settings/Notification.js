@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import useAxios from '../Auth/useAxiosHook.interceptor';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useTranslation } from 'react-i18next';
 
 function Notification() {
     const axios=useAxios();
+    const [direction, setDirection] = useState('ltr');
+    const [t,i18n]=useTranslation();
+
     const initialNotificationStates = JSON.parse(localStorage.getItem('notificationStates')) || {
         'new_followers': true,
         'follower_challenges': true,
@@ -13,11 +18,11 @@ function Notification() {
     };
 
     const notificationLabels = {
-        'new_followers': 'New Followers',
-        'follower_challenges': 'Follower’s Challenges',
-        'follower_opportunities': 'Follower’s Opportunities',
-        'new_message': 'New Message',
-        'email_notifications': 'Email Notifications'
+        'new_followers': t('notificationToggle.newFollowers'),
+        'follower_challenges': t('notificationToggle.followersChallenges'),
+        'follower_opportunities': t('notificationToggle.followersOpportunities'),
+        'new_message':  t('notificationToggle.newMessage'),
+        'email_notifications':  t('notificationToggle.emailNotfications')
     };
 
     const [notificationStates, setNotificationStates] = useState(initialNotificationStates);

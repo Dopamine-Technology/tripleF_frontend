@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useLayoutEffect,useContext} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import loginPic from '../../assets/imgs/login.png'
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import facebook from '../../assets/imgs/facebook.png';
@@ -16,14 +16,14 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import startsWith from 'lodash.startswith';
 import { gapi } from "gapi-script";
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { UserDataContext } from "../UserContext/UserData.context";
 import { LoginSocialFacebook } from "reactjs-social-login";
-import { FacebookLoginButton } from "react-social-login-buttons";
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useTranslation } from 'react-i18next';
 
 function RegisterForm({ onLoadingChange }) {
   const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
@@ -38,17 +38,18 @@ function RegisterForm({ onLoadingChange }) {
       : Yup.string()
           .required("First name is required")
           .matches(
-            /^(?:[\u0600-\u06FF]+|[a-zA-Z]+)$/,
-            "First name can't contain mixed letters"
+            /^[^\u0600-\u06FF\s]+$/, 
+            "First Name cannot contain Arabic letters"
           ),
     last_name: signedUpWithGoogle
       ? Yup.string()
       : Yup.string()
           .required("Last name is required")
           .matches(
-            /^(?:[\u0600-\u06FF]+|[a-zA-Z]+)$/,
-            "Last name can't contain mixed letters"
+            /^[^\u0600-\u06FF\s]+$/, // Regular expression to disallow Arabic letters
+            "First Name cannot contain Arabic letters"
           ),
+          
     user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required")
     .matches(
       /^[^\u0600-\u06FF\s]+$/, // Regular expression to disallow Arabic letters
@@ -64,7 +65,7 @@ function RegisterForm({ onLoadingChange }) {
     )
   });
 
-  const MAX_FILE_SIZE = 102400; // 100KB
+  const MAX_FILE_SIZE = 102400;
 
   const validFileExtensions = ['jpg', 'gif', 'png', 'jpeg', 'svg', 'webp'];
   
@@ -91,14 +92,19 @@ function RegisterForm({ onLoadingChange }) {
     .min(1, 'Weight must be greater than or equal to 1') 
     .max(900, 'Weight must be less than or equal to 1000'),
       country_id: Yup.string().required('Country is required'),
-      mobile_number: Yup.string().required('Mobile number is required'),
+      mobile_number: Yup.string().matches(/^\d{7,15}$/, 'Mobile number must be a valid number')
+      .required('Mobile number is required'),
+      position: Yup.array()
+    .of(Yup.string())
+    .min(1, 'Sub Position is required')
+    .required('Sub Position is required')
     }),
     2: Yup.object().shape({
       talent_type: Yup.string().required('Sport Type is required'),
       gender: Yup.string().required('Gender is required'),
       years_of_experience:  Yup.number().typeError('Years of Experience must be a valid date').required('Years of Experience is required'),
       birth_date: Yup.date().typeError('Birth date must be a valid date').required('Birth date is required'),
-      country_id: Yup.string().required('Country is required'),
+      country_id: Yup.string().required('Place of Residence is required'),
       mobile_number: Yup.string().required('Mobile number is required'),
     }),
     3: Yup.object().shape({
@@ -110,7 +116,9 @@ function RegisterForm({ onLoadingChange }) {
       talent_type: Yup.string().required('Sport Type is required'),
       country_id: Yup.string().required('Country is required'),
       city_id: Yup.string().required('City is required'),
-      mobile_number: Yup.string().required('Mobile number is required'),
+      mobile_number: Yup.string()
+      .matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, 'Invalid mobile number')
+      .required('Mobile number is required'),
       year_founded: Yup.number().typeError('year founded must be a valid date').required('year founded is required'),
 
     }),
@@ -119,7 +127,7 @@ function RegisterForm({ onLoadingChange }) {
       gender: Yup.string().required('Gender is required'),
       years_of_experience:  Yup.number().typeError('Years of Experience must be a valid date').required('Years of Experience is required'),
       birth_date: Yup.date().typeError('Birth date must be a valid date').required('Birth date is required'),
-      country_id: Yup.string().required('Country is required'),
+      country_id: Yup.string().required('Place of Residence is required'),
       mobile_number: Yup.string().required('Mobile number is required'),
     }),
   };
@@ -164,25 +172,26 @@ function RegisterForm({ onLoadingChange }) {
       const [clubName, setClubName] = useState('');
       const [selectedCountry, setSelectedCountry] = useState("");
       const [selectedCountryCode, setSelectedCountryCode] = useState('jo');
-      const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+      const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
       const currentYear = new Date().getFullYear();
       const [errorMessageDisplayed, setErrorMessageDisplayed] = useState(false);
       const [imgErr,setImgErr]=useState('');
       const { user, setUser } = useContext(UserDataContext);
       const navigate=useNavigate();
+      const currentLanguage = Cookies.get('language') || 'en';
+      const [direction, setDirection] = useState('ltr');
+      const [t,i18n]=useTranslation();
+      const genderOptions = t('Register.genderOptions', { returnObjects: true });
+      const preferredFootOptions = t('Register.preferredFootOptions', { returnObjects: true });
 
-      useLayoutEffect(() => {
-        const handleResize = () => {
-          setWindowWidth(window.innerWidth);
-        };
-    
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-      }, []);
-    
-      const isSmallScreen = windowWidth <= 600;
-      const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
-      const isProScreen = windowWidth > 820 && windowWidth <= 1025;
+    useEffect(() => {
+      if (currentLanguage === 'ar') {
+        setDirection('rtl');
+      } 
+      else{
+        setDirection('ltr')
+      }
+    }, [currentLanguage]);
       
       const clientId='993509121628-0hsi8t03fl4ph2fph78mmnsa51c1sdd0.apps.googleusercontent.com'
 
@@ -352,8 +361,6 @@ function RegisterForm({ onLoadingChange }) {
         }
       };
       
-   
-      
       
     
       const [formErrors, setFormErrors] = useState({});
@@ -488,8 +495,7 @@ function RegisterForm({ onLoadingChange }) {
         }
       };
 
-      
-      
+     
       const handleNextStep = (data) => {
         if (currentStep === 2) {
           onSubmit(data); 
@@ -579,7 +585,7 @@ function RegisterForm({ onLoadingChange }) {
                 <div style={{ display: 'flex', alignItems: 'center' }} className='login-or'>
   <hr className='mt-4' style={{width:isTabletScreen||isProScreen?'40%':'24%',color:'#7C7C7C'}} />
 
-  <p style={{ margin: '0 10px' }}>OR</p>
+  <p style={{ margin: '0 10px' }}>{t('Register.or')}</p>
 
   <hr className=' mt-4' style={{width:isTabletScreen||isProScreen?'40%':'24%',color:'#7C7C7C'}} />
 </div>
@@ -591,7 +597,7 @@ function RegisterForm({ onLoadingChange }) {
                   register={register}
                   watch={watch}
                   name={"image"}
-                  label={"upload image"}
+                  label={t('Register.new_image')}
                       />
                       
                   </Form.Group>
@@ -602,7 +608,7 @@ function RegisterForm({ onLoadingChange }) {
                         register={register}
                         errors={errors}
                         name="first_name"
-                        label="First Name"
+                        label={t('Register.first_name')}
                         placeholder=''
                         className="form-control form-control-sm rounded"
                         validation={{}}
@@ -615,7 +621,7 @@ function RegisterForm({ onLoadingChange }) {
                         register={register}
                         errors={errors}
                         name="last_name"
-                        label="Last Name"
+                        label={t('Register.last_name')}
                         placeholder=''
                         className="form-control form-control-sm rounded"
                         validation={{}}
@@ -628,7 +634,7 @@ function RegisterForm({ onLoadingChange }) {
               register={register}
               errors={errors}
               name="user_name"
-              label="username"
+              label={t('Register.user_name')}
               placeholder=''
               className="form-control form-control-sm rounded"
               validation={{}}
@@ -642,7 +648,7 @@ function RegisterForm({ onLoadingChange }) {
                       register={register}
                       errors={errors}
                       name="email"
-                      label="Email address"
+                      label={t('Register.email_address')}
                       placeholder=''
                       className="form-control form-control-sm rounded"
                       validation={{}}
@@ -656,20 +662,21 @@ function RegisterForm({ onLoadingChange }) {
                   <Input
                     type="password"
                     name="password"
-                    placeholder='8+ Characters'
+                    placeholder={t('Register.validation')}
                     register={register}
-                    label="create password"
+                    label={t('Register.password')}
                     validation={{ required: true }}
                     className={"py-2 rounded-sm"}
                     errors={bothErrors}
                     inputWidth={isSmallScreen?'15rem':'31rem'}
+   
                   />
         
                   </Form.Group>
                   <Form.Group controlId="termsCheckbox" className="mb-3">
               <Form.Check
                 type="checkbox"
-                label="I accept the Privacy Policies and Terms&Conditions Agreements."
+                label={t('Register.agreements')}
                 onChange={handleTermsCheckbox}
                 checked={termsAccepted?true:false}
                 className={termsAccepted ? 'green-checkbox' : ''} 
@@ -679,20 +686,20 @@ function RegisterForm({ onLoadingChange }) {
             <div className={isSmallScreen?"mt-3":"d-flex justify-content-between align-items-center"}>
 
 <Button className='btn-tall' variant='' type='submit' disabled={!termsAccepted}>
-  Next <FaArrowRight color='white'/>
+{t('Register.next')}  <FaArrowRight color='white'/>
 </Button>
-<p style={{marginRight:isProScreen?'12rem':'7rem',marginTop:'1rem',width:isProScreen?'7rem':''}}>Step 1/2</p>
+<p style={{marginRight:isProScreen?'12rem':'7rem',marginTop:'1rem',width:isProScreen?'7rem':''}}>{t('Register.stepNum1')}</p>
 </div>
                 
                 </Form>
-                <p className='account-p'>Already have an account? <Link to='/login' style={{textDecoration:'none'}}>Sign in</Link> </p>
+                <p className='account-p'> {t('Register.need_account')} <Link to='/login' style={{textDecoration:'none'}}>{t('Register.sign_in')} </Link> </p>
               </Col>
             </Row>
             );
             case 2:
               return (
                 <div className='register-form'   >
-                <p>Account Type</p>
+                <p>{t('Register.account_type')}</p>
                 <div className="account-type-options" onChange={handleAccountTypeChange} >
                   {isSmallScreen ? (
                     <select className="form-select" style={{ width: isSmallScreen ? '100%' : '100%' }} >
@@ -736,7 +743,7 @@ function RegisterForm({ onLoadingChange }) {
               <form onSubmit={handleSubmit(onSubmit)}  onChange={handleChange} className='register-form'>
               <div className='form-container'>
                 <div className='form-group'>
-                  <label htmlFor="talentType">Talent Type</label>
+                  <label htmlFor="talentType">{t('Register.talent_type')}</label>
                   <select id="talentType" {...register('talent_type')} required className="green-border">
                     {sports.map(sport => (
                       <option key={sport.id} value={sport.id}>
@@ -752,7 +759,7 @@ function RegisterForm({ onLoadingChange }) {
                 </div>
             
                 <div className='form-group'>
-  <label htmlFor="position">Position:</label>
+  <label htmlFor="position">{t('Register.position')}</label>
   <select id="position" {...register('parent_position')} onChange={(e) => handlePositionSelect(e.target.value)} required>
     {positions?.map(position => (
       <option key={position.id} value={position.id}>
@@ -770,7 +777,7 @@ function RegisterForm({ onLoadingChange }) {
             
 {subPositions?.length > 0 && (
   <div className='form-group' required>
-    <label htmlFor="subPosition">Sub Positions:</label>
+    <label htmlFor="subPosition">{t('Register.subPosition')}</label>
     <select id="subPosition" {...register('position')} multiple>
       {subPositions?.map(subPosition => (
         <option key={subPosition.id} value={subPosition.id}>
@@ -791,20 +798,20 @@ function RegisterForm({ onLoadingChange }) {
 
             
             <div className='form-group'>
-  <label>Gender</label>
+  <label>{t('Register.gender')}</label>
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
-      <span className="label">Male</span>
+      <span className="label">{genderOptions[0]}</span>
       <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={!formData.gender}   />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">Female</span>
+      <span className="label">{genderOptions[1]}</span>
       <input type="radio" id="female" value="female" {...register('gender')}  />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">Rather not to say</span>
+      <span className="label">{genderOptions[2]}</span>
       <input type="radio" id="other" value="other" {...register('gender')}  />
       <span className="checkmark"></span>
     </label>
@@ -817,20 +824,20 @@ function RegisterForm({ onLoadingChange }) {
 </div>
 
 <div className='form-group'>
-  <label>Preferred Foot</label>
+  <label>{t('Register.preferredFoot')}</label>
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
-      <span className="label">Right</span>
+      <span className="label">{preferredFootOptions[0]}</span>
       <input type="radio" id="right" value="right" {...register('preferred_foot')} defaultChecked={!formData.preferred_foot} />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">Left</span>
+      <span className="label">{preferredFootOptions[1]}</span>
       <input type="radio" id="left" value="left" {...register('preferred_foot')} />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">Both</span>
+      <span className="label">{preferredFootOptions[2]}</span>
       <input type="radio" id="both" value="both" {...register('preferred_foot')}  />
       <span className="checkmark"></span>
     </label>
@@ -843,7 +850,7 @@ function RegisterForm({ onLoadingChange }) {
 </div>
 
             <div className='form-group'>
-  <label htmlFor="birthdate">Date of Birth:</label>
+  <label htmlFor="birthdate">{t('Register.birthDate')}</label>
   <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} 
   className={`form-control py-1 rounded-sm ${formErrors.birth_date ? "border-danger" : ""}`} />
   {Object.keys(formErrors).length > 0 && formErrors.birth_date && (
@@ -855,7 +862,7 @@ function RegisterForm({ onLoadingChange }) {
 
             
 <div className='form-group d-flex'>
-<label htmlFor="height">Height (cm):</label>
+<label htmlFor="height">{t('Register.height')}</label>
                   <input type="number" id="height" {...register('height')} 
                   className={`${formErrors.height ? "border-danger" : ""}`} />
        
@@ -865,7 +872,7 @@ function RegisterForm({ onLoadingChange }) {
     </div>
   )}
 
-<label htmlFor="weight">Weight (kg):</label>
+<label htmlFor="weight">{t('Register.weight')}</label>
  <input type="number" id="weight" {...register('wight')}
  className={`${formErrors.wight ? "border-danger" : ""}`}  />
   {Object.keys(formErrors).length > 0 && formErrors.wight && (
@@ -877,7 +884,7 @@ function RegisterForm({ onLoadingChange }) {
 
             
 <div className='form-group'>
-  <label htmlFor="country">Country:</label>
+  <label htmlFor="country">{t('Register.country')}</label>
   <select id="country" {...register('country_id', { required: true })} 
   onChange={(e) => handleCountrySelect(e.target.value)}
   className={`${formErrors.country_id ? "border-danger" : ""}`} >
@@ -898,7 +905,7 @@ function RegisterForm({ onLoadingChange }) {
             
 {cities?.length > 0 && (
   <div className='form-group'>
-    <label htmlFor="subPosition">City:</label>
+    <label htmlFor="subPosition">{t('Register.residencePlace')}</label>
     <select id="subPosition" {...register('city_id')} className={`${formErrors.city_id ? "border-danger" : ""}`}>
       {cities?.map(city => (
         <option key={city.id} value={city.id}>
@@ -916,7 +923,7 @@ function RegisterForm({ onLoadingChange }) {
 
             
 <div className='form-group'>
-  <label htmlFor="mobile_number">Phone:</label>
+  <label htmlFor="mobile_number">{t('Register.mobileNumber')}</label>
   <PhoneInput
   className={`form-control py-1 rounded-sm ${formErrors.mobile_number ? "border-danger" : ""}`}
   inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
@@ -938,9 +945,11 @@ function RegisterForm({ onLoadingChange }) {
   }}
   onChange={(e) => {
     setValue("mobile_number", e);
+    console.log("mobile_number", e)
   }}
   onCountryChange={() => { }}
 />
+
   {Object.keys(formErrors).length > 0 && formErrors.mobile_number && (
       <div className="text-danger">
         <p>{formErrors.mobile_number}</p>
@@ -954,10 +963,10 @@ function RegisterForm({ onLoadingChange }) {
           
             
               <button onClick={handleBack} className=' btn-tall mt-4 bg-white border-none' style={{ color: "#213555", width: '12rem', borderColor: 'white', marginRight: '2rem', padding: '0.5rem' }}>
-                <FaArrowLeft color='black' />Back
+                <FaArrowLeft color='black' />{t('Register.back')}
               </button>
               <button type="submit" className='btn-tall mt-4 get-started' style={{ width: '12rem', padding: '0.5rem' }}>
-                Get Started <FaArrowRight color='white' />
+              {t('Register.getStarted')} <FaArrowRight color='white' />
               </button>
             </form>
             
@@ -968,7 +977,7 @@ function RegisterForm({ onLoadingChange }) {
               <form onSubmit={handleSubmit(onSubmit)} onChange={handleChange} className='register-form'>
   <div className='form-container'>
     <div className='form-group'>
-      <label htmlFor="talentType">Sport Type</label>
+      <label htmlFor="talentType">{t('Register.talent_type')}</label>
       <select id="talentType" {...register('talent_type')}>
         {sports.map(sport => (
           <option key={sport.id} value={sport.id}>
@@ -984,24 +993,24 @@ function RegisterForm({ onLoadingChange }) {
     </div>
 
     <div className='form-group'>
-      <label>Gender:</label>
+      <label>{t('Register.gender')}</label>
       <div className="radio-buttons">
-        <label className='custom-radio-btn'>
-          <span className="label">Male</span>
-          <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={!formData.gender} />
-          <span className="checkmark"></span>
-        </label>
-        <label className='custom-radio-btn'>
-          <span className="label">Female</span>
-          <input type="radio" id="female" value="female" {...register('gender')} />
-          <span className="checkmark"></span>
-        </label>
-        <label className='custom-radio-btn'>
-          <span className="label">rather not to say</span>
-          <input type="radio" id="other" value="other" {...register('gender')} />
-          <span className="checkmark"></span>
-        </label>
-      </div>
+    <label className='custom-radio-btn'>
+      <span className="label">{genderOptions[0]}</span>
+      <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={!formData.gender}   />
+      <span className="checkmark"></span>
+    </label>
+    <label className='custom-radio-btn'>
+      <span className="label">{genderOptions[1]}</span>
+      <input type="radio" id="female" value="female" {...register('gender')}  />
+      <span className="checkmark"></span>
+    </label>
+    <label className='custom-radio-btn'>
+      <span className="label">{genderOptions[2]}</span>
+      <input type="radio" id="other" value="other" {...register('gender')}  />
+      <span className="checkmark"></span>
+    </label>
+  </div>
       {Object.keys(formErrors).length > 0 && formErrors.gender && (
     <div className="text-danger">
       <p>{formErrors.gender}</p>
@@ -1011,7 +1020,7 @@ function RegisterForm({ onLoadingChange }) {
 
     <div className='mb-3 d-flex'>
       <div className='flex-fill form-group'>
-        <label htmlFor="years_of_experience">Years of Experience:</label>
+        <label htmlFor="years_of_experience">{t('Register.exp_years')}</label>
         <input type="number" id="years_of_experience" {...register('years_of_experience')} min="0" style={{ padding: '8px' }} 
         className={`${formErrors.years_of_experience ? "border-danger" : ""}`}/>
         {Object.keys(formErrors).length > 0 && formErrors.years_of_experience && (
@@ -1021,7 +1030,7 @@ function RegisterForm({ onLoadingChange }) {
   )}
       </div>
       <div className='flex-fill form-group'>
-        <label htmlFor="birthdate">Date of Birth:</label>
+        <label htmlFor="birthdate">{t('Register.birthDate')}</label>
         <input type="date" id="birthdate" {...register('birth_date')} max={maxDate} className={`${formErrors.birth_date ? "border-danger" : ""}`}  />
         {Object.keys(formErrors).length > 0 && formErrors.birth_date && (
     <div className="text-danger">
@@ -1033,7 +1042,7 @@ function RegisterForm({ onLoadingChange }) {
     </div>
 
     <div className='form-group'>
-      <label htmlFor="country">Place of Residence</label>
+      <label htmlFor="country">{t('Register.residencePlace')}</label>
       <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}
       className={`${formErrors.country_id ? "border-danger" : ""}`}>
         <option value=" ">Select Country</option>
@@ -1051,7 +1060,7 @@ function RegisterForm({ onLoadingChange }) {
     </div>
     {cities?.length > 0 && (
       <div className='form-group'>
-        <label htmlFor="city">City:</label>
+        <label htmlFor="city">{t('Register.city')}</label>
         <select id="city" {...register('city_id')} className={`${formErrors.country_id ? "border-danger" : ""}`}>
           {cities?.map(city => (
             <option key={city.id} value={city.id}>
@@ -1067,7 +1076,7 @@ function RegisterForm({ onLoadingChange }) {
       </div>
     )}
     <div className='form-group'>
-      <label htmlFor="phone">Phone:</label>
+      <label htmlFor="phone">{t('Register.mobileNumber')}</label>
       <PhoneInput
         className={`form-control py-1 rounded-sm ${formErrors.mobile_number? "border-danger" : ""}`}
         inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
@@ -1105,10 +1114,10 @@ function RegisterForm({ onLoadingChange }) {
 
   <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
     style={{ color: "#213555", width: '12rem', borderColor: 'white', marginRight: '2rem', padding: '0.5rem' }}>
-    <FaArrowLeft color='black' />Back
+    <FaArrowLeft color='black' />{t('Register.back')}
   </button>
   <button type="submit" className='btn-tall mt-4' style={{ width: '12rem', padding: '0.5rem' }}>
-    Get Started <FaArrowRight color='white' />
+  {t('Register.getStarted')}<FaArrowRight color='white' />
   </button>
 </form>
 
@@ -1118,7 +1127,7 @@ function RegisterForm({ onLoadingChange }) {
               <form onSubmit={handleSubmit(onSubmit)} onChange={handleChange} className='register-form'>
               <div className='form-container'>
                 <div className='form-group'>
-                  <label htmlFor="talentType">Sport Type</label>
+                  <label htmlFor="talentType"> {t('Register.talent_type')}</label>
                   <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
       <option key={sport.id} value={sport.id}>
@@ -1134,21 +1143,21 @@ function RegisterForm({ onLoadingChange }) {
                 </div>
   
                 <div className='form-group'>
-  <label>Gender:</label>
+  <label>{t('Register.gender')}</label>
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
-      <span className="label">Male</span>
-      <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={!formData.gender} />
+      <span className="label">{genderOptions[0]}</span>
+      <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={!formData.gender}   />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">Female</span>
-      <input type="radio" id="female" value="female" {...register('gender')} />
+      <span className="label">{genderOptions[1]}</span>
+      <input type="radio" id="female" value="female" {...register('gender')}  />
       <span className="checkmark"></span>
     </label>
     <label className='custom-radio-btn'>
-      <span className="label">rather not to say</span>
-      <input type="radio" id="other" value="other" {...register('gender')} />
+      <span className="label">{genderOptions[2]}</span>
+      <input type="radio" id="other" value="other" {...register('gender')}  />
       <span className="checkmark"></span>
     </label>
   </div>
@@ -1160,7 +1169,7 @@ function RegisterForm({ onLoadingChange }) {
 </div>
 <div className='mb-3 d-flex '>
                     <div className='flex-fill form-group' >
-                    <label htmlFor="birthdate">years of experience:</label>
+                    <label htmlFor="birthdate">{t('Register.exp_years')}</label>
                   <input type="number" id="years_of_experience" {...register('years_of_experience')} 
                   min="0"  style={{padding:'8px'}} className={`${formErrors.years_of_experience ? "border-danger" : ""}`}/>
                   {Object.keys(formErrors).length > 0 && formErrors.years_of_experience && (
@@ -1170,7 +1179,7 @@ function RegisterForm({ onLoadingChange }) {
   )}
                     </div>
                     <div className='flex-fill form-group'>
-                    <label htmlFor="birthdate">Date of Birth:</label>
+                    <label htmlFor="birthdate">{t('Register.birthDate')}</label>
                   <input type="date" id="birthdate" {...register('birth_date')} max={maxDate}
                   className={`${formErrors.birth_date ? "border-danger" : ""}`}   />
                   {Object.keys(formErrors).length > 0 && formErrors.birth_date && (
@@ -1182,7 +1191,7 @@ function RegisterForm({ onLoadingChange }) {
                   </div>
    
                   <div className='form-group'>
-  <label htmlFor="country">Place of Residence</label>
+  <label htmlFor="country">{t('Register.residencePlace')}</label>
   <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)}
   className={`${formErrors.country_id ? "border-danger" : ""}`}>
     <option value=" ">Select Country</option>
@@ -1200,7 +1209,7 @@ function RegisterForm({ onLoadingChange }) {
 </div>
 {cities?.length > 0 && (
         <div className='form-group'>
-          <label htmlFor="subPosition">City:</label>
+          <label htmlFor="subPosition">{t('Register.city')}</label>
           <select id="subPosition" {...register('city_id')}
           className={`${formErrors.city_id ? "border-danger" : ""}`}>
             {cities?.map(city => (
@@ -1217,7 +1226,7 @@ function RegisterForm({ onLoadingChange }) {
         </div>
       )}
         <div className='form-group'>
-          <label htmlFor="phone">Phone:</label>
+          <label htmlFor="phone">{t('Register.mobileNumber')}</label>
           <PhoneInput
   className={`form-control py-1 rounded-sm ${formErrors.mobile_number  ? "border-danger" : ""}`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
@@ -1256,10 +1265,10 @@ function RegisterForm({ onLoadingChange }) {
               
               <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
                  style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
-                  <FaArrowLeft color='black' />Back
+                  <FaArrowLeft color='black' />{t('Register.back')}
                 </button>
                 <button type="submit" className='btn-tall mt-4' style={{width:'12rem',padding:'0.5rem'}}>
-                  Get Started <FaArrowRight color='white' />
+                {t('Register.getStarted')} <FaArrowRight color='white' />
                 </button>
             </form>
             );
@@ -1272,7 +1281,7 @@ function RegisterForm({ onLoadingChange }) {
                   register={register}
                   watch={watch}
                   name={"club_logo"}
-                  label={"Logo"}
+                  label={t('Register.logo')}
                   errors={errors}
        />
 
@@ -1285,7 +1294,7 @@ function RegisterForm({ onLoadingChange }) {
   )}
       {imgErr!=''&&<p className='text-danger'>{imgErr}</p>}
             <div className='form-group'> 
-          <label htmlFor="clubname">Club Name:</label>
+          <label htmlFor="clubname">{t('Register.clubName')}</label>
           <input type="text" id="clube_name" {...register('club_name')}  value={clubName}  onChange={handleClubNameChange} 
           style={{border:'1px solid #ccc',borderRadius:'5px',padding:'8px'}} className={`${formErrors.club_name ? "border-danger" : ""}`} />
           {Object.keys(formErrors).length > 0 && formErrors.club_name && (
@@ -1295,7 +1304,7 @@ function RegisterForm({ onLoadingChange }) {
   )}
         </div>
       <div className='form-group'>
-  <label htmlFor="talentType">Sport Type</label>
+  <label htmlFor="talentType">{t('Register.talent_type')}</label>
   <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
       <option key={sport.id} value={sport.id}>
@@ -1310,7 +1319,7 @@ function RegisterForm({ onLoadingChange }) {
   )}
 </div>
 <div className='form-group'>
-  <label htmlFor="country">Country:</label>
+  <label htmlFor="country">{t('Register.country')}</label>
   <select id="country" {...register('country_id')} onChange={(e) => handleCountrySelect(e.target.value)} 
   className={`${formErrors.country_id ? "border-danger" : ""}`}>
     <option value=" ">Select Country</option>
@@ -1328,7 +1337,7 @@ function RegisterForm({ onLoadingChange }) {
 </div>
 {cities?.length > 0 && (
         <div className='form-group'>
-          <label htmlFor="subPosition">City:</label>
+          <label htmlFor="subPosition">{t('Register.city')}</label>
           <select id="subPosition" {...register('city_id')} className={`${formErrors.city_id ? "border-danger" : ""}`}>
             {cities?.map(city => (
               <option key={city.id} value={city.id}>
@@ -1344,7 +1353,7 @@ function RegisterForm({ onLoadingChange }) {
         </div>
       )}
   <div className='form-group'>
-          <label htmlFor="phone">Phone Number:</label>
+          <label htmlFor="phone">{t('Register.mobileNumber')}</label>
           <PhoneInput
   className={`form-control py-1 rounded-sm ${formErrors.mobile_number ? "border-danger" : ""}`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100'} border-0 form-control-lg py-0 shadow-none`}
@@ -1378,7 +1387,7 @@ function RegisterForm({ onLoadingChange }) {
 
   </div>
         <div className='form-group'>
-          <label htmlFor="yearsFounded">Years founded:</label>
+          <label htmlFor="yearsFounded">{t('Register.year_founded')}</label>
           <input
             type="number"
             id="yearsFounded"
@@ -1401,10 +1410,10 @@ function RegisterForm({ onLoadingChange }) {
      
       <button onClick={handleBack} className=' btn-tall mt-4 bg-white border white'
                  style={{color:"#213555",width:'12rem',borderColor:'white',marginRight:'2rem',padding:'0.5rem'}}>
-                  <FaArrowLeft color='black' />Back
+                  <FaArrowLeft color='black' />{t('Register.back')}
                 </button>
                 <button type="submit" className='btn-tall mt-4' style={{width:'12rem',padding:'0.5rem'}}>
-                  Get Started <FaArrowRight color='white' />
+                {t('Register.getStarted')} <FaArrowRight color='white' />
                 </button>
             
     </form>
@@ -1453,7 +1462,7 @@ function RegisterForm({ onLoadingChange }) {
   </select>
 )}
            <div className='form-group'>
-  <label>Gender:</label>
+  <label>{t('Register.gender')}</label>
   <div className="radio-buttons">
     <label className='custom-radio-btn'>
       <span className="label">Male</span>
@@ -1572,7 +1581,7 @@ function RegisterForm({ onLoadingChange }) {
      </Col>:null}
    
     <Col md={6} className='mt-4 register-div'>
-        <p className='register-welcome ' style={{marginBottom:'1rem'}}>Create an Account</p>
+        <p className='register-welcome ' style={{marginBottom:'1rem'}}>{t('Register.title')}</p>
         {renderFormStep()}
       </Col>
     

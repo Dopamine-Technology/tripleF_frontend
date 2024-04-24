@@ -1,7 +1,7 @@
 import React, { useState ,useLayoutEffect} from "react";
 import { Form, Col } from "react-bootstrap";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const Input = ({
   register,
@@ -18,18 +18,8 @@ const Input = ({
 }) => {
 
   const [showPassword, setShowPassword] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isSmallScreen = windowWidth <= 600;
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);

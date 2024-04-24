@@ -1,9 +1,15 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Blog from './Blog';
 import './style.css';
-import Rectangle from '../../assets/imgs/rectangle.png'
+import Rectangle from '../../assets/imgs/rectangle.png';
+import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 
 const BlogsSet = () => {
+  const currentLanguage = Cookies.get('language') || 'en';
+  const [direction, setDirection] = useState('ltr');
+  const [t,i18n]=useTranslation();
+
     const blogs=[{
         img:Rectangle,
         title:"Blog title here, Neque porro quisquam est qui dolorem ipsum",
@@ -44,7 +50,7 @@ return (
           />
         ))
       ) : (
-        <p>No blogs available</p>
+        <p>{t('BlogsList.noBlogs')}</p>
       )}
     </div>
   );

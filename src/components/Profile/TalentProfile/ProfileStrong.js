@@ -5,13 +5,18 @@ import { FaArrowRight} from "react-icons/fa";
 import PercentageCircle from './PercentageCircle';
 import { FaRegCircle } from "react-icons/fa6";
 import { TbCircleCheckFilled } from "react-icons/tb";
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../../LanguageContext/LanguageProvider';
 
 const ProfileStrong = ({ img, content, category, profileData }) => {
+    const { language, changeLanguage } = useLanguage(); // Access language context
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
   const [percentage, setPercentage] = useState(parseInt(profileData.profile_progress.progress_percentage.replace('%', ''), 10));
   
   return (
       <Card className='profile-card' >
-          <p className='strong-p'>Complete your profile <FaArrowRight color='#213555' /></p>
+          <p className='strong-p'>{t('Profile.profileStrength')} <FaArrowRight color='#213555' /></p>
           <Row>
               <Col>
                   <PercentageCircle percentage={percentage} />

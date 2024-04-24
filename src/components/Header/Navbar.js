@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Cookies from 'js-cookie';
-import LogoWhite from '../../assets/imgs/LogoWhite.png';
+import LogoWhite from '../../assets/imgs/LogohiteLastVersion.png';
 import './style.css';
 import { Link } from 'react-router-dom';
 import { RxDividerVertical } from "react-icons/rx";
@@ -14,11 +14,13 @@ import En from '../../assets/imgs/en.jpg';
 import LanguageIcon from '../../assets/imgs/langauge-icon.png';
 import profileIcon from '../../assets/imgs/profile-icon.svg';
 import ArrowDownImage from '../../assets/imgs/dropdownWhite.svg';
-import Logo from '../../assets/imgs/Logo.png'
+import Logo from '../../assets/imgs/LogoLastVersion.png'
 import LanguageIconBlack from '../../assets/imgs/langauge-icon.svg';
 import profileIconBlack from '../../assets/imgs/profile-black-icon.svg';
 import btnIconHover from '../../assets/imgs/btnIconHover.svg';
 import { useTranslation } from 'react-i18next';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+
 
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'En';
@@ -74,7 +76,7 @@ const TopNavbar = ({content}) => {
   return (
     <>
     {isScrolled?
-<Navbar expand="lg" className='scroll-navbar' style={{ zIndex: '1' }}  >
+<Navbar expand="lg" className='scroll-navbar' style={{ zIndex: 999 }}  >
   <Container className='navbar-container'>
     <Navbar.Brand  className="d-flex align-items-center navbar-brand2 " style={{marginLeft:'5rem'}}>
       <img src={Logo} className='logo-register' />
@@ -163,8 +165,9 @@ const BottomNavbar = () => {
   
   const [activeLink, setActiveLink] = useState(1);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [t,i18n]=useTranslation();
+
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -220,17 +223,7 @@ const BottomNavbar = () => {
       setDirection('ltr');
     }
   }, [currentLanguage]);
-useLayoutEffect(() => {
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
-  window.addEventListener('resize', handleResize);
-  return () => window.removeEventListener('resize', handleResize);
-}, []);
 
-  const isSmallScreen = windowWidth <= 600;
-  const isIphoneScreen= windowWidth == 430
-  const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
   return (
     <>
@@ -278,7 +271,7 @@ useLayoutEffect(() => {
 
 const CombinedNavbars = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
   const [t,i18n]=useTranslation();
 
 
@@ -301,16 +294,7 @@ const CombinedNavbars = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  
-    const isSmallScreen = windowWidth <= 600;
-    const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
+
 
     const currentLanguage = Cookies.get('language') || 'en';
     const [direction, setDirection] = useState('ltr');

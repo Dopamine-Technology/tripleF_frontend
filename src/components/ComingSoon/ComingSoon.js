@@ -12,7 +12,7 @@ function ComingSoon(){
  
             Coming Soon
           </h1>
-          <CountDown />
+          {/* <CountDown /> */}
           <Optin />
           <Preloader />
       

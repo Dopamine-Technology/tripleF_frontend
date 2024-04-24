@@ -17,6 +17,8 @@ import Certifications from '../CoachProfile/Certifications';
 import { useParams,useNavigate } from 'react-router-dom';
 import ProfileStrongView from './ProfileStrongView';
 import LoadingScreen from '../../LoadingScreen/LoadingScreen';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../../LanguageContext/LanguageProvider';
 
 function WholeProfile(){
     const axios=useAxios();
@@ -25,6 +27,9 @@ function WholeProfile(){
     const [profileData,setProfileData]=useState();
     const [loading, setLoading] = useState(true);
     const navigate=useNavigate();
+    const { language, changeLanguage } = useLanguage(); // Access language context
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
 
     useEffect(() => {
         // Programmatically reload the page when the `id` parameter changes
@@ -101,7 +106,7 @@ function WholeProfile(){
             }
 
             {profileData.profile.type_name =='coach'||profileData.profile.type_name =='scout'?
-               <Certifications sectionName='Certifications' data={Certification} id={id}/>:null
+               <Certifications sectionName={t('Profile.certifications')} data={Certification} id={id}/>:null
             }
         {
      id == user.userData.id ? (

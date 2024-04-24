@@ -7,25 +7,9 @@ import './style.css';
 import CombinedNavbars from '../Register/Navbar';
 import Cookies from 'js-cookie';
 
-
-
 const Header = ({ content }) => {
   const currentLanguage = Cookies.get('language') || 'en';
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  
-   
-
-    useLayoutEffect(() => {
-      const handleResize = () => {
-        setWindowWidth(window.innerWidth);
-      };
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-    
-      const isSmallScreen = windowWidth <= 600;
-      const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
   
     return (
         <div className='whole-div'  >

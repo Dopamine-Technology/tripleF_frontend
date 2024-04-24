@@ -5,6 +5,7 @@ import { Row, Col } from 'react-bootstrap';
 import RegisterButton from '../Header/RegisterButton';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const Steps = () => {
   const currentLanguage = Cookies.get('language') || 'en';
@@ -36,20 +37,9 @@ const Steps = () => {
       content: t('howItWorks.cards.0.desc')
     },
   ];
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isSmallScreen = windowWidth <= 600;
-  const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
-  const isProScreen = windowWidth > 820 && windowWidth <= 1025;
 
   return (
     <div className='steps-div' id='How' style={{direction:direction}}>

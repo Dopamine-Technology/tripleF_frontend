@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 const ContactForm = ({isTabletScreen}) => {
   const schema = Yup.object().shape({
@@ -30,19 +31,18 @@ const ContactForm = ({isTabletScreen}) => {
   } = useForm({ mode: "onChange",
   resolver: yupResolver(schema)});
 
-  const currentLanguage = Cookies.get('language') || 'en';
+  const { language, changeLanguage } = useLanguage(); // Access language context
   const [direction, setDirection] = useState('ltr');
-    const [t,i18n]=useTranslation();
+  const [t, i18n] = useTranslation();
 
-    useEffect(() => {
-      // Change direction based on the selected language
-      if (currentLanguage === 'ar') {
+  useEffect(() => {
+    // Use the language obtained from the context
+    if (language === 'ar') {
         setDirection('rtl');
-      } 
-      else{
-        setDirection('ltr')
-      }
-    }, [currentLanguage]);
+    } else {
+        setDirection('ltr');
+    }
+}, [language]);
 
 
   const onSubmit = async (data) => {
