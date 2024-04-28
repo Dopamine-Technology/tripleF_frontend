@@ -132,7 +132,8 @@
   z-index: 999;
 }
 .logo-header{
-  width:26%
+  width:100%;
+  margin-left: 2rem;
 }
 .first-nav{
   margin-left: 1rem;
@@ -293,7 +294,7 @@ z-index:3;
 
 @media only screen and (min-width: 1024px) and (max-width: 1366px) {
   .whole-div {
-    height: 63vh;
+    height: 53vh;
     background-position:0%;  
   }
 }

@@ -5,23 +5,14 @@ import ClientImg from './ClientImg';
 import './style.css';
 import ClientImgResponsive from './ClientImgResponsive';
 import Cookies from 'js-cookie';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const OurClients = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
   const currentLanguage = Cookies.get('language') || 'en';
   const [direction, setDirection] = useState('ltr');
 
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isSmallScreen = windowWidth <= 600;
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -18,15 +18,17 @@ import * as yup from "yup"; // Import Yup
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginSocialFacebook } from "reactjs-social-login";
 import { FacebookLoginButton } from "react-social-login-buttons";
+import { useTranslation } from 'react-i18next';
 
 function LoginForm() {
+  const [t,i18n]=useTranslation();
 
   const schema = yup.object().shape({
     email:yup.string()
-    .required("Email is required")
-    .email("Provide a valid email address ex:John@example.com")
-    .required("Email is required"),
-    password: yup.string().required('Password is required'),
+    .required(t('validationErrors.email'))
+    .email(t('validationErrors.valid_email'))
+    .required(t('validationErrors.email')),
+    password: yup.string().required(t('validationErrors.password')),
   });
   const {
     register,
@@ -43,6 +45,18 @@ function LoginForm() {
   const [loading, setLoading] = useState(true);
   const [rememberMe, setRememberMe] = useState(false);
   const [errorMessageDisplayed, setErrorMessageDisplayed] = useState(false);
+
+  const currentLanguage = Cookies.get('language') || 'en';
+  const [direction, setDirection] = useState('ltr');
+  
+    useEffect(() => {
+      if (currentLanguage === 'ar') {
+        setDirection('rtl');
+      } 
+      else{
+        setDirection('ltr')
+      }
+    }, [currentLanguage]);
 
 
   const onSuccess = (res) => {
@@ -152,7 +166,7 @@ function LoginForm() {
   
 
   return (
-    <Row className='mt-2'>
+    <Row className='mt-2' >
       <Col md={6}>
         <img src={loginPic} alt="Your Image" className='login-img' />
         {/* <img src={loginPic} alt="Your Image" style={{ width: '37rem', height: '30rem' }} />  */}
@@ -160,8 +174,8 @@ function LoginForm() {
       </Col>
       <Col md={6} className='login-col'>
         <div>
-          <p className='login-welcome'> Welcome Back </p>
-          <p  className='login-p'>Welcome Back, please enter your details</p>
+          <p className={currentLanguage=='ar'?'login-welcome-ar':'login-welcome'}>  {t('Login.title')} </p>
+          <p  className={currentLanguage=='ar'?'login-p-ar':'login-p'}>{t('Login.desc')}</p>
         </div>
         <div className='social-login social-login-container'>
         <GoogleLogin
@@ -221,7 +235,7 @@ function LoginForm() {
           <div style={{ display: 'flex', alignItems: 'center' }} className='login-or'>
   <hr className='mt-4' style={{width:'24%',color:'#7C7C7C'}} />
 
-  <p style={{ margin: '0 10px' }}>OR</p>
+  <p style={{ margin: '0 10px' }}>{t('Login.or')}</p>
 
   <hr className=' mt-4' style={{width:'24%',color:'#7C7C7C'}} />
 </div>
@@ -233,7 +247,7 @@ function LoginForm() {
               register={register}
               errors={errors}
               name='email'
-              label='Email Address'
+              label={t('Login.emailAddress')}
               placeholder=''
               className='form-control form-control-sm rounded'
               validation={{}}
@@ -246,7 +260,7 @@ function LoginForm() {
      register={register}
      errors={errors}
      name='password'
-     label='Password'
+     label={t('Login.Password')}
      placeholder=''
      className='form-control form-control-sm rounded'
      validation={{}}
@@ -256,22 +270,22 @@ function LoginForm() {
  <Form.Group className='mb-3' controlId='formRememberMe'  >
   <Row>
     <Col xs={5}>
-      <Form.Check type='checkbox' label='Remember Me' onChange={handleRememberMeChange} checked={rememberMe}
+      <Form.Check type='checkbox'  label={t('Login.remmeberMe')} onChange={handleRememberMeChange} checked={rememberMe}
       className={rememberMe ? 'green-checkbox' : ''} />
     </Col>
     <Col xs={7}>
       <Form.Text>
-        <a href='/reset-password/' className='text-black'>Forgot Password?</a>
+        <a href='/reset-password/' className='text-black'>  {t('Login.forgotPassword')}</a>
       </Form.Text>
     </Col>
   </Row>
 </Form.Group>
 
           <Button variant='' className='btn-tall' type='submit' >
-            Sign in
+          {t('Login.signIn')}
           </Button>
         </Form>
-       <p style={{marginTop:'1rem'}} className='forget-p'> Don’t have an account? <Link to='/register'>Sign Up</Link></p>
+       <p style={{marginTop:'1rem'}} className='forget-p'> {t('Login.dont_have_account')} <Link to='/register'>{t('Login.signup')}</Link></p>
       </Col>
     </Row>
   );

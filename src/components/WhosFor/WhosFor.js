@@ -54,7 +54,7 @@ const WhosFor = () => {
           <WhosForDesc />
         </Col>
       </Row>
-      <Row className="justify-content-center card-container  " >
+      <Row className="justify-content-center card-container mt-2 " >
 
         {types.map((type, index) => (
           <Col key={index} xs={12} sm={6} md={6} lg={6} xl={3} className='card-responsive' >

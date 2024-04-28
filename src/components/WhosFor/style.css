@@ -25,7 +25,7 @@
     height: 350px;
   }
   .card-container {
-    margin-left:4rem
+    margin-left:4rem;
   }
   .card-title{
     text-align: center;
@@ -132,5 +132,8 @@
     }
     .card-container{
       margin-left: 10rem;
+    }
+    .card-responsive{
+      margin-top: 3rem;
     }
   }

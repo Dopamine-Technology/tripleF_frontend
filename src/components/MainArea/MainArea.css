@@ -1193,4 +1193,19 @@ user-select: none;
         .share-btn{
             width: 70px;
         }
+        .RightArea {
+            margin-top: 2rem;
+            width: 14rem;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0px 2px 12px rgba(218,218,218, 0.5);
+            opacity: 1;
+            background-color: rgba(255,255,255, 1);
+            margin-left: 0rem;
+            padding-bottom: 0;
+            
+          }
+          .post-continer{
+            margin-left: 0rem;
+        }
 }

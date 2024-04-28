@@ -5,25 +5,15 @@ import LeftArea from "./LeftArea";
 import RightArea from "./RightArea";
 import './Navbar.css'
 import { Outlet } from "react-router-dom";
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const { Header, Sider, Content } = AntLayout;
 
 const Layout = ({socket,notifications}) => {
 
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
-const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-useLayoutEffect(() => {
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
-
-  window.addEventListener('resize', handleResize);
-  return () => window.removeEventListener('resize', handleResize);
-}, []);
-
-const isSmallScreen = windowWidth <= 600;
-const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
 const [isCollapsed, setIsCollapsed] = useState(isSmallScreen?true:false);
 

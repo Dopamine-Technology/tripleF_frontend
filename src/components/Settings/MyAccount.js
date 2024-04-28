@@ -14,8 +14,9 @@ import { UserDataContext } from '../UserContext/UserData.context';
 import CheckCircleFill from '../../assets/imgs/checkCircleFill.svg';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-
-
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function MyAccount() {
 
@@ -23,6 +24,19 @@ function MyAccount() {
 
   const navigate=useNavigate();
   const {user}=useContext(UserDataContext);
+
+  const { language, changeLanguage } = useLanguage(); 
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
+
+  useEffect(() => {
+    if (language === 'ar') {
+        setDirection('rtl');
+    } else {
+        setDirection('ltr');
+    }
+}, [language]);
+
 
   useEffect(() => {
     if (user.userData.profile.type_name === 'talent') {
@@ -86,7 +100,7 @@ function MyAccount() {
         });
 
       
-          const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+          const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
           const [isValidMobileNumber, setIsValidMobileNumber] = useState(true);
           const [maxDate, setMaxDate] = useState(calculateMaxDate());
           const [countries,setCountries]=useState();
@@ -97,6 +111,8 @@ function MyAccount() {
           const [subPositions,setSubPositions]=useState();
           const [verificationEmail,setVerificationEmail]=useState(false);
           const [profileData,setProfileData]=useState();
+          const genderOptions = t('Register.genderOptions', { returnObjects: true });
+          const preferredFootOptions = t('Register.preferredFootOptions', { returnObjects: true });
         
           const axios=useAxios();
 
@@ -136,16 +152,7 @@ function MyAccount() {
           }
       };
       
-          useLayoutEffect(() => {
-            const handleResize = () => {
-              setWindowWidth(window.innerWidth);
-            };
-        
-            window.addEventListener('resize', handleResize);
-            return () => window.removeEventListener('resize', handleResize);
-          }, []);
-        
-          const isSmallScreen = windowWidth <= 600;
+         
           function calculateMaxDate() {
             const currentDate = new Date();
             const maxDate = new Date(currentDate);
@@ -264,17 +271,17 @@ function MyAccount() {
            <Form.Group className='mb-3' controlId='heightAndWeight'>
     <div className="d-flex">
         <div className="me-2">
-            <label htmlFor="height">Height </label>
+            <label htmlFor="height">{t('Register.height')} </label>
             <input type="number" id="height" {...register('height')}   defaultValue={profileData?.profile.height} className="form-control" style={{width:'188px'}}/>
         </div>
         <div>
-            <label htmlFor="weight">Weight </label>
+            <label htmlFor="weight">{t('Register.weight')} </label>
             <input type="number" id="weight" {...register('wight')}  className="form-control"defaultValue={profileData?.profile.wight}  style={{width:'188px'}} />
         </div>
     </div>
 </Form.Group> 
 <Form.Group controlId='countryy' className='mb-3'>
-    <Form.Label htmlFor="country">Place of Residence</Form.Label>
+    <Form.Label htmlFor="country">{t('Register.residencePlace')}</Form.Label>
     <Form.Control as="select" id="country" {...register('country_id')}  style={{width:'391px'}} >
         <option value={profileData?.profile.country.id}>{profileData?.profile.country.name}</option>
         {countries?.map(country => (
@@ -285,8 +292,8 @@ function MyAccount() {
     </Form.Control>
 </Form.Group>
 <Form.Group controlId='countryy' className=''>
-    <Form.Label className='mb-0 mt-3'>Talent Type:</Form.Label>
-    <div className="d-flex align-items-center ">
+    <Form.Label className='mb-0 mt-3'>{t('Register.talent_type')}</Form.Label>
+    <div className={isProScreen?"align-items-center ":"d-flex align-items-center "}>
         <Form.Control as="select" id="country" {...register('talent_type')} style={{ width: '391px', marginRight: '1rem' }}>
             <option value="Football">Football</option>
             {/* {sports?.map(sport => (
@@ -295,8 +302,8 @@ function MyAccount() {
                 </option>
             ))} */}
         </Form.Control>
-        <div className='mb-4' >
-            <Form.Label>Account Type:</Form.Label>
+        <div className={isProScreen?'mt-4':'mb-4'} >
+            <Form.Label>{t('Register.account_type')}</Form.Label>
             
                 <>
                     <label key={1} className="custom-radio-btn">
@@ -312,21 +319,18 @@ function MyAccount() {
 </Form.Group> 
 {user.userData.profile.type_name=='talent'&&
 <Form.Group controlId='gender' className='me-2'>
-<label>Position</label>
-<div className="d-flex" onChange={(e) => handlePositionSelect(e.target.value)}>
-    {positions?.map((position) => (
-        <label key={position.id} className='custom-radio-btn me-2'>
+<label>{t('Register.position')}</label>
+<div className={`d-flex ${isProScreen ? 'flex-wrap' : ''}`} onChange={(e) => handlePositionSelect(e.target.value)}>
+    {positions?.map((position, index) => (
+        <label key={position.id} className={`custom-radio-btn me-2 ${isProScreen && index % 2 !== 0 ? 'mb-2' : ''}`}>
             <span className="label">{position.name}</span>
             <input 
                 type="radio" 
                 id={position.id}
                 value={position.id}
                 {...register('parent_position')}
-                defaultChecked={position.id == profileData?.profile.parent_position?.id}
-        
-                
+                defaultChecked={position.id === profileData?.profile.parent_position?.id}
             />
-            {console.log('the data',position.id, profileData?.profile.parent_position?.id)}
             <span className="checkmark"></span>
         </label>
     ))}
@@ -336,7 +340,7 @@ function MyAccount() {
 
     {watch('parent_position') != '1' && user.userData.profile.type_name=='talent'&&<Form.Group controlId='subPosition' className='mb-3 me-4'>
     <div className='form-group'>
-        <Form.Label htmlFor="subPosition">Sub Position</Form.Label>
+        <Form.Label htmlFor="subPosition">{t('Register.subPosition')}</Form.Label>
         <select 
             id="subPosition" 
             {...register('position')} 
@@ -385,20 +389,20 @@ function MyAccount() {
 
 
 <Form.Group controlId='gender' className='me-2 mt-2'>
-        <label>Preferred Foot</label>
+        <label>{t('Register.preferredFoot')}</label>
         <div className="d-flex">
             <label className='custom-radio-btn me-2'>
-                <span className="label">Right</span>
+                <span className="label">{preferredFootOptions[0]}</span>
                 <input type="radio" id="male" value="male" {...register('preffered_foot')} />
                 <span className="checkmark"></span>
             </label>
             <label className='custom-radio-btn  me-2'>
-                <span className="label">Left</span>
+                <span className="label">{preferredFootOptions[1]}</span>
                 <input type="radio" id="female" value="female" {...register('preffered_foot')}  />
                 <span className="checkmark"></span>
             </label>
             <label className='custom-radio-btn '>
-                <span className="label">Both</span>
+                <span className="label">{preferredFootOptions[2]}</span>
                 <input type="radio" id="other" value="other" {...register('preffered_foot')} defaultChecked/>
                 <span className="checkmark"></span>
             </label>
@@ -412,7 +416,7 @@ function MyAccount() {
         const coachFields = (
             <>
 <Form.Group controlId='country' >
-<Form.Label htmlFor="country ">Place of Residence</Form.Label>
+<Form.Label htmlFor="country ">{t('Register.residencePlace')}</Form.Label>
     <div className="d-flex align-items-center ">
     <Form.Control as="select" id="country" {...register('country_id')} style={{width:'391px'}} className='me-3' >
     <option value={profileData?.profile.country.id}>{profileData?.profile.country.name}</option>
@@ -424,7 +428,7 @@ function MyAccount() {
     </Form.Control>
         <div className='mb-4' >
         <div className="">
-            <label htmlFor="height">Years of experience </label>
+            <label htmlFor="height">{t('Register.exp_years')} </label>
             <input type="number" id="height" {...register('years_of_experience')} defaultValue={profileData?.profile.years_of_experience} className="form-control" min="0" />
         </div>
  
@@ -439,12 +443,13 @@ function MyAccount() {
     else{
     return(
         <div className='edit-data'>
-           <p className='title-editData'> My Account</p>
+           <p className='title-editData'> {t('Register.myAccount')}</p>
            {loading?(
             <LoadingScreen />
            ):(
             <Form className='signup-form' onSubmit={handleSubmit(onSubmit)}>
-            {user.userData.profile.type_name=='club'? <Input
+            {user.userData.profile.type_name=='club'? 
+            <Input
     register={register}
     errors={errors}
     name="club_name"
@@ -455,13 +460,13 @@ function MyAccount() {
     type="text"
     defaultValue={profileData?.profile.club_name} // Set default value here
     inputWidth="289px"
-  />:     <div className={isSmallScreen ? 'mb-3' : ' d-flex'}>
+  />:     <div className={isSmallScreen||isProScreen ? 'mb-3' : ' d-flex'}>
                       <div className={isSmallScreen ? 'mb-3' : 'flex-fill'} >
                         <Input
                           register={register}
                           errors={errors}
                           name="first_name"
-                          label="First Name"
+                          label={t('Register.first_name')}
                           placeholder=''
                           className="form-control form-control-sm rounded"
                           validation={{}}
@@ -475,7 +480,7 @@ function MyAccount() {
                           register={register}
                           errors={errors}
                           name="last_name"
-                          label="Last Name"
+                          label={t('Register.last_name')}
                           placeholder=''
                           className="form-control form-control-sm rounded"
                           validation={{}}
@@ -491,18 +496,18 @@ function MyAccount() {
     register={register}
     errors={errors}
     name="email"
-    label="Email"
+    label={t('Register.email_address')}
     placeholder=''
     className="form-control form-control-sm rounded"
     validation={{}}
     type="text"
-    inputWidth='595px'
+    inputWidth={isProScreen?'395px':'595px'}
     defaultValue={profileData?.email}
 
   />
   {profileData?.is_email_verified? null:
-  verificationEmail? <p className='sent-verify'  style={{ position: 'absolute', right: '7rem', bottom: '-1rem' }} ><img src={CheckCircleFill}  className='me-1'/>Verification email sent</p>:
-  <p className='need-verify' onClick={handleVerifyClick} style={{ position: 'absolute', right: '7rem', bottom: '-1rem' }} >Verify your email</p>
+  verificationEmail? <p className='sent-verify'  style={{ position: 'absolute', right: '7rem', bottom: '-1rem' }} ><img src={CheckCircleFill}  className='me-1'/>{t('Register.SendVerification')}</p>:
+  <p className='need-verify' onClick={handleVerifyClick} style={{ position: 'absolute', right: '7rem', bottom: '-1rem' }} >{t('Register.verifyEmail')}</p>
 
 }
 
@@ -513,9 +518,9 @@ function MyAccount() {
 
                 
                   <Form.Group className='mb-3' controlId='phoneAndUsername'>
-    <div className="d-flex">
+    <div className={isProScreen?"":"d-flex"}>
         <div className="me-3 mt-2">
-            <label htmlFor="mobile_number">Phone:</label>
+            <label htmlFor="mobile_number">{t('Register.mobileNumber')}</label>
             <PhoneInput
     className={`form-control py-1 rounded-sm custom-phone-input${errors && errors["mobile_number"] ? "border-danger" : ""}`}
     inputClass={` border-0 form-control-lg py-0 shadow-none custom-phone-input `}
@@ -547,10 +552,10 @@ function MyAccount() {
                 <div className="text-danger">Please enter a valid mobile number.</div>
             )}
         </div>
-        <div className="flex-fill">
+        <div className={isProScreen?"":"flex-fill"}>
           {user.userData.profile.type_name=='club'?
    <Form.Group controlId='birthdate' className='mt-3' style={{marginLeft:'1rem',width:'188px',height:'23px'}}>
-   <label htmlFor="birthdate">Year Founded</label>
+   <label htmlFor="birthdate">{t('Register.year_founded')}</label>
    <div className="d-flex">
        <select id="birthdate" {...register('year_founded')} className="form-control me-2">
            <option value={profileData?.profile.year_founded}>{profileData?.profile.year_founded}</option>
@@ -565,7 +570,7 @@ function MyAccount() {
                 register={register}
                 errors={errors}
                 name="user_name"
-                label="UserName"
+                label={t('Register.user_name')}
                 placeholder=''
                 className="form-control form-control-sm rounded"
                 validation={{}}
@@ -581,7 +586,7 @@ function MyAccount() {
 </Form.Group>
 
     {user.userData.profile.type_name=='club'?(<Form.Group controlId='country' className='mb-3'>
-    <Form.Label htmlFor="country">Place of Residence</Form.Label>
+    <Form.Label htmlFor="country">{t('Register.residencePlace')}</Form.Label>
     <Form.Control as="select" id="country" {...register('country_id')}  style={{width:'391px'}} >
         <option value={profileData?.profile.country.id}>{profileData?.profile.country.name}</option>
         {countries?.map(country => (
@@ -591,31 +596,31 @@ function MyAccount() {
         ))}
     </Form.Control>
 </Form.Group>):(
-      <div className='mb-3 d-flex '>
-      <Form.Group controlId='gender' className='me-5'>
-          <label>Gender:</label>
+      <div className={isProScreen?'mb-3 ':'mb-3 d-flex '}>
+      <Form.Group controlId='gender' className={isProScreen?'mb-5 ':'me-5'}>
+          <label>{t('Register.gender')}</label>
           <div className="d-flex">
          
           <label className='custom-radio-btn me-2'>
-      <span className="label">Male</span>
+      <span className="label">{genderOptions[0]}</span>
       <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={profileData?.profile.gender === 'male'} />
       <span className="checkmark"></span>
   </label>
   <label className='custom-radio-btn me-2'>
-      <span className="label">Female</span>
+      <span className="label">{genderOptions[1]}</span>
       <input type="radio" id="female" value="female" {...register('gender')} defaultChecked={profileData?.profile.gender === 'female'} />
       <span className="checkmark"></span>
   </label>
   <label className='custom-radio-btn'>
-      <span className="label">Rather not to say</span>
+      <span className="label">{genderOptions[2]}</span>
       <input type="radio" id="other" value="other" {...register('gender')} defaultChecked={profileData?.profile.gender === 'other'} />
       <span className="checkmark"></span>
   </label>
           </div>
       </Form.Group>
   
-      <Form.Group controlId='birthdate' className='' style={{marginLeft:'1.2rem',width:'188px'}}>
-      <label htmlFor="birthdate">Date of Birth:</label>
+      <Form.Group controlId='birthdate' className='' style={{marginLeft:isProScreen?'0rem':'1.2rem',width:'188px'}}>
+      <label htmlFor="birthdate">{t('Register.birthDate')}</label>
       <div className="d-flex">
           <input type="date" id="birthdate" {...register('birth_date')} defaultValue={profileData?.profile.birth_date} max={maxDate} className="form-control me-2" />
       </div>
@@ -636,7 +641,7 @@ function MyAccount() {
     </Col>
     <Col>
     <Button type='submit' className='save-changes' variant=''>
-    Save Changes
+    {t('Register.saveChanges')}
 </Button>
     </Col>
   </Row>

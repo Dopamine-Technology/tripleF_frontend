@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useLayoutEffect,useState} from 'react';
 import {Form } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import Input from '../Register/Input';
@@ -8,8 +8,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {Button,Row,Col} from 'react-bootstrap';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { message } from 'antd';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function ChangePassword() {
+  const { language, changeLanguage } = useLanguage(); 
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
     const schema = Yup.object().shape({
       current_password:  Yup.string()
       .required("password is required")
@@ -39,7 +45,10 @@ function ChangePassword() {
         setValue,
         formState: { errors },
       } = useForm( { mode: "onChange",
-      resolver: yupResolver(schema)});    
+      resolver: yupResolver(schema)});
+      
+      const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+      
 
       const axios=useAxios();
 
@@ -68,7 +77,7 @@ function ChangePassword() {
 
     return(
         <div className='edit-data'>
-           <p className='title-editData'> Change Password</p>
+           <p className='title-editData'> {t('ChangePassword.ChangePassword')}</p>
            <Form  className='signup-form' onSubmit={handleSubmit(onSubmit)}>
            <Form.Group className='mb-3' controlId='password'>
                   <Input
@@ -76,11 +85,11 @@ function ChangePassword() {
                     name="current_password"
                     placeholder=''
                     register={register}
-                    label="Current Password"
+                    label= {t('ChangePassword.currentPassword')}
                     validation={{ required: true }}
                     className={"py-2 rounded-sm"}
                     errors={errors}
-                    inputWidth='31rem'
+                    inputWidth={isProScreen?'20rem':'31rem'}
                   />
 
                   </Form.Group>
@@ -90,11 +99,11 @@ function ChangePassword() {
                     name="new_password"
                     placeholder=''
                     register={register}
-                    label="New Password"
+                    label={t('ChangePassword.NewPassword')}
                     validation={{ required: true }}
                     className={"py-2 rounded-sm"}
                     errors={errors}
-                    inputWidth='31rem'
+                    inputWidth={isProScreen?'20rem':'31rem'}
                   />
 
                   </Form.Group>
@@ -104,7 +113,7 @@ function ChangePassword() {
           name="confirmPassword"
           placeholder=''
           register={register}
-          label="Confirm Password"
+          label={t('ChangePassword.ConfirmPassword')}
           validation={{
             required: true,
             validate: (value) =>
@@ -113,7 +122,7 @@ function ChangePassword() {
           }}
           className={"py-2 rounded-sm"}
           errors={errors}
-          inputWidth='31rem'
+          inputWidth={isProScreen?'20rem':'31rem'}
         />
       </Form.Group>
       <Row>
@@ -121,7 +130,7 @@ function ChangePassword() {
    
     <Col>
     <Button type='submit' className='save-changes mt-4' variant=''>
-    Save Changes
+    {t('Register.saveChanges')}
 </Button>
     </Col>
   </Row>

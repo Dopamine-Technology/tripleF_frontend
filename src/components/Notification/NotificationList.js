@@ -1,9 +1,13 @@
-import React from 'react';
+import React,{useState} from 'react';
 import NavBar from '../Layout/Navbar';
-
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 
 function NotificationList() {
+    const { language, changeLanguage } = useLanguage(); // Access language context
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
     const notifications=[
         {userImg:'https://media.gettyimages.com/id/200280798-001/photo/front-profile-of-a-boy-playing-football-in-a-garden.jpg?s=170667a&w=gi&k=20&c=4XuSBXViKEU7blJ4C_1VASVKQGJii0_cC1K3ubxEuos=',
          userName:'FarisJad',
@@ -49,7 +53,7 @@ function NotificationList() {
     return(
         <div className='notification-main'>
             <NavBar />
-            <p className='notifiactionList-title'>Notifications</p>
+            <p className='notifiactionList-title'>{t('Notification.notifications')}</p>
          <div className='notification-container'>
            {notifications.map((notification,index)=>(
               <div className='d-flex ' style={{marginLeft:'5rem'}}>

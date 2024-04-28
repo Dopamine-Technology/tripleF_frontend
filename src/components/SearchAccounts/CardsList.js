@@ -1,5 +1,3 @@
-// CardsList.js
-
 import React, { useEffect, useState } from 'react';
 import AccountCard from './AccountCard';
 import Container from 'react-bootstrap/Container';
@@ -30,7 +28,7 @@ function CardsList({ isSmallScreen, filters }) {
         }
 
         axios
-            .post(endpoint, filters) // Include filters in the request
+            .post(endpoint, filters) 
             .then((response) => {
                 setProfiles(response.data.result);
                 console.log('aya', response.data.result);
@@ -43,7 +41,7 @@ function CardsList({ isSmallScreen, filters }) {
             .finally(() => {
                 setLoading(false);
             });
-    }, [location.pathname, filters]); // Include filters in the dependency array
+    }, [location.pathname, filters]); 
 
     const numColumns = 4;
 
@@ -60,7 +58,7 @@ function CardsList({ isSmallScreen, filters }) {
                     (index % numColumns === 0 || index === profiles?.length - 1) && (
                         <Row key={index} style={{ marginLeft: isSmallScreen ? '0rem' : '' }}>
                             {profiles?.slice(index, index + numColumns).map((profile, i) => (
-                                <Col key={i} md={3} xs={6}>
+                                <Col key={i} md={3} xs={6} lg={6} xl={3}>
                                     <AccountCard profile={profile} />
                                 </Col>
                             ))}

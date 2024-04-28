@@ -3,6 +3,8 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { Tab } from 'react-bootstrap';
 import Input from './Input';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 
 function ScoutOppFilter(props) {
@@ -11,9 +13,13 @@ function ScoutOppFilter(props) {
     errors,
   } = useForm();
 
+  const { language, changeLanguage } = useLanguage(); // Access language context
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
+
   const types = [
-    { id: 'published', name: 'published', label: 'Published' },
-    { id: 'applied', name: 'applied', label: 'Applied' },
+    { id: 'published', name: 'published', label: t('Opportunity.published') },
+    { id: 'applied', name: 'applied', label: t('Opportunity.applied') },
   ];
   const [activeTab, setActiveTab] = useState("published");
 

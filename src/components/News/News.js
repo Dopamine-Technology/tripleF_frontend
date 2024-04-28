@@ -5,26 +5,17 @@ import axios from 'axios';
 import { FaArrowRight } from "react-icons/fa";
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const News = () => {
   const [news, setNews] = useState([]);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
   const currentLanguage = Cookies.get('language') || 'en';
   const [direction, setDirection] = useState('ltr');
   const [t,i18n]=useTranslation();
 
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isSmallScreen = windowWidth <= 600;
 
   const axiosConfig = {
     headers: {

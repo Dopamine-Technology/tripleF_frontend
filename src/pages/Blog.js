@@ -1,34 +1,32 @@
-import React,{useState,useLayoutEffect} from 'react'
+import React,{useState,useEffect} from 'react'
 import Navbar from '../components/Register/Navbar';
 import RecentPosts from '../components/Blogs/RecentPosts';
 import Footer from '../components/Footer/Footer';
 import SingleBlog from '../components/Blogs/SingleBlog';
 import { Row,Col } from 'react-bootstrap';
+import { useScreenWidth } from '../components/ScreenWidthContext/ScreenWidth.context';
+import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 
 const BlogPage = () => {
     const tags=['#hashtag','#hashtag'];
-        const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-    useLayoutEffect(() => {
-      const handleResize = () => {
-        setWindowWidth(window.innerWidth);
-      };
-  
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-  
-    const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
-
+    const {  isTabletScreen } = useScreenWidth();
+    const currentLanguage = Cookies.get('language') || 'en';
+  const [direction, setDirection] = useState('ltr');
+  const [t,i18n]=useTranslation()
+  useEffect(() => {
+    if (currentLanguage === 'ar') {
+      setDirection('rtl');
+    }       else{
+      setDirection('ltr')
+    }
+  }, [currentLanguage]);
     return(
-        <div>
+        <div style={{direction:direction}}>
         <Navbar />
         <Row>
             <Col sm={8}  >
-        
-
                     <SingleBlog />
-             
             </Col>
 
         
@@ -36,14 +34,14 @@ const BlogPage = () => {
                     <Col sm={4}>
                         <Row>
                             <div>
-                                <p className='Col-title'>Recent posts</p>
+                                <p className='Col-title'>{t('BlogsList.recentPosts')}</p>
                                 <hr className='hr-title' />
                                 <RecentPosts />
                             </div>
                         </Row>
                         <Row>
                             <div>
-                                <p className='Col-title'>Categories</p>
+                                <p className='Col-title'>{t('BlogsList.categories')}</p>
                                 <hr className='hr-title' />
                                 <div style={{ marginLeft: '4rem' }}>
                                     <p className='category-name'>Category Name</p>
@@ -57,7 +55,7 @@ const BlogPage = () => {
                         </Row>
                         <Row>
                             <div>
-                                <p className='Col-title'>Tags</p>
+                                <p className='Col-title'>{t('BlogsList.Tags')}</p>
                                 <hr className='hr-title' />
                                 <div style={{ marginLeft: '4rem' }}>
                                     {tags.map((tag, index) => (

@@ -19,41 +19,47 @@ import { Link,useNavigate } from 'react-router-dom';
 import SelectComponent from './Test';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function NewOpportunity(){
   const [accountType, setAccountType] = useState('1');
   const [editorContent, setEditorContent] = useState('');
   const [editorContent2,setEditorContent2]=useState('');
 
+  const { language, changeLanguage } = useLanguage(); 
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
+
   const talentSchema = Yup.object().shape({
-    title: Yup.string().required("Opportunity Title is required"),
-    position_id:Yup.string().required("Position is required"),
-    from_age:Yup.string().required("Starting age is required"),
-    to_age:Yup.string().required("End age is required"),
-    gender:Yup.string().required("Gender is required"),
+    title: Yup.string().required(t('validationErrors.opp_title')),
+    position_id:Yup.string().required(t('validationErrors.position')),
+    from_age:Yup.string().required(t('validationErrors.from_age')),
+    to_age:Yup.string().required(t('validationErrors.to_age')),
+    gender:Yup.string().required(t('validationErrors.gender')),
     from_height:Yup.number()
-    .typeError('Height must be a valid number')
-    .required("Height is required")
-    .min(1, 'Height must be greater than to 0') 
-    .max(300, 'Height must be less than or equal to 300'), 
+    .typeError(t('validationErrors.valid_height'))
+    .required(t('validationErrors.height'))
+    .min(1, t('validationErrors.min_height')) 
+    .max(300, t('validationErrors.max_height')), 
     to_height:Yup.number()
-    .typeError('Height must be a valid number')
-    .required("Height is required")
-    .min(1, 'Height must be greater than to 0') 
-    .max(300, 'Height must be less than or equal to 300'), 
+    .typeError(t('validationErrors.valid_height'))
+    .required(t('validationErrors.height'))
+    .min(1, t('validationErrors.min_height')) 
+    .max(300, t('validationErrors.max_height')),
     from_weight:Yup.number()
-    .typeError('Height must be a valid number')
-    .required("Weight is required")  
-    .min(1, 'Weight must be greater than 0') 
-    .max(300, 'Weight must be less than or equal to 300'), 
+    .typeError(t('validationErrors.valid_weight'))
+    .required(t('validationErrors.weight'))
+    .min(1, t('validationErrors.min_weight')) 
+    .max(300, t('validationErrors.max_weight')),
     to_weight:Yup.number()
-    .typeError('Height must be a valid number')
-    .required("Weight is required")
-    .min(1, 'Weight must be greater than 0') 
-    .max(300, 'Weight must be less than or equal to 300'), 
-    foot:Yup.string().required("Foot is required"),
-    country_id:Yup.string().required("Country is required"),
-    city_id:Yup.string().required("City is required"),
+    .typeError(t('validationErrors.valid_weight'))
+    .required(t('validationErrors.weight'))
+    .min(1, t('validationErrors.min_weight')) 
+    .max(300, t('validationErrors.max_weight')),
+    foot:Yup.string().required(t('validationErrors.foot')),
+    country_id:Yup.string().required(t('validationErrors.country_id')),
+    city_id:Yup.string().required(t('validationErrors.city_id')),
  
   });
     
@@ -116,7 +122,10 @@ function NewOpportunity(){
       const [requirementError,setRequirementError]=useState('');
       // const [disableAddButton, setDisableAddButton] = useState(false);
       const MAX_COUNT = 3;
-    
+      const genderOptions2 = t('Register.genderOptions', { returnObjects: true });
+      const preferredFootOptions = t('Register.preferredFootOptions', { returnObjects: true });
+      const typesOptions = t('AddOpportunity.targeted_type_options', { returnObjects: true });
+
       const options=
       [
         { value: 'option1', label: 'Option 1' },
@@ -132,7 +141,6 @@ function NewOpportunity(){
         { value: "Italian", label: "italiano  (Italian)" },
         { value: "Dutch", label: "Nederlands  (Dutch)" },
         { value: "Polish", label: "polski  (Polish)" },
-
       ];
       const animatedComponents = makeAnimated();
       
@@ -148,20 +156,21 @@ function NewOpportunity(){
     const [selectedItems, setSelectedItems] = useState([]);
 
 
-      const genderOptions = [
-        { label: "Male", value: "male" },
-        { label: "Female", value: "female" },
-        { label: "rather not to say", value: "other" },
-      ];
-      const preferredFoot = [
-        { label: "Right", value: "Right" },
-        { label: "Left", value: "Left" },
-        { label: "Both", value: "Both" },
-      ];
+    const genderOptions = [
+      { label:  genderOptions2[0], value: "male" },
+      { label: genderOptions2[1], value: "female" },
+      { label: genderOptions2[3], value: "both" },
+    ];
+
+    const preferredFoot = [
+      { label: preferredFootOptions[0], value: "Right" },
+      { label: preferredFootOptions[1], value: "Left" },
+      { label: preferredFootOptions[2], value: "Both" },
+    ];
       const Types = [
-        { label: "Talent", value: "1" },
-        { label: "Scout", value: "2" },
-        { label: "Coach", value: "3" },
+        { label:  typesOptions[0] , value: "1" },
+        { label: typesOptions[1], value: "2" },
+        { label: typesOptions[2], value: "3" },
       
       ];
 
@@ -186,8 +195,6 @@ function NewOpportunity(){
 const [editorState2, setEditorState2] = useState(() =>
 EditorState.createEmpty()
 );
-
-
 
 
       
@@ -244,7 +251,7 @@ EditorState.createEmpty()
         try {
               // Validate editor content
     if (!editorContent.trim()) {
-      setRequirementError('Requirements are required');
+      setRequirementError(t('validationErrors.requirements'));
       return; // Exit function if requirements are empty
     }
 
@@ -328,7 +335,7 @@ EditorState.createEmpty()
                       register={register}
                       errors={errors}
                       name="from_age"
-                      label="Age from"
+                      label={t('AddOpportunity.agefrom')}
                       placeholder=""
                       className="form-control form-control-sm rounded mt-1"
                       validation={{ validate: validateToGreaterThanFrom('age') }}
@@ -344,7 +351,7 @@ EditorState.createEmpty()
                       register={register}
                       errors={errors}
                       name="to_age"
-                      label="to"
+                      label={t('AddOpportunity.to')}
                       placeholder=""
                       className="form-control form-control-sm rounded mt-1"
                       validation={{
@@ -363,7 +370,7 @@ EditorState.createEmpty()
           register={register}
           errors={errors}
           name="gender"
-          label="Gender"
+          label={t('Register.gender')}
           className="form-control form-control-sm rounded me-3"
           type="radio"
           radioOptions={genderOptions}
@@ -379,7 +386,7 @@ EditorState.createEmpty()
                 register={register}
                 errors={errors}
                 name="from_height"
-                label="Height from"
+                label={t('AddOpportunity.heightFrom')}
                 placeholder=""
                 className="form-control form-control-sm rounded"
                 validation={{}}
@@ -392,7 +399,7 @@ EditorState.createEmpty()
                 register={register}
                 errors={errors}
                 name="to_height"
-                label="to"
+                label={t('AddOpportunity.to')}
                 placeholder=""
                 className="form-control form-control-sm rounded"
                 validation={{}}
@@ -405,7 +412,7 @@ EditorState.createEmpty()
                 register={register}
                 errors={errors}
                 name="from_weight"
-                label="Weight from"
+                label={t('AddOpportunity.weightFrom')}
                 placeholder=""
                 className="form-control form-control-sm rounded"
                 validation={{}}
@@ -418,7 +425,7 @@ EditorState.createEmpty()
                 register={register}
                 errors={errors}
                 name="to_weight"
-                label="to"
+                label={t('AddOpportunity.to')}
                 placeholder=""
                 className="form-control form-control-sm rounded"
                 validation={{}}
@@ -435,7 +442,7 @@ EditorState.createEmpty()
                 register={register}
                 errors={errors}
                 name="foot"
-                label="preferredFoot"
+                label={t('Register.preferredFoot')}
                 className="form-control form-control-sm rounded me-3"
                 type="radio"
                 radioOptions={preferredFoot}
@@ -444,7 +451,7 @@ EditorState.createEmpty()
             <Row>
             <Input
               type="select"
-              label="Country"
+              label={t('Register.country')}
               name="country_id"
               register={register}
               errors={errors} 
@@ -454,7 +461,7 @@ EditorState.createEmpty()
             
                                       <Input
               type="select"
-              label="City"
+              label={t('Register.city')}
               name="city_id"
               register={register}
               errors={{}}
@@ -465,7 +472,7 @@ EditorState.createEmpty()
             <Row>
             <Col md={8} col={8}>
             <Form.Label className={`text-capitalize text-black label2`}>
-            Requirements
+            {t('AddOpportunity.requirements')}
             </Form.Label>
            
             <JoditEditor value={editorContent} onChange={onEditorChange} />
@@ -481,7 +488,7 @@ EditorState.createEmpty()
              
               <Col md={8} col={8}>
             <Form.Label className={`text-capitalize text-black label2 mt-3`}>
-            Additional Information
+            {t('AddOpportunity.additionalInformation')}
             </Form.Label>
            
               
@@ -506,7 +513,7 @@ EditorState.createEmpty()
                register={register}
                errors={errors}
                name="from_exp"
-               label="Experience from"
+               label= {t('AddOpportunity.experienceFrom')}
                placeholder=""
                className="form-control form-control-sm rounded"
                validation={{ validate: validateToGreaterThanFrom('age') }}
@@ -522,7 +529,7 @@ EditorState.createEmpty()
                register={register}
                errors={errors}
                name="to_exp"
-               label="to"
+               label={t('AddOpportunity.to')}
                placeholder=""
                className="form-control form-control-sm rounded"
                validation={{
@@ -540,7 +547,7 @@ EditorState.createEmpty()
    register={register}
    errors={errors}
    name="gender"
-   label="Gender"
+   label={t('Register.gender')}
    className="form-control form-control-sm rounded me-3"
    type="radio"
    radioOptions={genderOptions}
@@ -551,7 +558,7 @@ EditorState.createEmpty()
  </Row>
  <Row>
    <Col md={4} lg={4} >
-   <label>Langauge</label>
+   <label>{t('LayoutNavbar.language')}</label>
             <SelectComponent onSelectLanguages={handleSelectLanguages} />
 </Col>
  </Row>
@@ -559,7 +566,7 @@ EditorState.createEmpty()
      <Input
        type="select"
        label="Country"
-       name="country_id"
+       name={t('Register.country')}
        register={register}
        errors={errors} 
        selectOptions={countries}
@@ -568,7 +575,7 @@ EditorState.createEmpty()
      
        <Input
        type="select"
-       label="City"
+       label={t('Register.city')}
        name="city_id"
        register={register}
        errors={{}}
@@ -578,7 +585,7 @@ EditorState.createEmpty()
      <Row>
      <Col md={8} col={8}>
      <Form.Label className={`text-capitalize text-black label2`}>
-     Requirements
+     {t('AddOpportunity.requirements')}
      </Form.Label>
     
      <JoditEditor value={editorContent} onChange={onEditorChange} />
@@ -593,7 +600,7 @@ EditorState.createEmpty()
       
        <Col md={8} col={8}>
      <Form.Label className={`text-capitalize text-black label2`}>
-     Additional Information
+     {t('AddOpportunity.additionalInformation')}
      </Form.Label>
     
        
@@ -619,7 +626,7 @@ EditorState.createEmpty()
                       register={register}
                       errors={errors}
                       name="from_exp"
-                      label="Experience from"
+                      label={t('AddOpportunity.experienceFrom')}
                       placeholder=""
                       className="form-control form-control-sm rounded"
                       validation={{ validate: validateToGreaterThanFrom('age') }}
@@ -635,7 +642,7 @@ EditorState.createEmpty()
                       register={register}
                       errors={errors}
                       name="to_exp"
-                      label="to"
+                      label={t('AddOpportunity.to')}
                       placeholder=""
                       className="form-control form-control-sm rounded"
                       validation={{
@@ -653,7 +660,7 @@ EditorState.createEmpty()
           register={register}
           errors={errors}
           name="gender"
-          label="Gender"
+          label={t('Register.gender')}
           className="form-control form-control-sm rounded me-3"
           type="radio"
           radioOptions={genderOptions}
@@ -664,14 +671,14 @@ EditorState.createEmpty()
         </Row>
         <Row>
           <Col md={4} lg={4} >
-            <label>Langauge</label>
+            <label>{t('LayoutNavbar.language')}</label>
             <SelectComponent onSelectLanguages={handleSelectLanguages} />
     </Col>
         </Row>
         <Row>
             <Input
               type="select"
-              label="Country"
+              label={t('Register.country')}
               name="country_id"
               register={register}
               errors={errors} 
@@ -681,7 +688,7 @@ EditorState.createEmpty()
             
               <Input
               type="select"
-              label="City"
+              label={t('Register.city')}
               name="city_id"
               register={register}
               errors={{}}
@@ -691,7 +698,7 @@ EditorState.createEmpty()
             <Row>
             <Col md={8} col={8}>
             <Form.Label className={`text-capitalize text-black label2`}>
-            Requirements
+            {t('AddOpportunity.requirements')}
             </Form.Label>
            
             <JoditEditor value={editorContent} onChange={onEditorChange} />
@@ -706,7 +713,7 @@ EditorState.createEmpty()
              
               <Col md={8} col={8}>
             <Form.Label className={`text-capitalize text-black label2`}>
-            Additional Information
+            {t('AddOpportunity.additionalInformation')}
             </Form.Label>
            
               
@@ -736,7 +743,7 @@ EditorState.createEmpty()
         <NavBar />
       
       <Form className='newOpp-form' onSubmit={handleSubmit(onSubmit)}>
-      <p className='addOpp-title'><Link style={{textDecoration:'none',color:'#464646'}} to='/home'><div className='back-arrow me-3' ><IoIosArrowBack color='#979797' size={20}/> </div>Add opportunity</Link></p>
+      <p className='addOpp-title'><Link style={{textDecoration:'none',color:'#464646'}} to='/home'><div className='back-arrow me-3' ><IoIosArrowBack color='#979797' size={20}/> </div>{t('AddOpportunity.addOpportunity')}</Link></p>
         <Col md={4} lg={4}></Col>
         <Col md={8} lg={8}>
         <Row>
@@ -745,7 +752,7 @@ EditorState.createEmpty()
                         register={register}
                         errors={errors}
                         name="title"
-                        label="Opportunitie Title"
+                        label={t('AddOpportunity.opportunitieTitle')}
                         placeholder=''
                         className="form-control form-control-sm rounded me-4 mt-1"
                         validation={{}}
@@ -761,7 +768,7 @@ EditorState.createEmpty()
                           register={register}
                           errors={errors}
                           name="targeted_type"
-                          label="Type"
+                          label={t('AddOpportunity.targeted_type')}
                           className="form-control form-control-sm rounded me-3"
                           type="radio"
                           radioOptions={Types}
@@ -774,7 +781,7 @@ EditorState.createEmpty()
       {accountType=='1'?  <Col md={4} lg={4}>
                               <Input
                  type="select"
-                 label="Position"
+                 label={t('Register.position')}
                  name="position_id"
                  register={register} 
                  errors={errors}
@@ -796,7 +803,7 @@ EditorState.createEmpty()
         <Col>
         <Button className='add-btn' type='submit'
          disabled={disableBtn}
-         >Add</Button>
+         >{t('mainarea.add')}</Button>
         </Col>
       <Col></Col>
       </Row>

@@ -4,6 +4,7 @@ import NavBar from "../Layout/Navbar";
 import '../Layout/Navbar.css';
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const { Header, Sider, Content } = AntLayout;
 
@@ -14,18 +15,9 @@ const SettingsLayout = () => {
     setIsCollapsed(!isCollapsed);
 };
 
-const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
-useLayoutEffect(() => {
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
 
-  window.addEventListener('resize', handleResize);
-  return () => window.removeEventListener('resize', handleResize);
-}, []);
-
-const isSmallScreen = windowWidth <= 600;
 
   return (
     <AntLayout style={{ minHeight: "100vh" }}>

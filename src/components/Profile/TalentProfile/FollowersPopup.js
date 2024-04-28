@@ -7,6 +7,8 @@ import useAxios from '../../Auth/useAxiosHook.interceptor';
 import { UserDataContext } from '../../UserContext/UserData.context';
 import LoadingScreen from '../../LoadingScreen/LoadingScreen';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../LanguageContext/LanguageProvider';
+import { useTranslation } from 'react-i18next';
 
 
 function FollowersPopup({ users, handleClose,id, show, activeKey, followingUsers, handleCloseFollowingPopup }) {
@@ -17,6 +19,9 @@ function FollowersPopup({ users, handleClose,id, show, activeKey, followingUsers
     const [following, setFollowing] = useState([]);
     const [followers,setFollowers]=useState([]);
     const [loading, setLoading] = useState(true);
+    const { language, changeLanguage } = useLanguage();
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
 
 
     useEffect(() => {
@@ -78,7 +83,7 @@ function FollowersPopup({ users, handleClose,id, show, activeKey, followingUsers
         <Modal show={show} onHide={handleClose} size='lg'>
             <Modal.Header>
                 <Modal.Title className=''>
-                    {activeKey=='followers' ? <p className='followersModal-title mb-0'>Followers (9)</p> : <p>Following (19)</p>}
+                    {activeKey=='followers' ? <p className='followersModal-title mb-0'>{t('Profile.followers')}</p> : <p>{t('Profile.following')} </p>}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -100,10 +105,10 @@ function FollowersPopup({ users, handleClose,id, show, activeKey, followingUsers
                                     {
                                         user.is_followed ?  <Button variant="" className="following" onClick={()=>ToggleFollow(user.id)} >
                                         
-                                        <img src={Followed} /> Following
+                                        <img src={Followed} /> {t('Profile.following')}
                                     </Button>  :
                                             <Button variant="" className="follow"  onClick={()=>ToggleFollow(user.id)}>
-                                                + Follow
+                                                + {t('Profile.follow')}
                                             </Button>
                                     }
                                  
@@ -130,11 +135,11 @@ function FollowersPopup({ users, handleClose,id, show, activeKey, followingUsers
                                             user.is_followed ? 
                                             <Button variant="outline-success"  onClick={()=>ToggleFollow(user.id)} className="" style={{ borderRadius: '18px', float: 'right',backgroundColor:'rgba(228, 248, 242, 0.5)' }}>
                                         
-                                            <img src={Followed} /> Following
+                                            <img src={Followed} /> {t('Profile.following')}
                                         </Button>  
                                          :
                                                 <Button variant="outline-success"  onClick={()=>ToggleFollow(user.id)} className="" style={{ borderRadius: '18px', float: 'right' }}>
-                                                    + Follow
+                                                    +  {t('Profile.follow')}
                                                 </Button>
                                         }
                                     </ListGroup.Item>

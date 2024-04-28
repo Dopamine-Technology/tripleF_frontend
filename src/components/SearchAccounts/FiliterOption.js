@@ -5,8 +5,13 @@ import { useForm } from 'react-hook-form';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { UserDataContext } from '../UserContext/UserData.context';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function FiliterOption(props) {
+   const { language, changeLanguage } = useLanguage(); 
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
   const {
     register,
     handleSubmit,
@@ -31,6 +36,8 @@ function FiliterOption(props) {
   const [countries, setCountries] = useState([]);
   const [languages, setLanguages] = useState([]);
   const location = useLocation();
+  const genderOptions2 = t('Register.genderOptions', { returnObjects: true });
+  const preferredFootOptions = t('Register.preferredFootOptions', { returnObjects: true });
 
  
   const currentYear = new Date().getFullYear();
@@ -40,14 +47,14 @@ function FiliterOption(props) {
   }
   
   const genderOptions = [
-    { id: 'female', name: 'female'},
-    { id: 'male', name: 'male'},
-    { id: 'other', name: 'rather not to say'},
+    { id: 'female', name: genderOptions2[0]},
+    { id: 'male', name: genderOptions2[1]},
+    { id: 'other', name: genderOptions2[2]},
   ];
   const preferredFoot = [
-    { id: 'right', name: 'right' },
-    { id: 'left', name: 'left' },
-    { id: 'both', name: 'both' },
+    { id: 'right', name: preferredFootOptions[0] },
+    { id: 'left', name: preferredFootOptions[1] },
+    { id: 'both', name: preferredFootOptions[2] },
   ];
   const expYears = [
     { id: '0-3', name: '0-3 years', from_years_exp: 0, to_years_exp: 3 },
@@ -120,7 +127,7 @@ function FiliterOption(props) {
   return (
     <Row className='' style={{ marginLeft: isSmallScreen?'6rem':'1rem' }}>
       { location.pathname === '/talents/profiles/list'?(<>
-       <Col md={6} lg={3}>
+       <Col md={6} lg={6} xl={3}>
         <Input
           type='select'
           label=''
@@ -129,13 +136,13 @@ function FiliterOption(props) {
           errors={errors} 
           selectOptions={countries}
           inputWidth='13rem'
-          placeholder='country'
+          placeholder={t('Register.country')}
           borderRadius='18px'
           onChange={handleFilterChange}
         />
       </Col>
       {user.userData.profile.type_name=='talent'?(
-      <><Col md={6} lg={3}>
+      <><Col md={6} lg={6} xl={3}>
         <Input
           type='select'
           label=''
@@ -144,12 +151,12 @@ function FiliterOption(props) {
           errors={errors}
           selectOptions={positions}
           inputWidth='13rem'
-          placeholder='position'
+          placeholder={t('Register.position')}
           borderRadius='18px'
           onChange={handleFilterChange}
         />
       </Col>
-      <Col md={6} lg={3}>
+      <Col md={6} lg={6} xl={3}>
         <Input
           type='select'
           label=''
@@ -158,12 +165,12 @@ function FiliterOption(props) {
           errors={errors}
           selectOptions={genderOptions}
           inputWidth='13rem'
-          placeholder='Gender'
+          placeholder={t('Register.gender')}
           borderRadius='18px'
           onChange={handleFilterChange}
         />
       </Col> 
-      <Col md={6} lg={3}>
+      <Col md={6} lg={6} xl={3}>
         <Input
           type='select'
           label=''
@@ -172,13 +179,13 @@ function FiliterOption(props) {
           errors={errors}
           selectOptions={preferredFoot}
           inputWidth='13rem'
-          placeholder='Preferred Foot'
+          placeholder={t('Register.preferredFoot')}
           borderRadius='18px'
           onChange={handleFilterChange}
         />
       </Col>
       </> ):(
-        <>    <Col md={6} lg={3}>
+        <>    <Col md={6} lg={6} xl={3}>
         <Input
           type='select'
           label=''
@@ -187,12 +194,12 @@ function FiliterOption(props) {
           errors={errors}
           selectOptions={genderOptions}
           inputWidth='13rem'
-          placeholder='Gender'
+          placeholder={t('Register.gender')}
           borderRadius='18px'
           onChange={handleFilterChange}
         />
       </Col> 
-      <Col md={6} lg={3}>
+      <Col md={6} lg={6} xl={3}>
       <Input
           type='select'
           label=''
@@ -201,7 +208,7 @@ function FiliterOption(props) {
           errors={errors}
           selectOptions={expYears}
           inputWidth='13rem'
-          placeholder='experience years'
+          placeholder={t('Register.exp_years')}
           borderRadius='18px'
           onChange={handleExpYearChange}
         />
@@ -212,7 +219,7 @@ function FiliterOption(props) {
       </>):
       location.pathname === '/scouts/profiles/list'?
       (<>   
-        <Col md={6} lg={3}>
+        <Col md={6} lg={6} xl={3}>
          <Input
            type='select'
            label=''
@@ -221,12 +228,12 @@ function FiliterOption(props) {
            errors={errors} 
            selectOptions={countries}
            inputWidth='13rem'
-           placeholder='country'
+           placeholder={t('Register.country')}
            borderRadius='18px'
            onChange={handleFilterChange}
          />
        </Col>
-        <Col md={6} lg={3}>
+        <Col md={6} lg={6} xl={3}>
         <Input
           type='select'
           label=''
@@ -235,12 +242,12 @@ function FiliterOption(props) {
           errors={errors}
           selectOptions={genderOptions}
           inputWidth='13rem'
-          placeholder='Gender'
+          placeholder={t('Register.gender')}
           borderRadius='18px'
           onChange={handleFilterChange}
         />
        </Col> 
-       <Col md={6} lg={3}>
+       <Col md={6} lg={6} xl={3}>
        <Input
            type='select'
            label=''
@@ -249,12 +256,12 @@ function FiliterOption(props) {
            errors={errors}
            selectOptions={expYears}
            inputWidth='13rem'
-           placeholder='experience years'
+           placeholder={t('Register.exp_years')}
            borderRadius='18px'
            onChange={handleExpYearChange}
          />
        </Col>
-       <Col md={6} lg={3}>
+       <Col md={6} lg={6}  xl={3}>
        <Input
            type='select'
            label=''
@@ -263,7 +270,7 @@ function FiliterOption(props) {
            errors={errors}
            selectOptions={languages}
            inputWidth='13rem'
-           placeholder='language'
+           placeholder={t('LayoutNavbar.language')}
            borderRadius='18px'
            onChange={handleFilterChange}
          />
@@ -271,7 +278,7 @@ function FiliterOption(props) {
        </>):
       location.pathname === '/coaches/profiles/list'?
       (  <>   
-       <Col md={6} lg={4}>
+       <Col md={6} lg={6} xl={4}>
         <Input
           type='select'
           label=''
@@ -280,12 +287,12 @@ function FiliterOption(props) {
           errors={errors} 
           selectOptions={countries}
           inputWidth='13rem'
-          placeholder='country'
+          placeholder={t('Register.country')}
           borderRadius='18px'
           onChange={handleFilterChange}
         />
       </Col>
-       <Col md={6} lg={4}>
+       <Col md={6} lg={6} xl={4}>
        <Input
           type='select'
           label=''
@@ -294,12 +301,12 @@ function FiliterOption(props) {
           errors={errors}
           selectOptions={genderOptions}
           inputWidth='13rem'
-          placeholder='Gender'
+          placeholder={t('Register.gender')}
           borderRadius='18px'
           onChange={handleFilterChange}
         />
       </Col> 
-      <Col md={6} lg={4}>
+      <Col md={6} lg={6} xl={4}>
       <Input
           type='select'
           label=''
@@ -308,14 +315,14 @@ function FiliterOption(props) {
           errors={errors}
           selectOptions={expYears}
           inputWidth='13rem'
-          placeholder='experience years'
+          placeholder={t('Register.exp_years')}
           borderRadius='18px'
           onChange={handleExpYearChange}
         />
       </Col>
       </>):
       location.pathname === '/clubs/profiles/list'?
-      (<><Col md={6} lg={6}>
+      (<><Col md={6} lg={6} >
         <Input
           type='select'
           label=''
@@ -324,12 +331,12 @@ function FiliterOption(props) {
           errors={errors} 
           selectOptions={countries}
           inputWidth='13rem'
-          placeholder='country'
+          placeholder={t('Register.country')}
           borderRadius='18px'
           onChange={handleFilterChange}
         />
       </Col>
-      <Col md={6} lg={6}>
+      <Col md={6} lg={6} >
         <Input
           type='select'
           label=''
@@ -338,7 +345,7 @@ function FiliterOption(props) {
           errors={errors} 
           selectOptions={yearOptions}
           inputWidth='13rem'
-          placeholder='year founded'
+          placeholder={t('Register.year_founded')}
           borderRadius='18px'
           onChange={handleFilterChange}
         />

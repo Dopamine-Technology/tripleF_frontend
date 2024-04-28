@@ -13,12 +13,17 @@ import { UserDataContext } from '../../UserContext/UserData.context';
 import Email from '../../../assets/imgs/Email.svg';
 import checkmark from '../../../assets/imgs/checkmark.svg';
 import FollowBtn from '../FollowBtn';
+import { useLanguage } from '../../LanguageContext/LanguageProvider';
+import { useTranslation } from 'react-i18next';
 
 
 function ClubProfileCard({id,profileData}) {
 
   const { user } = useContext(UserDataContext);
   const currentYear = new Date().getFullYear();
+  const { language, changeLanguage } = useLanguage(); // Access language context
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
 
 
   const ClubData=[
@@ -54,9 +59,9 @@ function ClubProfileCard({id,profileData}) {
       <Card.Title className='card-title'>{profileData.profile.club_name} {id!=null?<img src={checkmark} />:null}</Card.Title>
       <Card.Subtitle className='card-subTitle'>{profileData.profile.type_name}</Card.Subtitle>
       <p className='followers-number'>
-        <span className='followers-span me-2' onClick={() => handleShow('followers')}>{profileData.followers_count} followers</span>
+        <span className='followers-span me-2' onClick={() => handleShow('followers')}>{profileData.followers_count} {t('Profile.followers')}</span>
         <span className='me-2'>.</span>
-        <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} following</span>
+        <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} {t('Profile.following')}</span>
       </p>
       {profileData.id!=user.userData.id?   <FollowBtn id={id}  is_followed={profileData.is_followed}/>:null}
       {profileData.profile.type_name == 'club' ? 

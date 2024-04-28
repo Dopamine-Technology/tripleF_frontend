@@ -4,22 +4,13 @@ import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
 import single from '../../assets/imgs/SingleRight.svg'
 import { Card } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const { Meta } = Card;
 const SingleOne = ({ img, content, category }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
-  useLayoutEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isSmallScreen = windowWidth <= 600;
-  const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
   
   return (
     <Link to="/blogs/1" style={{ textDecoration: 'none' }}>

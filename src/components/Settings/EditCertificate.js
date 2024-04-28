@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import AddCertificate from './AddCertificate';
 import Edit from '../../assets/imgs/edit.svg';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function EditCertificate({ handleClose, show, data }) {
     const [selectedCertificate, setSelectedCertificate] = useState(null);
+    const { language, changeLanguage } = useLanguage(); 
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
 
     // Function to handle opening the edit modal
     const handleShowEditWhole = (certificate) => {
@@ -15,7 +20,7 @@ function EditCertificate({ handleClose, show, data }) {
         <div>
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title className='share-title'>Edit Certificates</Modal.Title>
+                    <Modal.Title className='share-title'>{t('AddCertificate.editCertificate')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='challenge-container'>

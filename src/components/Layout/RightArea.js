@@ -1,6 +1,8 @@
 import React,{useEffect,useState} from 'react'
 import { Button } from 'react-bootstrap';
 import useAxios from '../Auth/useAxiosHook.interceptor';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function RightArea(){
 
@@ -9,6 +11,10 @@ function RightArea(){
   const [talentData,setTalentData]=useState();
   const [challenges,setChallenges]=useState();
   const axios=useAxios();
+
+  const { language, changeLanguage } = useLanguage(); // Access language context
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
 
   useEffect(() => {
 
@@ -185,16 +191,16 @@ function RightArea(){
           ) : (
             <p>No data available</p>
           )}
-          <Button className="discover-btn">Discover more</Button>
+          <Button className="discover-btn">{t('mainarea.discoverBtn')}</Button>
         </div>
       );
       
     
     return(
       <div  >
-      {renderDataSection('Recommended Challenges', profilesData,false)}
-      {renderDataSection('Clubs to Follow', clubsData,true)}
-      {renderDataSection('Scouts to Follow', scoutData2,true)}
+      {renderDataSection(t('mainarea.recommendedChallenges'), profilesData,false)}
+      {renderDataSection(t('mainarea.followClubs'), clubsData,true)}
+      {renderDataSection(t('mainarea.followScouts'), scoutData2,true)}
     </div>
     )
 }

@@ -9,10 +9,12 @@ import { Col, Row } from 'react-bootstrap';
 import close from '../../assets/imgs/close.svg';
 import { UserDataContext } from '../UserContext/UserData.context';
 import { IoIosArrowForward } from "react-icons/io";
-import ListImage from '../../assets/imgs/listImg.svg';
+import { IoOpenOutline } from "react-icons/io5";
 import { FcApproval } from "react-icons/fc";
 import { Link } from 'react-router-dom';
-
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function StorySection() {
     const [timelineStories, setTimelineStories] = useState([]);
@@ -27,19 +29,22 @@ function StorySection() {
     const [viewedWithinModal, setViewedWithinModal] = useState(false);
     const [myStoryTime,setMyStoryTime]=useState('');
     const storyContainerRef = useRef(null);
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+    const { language, changeLanguage } = useLanguage(); // Access language context
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
+  
+    useEffect(() => {
+      // Use the language obtained from the context
+      if (language === 'ar') {
+          setDirection('rtl');
+      } else {
+          setDirection('ltr');
+      }
+  }, [language]);
+
 
     const axios = useAxios();
-
-    useLayoutEffect(() => {
-        const handleResize = () => {
-          setWindowWidth(window.innerWidth);
-        };
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-      }, []);
-      
-        const isSmallScreen = windowWidth <= 600;
 
     useEffect(() => {
         const fetchStoriesData = async () => {
@@ -127,11 +132,14 @@ function StorySection() {
     const handleCloseList = () => {
         setShowUserList(false);
     };
+    const handleOpenList=()=>{
+        setShowUserList(true);
+    }
     return (
         <div className="story-section">
             <div className="story-container" ref={storyContainerRef}>
                 <div className="story" onClick={() => handleStoryClick(null, null)}>
-                    <img src={user.userData.image} alt="Story" style={{ border: 'white',backgroundColor:'#979797',boxShadow:
+                    <img src={user.userData.profile.type_name=='club'?user.userData.profile.club_logo:user.userData.image} alt="Story" style={{ border: 'white',backgroundColor:'#979797',boxShadow:
                         seenStories.includes(user.userData.id) || myStories.is_seen
                             ? 'none'
                             : '', }} />
@@ -147,22 +155,24 @@ function StorySection() {
                             : ''
                             ,backgroundColor:'#979797'
                 }} />
-                            <span>{user2.user_name}</span>
+                            <span >{user2.user_name}</span>
                         </div>
                     </div>
                 ))}
             </div>
             <Modal show={show} onHide={() => setShow(false)} size={showUserList ? "xl" : "md"}>
                 <Modal.Body style={{ backgroundColor: showUserList ? "white" : "black", padding: 0 }}> 
+                {!showUserList&&<IoOpenOutline onClick={handleOpenList} color='white' size={28} />}
                     <Row className='row-profiles' style={{ margin: 0 }}>
+                   
                         {showUserList && (
                             <Col sm={6} lg={4} className='bg-white h-100 m-0 p-0'  style={{ display: isSmallScreen ? 'none' : 'block' }}>
                                 <div className="user-list" >
                                     <img src={close} className='mb-4' style={{ marginLeft: '1.5rem', marginTop: '2rem' }} onClick={handleCloseList} />
-                                    <p className='all-challenges'>All Challenges</p>
+                                    <p className='all-challenges'>{t('mainarea.allChallenges')}</p>
                                     <div className="profiles-stories d-flex" >
                                           
-                                          <img src={user.userData.image} alt="Story"  style={{
+                                          <img src={user.userData.profile.type_name=='club'?user.userData.profile.club_logo:user.userData.image} alt="Story"  style={{
                   boxShadow:
                       seenStories.includes(user.userData.id) 
                           ? 'none'
@@ -171,7 +181,7 @@ function StorySection() {
               }}/>
                <Link to={`/profile/${user.userData.id}`} style={{textDecoration:'none'}}>
                                           <div className='time-username'>
-                                              <span className='username'>Me</span>
+                                              <span className='username'>{t('mainarea.me')}</span>
                                               <span className='time'>{myStoryTime}</span>
                                           </div>
                   </Link>
@@ -190,7 +200,7 @@ function StorySection() {
                 {user2.stories[currentStoryIndex] && user2.stories[currentStoryIndex].created_at}
                 </span>
             </div>
-            {seenStories.includes(user2.id) || user2.seen ? <p className='seen'><FcApproval />seen</p> : null}
+            {seenStories.includes(user2.id) || user2.seen ? <p className='seen'><FcApproval />{t('mainarea.seen')}</p> : null}
         </div>
     </Link>
 ))}
@@ -202,7 +212,7 @@ function StorySection() {
                             {selectedStory !== null && (
                                 <div className="owner-stories d-flex" style={{
                                     position: 'absolute',
-                                    left: '32rem',
+                                    left: showUserList?'32rem':'2rem',
                                     top: '70px',
                                     zIndex: '2'
                                 }}>

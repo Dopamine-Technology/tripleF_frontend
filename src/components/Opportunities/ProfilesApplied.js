@@ -9,6 +9,8 @@ import RightArrow from '../../assets/imgs/rightArrow.svg';
 import { useParams } from 'react-router-dom';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function ProfilesApplied() {
     const { id } = useParams();
@@ -17,6 +19,18 @@ function ProfilesApplied() {
     const axios = useAxios();
     const navigate = useNavigate();
     let counter = 0;
+    const { language, changeLanguage } = useLanguage(); // Access language context
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
+  
+    useEffect(() => {
+      // Use the language obtained from the context
+      if (language === 'ar') {
+          setDirection('rtl');
+      } else {
+          setDirection('ltr');
+      }
+  }, [language]);
 
     const fetchOppData = async () => {
         try {
@@ -34,9 +48,9 @@ function ProfilesApplied() {
     return (
         <div style={{ backgroundColor: 'white', marginLeft: '7rem', padding: '3rem' }}>
             <p><img src={LeftArrow} className='me-3 ' style={{cursor:'pointer'}} onClick={()=>navigate('/applied/list')} /><span className='applied-title'>{name}</span></p>
-            <p className='applicants-num'>{profiles.length} Applicants</p>
+            <p className='applicants-num'>{profiles.length} {t('Opportunity.applicants')}</p>
             <div className="search-container mt-4" style={{ marginLeft: '2rem' }}>
-                <input type="text" placeholder="Search" className="search-input" />
+                <input type="text" placeholder={t('Opportunity.search')} className="search-input" />
                 <AiOutlineSearch className="search-icon" />
             </div>
             {profiles.map((profile, index) => (

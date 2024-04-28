@@ -4,22 +4,12 @@ import FiliterOption from './FiliterOption';
 import { AiOutlineSearch } from "react-icons/ai";
 import AccountCard from './AccountCard';
 import CardsList from './CardsList';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 function SearchAccounts() {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
     const [searchInput, setSearchInput] = useState('');
 
-useLayoutEffect(() => {
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
-
-  window.addEventListener('resize', handleResize);
-  return () => window.removeEventListener('resize', handleResize);
-}, []);
-
-const isSmallScreen = windowWidth <= 600;
-const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
 const [filters, setFilters] = useState({
   country: '',
@@ -49,7 +39,7 @@ const handleSearchInputChange = (event) => {
         justifyContent: 'center', 
         alignItems: 'center', 
         marginLeft:isSmallScreen?'1rem':'',
-        width:isSmallScreen?'100%':'70rem'
+        width:isSmallScreen?'100%':isProScreen?'100%':'70rem'
          }}>
 <div className="search-container2" style={{ width: '83%' }}>
                 <input type="text" placeholder="Search" className="search-input" value={searchInput} onChange={handleSearchInputChange} />
