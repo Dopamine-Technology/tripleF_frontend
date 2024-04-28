@@ -8,6 +8,8 @@ import Pusher from 'pusher-js';
 import { UserDataContext } from '../UserContext/UserData.context';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function NotificationDropDown() {
     const [notifications, setNotifications] = useState([]);
@@ -17,6 +19,10 @@ function NotificationDropDown() {
     const { user } = useContext(UserDataContext);
     const axios = useAxios();
     const navigate=useNavigate();
+    const { language, changeLanguage } = useLanguage(); // Access language context
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
+  
 
     useEffect(() => {
         const pusher = new Pusher('323996d4cfab0016889a', {
@@ -92,7 +98,7 @@ function NotificationDropDown() {
 
             </Dropdown.Toggle>
             <Dropdown.Menu style={{ width: '33rem' }} className='mt-5'>
-                <p className='title'>Notifications</p>
+                <p className='title'>{t('Notification.notifications')}</p>
                 {displayedNotifications.length > 0 ? (
                     displayedNotifications.map((notification, index) => (
                         <Dropdown.Item href="#" key={index}>
@@ -105,7 +111,7 @@ function NotificationDropDown() {
                                     <div>
                                         <p className='notification-content mt-2 ' style={{ maxWidth: '200px' }}>
                                             <span className='notification-owner-userName'>{notification.data.sender.name}</span>
-                                            {' '}started following you<br />{notification.created_at}
+                                            {' '}{t('Notification.startedFollowing')}<br />{notification.created_at}
                                         </p>
                                     </div>
                                 </div>
@@ -119,7 +125,7 @@ function NotificationDropDown() {
                                     <div>
                                         <p className='notification-content mt-2 ' style={{ maxWidth: '200px' }}>
                                             <span className='notification-owner-userName'>{notification.data.sender.name}</span>
-                                            {' '}added new Post<br />{notification.created_at}
+                                            {' '}{t('Notification.addedPost')}<br />{notification.created_at}
                                         </p>
                                     </div>
                                 </div>
@@ -133,7 +139,7 @@ function NotificationDropDown() {
                                     <div>
                                         <p className='notification-content mt-2 ' style={{ maxWidth: '200px' }}>
                                             <span className='notification-owner-userName'>{notification.data.sender.name}</span>
-                                            {' '} added a {notification.data.notification_data}  medal to your challenge<br />{notification.created_at}
+                                            {' '} {t('Notification.addedMedal')} {notification.data.notification_data} <br />{notification.created_at}
                                         </p>
                                     </div>
                                 </div>):(
@@ -146,7 +152,7 @@ function NotificationDropDown() {
                                     <div>
                                         <p className='notification-content mt-2 ' style={{ maxWidth: '200px' }}>
                                             <span className='notification-owner-userName'>{notification.data.sender.name!='0' && notification.data.sender.name}</span>
-                                            {' '} Your post just hit a milestone! It's received {notification.data.notification_text} likes!<br />{notification.created_at}
+                                            {' '} {t('Notification.milestone')} {notification.data.notification_text} likes!<br />{notification.created_at}
                                         </p>
                                     </div>
                                 </div>
@@ -161,13 +167,13 @@ function NotificationDropDown() {
                     ))
                 ) : (
                     <Dropdown.Item>
-                        No notifications
+                    {t('Notification.noNotification')}
                     </Dropdown.Item>
                 )}
                 {notifications.length > 7 && (
                     <>
                         <Dropdown.Divider />
-                        <Dropdown.Item href="/my/notifications"><p className='view-more'>View more notifications</p></Dropdown.Item>
+                        <Dropdown.Item href="/my/notifications"><p className='view-more'>{t('Notification.viewMore')}</p></Dropdown.Item>
                     </>
                 )}
             </Dropdown.Menu>

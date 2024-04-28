@@ -10,6 +10,8 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import { UserDataContext } from '../UserContext/UserData.context';
 import ScoutOppFilter from './ScoutOppFilter';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 
 function OpportunityList(){
@@ -27,6 +29,18 @@ function OpportunityList(){
       const [filterTextCountry, setFilterTextCountry] = useState('');
       const itemsPerPage = 5;
       const [currentPage, setCurrentPage] = useState(1);
+      const { language, changeLanguage } = useLanguage(); // Access language context
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
+  
+    useEffect(() => {
+      // Use the language obtained from the context
+      if (language === 'ar') {
+          setDirection('rtl');
+      } else {
+          setDirection('ltr');
+      }
+  }, [language]);
    
       const indexOfLastItem = currentPage * itemsPerPage;
       const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -117,7 +131,7 @@ function OpportunityList(){
           <Col lg={7} >
   
        <div class="search-container2 w-100">
-          <input type="text" placeholder="Search" class="search-input" />
+          <input type="text" placeholder={t('Opportunity.search')} class="search-input" />
           <AiOutlineSearch className="search-icon2" />
           
 </div>
@@ -125,7 +139,7 @@ function OpportunityList(){
 
 <Col lg={1}></Col>
 
-{user.userData.profile.type_name=="talent"?(null):(<Col lg={3} ><Button className='share-btn' onClick={() => {navigate('/home/add/opportunity')}}>Add Opportunity</Button>
+{user.userData.profile.type_name=="talent"?(null):(<Col lg={3} ><Button className='share-btn' onClick={() => {navigate('/home/add/opportunity')}}>{t('AddOpportunity.addOpportunity')}</Button>
 </Col>)}
 
 

@@ -77,9 +77,9 @@ const finalAge = hasBirthdayOccurred ? age : age - 1;
       <Card.Title className='card-title'>{profileData.name} {profileData.last_name}</Card.Title>
       <Card.Subtitle className='card-subTitle'>{profileData.profile.type_name}</Card.Subtitle>
       <p className='followers-number'>
-        <span className='followers-span me-2' onClick={() => handleShow('followers')}>{profileData.followers_count} followers</span>
+        <span className='followers-span me-2' onClick={() => handleShow('followers')}>{profileData.followers_count} {t('Profile.followers')}</span>
         <span className='me-2'>.</span>
-        <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} following</span>
+        <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} {t('Profile.following')}</span>
       </p>
       {profileData.id!=user.userData.id?   <FollowBtn id={id}  is_followed={profileData.is_followed}/>:null}
       

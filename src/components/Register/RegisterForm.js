@@ -27,41 +27,42 @@ import { useTranslation } from 'react-i18next';
 
 function RegisterForm({ onLoadingChange }) {
   const [signedUpWithGoogle, setSignedUpWithGoogle] = useState(false);
+  const [t,i18n]=useTranslation();
 
   const schema = Yup.object().shape({
     email:signedUpWithGoogle ? Yup.string():Yup.string()
-      .required("Email is required")
-      .email("Provide a valid email address ex:John@example.com")
-      .required("Email is required"),
+      .required(t('validationErrors.email'))
+      .email(t('validationErrors.valid_email'))
+      .required(t('validationErrors.email')),
       first_name: signedUpWithGoogle
       ? Yup.string()
       : Yup.string()
-          .required("First name is required")
+          .required(t('validationErrors.first_name'))
           .matches(
             /^[^\u0600-\u06FF\s]+$/, 
-            "First Name cannot contain Arabic letters"
+            t('validationErrors.valid_fisrt_name')
           ),
     last_name: signedUpWithGoogle
       ? Yup.string()
       : Yup.string()
-          .required("Last name is required")
+          .required( t('validationErrors.last_name'))
           .matches(
             /^[^\u0600-\u06FF\s]+$/, // Regular expression to disallow Arabic letters
-            "First Name cannot contain Arabic letters"
+            t('validationErrors.valid_last_name')
           ),
           
-    user_name: signedUpWithGoogle ? Yup.string():Yup.string().required("Username is required")
+    user_name: signedUpWithGoogle ? Yup.string():Yup.string().required(t('validationErrors.user_name'))
     .matches(
       /^[^\u0600-\u06FF\s]+$/, // Regular expression to disallow Arabic letters
-      "Username cannot contain Arabic letters"
+      t('validationErrors.valid_user_name')
     ),
     
     password: signedUpWithGoogle ? Yup.string() : Yup.string()
-    .required("password is required")
+    .required(t('validationErrors.password'))
     // .min(8, " must be at least 8 characters")
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case "
+      t('validationErrors.valid_password')
     )
   });
 
@@ -73,62 +74,64 @@ function RegisterForm({ onLoadingChange }) {
     const extension = fileName.split('.').pop().toLowerCase();
     return validFileExtensions.includes(extension);
   }
+
   
 
   const stepTwoSchema = {
     1: Yup.object().shape({
-      talent_type: Yup.string().required('Talent Type is required'),
-      parent_position: Yup.string().required('Position is required'),
-      gender: Yup.string().required('Gender is required'),
-      birth_date: Yup.date().typeError('Birth date must be a valid date').required('Birth date is required'),
+      talent_type: Yup.string().required(t('validationErrors.talent_type')),
+      parent_position: Yup.string().required(t('validationErrors.parent_position')),
+      gender: Yup.string().required(t('validationErrors.gender')),
+      birth_date: Yup.date().typeError(t('validationErrors.birth_date')).required(t('validationErrors.valid_birth_date')),
       height: Yup.number()
-    .typeError('Height must be a valid number')
-    .required('Height is required')
-    .min(1, 'Height must be greater than or equal to 1') 
-    .max(300, 'Height must be less than or equal to 300'), 
+    .typeError(t('validationErrors.height'))
+    .required(t('validationErrors.valid_height'))
+    .min(1, t('validationErrors.min_height')) 
+    .max(300, t('validationErrors.max_height')), 
     wight: Yup.number()
-    .typeError('Weight must be a valid number')
-    .required('Weight is required')
-    .min(1, 'Weight must be greater than or equal to 1') 
-    .max(900, 'Weight must be less than or equal to 1000'),
-      country_id: Yup.string().required('Country is required'),
-      mobile_number: Yup.string().matches(/^\d{7,15}$/, 'Mobile number must be a valid number')
-      .required('Mobile number is required'),
+    .typeError(t('validationErrors.weight'))
+    .required(t('validationErrors.valid_weight'))
+    .min(1, t('validationErrors.min_weight')) 
+    .max(900, t('validationErrors.max_weight')),
+      country_id: Yup.string().required(t('validationErrors.country_id')),
+      mobile_number: Yup.string().matches(/^\d{7,15}$/, t('validationErrors.valid_mobile_number'))
+      .required(t('validationErrors.mobile_number')),
       position: Yup.array()
     .of(Yup.string())
-    .min(1, 'Sub Position is required')
-    .required('Sub Position is required')
+    .min(1, t('validationErrors.position'))
+    .required(t('validationErrors.position'))
     }),
     2: Yup.object().shape({
-      talent_type: Yup.string().required('Sport Type is required'),
-      gender: Yup.string().required('Gender is required'),
-      years_of_experience:  Yup.number().typeError('Years of Experience must be a valid date').required('Years of Experience is required'),
-      birth_date: Yup.date().typeError('Birth date must be a valid date').required('Birth date is required'),
-      country_id: Yup.string().required('Place of Residence is required'),
-      mobile_number: Yup.string().required('Mobile number is required'),
+      talent_type: Yup.string().required(t('validationErrors.sport_type')),
+      gender: Yup.string().required(t('validationErrors.gender')),
+      years_of_experience:  Yup.number().typeError(t('validationErrors.valid_years_of_experience')).required(t('validationErrors.years_of_experience')),
+      birth_date: Yup.date().typeError(t('validationErrors.valid_birth_date')).required(t('validationErrors.birth_date')),
+      country_id: Yup.string().required(t('validationErrors.residence_place')),
+      mobile_number: Yup.string().matches(/^\d{7,15}$/, t('validationErrors.valid_mobile_number'))
+      .required(t('validationErrors.mobile_number')),
     }),
     3: Yup.object().shape({
-      club_logo: Yup.mixed().test('fileType', 'Image is required', (value) => {
+      club_logo: Yup.mixed().test('fileType', t('validationErrors.club_logo'), (value) => {
         if (!value) return true; // No file selected, hence no type issue
         return value && value[0] && ['image/jpeg', 'image/png'].includes(value[0].type);
-      }).required('Image is required'),
-      club_name: Yup.string().required('Club Name is required'),
-      talent_type: Yup.string().required('Sport Type is required'),
-      country_id: Yup.string().required('Country is required'),
-      city_id: Yup.string().required('City is required'),
-      mobile_number: Yup.string()
-      .matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, 'Invalid mobile number')
-      .required('Mobile number is required'),
-      year_founded: Yup.number().typeError('year founded must be a valid date').required('year founded is required'),
+      }).required(t('validationErrors.club_logo')),
+      club_name: Yup.string().required(t('validationErrors.club_name')),
+      talent_type: Yup.string().required(t('validationErrors.sport_type')),
+      country_id: Yup.string().required(t('validationErrors.country_id')),
+      city_id: Yup.string().required(t('validationErrors.city_id')),
+      mobile_number: Yup.string().matches(/^\d{7,15}$/, t('validationErrors.valid_mobile_number'))
+      .required(t('validationErrors.mobile_number')),
+      year_founded: Yup.number().typeError(t('validationErrors.valid_year_founded')).required(t('validationErrors.year_founded')),
 
     }),
     4: Yup.object().shape({
-      talent_type: Yup.string().required('Sport Type is required'),
-      gender: Yup.string().required('Gender is required'),
-      years_of_experience:  Yup.number().typeError('Years of Experience must be a valid date').required('Years of Experience is required'),
-      birth_date: Yup.date().typeError('Birth date must be a valid date').required('Birth date is required'),
-      country_id: Yup.string().required('Place of Residence is required'),
-      mobile_number: Yup.string().required('Mobile number is required'),
+      talent_type: Yup.string().required(t('validationErrors.sport_type')),
+      gender: Yup.string().required(t('validationErrors.gender')),
+      years_of_experience:  Yup.number().typeError(t('validationErrors.valid_years_of_experience')).required(t('validationErrors.years_of_experience')),
+      birth_date: Yup.date().typeError(t('validationErrors.valid_birth_date')).required(t('validationErrors.birth_date')),
+      country_id: Yup.string().required(t('validationErrors.residence_place')),
+      mobile_number: Yup.string().matches(/^\d{7,15}$/, t('validationErrors.valid_mobile_number'))
+      .required(t('validationErrors.mobile_number')),
     }),
   };
 
@@ -180,7 +183,7 @@ function RegisterForm({ onLoadingChange }) {
       const navigate=useNavigate();
       const currentLanguage = Cookies.get('language') || 'en';
       const [direction, setDirection] = useState('ltr');
-      const [t,i18n]=useTranslation();
+ 
       const genderOptions = t('Register.genderOptions', { returnObjects: true });
       const preferredFootOptions = t('Register.preferredFootOptions', { returnObjects: true });
 

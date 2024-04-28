@@ -25,6 +25,7 @@ import { useLanguage } from '../LanguageContext/LanguageProvider';
 import { useTranslation } from 'react-i18next';
 
 
+
 function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
     const { user } = useContext(UserDataContext);
     const navigate=useNavigate();
@@ -35,6 +36,16 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
     const { language, changeLanguage } = useLanguage(); // Access language context
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
+    
+  
+    useEffect(() => {
+      // Use the language obtained from the context
+      if (language === 'ar') {
+          setDirection('rtl');
+      } else {
+          setDirection('ltr');
+      }
+  }, [language]);
 
     const fetchData = (value) => {
       fetch("https://jsonplaceholder.typicode.com/users")
@@ -170,15 +181,15 @@ const changeLanguageHandler = () => {
 
 
     return (
-      <div style={{direction:direction}}>
-        <Navbar expand="lg" className="bg-body-tertiary" style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)" ,direction:direction}}>
+      <div >
+        <Navbar expand="lg" className="bg-body-tertiary" style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)"}}>
             <Container>
                 <Navbar.Brand href="/home">
                     <img src={Logo} width='40%' alt="Logo" />
                 </Navbar.Brand>
                 <Nav className="me-auto">
                     <div className="search-container">
-                        <input type="text" placeholder="Search" className="search-input" onChange={(e) => handleChange(e.target.value)} />
+                        <input type="text" placeholder={t('Opportunity.search')} className="search-input" onChange={(e) => handleChange(e.target.value)} />
                         <AiOutlineSearch className="search-icon" />
                        
                     </div>
@@ -198,7 +209,7 @@ const changeLanguageHandler = () => {
                     <Dropdown menu={{ items }} className="dropdown-responsive">
                         <Space>
                             <div className="image-container">
-                                <img src={user.userData.image} alt="Profile" width='30px' height='30px' style={{borderRadius:'30px'}}/>
+                                <img src={user.userData.profile.type_name=='club'?user.userData.profile.club_logo:user.userData.image} alt="Profile" width='30px' height='30px' style={{borderRadius:'30px'}}/>
                                 <p className="me">Me</p>
                             </div>
                             <MdArrowDropDown fontSize={38} style={{ color: '#979797' }} />

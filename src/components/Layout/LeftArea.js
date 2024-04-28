@@ -102,7 +102,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
             <div className="Pro" onClick={() => handleOppClick(4,'/Opportunities')} >
             <img src={OpportunitiesIcon} />
             <div style={{fontSize:'15px'}}>
-                {user.userData.profile.type_name=="talent"?(!isCollapsed && <div > <span className='me-3'>{t('leftArea.opportunities')}</span> <img src={dropdownImg} /></div>):(!isCollapsed && <div >My Opportunities <img src={dropdownImg} /> </div>)}  
+                {user.userData.profile.type_name=="talent"?(!isCollapsed && <div > <span className='me-3'>{t('leftArea.opportunities')}</span> <img src={dropdownImg} /></div>):(!isCollapsed && <div >{t('leftArea.opportunities')} <img src={dropdownImg} /> </div>)}  
                 </div>
             </div>}
             {isNavLinkVisible && (

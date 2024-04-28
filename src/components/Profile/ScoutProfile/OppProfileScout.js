@@ -14,6 +14,8 @@ import useAxios from '../../Auth/useAxiosHook.interceptor';
 import { message } from 'antd';
 import { UserDataContext } from '../../UserContext/UserData.context';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../../LanguageContext/LanguageProvider';
 
 
 
@@ -24,6 +26,9 @@ function OppProfileScout({profileData}){
     const { id } = useParams();
     const [ScoutOpportunities,setScoutOpportunities]=useState();
     const { user } = useContext(UserDataContext);
+    const { language, changeLanguage } = useLanguage(); 
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
 
     const fetchOppData = async () => {
         try {
@@ -85,12 +90,14 @@ function OppProfileScout({profileData}){
          <BsThreeDotsVertical fontSize="1.5rem"  />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="" className='p-2' ><CiLink className='me-2' color='#9D9C9D'/>Copy link to Post</Dropdown.Item>
+      <Dropdown.Menu className='w-auto'>
+        <Dropdown.Item href="" className='p-2' ><CiLink className='me-1' color='#9D9C9D'/>{t('PostActions.copyLink')}</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleChangeState(data.id)}> 
-        {data.status=='open'?   <><MdOutlineCancel className='me-2' color='#9D9C9D' />Discard Opportunity</>:
-        <><AiOutlineReload className='me-2' color='#9D9C9D' />Reopen Opportunity</>}
-<><MdOutlineCancel className='me-2' color='#9D9C9D' />Discard Opportunity</>
+        
+        { user.userData.id==data.user.id?(
+        data.status=='open'? 
+        <><MdOutlineCancel className='me-1' color='#9D9C9D' />{t('Opportunity.closeOpportunity')}</>:
+        <><AiOutlineReload className='me-2' color='#9D9C9D' />{t('Opportunity.openOpportunity')}</>):(<></>)}
         </Dropdown.Item>
        
       </Dropdown.Menu>

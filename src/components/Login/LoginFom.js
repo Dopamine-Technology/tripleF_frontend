@@ -21,13 +21,14 @@ import { FacebookLoginButton } from "react-social-login-buttons";
 import { useTranslation } from 'react-i18next';
 
 function LoginForm() {
+  const [t,i18n]=useTranslation();
 
   const schema = yup.object().shape({
     email:yup.string()
-    .required("Email is required")
-    .email("Provide a valid email address ex:John@example.com")
-    .required("Email is required"),
-    password: yup.string().required('Password is required'),
+    .required(t('validationErrors.email'))
+    .email(t('validationErrors.valid_email'))
+    .required(t('validationErrors.email')),
+    password: yup.string().required(t('validationErrors.password')),
   });
   const {
     register,
@@ -47,8 +48,7 @@ function LoginForm() {
 
   const currentLanguage = Cookies.get('language') || 'en';
   const [direction, setDirection] = useState('ltr');
-  const [t,i18n]=useTranslation();
-
+  
     useEffect(() => {
       if (currentLanguage === 'ar') {
         setDirection('rtl');

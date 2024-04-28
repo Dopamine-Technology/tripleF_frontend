@@ -58,8 +58,6 @@ const Input = ({
                     id={option.value}
                     value={option.value}
                     {...register(name)}
-                 
-               
                   />
                   <span className="checkmark" style={{marginLeft:'0.4rem'}} ></span>
                 </label>

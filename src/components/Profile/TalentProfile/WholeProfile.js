@@ -102,11 +102,11 @@ function WholeProfile(){
                 <CoachProfileCard profileData={profileData} id={id}  />
             }
             {profileData.profile.type_name =='coach'?
-               <Certifications sectionName='Coaching License' data={License} id={id}/>:null
+               <Certifications sectionName='license' data={License} id={id}/>:null
             }
 
             {profileData.profile.type_name =='coach'||profileData.profile.type_name =='scout'?
-               <Certifications sectionName={t('Profile.certifications')} data={Certification} id={id}/>:null
+               <Certifications sectionName="certification" data={Certification} id={id}/>:null
             }
         {
      id == user.userData.id ? (

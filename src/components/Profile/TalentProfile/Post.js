@@ -22,6 +22,12 @@ import { MdDeleteOutline } from "react-icons/md";
 import ReportPostPopup from '../../Post/ReportPostPopup';
 import { UserDataContext } from '../../UserContext/UserData.context';
 import { message } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../../LanguageContext/LanguageProvider';
+import report from '../../../assets/imgs/Report.svg';
+import UnFollowUser from '../../../assets/imgs/UnfollowUser.svg';
+import notInterested from '../../../assets/imgs/notInterested.svg';
+import copyLink from '../../../assets/imgs/copyLink.svg';
 
 function Post(){
     const [show, setShow] = useState(false);
@@ -34,9 +40,13 @@ function Post(){
     const [selectedPostId, setSelectedPostId] = useState(null);
     const [hasMore, setHasMore] = useState(true);
     const axios=useAxios();
+    const [copied, setCopied] = useState(false);
     const { user } = useContext(UserDataContext);
     const { id } = useParams();
     const [showReportPopup, setShowReportPopup] = useState(false);
+    const { language, changeLanguage } = useLanguage(); 
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
 
     useEffect(() => {
     
@@ -87,7 +97,31 @@ function Post(){
       //   };
       // }, []);
     
-
+      const handleCopyLink = (postId) => {
+        const postLink = `${window.location.origin}/view/post/${postId}`;
+        console.log("Copying link:", postLink);
+    
+        // Check if the Clipboard API is available
+        if (navigator.clipboard) {
+            // Copy the link to the clipboard
+            navigator.clipboard.writeText(postLink)
+                .then(() => {
+                    console.log("Link copied to clipboard:", postLink);
+                    // Set state to indicate that the link has been copied
+                    setCopied(true);
+                    message.success('link copied')
+                    // Reset the copied state after a short delay
+                    setTimeout(() => {
+                        setCopied(false);
+                    }, 2000);
+                })
+                .catch((error) => {
+                    console.error("Failed to copy link to clipboard:", error);
+                });
+        } else {
+            console.error("Clipboard API not available");
+        }
+    };
       const likeHandle = (index) => {
         const newShowMedalPopups = [...showMedalPopups];
         newShowMedalPopups[index] = !newShowMedalPopups[index];
@@ -191,18 +225,24 @@ function Post(){
          <BsThreeDotsVertical fontSize="1.5rem"  />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="" className='p-2' ><FaRegCopy className='me-2' />Copy link to Post</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2'> <FaRegEyeSlash className='me-2' onClick={() => BlockPost(post.id)} />I don’t want to see <br />  this</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => unfollowUser(post.user.id)}><RiUserUnfollowLine className='me-2' />Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleShowReportPopup()} ><MdOutlineCancel className='me-2' />Report Post</Dropdown.Item>
+      <Dropdown.Menu style={{width:'14rem'}}>
+        <Dropdown.Item href="" className='p-2'  onClick={() => handleCopyLink(post.id)}  ><img src={copyLink} className='me-2'/>{copied ? t('PostActions.copiedLink') : t('PostActions.copyLink')}</Dropdown.Item>
+        {post.user.id!=user.userData.id &&
+        <>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => BlockPost(post.id)}> <img src={notInterested} className='me-2' />{t('PostActions.notInterested')}</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => unfollowUser(post.user.id)} ><img src={UnFollowUser} className='me-2' />{t('PostActions.unfollow')}</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleShowReportPopup()} ><img src={report} className='me-2' />{t('PostActions.reportPost')}</Dropdown.Item>
+        </> }
+        
+   
         {post.user.id==user.userData.id && 
         <>
              <hr />
              <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)}  >
-            <MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item> 
+            <MdDeleteOutline color='#979797' size='24px' className='me-2' />{t('PostActions.deletePost')}</Dropdown.Item> 
          </>
           }
+      
       </Dropdown.Menu>
     </Dropdown>
     </div>

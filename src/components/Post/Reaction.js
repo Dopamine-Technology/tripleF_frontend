@@ -1,9 +1,15 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { LiaMedalSolid } from "react-icons/lia";
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function Reaction({users}) {
+  const { language, changeLanguage } = useLanguage(); 
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
+
     return (
         <ListGroup as="ol" numbered className='w-100'>
         {users&&users.length>0?(users.map((user, index) => (
@@ -34,7 +40,7 @@ function Reaction({users}) {
         </div>
         ))):
         (<p>
-            There is no likes 
+             {t('mainarea.noLikes')}
         </p>)}
       </ListGroup>
     )

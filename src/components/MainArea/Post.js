@@ -221,12 +221,12 @@ function Post({socket,newPostCreated}){
       </Dropdown.Toggle>
 
       <Dropdown.Menu style={{width:'14rem'}}>
-        <Dropdown.Item href="" className='p-2'  onClick={() => handleCopyLink(post.id)}  ><img src={copyLink} className='me-2'/>{copied ? 'Link Copied' : 'Copy post link'}</Dropdown.Item>
+        <Dropdown.Item href="" className='p-2'  onClick={() => handleCopyLink(post.id)}  ><img src={copyLink} className='me-2'/>{copied ? t('PostActions.copiedLink') : t('PostActions.copyLink')}</Dropdown.Item>
         {post.user.id!=user.userData.id &&
         <>
-        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => BlockPost(post.id)}> <img src={notInterested} className='me-2' />I don’t want to see <br /> this</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => unfollowUser(post.user.id)} ><img src={UnFollowUser} className='me-2' />Unfollow user</Dropdown.Item>
-        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleShowReportPopup()} ><img src={report} className='me-2' />Report Post</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => BlockPost(post.id)}> <img src={notInterested} className='me-2' />{t('PostActions.notInterested')}</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => unfollowUser(post.user.id)} ><img src={UnFollowUser} className='me-2' />{t('PostActions.unfollow')}</Dropdown.Item>
+        <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleShowReportPopup()} ><img src={report} className='me-2' />{t('PostActions.reportPost')}</Dropdown.Item>
         </> }
         
    
@@ -234,7 +234,7 @@ function Post({socket,newPostCreated}){
         <>
              <hr />
              <Dropdown.Item href="" className=' p-2' onClick={() => handleDelete(post.id)}  >
-            <MdDeleteOutline color='#979797' size='24px' className='me-2' /> Delete Post</Dropdown.Item> 
+            <MdDeleteOutline color='#979797' size='24px' className='me-2' />{t('PostActions.deletePost')}</Dropdown.Item> 
          </>
           }
       

@@ -10,7 +10,8 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import Bronze from '../../assets/imgs/bronze.svg';
 import Silver from '../../assets/imgs/silver.svg';
 import Gold from '../../assets/imgs/gold.svg';
-import Medal from '../../assets/imgs/Medal.svg'
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function ReactionPopup({handleClose,show,id}) {
     const axios=useAxios();
@@ -18,6 +19,9 @@ function ReactionPopup({handleClose,show,id}) {
     const[allReaction,setAllReaction]=useState();
     const [subReaction,setSubReaction]=useState();
     const [loading, setLoading] = useState(true);
+    const { language, changeLanguage } = useLanguage(); 
+  const [direction, setDirection] = useState('ltr');
+  const [t, i18n] = useTranslation();
 
     const handleTabSelect = async (tab) => {
       let points;
@@ -111,7 +115,7 @@ function ReactionPopup({handleClose,show,id}) {
 
     const tabs = {
         All: {
-          title: (<p className='reaction-p'> All </p>),
+          title: (<p className='reaction-p'>  {t('mainarea.all')} </p>),
           content: (
             <>
         <Reaction users={allReaction} />

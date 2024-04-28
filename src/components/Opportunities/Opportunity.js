@@ -95,11 +95,12 @@ function Opportunity({data}){
       </Dropdown.Toggle>
 
       <Dropdown.Menu className='w-auto'>
-        <Dropdown.Item href="" className='p-2' ><CiLink className='me-1' color='#9D9C9D'/>Copy link to Post</Dropdown.Item>
+        <Dropdown.Item href="" className='p-2' ><CiLink className='me-1' color='#9D9C9D'/>{t('PostActions.copyLink')}</Dropdown.Item>
         <Dropdown.Item href="" className='mt-1 p-2' onClick={() => handleChangeState(data.id)}> 
-        {data.status=='open'? 
-        <><MdOutlineCancel className='me-1' color='#9D9C9D' />Discard Opportunity</>:
-        <><AiOutlineReload className='me-2' color='#9D9C9D' />Reopen Opportunity</>}
+        { user.userData.id==data.user.id?(
+        data.status=='open'? 
+        <><MdOutlineCancel className='me-1' color='#9D9C9D' />{t('Opportunity.closeOpportunity')}</>:
+        <><AiOutlineReload className='me-2' color='#9D9C9D' />{t('Opportunity.openOpportunity')}</>):(<></>)}
         </Dropdown.Item>
        
       </Dropdown.Menu>

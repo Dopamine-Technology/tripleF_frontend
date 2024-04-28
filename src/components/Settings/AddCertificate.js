@@ -4,9 +4,14 @@ import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import Input from '../Register/Input';
 import useAxios from '../Auth/useAxiosHook.interceptor';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 function AddCertificate({ handleClose, show, certificate }) {
     const axios = useAxios();
+    const { language, changeLanguage } = useLanguage(); 
+    const [direction, setDirection] = useState('ltr');
+    const [t, i18n] = useTranslation();
     const {
         register,
         handleSubmit,
@@ -62,7 +67,7 @@ function AddCertificate({ handleClose, show, certificate }) {
         <div>
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title className='share-title'>Add Certificate</Modal.Title>
+                    <Modal.Title className='share-title'>{certificate ?t('AddCertificate.editCertificate'):t('AddCertificate.addCertificate')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='challenge-container'>
@@ -71,7 +76,7 @@ function AddCertificate({ handleClose, show, certificate }) {
                                 register={register}
                                 errors={errors}
                                 name="name"
-                                label="Certificate Name *"
+                                label={t('AddCertificate.certificateName')}
                                 placeholder=''
                                 className="form-control form-control-sm rounded"
                                 validation={{}}
@@ -80,32 +85,32 @@ function AddCertificate({ handleClose, show, certificate }) {
                                 defaultValue={certificate ? certificate.name : null}
                             />
                             <Form.Group controlId='issued_by' className='mb-3'>
-                                <Form.Label>Issued By *</Form.Label>
+                                <Form.Label>{t('Profile.issudBy')}</Form.Label>
                                 <Form.Control
                                     type='text'
                                     {...register('issued_by', { required: true })}
-                                    placeholder='Issued By'
+                                    placeholder={t('Profile.issudBy')}
                                     defaultValue={certificate ? certificate.issued_by : null}
                                 />
                                 {errors.issued_by && <span className="text-danger">This field is required</span>}
                             </Form.Group>
                             <Form.Group controlId='issued_date' className='mb-3'>
-                                <Form.Label>Issued Date *</Form.Label>
+                                <Form.Label>{t('Profile.issuedDate')}</Form.Label>
                                 <Form.Control
                                     type='date'
                                     {...register('issued_date', { required: true })}
-                                    placeholder='Issued Date'
+                                    placeholder={t('Profile.issuedDate')}
                                     max={maxDate}
                                     defaultValue={certificate ? certificate.issued_date : null}
                                 />
                                 {errors.issued_date && <span className="text-danger">This field is required</span>}
                             </Form.Group>
                             <Form.Group controlId='credential_id' className='mb-3'>
-                                <Form.Label>Credential *</Form.Label>
+                                <Form.Label>{t('Profile.credentialId')}</Form.Label>
                                 <Form.Control
                                     type='text'
                                     {...register('credential_id', { required: true })}
-                                    placeholder='Credential'
+                                    placeholder={t('Profile.credentialId')}
                                     defaultValue={certificate ? certificate.credential_id : null}
                                 />
                                 {errors.credential_id && <span className="text-danger">This field is required</span>}
@@ -115,7 +120,7 @@ function AddCertificate({ handleClose, show, certificate }) {
                 </Modal.Body>
                 <Modal.Footer className='challenge-footer'>
                     <Button type="submit" form="certificateForm" className={certificate ? 'editSubmit-btn' : 'afterSubmit-btn'}>
-                        {certificate ? 'Save Changes' : 'Add'}
+                        {certificate ? t('Register.saveChanges') :t('mainarea.add')}
                     </Button>
                 </Modal.Footer>
             </Modal>
