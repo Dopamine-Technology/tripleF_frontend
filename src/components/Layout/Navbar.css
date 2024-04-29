@@ -376,6 +376,32 @@ text-align: left;
    }
 }
 
+@media only screen and (min-width: 820px) and (max-width: 1366px) {
+    .search-container{
+      display: none;
+    }
+
+    .brand-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+  
+    .RightArea{
+     margin-left: 3.5rem;
+     width: 20rem;
+    }
+    .leftside-container{
+     margin-left: 2rem;
+     margin-top: 2.7rem;
+    }
+    .story-section{
+     max-width: 85%;
+    }
+    .navbar-nav {
+        flex-direction: row;
+    }
+ }
+
 
 
 

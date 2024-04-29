@@ -126,14 +126,23 @@
      }
   }
 
-  @media only screen and (min-width: 1024px) and (max-width: 1366px) {
+  @media only screen and (min-width: 820px) and (max-width: 1100px) {
     .who2-h1{
-      margin: 0 93px 53px 0px;
+      justify-content: center;
+      align-items: center;
     }
     .card-container{
       margin-left: 10rem;
     }
     .card-responsive{
       margin-top: 3rem;
+    }
+    .whos-card{
+      width:280px
+     }
+  }
+  @media only screen and (min-width:  1100px) and (max-width: 1366px) {
+    .card-container{
+      margin-left: 0rem;
     }
   }

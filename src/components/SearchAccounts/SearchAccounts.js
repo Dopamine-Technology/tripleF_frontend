@@ -7,7 +7,7 @@ import CardsList from './CardsList';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 function SearchAccounts() {
-  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen,isTabletGalaxyScreen } = useScreenWidth();
     const [searchInput, setSearchInput] = useState('');
 
 
@@ -39,9 +39,10 @@ const handleSearchInputChange = (event) => {
         justifyContent: 'center', 
         alignItems: 'center', 
         marginLeft:isSmallScreen?'1rem':'',
-        width:isSmallScreen?'100%':isProScreen?'100%':'70rem'
+        // width:isSmallScreen?'100%':isProScreen?'100%':'70rem'
+        width:"auto"
          }}>
-<div className="search-container2" style={{ width: '83%' }}>
+<div className="search-container2" style={{ width: isTabletGalaxyScreen?'73%':'83%' }}>
                 <input type="text" placeholder="Search" className="search-input" value={searchInput} onChange={handleSearchInputChange} />
                 <AiOutlineSearch className="search-icon2" />
 </div>

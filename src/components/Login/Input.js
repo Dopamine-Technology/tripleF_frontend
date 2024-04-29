@@ -42,13 +42,15 @@ const Input = ({
         />
           {type === "password" && (
           <div
-            className="position-absolute top-50 end-0 translate-middle-y eye-icon"
+            className="position-absolute top-50 end-0 translate-middle-y eye-icon" 
+            style={{marginRight:isProScreen?'-19rem':''}}
+
        
           >
             {showPassword ? (
               <FaEyeSlash
                 onClick={togglePasswordVisibility}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer"}}
 
               />
             ) : (
