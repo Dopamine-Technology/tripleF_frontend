@@ -22,7 +22,7 @@ const SingleOne = ({ img, content, category }) => {
       }}
       cover={
         <img alt={img} src={img}
-          style={{ borderRadius: '16px', width: isSmallScreen?'300px':isTabletScreen?'281px':'391px', height: !isSmallScreen?'347px':'300px' }}
+          style={{ borderRadius: '16px', width: isSmallScreen?'300px':isTabletScreen||isProScreen?'281px':'391px', height: !isSmallScreen?'347px':'300px' }}
         />
       }
     >

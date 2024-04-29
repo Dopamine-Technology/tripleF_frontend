@@ -16,7 +16,7 @@ function NewPost({onNewPostCreated  }){
     const location=useLocation();
     const navigate=useNavigate();
     const {user}=useContext(UserDataContext);
-    const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+    const { windowWidth, isSmallScreen, isTabletScreen, isProScreen,isTabletGalaxyScreen } = useScreenWidth();
     const { language, changeLanguage } = useLanguage(); // Access language context
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
@@ -38,10 +38,16 @@ function NewPost({onNewPostCreated  }){
 
 
 return(
-<Container className='new-post' style={{ marginLeft: isProScreen&&isProfilePath? '6rem' : isProScreen? '0rem':isProfilePath?'0rem':'4rem' }}>
+<Container className='new-post' style={{ 
+  marginLeft: isProScreen && isProfilePath ? '0rem' : 
+              isProScreen ? '0rem' :
+              isTabletGalaxyScreen && isProfilePath ? '4rem' :
+              isProfilePath ? '0rem' : 
+              '4rem' 
+}}>
     {user.userData.profile.type_name === "talent" ? (
         <Row>
-        <Col xs={6} sm={8} md={6} lg={9} xl={10}>
+        <Col xs={6} sm={8} md={9} lg={9} xl={9}>
             <div className='d-flex'>
                 <div>
                     <img src={asset2} width='90px' height='70px' className='m-3 shareChallenge-img' />
@@ -52,7 +58,7 @@ return(
                 </div>
             </div>
         </Col>
-        <Col xs={6} sm={4} md={12} lg={3} xl={2}>
+        <Col xs={6} sm={4} md={3} lg={4} xl={3}>
             <Button className='share-btn' onClick={handleShow}>{t('mainarea.shareBtn')}</Button>
             {show && <ChallengesList handleClose={handleClose} show={show}  onNewPostCreated={onNewPostCreated}   />}
         </Col>
@@ -60,7 +66,7 @@ return(
     ) : (
         user.userData.profile.type_name === "coach" ? (
           <Row>
-            <Col xs={6} sm={6} md={6} lg={10} >
+            <Col xs={6} sm={6} md={9} lg={10} >
                 <div className='d-flex'>
                     <div>
                         <img src={asset2} width='90px' height='70px' className='m-3' />
@@ -71,20 +77,20 @@ return(
                     </div>
                 </div>
             </Col>
-            <Col  xs={6} sm={6} md={12} lg={2}>
+            <Col  xs={6} sm={6} md={3} lg={2}>
                 <Button className='share-btn' onClick={handleShow}>{t('mainarea.shareBtn')}</Button>
                 {show && <ChallengesList handleClose={handleClose} show={show} />}
             </Col>
         </Row>
         ) : (
             <Row >
-                <Col xs={6} sm={6} md={12} lg={10}>
+                <Col xs={6} sm={6} md={9} lg={10}>
                     <div  className='add-post'>
                         <p className='newPost-title'>{t('mainarea.postOpportunities')}</p>
                         <p className='newPost-desc'>{t('mainarea.shareChallengeDesc')}</p>
                     </div>
                 </Col>
-                <Col xs={6} sm={6} md={6} lg={2}><Button className='share-btn' onClick={() => { navigate('/home/add/opportunity') }}>{t('mainarea.add')}</Button></Col>
+                <Col xs={6} sm={6} md={3} lg={2}><Button className='share-btn' onClick={() => { navigate('/home/add/opportunity') }}>{t('mainarea.add')}</Button></Col>
             </Row>
         )
     )}

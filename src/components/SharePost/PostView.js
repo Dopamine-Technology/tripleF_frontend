@@ -112,13 +112,9 @@ function PostView() {
       }
       }
     const handleCopyLink = (postId) => {
-        // Construct the link with the post ID
         const postLink = `${window.location.origin}/view/post/${postId}`;
         console.log("Copying link:", postLink);
-    
-        // Check if the Clipboard API is available
         if (navigator.clipboard) {
-            // Copy the link to the clipboard
             navigator.clipboard.writeText(postLink)
                 .then(() => {
                     console.log("Link copied to clipboard:", postLink);

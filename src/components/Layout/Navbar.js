@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next';
 
 
 
-function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
+function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
     const { user } = useContext(UserDataContext);
     const navigate=useNavigate();
     const axios=useAxios();
@@ -106,8 +106,8 @@ function NavBar({ toggleCollapse,isSmallScreen,socket,notifications }) {
 }, [language]);
 
 const changeLanguageHandler = () => {
-  const newLanguage = language == 'en' ? 'ar' : 'en'; // Toggle between English and Arabic
-  changeLanguage(newLanguage); // Pass the new language to the context function
+  const newLanguage = language == 'en' ? 'ar' : 'en'; 
+  changeLanguage(newLanguage); 
 };
   
     const items = [
@@ -182,7 +182,8 @@ const changeLanguageHandler = () => {
 
     return (
       <div >
-        <Navbar expand="lg" className="bg-body-tertiary" style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)"}}>
+        <Navbar expand="lg" className="bg-body-tertiary"
+         style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)"}}>
             <Container>
                 <Navbar.Brand href="/home">
                     <img src={Logo} width='40%' alt="Logo" />
@@ -198,18 +199,15 @@ const changeLanguageHandler = () => {
        
                 <Nav className="right-content">
                     <img src={messages} className="icon me-2" />
-                    {isSmallScreen?<img src={NotificationIcon} className="icon me-2" onClick={toggleDropdown} />:
+                    {isSmallScreen||isProScreen?<img src={NotificationIcon} className="icon me-2" onClick={toggleDropdown} />:
                           <NotificationDropDown notifications={notifications} />
                     }
-                    {/* <img src={NotificationIcon} className="icon me-4" onClick={toggleDropdown} /> */}
-      
-         
-              
+                  
                 
                     <Dropdown menu={{ items }} className="dropdown-responsive">
                         <Space>
                             <div className="image-container">
-                                <img src={user.userData.profile.type_name=='club'?user.userData.profile.club_logo:user.userData.image} alt="Profile" width='30px' height='30px' style={{borderRadius:'30px'}}/>
+                                <img src={user.userData.profile.type_name=='club'?user.userData.profile.club_logo:user.userData.image} alt="Profile" width={isProScreen?'20px':'30px'} height={isProScreen?'20px':'30px'} style={{borderRadius:'30px'}}/>
                                 <p className="me">Me</p>
                             </div>
                             <MdArrowDropDown fontSize={38} style={{ color: '#979797' }} />

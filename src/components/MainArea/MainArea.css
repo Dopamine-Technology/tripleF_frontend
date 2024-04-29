@@ -1151,7 +1151,7 @@ user-select: none;
         margin-left: 3rem;
     }
 }
-@media only screen and (min-width: 1024px) and (max-width: 1366px) {
+@media only screen and (min-width: 820px) and (max-width: 1366px) {
     .story-section {
         padding: 20px;
         border-radius: 10px;
@@ -1175,7 +1175,7 @@ user-select: none;
        border: 1px solid rgba(226,226,234, 1);
        opacity: 1;
        background-color: white;
-       width: 90%;
+       width: 83%;
        margin-left: 0rem;
        
     }
@@ -1191,7 +1191,9 @@ user-select: none;
         max-width: 10rem;
         }
         .share-btn{
-            width: 70px;
+            /* width: 70px; */
+            width:auto;
+            margin-left: 1rem;
         }
         .RightArea {
             margin-top: 2rem;
@@ -1207,5 +1209,10 @@ user-select: none;
           }
           .post-continer{
             margin-left: 0rem;
+        }
+        .text{
+            width: 83%;
+     
+        
         }
 }

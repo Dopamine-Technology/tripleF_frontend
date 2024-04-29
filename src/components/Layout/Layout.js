@@ -22,7 +22,7 @@ const toggleCollapse = () => {
 };
   return (
     <AntLayout style={{ minHeight: "100vh" }}>
-      <NavBar toggleCollapse={toggleCollapse} isSmallScreen={isSmallScreen} notifications={notifications}  />
+      <NavBar toggleCollapse={toggleCollapse} isSmallScreen={isSmallScreen} notifications={notifications} isProScreen={isProScreen}  />
       <AntLayout>
         <Sider
           width={isCollapsed?0:80}

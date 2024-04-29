@@ -23,7 +23,7 @@ const Input = ({
   const [inputValue, setInputValue] = useState(defaultValue);
   const [isTyping, setIsTyping] = useState(false);
 
-  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen,isTabletGalaxyScreen } = useScreenWidth();
 
   useEffect(() => {
     setInputValue(defaultValue);
@@ -77,7 +77,7 @@ const Input = ({
         {type === "password" && (
           <div
             className="position-absolute top-50 end-0 translate-middle-y"
-            style={{ marginRight: "-14rem" }}
+            style={{ marginRight:isTabletGalaxyScreen?'-19rem': "-14rem" }}
           >
             {showPassword ? (
               <FaEyeSlash

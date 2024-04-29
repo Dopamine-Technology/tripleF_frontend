@@ -18,6 +18,7 @@ import Logo from '../../assets/imgs/LogoLastVersion.png'
 import LanguageIconBlack from '../../assets/imgs/langauge-icon.svg';
 import profileIconBlack from '../../assets/imgs/profile-black-icon.svg';
 import btnIconHover from '../../assets/imgs/btnIconHover.svg';
+import burgerImg from '../../assets/imgs/burger.svg'
 import { useTranslation } from 'react-i18next';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
@@ -333,7 +334,7 @@ const CombinedNavbars = () => {
     isTabletScreen?(
       <Navbar expand="lg" className='p-0' >
   <Container className='navbar-container' style={{backgroundColor:'white',paddingLeft:'2rem'}}>
-    <Navbar.Brand href="" className="d-flex align-items-center navbar.brand2 ">
+    <Navbar.Brand href="" className="d-flex align-items-center navbar.brand2  ">
       <img src={Logo} className='logo-register' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
     </Navbar.Brand>
@@ -431,13 +432,76 @@ const CombinedNavbars = () => {
     </Navbar>
     )
 :
-  (
-<Container style={{ marginRight: isScrolled && currentLanguage === 'ar' ? '-7rem' : isScrolled ? '14rem' : '2.5rem' }}>
+isProScreen?(
+<Navbar expand="lg">
+  <Container className="">
+    <Navbar.Brand href="" className="">
+      <img src={LogoWhite} className='' />
+    </Navbar.Brand>
+    <Navbar.Toggle aria-controls="basic-navbar-nav" style={{width:"28px",height:'28px'}} className="ms-auto" children={<img src={burgerImg} alt="Toggle Menu" width='28px' height='22px' />} />
+    <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="mt-1">
+        <DropdownButton
+          title={
+            <div className='d-flex align-items-center'>
+              <img src={LanguageIcon} width='24px' height='24px' className='me-1 mb-4' />
+              <span className='mb-4'>{currentLanguage}</span>
+              <img src={ArrowDownImage} width='24px' height='24px' className='ms-1 mb-4' />
+            </div>
+          }
+          id="language-dropdown"
+          variant=""
+          className="bg-transparent mr-5 custom-dropdown mt-1"
+        >
+          {availableLanguages.map((lang) => (
+            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
+              <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
+              {lang.label}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+        
+        <Link to='/login' className='text-black d-flex mt-2' style={{ textDecoration: 'none' }}>
+          <img src={profileIcon} width='24px' height='24px' className='me-1' />
+          {t('navbar.login')}
+        </Link>
+      </Nav>
+      <Nav className="me-auto">
+        <Nav.Link href='/#section1' className='' style={{ textDecoration: 'none' }} onClick={() => handleNavLinkClick('about')}>
+          <p className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>{t('navbar.home')}</p>
+        </Nav.Link>
+        <Nav.Link href="/#about" className='' style={{ textDecoration: 'none' }}>
+          <p className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>{t('navbar.aboutus')}</p>
+        </Nav.Link>
+        <Nav.Link href="/#Who" className='' style={{ textDecoration: 'none' }}>
+          <p className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }}>{t('navbar.whoFor')}</p>
+        </Nav.Link>
+        <Nav.Link href="/#How" className='' style={{ textDecoration: 'none' }}>
+          <p className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>{t('navbar.howItWorks')}</p>
+        </Nav.Link>
+        <Nav.Link href="/#Testimonial" className='' style={{ textDecoration: 'none' }}>
+          <p className={` ${activeLink === 5 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>{t('navbar.testimonial')}</p>
+        </Nav.Link>
+        <Nav.Link href="/#Contact" className='' style={{ textDecoration: 'none' }}>
+          <p className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>{t('navbar.contactUs')}</p>
+        </Nav.Link>
+        <Nav.Link href="/#News" className='' style={{ textDecoration: 'none' }}>
+          <p className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>{t('navbar.news')}</p>
+        </Nav.Link>
+      </Nav>
+    </Navbar.Collapse>
+  </Container>
+</Navbar>
+
+ 
+):(
+  <Container style={{ marginRight: isScrolled && currentLanguage === 'ar' ? '-7rem' : isScrolled ? '14rem' : '2.5rem' }}>
 
       <TopNavbar />
       <BottomNavbar />
     </Container>
-  )
+)
+ 
    }
      
     </div>

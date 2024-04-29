@@ -6,12 +6,14 @@ import Col from 'react-bootstrap/Col';
 import useAxios from '../Auth/useAxiosHook.interceptor';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import { useLocation } from 'react-router-dom';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
-function CardsList({ isSmallScreen, filters }) {
+function CardsList({  filters }) {
     const [profiles, setProfiles] = useState();
     const [loading, setLoading] = useState(true);
     const axios = useAxios();
     const location = useLocation();
+    const { windowWidth, isSmallScreen, isTabletScreen, isProScreen,isTabletGalaxyScreen } = useScreenWidth();
 
     useEffect(() => {
         let endpoint = "";
@@ -56,7 +58,7 @@ function CardsList({ isSmallScreen, filters }) {
             ) : (
                 profiles?.map((profile, index) => (
                     (index % numColumns === 0 || index === profiles?.length - 1) && (
-                        <Row key={index} style={{ marginLeft: isSmallScreen ? '0rem' : '' }}>
+                        <Row key={index} style={{ marginLeft: isSmallScreen? '0rem' : '' }}>
                             {profiles?.slice(index, index + numColumns).map((profile, i) => (
                                 <Col key={i} md={3} xs={6} lg={6} xl={3}>
                                     <AccountCard profile={profile} />
