@@ -1,6 +1,6 @@
 import React, { useContext,useEffect,useState } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import Logo from '../../assets/imgs/Logo.png'
+import Logo from '../../assets/imgs/LogoLastVersion.png'
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdArrowDropDown } from "react-icons/md";
 import { AiOutlineMessage } from "react-icons/ai";
@@ -185,8 +185,8 @@ const changeLanguageHandler = () => {
         <Navbar expand="lg" className="bg-body-tertiary"
          style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)",direction:direction}}>
             <Container>
-                <Navbar.Brand href="/home">
-                    <img src={Logo} width='40%' alt="Logo" />
+                <Navbar.Brand href="/home" className="me-5">
+                    <img src={Logo} width='80%' alt="Logo " className="me-3" />
                 </Navbar.Brand>
                 <Nav className={`${language=='ar'?'me-5':'me-auto'}`}>
                     <div className="search-container" style={{direction:direction}}>
