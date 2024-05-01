@@ -183,13 +183,13 @@ const changeLanguageHandler = () => {
     return (
       <div >
         <Navbar expand="lg" className="bg-body-tertiary"
-         style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)"}}>
+         style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)",direction:direction}}>
             <Container>
                 <Navbar.Brand href="/home">
                     <img src={Logo} width='40%' alt="Logo" />
                 </Navbar.Brand>
-                <Nav className="me-auto">
-                    <div className="search-container">
+                <Nav className={`${language=='ar'?'me-5':'me-auto'}`}>
+                    <div className="search-container" style={{direction:direction}}>
                         <input type="text" placeholder={t('Opportunity.search')} className="search-input" onChange={(e) => handleChange(e.target.value)} />
                         <AiOutlineSearch className="search-icon" />
                        

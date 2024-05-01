@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-const Step = ({ step, content, stepNum, isSmallScreen,isTabletScreen,isProScreen }) => {
+const Step = ({ step, content, stepNum, isSmallScreen,isTabletScreen,isProScreen,isTabletGalaxyScreen }) => {
   return (
     <Card style={{ width: isSmallScreen ? '100%' : isTabletScreen?'342px':isProScreen?'27rem':'30rem', borderRadius: '10px' ,height: isSmallScreen ? '80%' : ''}}>
       <Card.Body>

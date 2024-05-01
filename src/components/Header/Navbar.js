@@ -21,7 +21,7 @@ import btnIconHover from '../../assets/imgs/btnIconHover.svg';
 import burgerImg from '../../assets/imgs/burger.svg'
 import { useTranslation } from 'react-i18next';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
-
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'En';
@@ -118,13 +118,13 @@ const TopNavbar = ({content}) => {
   </Container>
 </Navbar>:
 <Navbar expand="lg" className='fixed-navbar' >
-  <Container style={{ marginLeft: currentLanguage === 'ar' ? '0rem' : '-1rem', marginRight: currentLanguage === 'ar' ? '5rem' : '-1rem' }}>
+  <Container style={{ marginLeft: currentLanguage === 'ar' ? '0rem' : '-1rem', marginRight: currentLanguage === 'ar' ? '-5rem' : '-1rem' }}>
     <Navbar.Brand  className="d-flex align-items-center navbar-brand2">
       <img src={LogoWhite} className='logo-header' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className="custom-toggler ms-5" />
     </Navbar.Brand>
     <Navbar.Collapse id="basic-navbar-nav">
-      <Nav className="ms-auto">
+      <Nav className="ms-auto mt-3">
         <DropdownButton
           title={
             <div className='d-flex align-items-center'>
@@ -247,7 +247,7 @@ const BottomNavbar = () => {
       </Navbar.Collapse>
     </Container>
   </Navbar>:<Navbar expand="lg" className='fixed-navbar2' style={{ direction:direction }} >
-    <Container style={{marginLeft:direction=='rtl'?'25rem':'1rem'}}>
+    <Container style={{marginLeft:currentLanguage=='ar'?'30rem':'1rem'}}>
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'16rem':'13rem'}} className="custom-toggler"/>
       <Navbar.Collapse id="basic-navbar-nav">

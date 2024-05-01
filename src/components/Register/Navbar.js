@@ -39,8 +39,6 @@ const TopNavbar = () => {
   
   const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
-
-
   useEffect(() => {
     // Change direction based on the selected language
     if (currentLanguage === 'ar') {
@@ -123,7 +121,7 @@ const BottomNavbar = () => {
 
   return (
     <Navbar expand="lg" className='' style={{ direction: direction }}>
-  <Container style={{ marginLeft: isTabletScreen ? '30rem' : '1rem' }}>
+  <Container style={{ marginLeft: isTabletScreen ? '30rem' :currentLanguage=='ar'?'32rem': '1rem' }}>
     <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent', marginLeft: 'auto' }} />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">

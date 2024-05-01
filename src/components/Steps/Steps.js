@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const Steps = () => {
-  const currentLanguage = Cookies.get('language') || 'en';
+    const currentLanguage = Cookies.get('language') || 'en';
     const [direction, setDirection] = useState('ltr');
     const [t,i18n]=useTranslation();
 
@@ -38,19 +38,22 @@ const Steps = () => {
     },
   ];
   
-  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen,isTabletGalaxyScreen } = useScreenWidth();
 
 
   return (
     <div className='steps-div' id='How' style={{direction:direction}}>
    <div className="Shape"></div>
-      <Row style={{marginTop:'2rem',marginRight:currentLanguage=='ar'?'10rem':''}}>
+      <Row style={{marginTop:'2rem',marginRight:currentLanguage=='ar'?'14rem':''}}>
         <Col md={6} className="order-md-1 order-2">
           <Row className='mb-3'>
             {stepsArray.map((step, index) => (
-              <Col key={index} md={12} style={{ marginLeft: isSmallScreen ? 0 : (index % 2 === 0 ? isTabletScreen||isProScreen?'0.7rem':'5.3rem' : isTabletScreen||isProScreen?'-2rem':'2.3rem') }}>
+              <Col key={index} md={12} style={{ marginLeft: isSmallScreen ? 0 : (index % 2 === 0 ? isTabletScreen||isProScreen||isTabletGalaxyScreen?'0.7rem':'5.3rem' : 
+              isTabletScreen||isProScreen||isTabletGalaxyScreen?'-2rem':'2.3rem'), 
+              marginRight: currentLanguage=='ar'?isSmallScreen ? 0 : (index % 2 === 0 ? isTabletScreen||isProScreen||isTabletGalaxyScreen?'0.7rem':'5.3rem' : 
+              isTabletScreen||isProScreen||isTabletGalaxyScreen?'-2rem':'2.3rem'):'' }} >
                 <Step step={step.step} content={step.content} stepNum={step.stepNum} isSmallScreen={isSmallScreen} 
-                 isTabletScreen={isTabletScreen} isProScreen={isProScreen} />
+                 isTabletScreen={isTabletScreen} isProScreen={isProScreen}  isTabletGalaxyScreen={isTabletGalaxyScreen} />
               </Col>
             ))}
           </Row>

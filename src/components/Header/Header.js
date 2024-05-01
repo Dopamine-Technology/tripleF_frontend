@@ -8,9 +8,9 @@ import CombinedNavbars from '../Register/Navbar';
 import Cookies from 'js-cookie';
 
 const Header = ({ content }) => {
+    
   const currentLanguage = Cookies.get('language') || 'en';
 
-  
     return (
         <div className='whole-div'  >
             <div className="background-overlay"  id='homeSection'></div>

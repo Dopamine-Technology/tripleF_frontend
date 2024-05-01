@@ -2,18 +2,18 @@ import React, { useState, useEffect ,useLayoutEffect} from 'react';
 import SingleOne from './SingleOne';
 import { Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight,FaArrowLeft  } from "react-icons/fa";
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 const News = () => {
   const [news, setNews] = useState([]);
 
   const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
-  const currentLanguage = Cookies.get('language') || 'en';
-  const [direction, setDirection] = useState('ltr');
+  const { language, changeLanguage,direction } = useLanguage(); 
   const [t,i18n]=useTranslation();
 
 
@@ -27,15 +27,7 @@ const News = () => {
     }
   };
 
-  useEffect(() => {
-    // Change direction based on the selected language
-    if (currentLanguage === 'ar') {
-      setDirection('rtl');
-    } 
-    else{
-      setDirection('ltr')
-    }
-  }, [currentLanguage]);
+ 
   useEffect(() => {
     axios.post('https://backend.triplef.group/api/app/latest_posts', axiosConfig)
       .then((response) => {
@@ -69,7 +61,7 @@ const News = () => {
     <div className='p-4 mt-5' id='News' style={{direction:direction}}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <p className='news-h1' style={{ width: '30rem', marginLeft: isSmallScreen?'0.8rem':'2.7rem' }}>{t('News.title')}</p>
-        <p><a href="/blogs" className='read-more-link mt-2'>{t('News.view_more')}</a> <FaArrowRight className='arrow-hidden' /></p>
+        <p><a href="/blogs" className='read-more-link mt-2'>{t('News.view_more')}</a> {language=='ar'?<FaArrowLeft  className='arrow-hidden' />:<FaArrowRight className='arrow-hidden' />}</p>
       </div>
       <Row className={isSmallScreen?`news-row`:`mt-5 news-row`} >
         {news2 && news2.length > 0 ? (
