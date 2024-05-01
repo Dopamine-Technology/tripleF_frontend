@@ -96,10 +96,10 @@ function RegisterForm({ onLoadingChange }) {
       country_id: Yup.string().required(t('validationErrors.country_id')),
       mobile_number: Yup.string().matches(/^\d{7,15}$/, t('validationErrors.valid_mobile_number'))
       .required(t('validationErrors.mobile_number')),
-      position: Yup.array()
-    .of(Yup.string())
-    .min(1, t('validationErrors.position'))
-    .required(t('validationErrors.position'))
+    //   position: Yup.array()
+    // .of(Yup.string())
+    // .min(1, t('validationErrors.position'))
+    // .required(t('validationErrors.position'))
     }),
     2: Yup.object().shape({
       talent_type: Yup.string().required(t('validationErrors.sport_type')),
@@ -392,11 +392,21 @@ function RegisterForm({ onLoadingChange }) {
           }
         } else if (currentStep === 2) {
           try {
+        
             await stepTwoSchema[accountType].validate(data, { abortEarly: false });
 
             if (!data.position) {
-              data.position = '1';
-            }
+              data.position = [1,0];
+          
+            } 
+              else {
+                if (Array.isArray(data.position)) {
+                  data.position = [data.position, 0]; // If only one option is selected, send [option, 0]
+                }
+              }
+
+            
+           
             const mergedData = {};
             for (const key in formData) {
               if (formData[key]) {

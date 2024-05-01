@@ -6,25 +6,15 @@ import RightVector from '../../assets/imgs/vectorRight.svg';
 import { ImQuotesLeft } from "react-icons/im";
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 const ClientTalk = ({ selectedImageIndex, setSelectedImageIndex }) => {
   let description = '';
   let name='';
   let job ='';
 
-  const currentLanguage = Cookies.get('language') || 'en';
-    const [direction, setDirection] = useState('ltr');
-    const [t,i18n]=useTranslation();
-
-    useEffect(() => {
-      // Change direction based on the selected language
-      if (currentLanguage === 'ar') {
-        setDirection('rtl');
-      } 
-      else{
-        setDirection('ltr')
-      }
-    }, [currentLanguage]);
+  const { language, changeLanguage,direction } = useLanguage(); 
+  const [t,i18n]=useTranslation();
 
   const handleNextButtonClick = () => {
    
@@ -91,10 +81,10 @@ const ClientTalk = ({ selectedImageIndex, setSelectedImageIndex }) => {
 
       <div className='mt-4' style={{marginLeft:'-1.3rem'}} >
         <Button className='customButton' style={{ backgroundColor: '#213555' }} onClick={handlePrevButtonClick}>
-          <img src={LeftVector} style={{width: '17.1px',height: '15px'}} />
+          <img src={language=='ar'?RightVector:LeftVector} style={{width: '17.1px',height: '15px'}} />
         </Button>
         <Button className='customButton' style={{ backgroundColor: '#213555' }} onClick={handleNextButtonClick}>
-          <img src={RightVector} style={{width: '17.1px',height: '15px'}} />
+          <img src={language=='ar'?LeftVector:RightVector} style={{width: '17.1px',height: '15px'}} />
         </Button>
       </div>
     </div>

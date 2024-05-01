@@ -12,8 +12,12 @@ const ScreenProvider = ({ children }) => {
     windowWidth > 820 && windowWidth <= 1025
   );
   const [isTabletGalaxyScreen, setIsTabletGalaxyScreen] = useState(
-    windowWidth > 1025 && windowWidth <= 1366
+    windowWidth > 1025 && windowWidth <= 1170
   );
+  const [isMacTablet, setIsMacTablet] = useState(
+    windowWidth > 1170 && windowWidth <= 1366
+  );
+
 
 
   useEffect(() => {
@@ -23,8 +27,8 @@ const ScreenProvider = ({ children }) => {
       setIsSmallScreen(newWidth <= 600);
       setIsTabletScreen(newWidth > 600 && newWidth <= 820);
       setIsProScreen(newWidth > 820 && newWidth <= 1025);
-      setIsTabletGalaxyScreen(newWidth > 1025 && newWidth <= 1366)
-
+      setIsTabletGalaxyScreen(newWidth > 1025 && newWidth <= 1170)
+      setIsMacTablet(newWidth > 1170 && newWidth <= 1366)
     };
 
     window.addEventListener('resize', handleResize);
@@ -38,7 +42,8 @@ const ScreenProvider = ({ children }) => {
         isSmallScreen,
         isTabletScreen,
         isProScreen,
-        isTabletGalaxyScreen
+        isTabletGalaxyScreen,
+        isMacTablet
       }}
     >
       {children}

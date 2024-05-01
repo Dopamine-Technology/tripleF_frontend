@@ -440,7 +440,7 @@ margin-left: 4rem;
     margin-left: 2rem;
    }
  }
- @media only screen and (min-width: 1100px) and (max-width: 1366px) {
+ @media only screen and (min-width: 1100px) and (max-width: 1170px) {
   .signup-img{
     display: none;
   }
@@ -459,4 +459,13 @@ margin-left: 4rem;
    .login-or{
     margin-left: 2rem;
    }
+ }
+
+ @media only screen and (min-width:  1170px) and (max-width: 1366px) {
+  .signup-img{
+      width:37rem;
+      height: 30rem;
+      margin-top: -0.1rem;
+    
+  }
  }

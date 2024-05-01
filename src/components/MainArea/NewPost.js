@@ -16,7 +16,7 @@ function NewPost({onNewPostCreated  }){
     const location=useLocation();
     const navigate=useNavigate();
     const {user}=useContext(UserDataContext);
-    const { windowWidth, isSmallScreen, isTabletScreen, isProScreen,isTabletGalaxyScreen } = useScreenWidth();
+    const { windowWidth, isSmallScreen, isTabletScreen, isProScreen,isTabletGalaxyScreen,isMacTablet } = useScreenWidth();
     const { language, changeLanguage } = useLanguage(); // Access language context
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
@@ -40,9 +40,11 @@ function NewPost({onNewPostCreated  }){
 return(
 <Container className='new-post' style={{ 
   marginLeft: isProScreen && isProfilePath ? '0rem' : 
-              isProScreen ? '0rem' :
+              isProScreen? '0rem' :
               isTabletGalaxyScreen && isProfilePath ? '4rem' :
-              isProfilePath ? '0rem' : 
+              isMacTablet&&isProfilePath?'4rem':
+              isProfilePath ? '0rem':
+              isMacTablet?'0rem':
               '4rem' 
 }}>
     {user.userData.profile.type_name === "talent" ? (
@@ -58,7 +60,7 @@ return(
                 </div>
             </div>
         </Col>
-        <Col xs={6} sm={4} md={3} lg={4} xl={3}>
+        <Col xs={6} sm={4} md={3} lg={3} xl={3}>
             <Button className='share-btn' onClick={handleShow}>{t('mainarea.shareBtn')}</Button>
             {show && <ChallengesList handleClose={handleClose} show={show}  onNewPostCreated={onNewPostCreated}   />}
         </Col>
@@ -84,13 +86,13 @@ return(
         </Row>
         ) : (
             <Row >
-                <Col xs={6} sm={6} md={9} lg={10}>
+                <Col xs={6} sm={6} md={9} lg={9}>
                     <div  className='add-post'>
                         <p className='newPost-title'>{t('mainarea.postOpportunities')}</p>
                         <p className='newPost-desc'>{t('mainarea.shareChallengeDesc')}</p>
                     </div>
                 </Col>
-                <Col xs={6} sm={6} md={3} lg={2}><Button className='share-btn' onClick={() => { navigate('/home/add/opportunity') }}>{t('mainarea.add')}</Button></Col>
+                <Col xs={6} sm={6} md={3} lg={3}><Button className='share-btn' onClick={() => { navigate('/home/add/opportunity') }}>{t('mainarea.add')}</Button></Col>
             </Row>
         )
     )}

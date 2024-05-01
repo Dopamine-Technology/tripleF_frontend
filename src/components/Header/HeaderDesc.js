@@ -1,34 +1,22 @@
-import React,{useContext,useState,useLayoutEffect,useEffect} from 'react';
+import React,{useContext} from 'react';
 import RegisterButton from './RegisterButton';
 import {Row,Col} from 'react-bootstrap';
 import { PermDataContext } from '../PermContext/PermData.context';
-import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
 
 const HeaderDesc = () => {
 
   const { permData } = useContext(PermDataContext);
   const isViewingTalent = permData?.find(item => item.name === 'view_talent' && item.value === true);
   const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
-
-  
-    const currentLanguage = Cookies.get('language') || 'en';
-    const [direction, setDirection] = useState('ltr');
-    const [t,i18n]=useTranslation();
-
-    useEffect(() => {
-      if (currentLanguage === 'ar') {
-        setDirection('rtl');
-      } 
-      else{
-        setDirection('ltr')
-      }
-    }, [currentLanguage]);
+  const { language, changeLanguage,direction } = useLanguage(); 
+  const [t,i18n]=useTranslation();
     
   return (
     <div className='header-div' style={{direction:direction} } >
-      <Row style={{marginRight:currentLanguage=='ar'?'-25rem':''}} >
+      <Row style={{marginRight:language=='ar'?'-28rem':''}} >
         <Col md={6} className={isSmallScreen ? '':'mt-5'} >
           <p className='header-h1' style={{ zIndex: '999' }}>
             {t('header.title')}

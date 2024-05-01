@@ -6,13 +6,16 @@ import RightArea from "./RightArea";
 import './Navbar.css'
 import { Outlet } from "react-router-dom";
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useLanguage } from '../LanguageContext/LanguageProvider';
+import { useTranslation } from "react-i18next";
 
 const { Header, Sider, Content } = AntLayout;
 
 const Layout = ({notifications}) => {
 
   const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
-
+  const { language, changeLanguage,direction } = useLanguage(); 
+  const [t,i18n]=useTranslation();
 
 
 const [isCollapsed, setIsCollapsed] = useState(isSmallScreen?true:false);
@@ -23,11 +26,10 @@ const toggleCollapse = () => {
   return (
     <AntLayout style={{ minHeight: "100vh" }}>
       <NavBar toggleCollapse={toggleCollapse} isSmallScreen={isSmallScreen} notifications={notifications} isProScreen={isProScreen}  />
-      <AntLayout>
+      <AntLayout >
         <Sider
           width={isCollapsed?0:80}
           className="bg-transparent"
-        
           style={{ overflow: 'auto', height: '100vh', position: '', left: 0, width: isCollapsed ? 0 : 80 }}
         >
           
@@ -36,7 +38,7 @@ const toggleCollapse = () => {
         <AntLayout style={{ transition: 'margin-left 0.3s' }} className="AntLayout" 
         style={{marginLeft:isSmallScreen ?(isCollapsed?'-3rem':'100rem'):isTabletScreen?'4rem':''}}>
                                                     
-          <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+          <Content style={{ margin: "24px 16px 0 ", overflow: "initial" }}>
             <Row justify="center">
               <Col xs={24} md={24} lg={16}>
                 <Outlet />

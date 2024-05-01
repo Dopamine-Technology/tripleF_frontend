@@ -1,11 +1,9 @@
 import React,{useContext,useState,useEffect} from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
-import RegisterImg from '../../assets/imgs/registerImage.svg';
 import Input from './Input';
 import { useForm } from 'react-hook-form';
-import search from '../../assets/imgs/search.png';
 import facebook from '../../assets/imgs/facebook.png';
-import { Link,Navigate,useNavigate  } from 'react-router-dom';
+import { Link,useNavigate  } from 'react-router-dom';
 import loginPic from '../../assets/imgs/login.png';
 import { UserDataContext } from "../UserContext/UserData.context";
 import Cookies from "js-cookie";
@@ -13,7 +11,6 @@ import axios from 'axios';
 import './style.css';
 import { GoogleLogin } from 'react-google-login';
 import { message } from 'antd';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import * as yup from "yup"; // Import Yup
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginSocialFacebook } from "reactjs-social-login";
@@ -268,7 +265,7 @@ function LoginForm() {
    />
  </Form.Group>
  <Form.Group className='mb-3' controlId='formRememberMe'  >
-  <Row>
+  <Row >
     <Col xs={5}>
       <Form.Check type='checkbox'  label={t('Login.remmeberMe')} onChange={handleRememberMeChange} checked={rememberMe}
       className={rememberMe ? 'green-checkbox' : ''} />
