@@ -85,7 +85,7 @@ function NotificationDropDown() {
     }
 
     const displayedNotifications = allNotifications?.length > 0 ? allNotifications.slice(0, 7) : [];
-    console.log('notification here', notifications);
+    // console.log('notification here', notifications);
 
     return (
         <Dropdown className="d-inline mx-2" drop='start' onClick={handleToggleClick} >

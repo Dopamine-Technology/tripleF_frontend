@@ -31,7 +31,7 @@ function ProfileCard({id,profileData}) {
   const TalentData= [
     { title: t('Profile.gender'), value: profileData.profile.gender, svg: Heart },
     { title: t('Profile.nationality'), value: profileData.profile.country.name, svg: nationlaity },
-    { title: t('Profile.position'), value: profileData.profile.position.name, svg: Positon },
+    // { title: t('Profile.position'), value: profileData.profile.position.name, svg: Positon },
     { title: t('Profile.preferredFoot'), value: 'Left', svg: prefferedFoot },
     { title: t('Profile.birthDate'), value: profileData.profile.birth_date, svg: Calendar },
     { title: t('Profile.height'), value: profileData.profile.height, svg: Height },
@@ -102,7 +102,7 @@ const handleUpdateIsFollowed = (value) => {
         <span className='me-2'>.</span>
         <span className='followers-span' onClick={() => handleShow('following')}> {followingCount} {t('Profile.following')}</span>
       </p>
-      {profileData.id!=user.userData.id?  
+      {/* {profileData.id!=user.userData.id?  
        <FollowBtn id={id} is_followed={isFollowed}
         updateFollowersCount={updateFollowersCount}
         updateFollowingCount={updateFollowingCount}
@@ -156,7 +156,7 @@ const handleUpdateIsFollowed = (value) => {
       }
               {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Central Forward'&&
         <Card.Img src={GoalKeeper} className='mt-4' />
-      }
+      } */}
       {profileData.profile.type_name == 'talent' ? 
         (TalentData.map((data, index) => (
           <div>

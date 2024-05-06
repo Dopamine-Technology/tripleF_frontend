@@ -1,16 +1,33 @@
 import React from 'react';
+import { AiOutlineSearch } from "react-icons/ai";
+import { Row,Col,Container } from 'react-bootstrap';
+import New from '../../assets/imgs/new.png';
 
 function Navbar() {
-  // Dummy data for user
-  const user = {
-    name: "John Doe",
-    image: "https://randomuser.me/api/portraits/men/1.jpg" 
-  };
 
   return (
-    <div className="navbar">
-      <img src={user.image} alt={user.name} className="user-avatar" />
-      <h2 className="user-name">{user.name}</h2>
+    <div className="mb-2">
+      <Container>
+        <Row>
+          <Col >
+      <p className='header-title'>Messaging</p>
+         </Col>
+         <Col >
+    <div class="search-container " >
+    <input type="text" placeholder="Search" class="search-input" />
+    <AiOutlineSearch className="search-icon" />
+    </div>
+    </Col>
+    <Col ></Col>
+    <Col></Col>
+    <Col>
+    <button className='btn-tall' style={{width:'auto',padding:'0.5rem'}}>
+                 <img src={New}  /> New Message
+                </button>
+    </Col>
+    </Row>
+    <hr style={{color:'#d3d7dd'}} />
+    </Container>
     </div>
   );
 }

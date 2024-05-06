@@ -25,7 +25,6 @@ import { useLanguage } from '../LanguageContext/LanguageProvider';
 import { useTranslation } from 'react-i18next';
 
 
-
 function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
     const { user } = useContext(UserDataContext);
     const navigate=useNavigate();
@@ -33,13 +32,13 @@ function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [input, setInput] = useState("");
     const [results,setResults]=useState([])
-    const { language, changeLanguage } = useLanguage(); // Access language context
+    const { language, changeLanguage } = useLanguage(); 
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
+   
     
   
     useEffect(() => {
-      // Use the language obtained from the context
       if (language === 'ar') {
           setDirection('rtl');
       } else {
@@ -97,7 +96,6 @@ function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
   }
 
   useEffect(() => {
-    // Use the language obtained from the context
     if (language === 'ar') {
         setDirection('rtl');
     } else {
