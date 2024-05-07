@@ -17,13 +17,13 @@ import { Link ,useNavigate} from 'react-router-dom';
 import Cookies from "js-cookie";
 import useAxios from "../Auth/useAxiosHook.interceptor";
 import { RxHamburgerMenu } from "react-icons/rx";
-import messages from '../../assets/imgs/messages.svg';
+import messagesIcon from '../../assets/imgs/messages.svg';
 import NotificationIcon from '../../assets/imgs/notificationIcon.svg';
 import NotificationDropDown from "../Notification/NotificationDropDown";
 import { SearchResultsList } from "./SearchResultsList";
 import { useLanguage } from '../LanguageContext/LanguageProvider';
 import { useTranslation } from 'react-i18next';
-
+import Pusher from 'pusher-js'; 
 
 function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
     const { user } = useContext(UserDataContext);
@@ -35,6 +35,43 @@ function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
     const { language, changeLanguage } = useLanguage(); 
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
+    const [messages,setMessages]=useState([]);
+    const [unreadCount, setUnreadCount] = useState(0);
+    const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
+
+    useEffect(() => {
+      const pusher = new Pusher('323996d4cfab0016889a', {
+          cluster: 'ap2',
+      });
+
+      console.log('Pusher connected2:', pusher.connection.state)
+
+      const channel = pusher.subscribe('chat-channel');
+
+      console.log('Subscribed to channel2:', channel.name);
+
+      channel.bind('new-message', (data) => {
+          setMessages((prevNotifications) => [...prevNotifications, data]);
+          setUnreadCount((prevCount) => prevCount + 1);
+          setHasUnreadMessages(true);
+          console.log('data222')
+          console.log('data 2223',data);
+     
+          if (user.userData.id === data.notifiable_id) { 
+            setHasUnreadMessages(true);
+          }
+      });
+
+      return () => {
+          channel.unbind();
+          pusher.unsubscribe('chat-channel');
+          console.log('Disconnected from Pusher');
+      };
+  }, [messages]);
+
+  useEffect(() => {
+      console.log('messages', messages);
+  }, [messages]);
    
     
   
@@ -196,7 +233,15 @@ const changeLanguageHandler = () => {
                 </Nav>
        
                 <Nav className="right-content">
-                    <img src={messages} className="icon me-2" />
+                {(messages.some(notification => notification.notifiable_id === user.userData.id) && hasUnreadMessages) ? (
+   <div className="icon-wrapper position-relative" onClick={()=>{navigate('/chatbox')}}>
+   <img src={messagesIcon} className="icon me-2" />
+    <div className="unread-spot"></div>
+ </div>
+) : (
+    <img src={messagesIcon} className="icon me-2" onClick={()=>{navigate('/chatbox')}} />
+)}
+
                     {isSmallScreen||isProScreen?<img src={NotificationIcon} className="icon me-2" onClick={toggleDropdown} />:
                           <NotificationDropDown notifications={notifications} />
                     }

@@ -66,7 +66,7 @@ function Sidebar({ setCurrentChatId }) {
           >
             <img src={chat.image} alt={chat.first_name} className="avatar" />
             <div className="info">
-              <h2>{chat.first_name} {chat.last_name}</h2>
+              <p className='info-name'>{chat.first_name} {chat.last_name}</p>
               <p>{chat.last_message.message}</p>
             </div>
             <div className="meta">

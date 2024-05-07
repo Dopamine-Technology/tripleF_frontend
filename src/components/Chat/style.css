@@ -1,7 +1,7 @@
 
    .chat-box {
     width: 1206px;
-    height: 700px;
+    height: 732px;
     margin: 16px 80px 1px;
     padding: 22px 1px 1px 4px;
     border-radius: 6px;
@@ -9,17 +9,18 @@
     background-color: var(--fill-white-white);
   }
   
-  .navbar {
+  /* .navbar {
     height: 80px;
     background-color: #fff;
     border-bottom: 1px solid #ccc;
   } 
-  
+   */
   .chat-list {
     overflow-y: auto;
     height: calc(100% - 180px);  
     background-color: #fafbfc;
     border-left: solid 1px #ebeaed;
+    padding: 28px 95px 16px 25px;
 
   }
   
@@ -94,14 +95,14 @@
     font-size: 12px;
     margin-top: 5px;
   }
-   .navbar {
+   /* .navbar {
     height: 80px;
     background-color: #fff;
     border-bottom: 1px solid #ccc;
     display: flex;
     align-items: center;
     padding: 0 20px;
-  } 
+  }  */
   
   .user-avatar {
     width: 40px;
@@ -117,14 +118,14 @@
   }
 
   
-   .navbar {
+   /* .navbar {
     height: 80px;
     background-color: #f5f5f5; 
     display: flex;
     align-items: center;
     padding: 0 20px;
     border-bottom: 1px solid #ccc;
-  } 
+  }  */
   
   .user-avatar {
     width: 40px;
@@ -133,20 +134,20 @@
     margin-right: 15px;
   }
   .sidebar {
-    width: 30%;
+    width: 25%;
     height: 100vh;
 
     float: left;
   }
    
-   .navbar {
+   /* .navbar {
     height: 80px;
     background-color: #f5f5f5; 
     display: flex;
     align-items: center;
     padding: 0 20px;
     border-bottom: 1px solid #ccc;
-  } 
+  }  */
   
   .user-avatar {
     width: 40px;
@@ -161,33 +162,34 @@
     padding: 10px;
     width: 749px;
     height: 49px;
-    margin: 34px 1px 0 0;
+    /* margin: 0px 0px 0 0px; */
     padding: 5px 16px;
     border-radius: 6px;
     border: solid 1px #a6aebb;
     background-color: rgba(235, 234, 237, 0.3);
+    margin-top: 0.1rem;
   }
   
   .chat-input-field {
     flex: 1;
-    padding: 10px;
+    padding: 14px;
     border: none;
-    border-radius: 20px;
-    background-color: #fff; /* Input field background color */
-    margin-right: 10px;
+    /* border-radius: 20px;   */
+    background-color: rgba(235, 234, 237, 0.3);
+    margin-right: 8rem;
+    width: 100%;
   }
   
   .send-button {
-    background-color: #128C7E; /* WhatsApp send button color */
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
+    /* padding: 10px 20px; */
+    border-radius: 45px;
     cursor: pointer;
     /* width: 30px;
     height: 30px; */
     /* margin: 4px 0 5px 12px; */
-    padding: 0.5rem;
+    padding: 0.3rem;
     background-color: #213555;
     cursor: pointer;
   }
@@ -283,7 +285,16 @@
     border-radius: 10px;
     
   }
- 
+ .info-name{
+  margin: 0 77px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+ }
   
   
   
