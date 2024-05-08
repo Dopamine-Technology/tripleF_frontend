@@ -20,6 +20,7 @@ import prefferedFoot from '../../../assets/imgs/run-outlined.svg';
 import FollowBtn from '../FollowBtn';
 import { useLanguage } from '../../LanguageContext/LanguageProvider';
 import { useTranslation } from 'react-i18next';
+import MessageBtn from '../MessageBtn';
 
 function ProfileCard({id,profileData}) {
   const axios  = useAxios();
@@ -102,6 +103,12 @@ const handleUpdateIsFollowed = (value) => {
         <span className='me-2'>.</span>
         <span className='followers-span' onClick={() => handleShow('following')}> {followingCount} {t('Profile.following')}</span>
       </p>
+      {profileData.id!=user.userData.id?  
+       <FollowBtn id={id} is_followed={isFollowed}
+        updateFollowersCount={updateFollowersCount}
+        updateFollowingCount={updateFollowingCount}
+        updateIsFollowed={setIsFollowed} />:null}
+        <MessageBtn />
       {/* {profileData.id!=user.userData.id?  
        <FollowBtn id={id} is_followed={isFollowed}
         updateFollowersCount={updateFollowersCount}

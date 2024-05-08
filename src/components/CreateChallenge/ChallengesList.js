@@ -9,7 +9,7 @@ import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../LanguageContext/LanguageProvider';
 
-function ChallengesList({ handleClose, show, onNewPostCreated }) {
+function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
   const { language, changeLanguage } = useLanguage();
   const [direction, setDirection] = useState('ltr');
   const [t, i18n] = useTranslation();
@@ -34,15 +34,7 @@ function ChallengesList({ handleClose, show, onNewPostCreated }) {
         const video = document.createElement('video');
         video.preload = 'metadata';
         video.onloadedmetadata = function () {
-          // Check the duration of the video
-          if (video.duration <= 700) {
-            setVideoUploaded(true);
-       
-          } else {
-            // Video duration exceeds 10 seconds, show an error message
-            message.error('Video duration should not exceed 10 seconds.');
-            setVideoUploaded(false);
-          }
+          setVideoUploaded(true);
           // Clean up
           URL.revokeObjectURL(video.src);
         };
@@ -67,11 +59,14 @@ function ChallengesList({ handleClose, show, onNewPostCreated }) {
         },
       })
       .then((response) => {
+      
         message.success('File uploaded successfully');
+        setShow(false);
         onNewPostCreated();
+        
       })
       .catch((error) => {
-        message.error('Error uploading file');
+        // message.error('Error uploading file');
       });
   };
 

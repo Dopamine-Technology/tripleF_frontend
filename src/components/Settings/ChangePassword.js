@@ -89,7 +89,7 @@ function ChangePassword() {
                     validation={{ required: true }}
                     className={"py-2 rounded-sm"}
                     errors={errors}
-                    inputWidth={isProScreen?'20rem':'31rem'}
+                    inputWidth={isProScreen||isSmallScreen?'20rem':'31rem'}
                   />
 
                   </Form.Group>
@@ -103,7 +103,7 @@ function ChangePassword() {
                     validation={{ required: true }}
                     className={"py-2 rounded-sm"}
                     errors={errors}
-                    inputWidth={isProScreen?'20rem':'31rem'}
+                    inputWidth={isProScreen||isSmallScreen?'20rem':'31rem'}
                   />
 
                   </Form.Group>
@@ -122,7 +122,7 @@ function ChangePassword() {
           }}
           className={"py-2 rounded-sm"}
           errors={errors}
-          inputWidth={isProScreen?'20rem':'31rem'}
+          inputWidth={isProScreen||isSmallScreen?'20rem':'31rem'}
         />
       </Form.Group>
       <Row>

@@ -7,13 +7,17 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import Dropdown from 'react-bootstrap/Dropdown';
 import remove from '../../assets/imgs/remove.png';
 import block from '../../assets/imgs/block.png';
+import { useNavigate } from 'react-router-dom';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
-function Sidebar({ setCurrentChatId }) {
+function Sidebar({ setCurrentChatId,onSelectChat }) {
   const axios = useAxios();
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedChatId, setSelectedChatId] = useState(null); // State to track selected chat ID
-  const [hoveredChatIds, setHoveredChatIds] = useState({}); // State to track hovered chat IDs
+  const [hoveredChatIds, setHoveredChatIds] = useState({});
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+  const navigate=useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -36,7 +40,10 @@ function Sidebar({ setCurrentChatId }) {
 
   const handleChatClick = (chatId) => {
     setCurrentChatId(chatId);
-    setSelectedChatId(chatId); // Set the selected chat ID when clicked
+    setSelectedChatId(chatId); 
+    if(isSmallScreen)     navigate(`/chat/${chatId}`);
+
+    
   };
 
   const handleMouseEnter = (chatId) => {
