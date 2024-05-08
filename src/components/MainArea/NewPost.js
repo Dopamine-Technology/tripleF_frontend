@@ -62,7 +62,7 @@ return(
         </Col>
         <Col xs={6} sm={4} md={3} lg={3} xl={3}>
             <Button className='share-btn' onClick={handleShow}>{t('mainarea.shareBtn')}</Button>
-            {show && <ChallengesList handleClose={handleClose} show={show}  onNewPostCreated={onNewPostCreated}   />}
+            {show && <ChallengesList handleClose={handleClose} setShow={setShow} show={show}  onNewPostCreated={onNewPostCreated}   />}
         </Col>
     </Row>
     ) : (
@@ -81,7 +81,7 @@ return(
             </Col>
             <Col  xs={6} sm={6} md={3} lg={2}>
                 <Button className='share-btn' onClick={handleShow}>{t('mainarea.shareBtn')}</Button>
-                {show && <ChallengesList handleClose={handleClose} show={show} />}
+                {show && <ChallengesList handleClose={handleClose} show={show} setShow={setShow}/>}
             </Col>
         </Row>
         ) : (

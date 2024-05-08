@@ -597,10 +597,10 @@ function MyAccount() {
         ))}
     </Form.Control>
 </Form.Group>):(
-      <div className={isProScreen?'mb-3 ':'mb-3 d-flex '}>
+      <div className={isProScreen||isSmallScreen?'mb-3 ':'mb-3 d-flex '}>
       <Form.Group controlId='gender' className={isProScreen?'mb-5 ':'me-5'}>
           <label>{t('Register.gender')}</label>
-          <div className="d-flex">
+          <div className={"d-flex"}>
          
           <label className='custom-radio-btn me-2'>
       <span className="label">{genderOptions[0]}</span>
@@ -620,7 +620,7 @@ function MyAccount() {
           </div>
       </Form.Group>
   
-      <Form.Group controlId='birthdate' className='' style={{marginLeft:isProScreen?'0rem':'1.2rem',width:'188px'}}>
+      <Form.Group controlId='birthdate' className='' style={{marginLeft:isProScreen||isSmallScreen?'0rem':'1.2rem',width:'188px',marginTop:isSmallScreen?'1.5rem':''}}>
       <label htmlFor="birthdate">{t('Register.birthDate')}</label>
       <div className="d-flex">
           <input type="date" id="birthdate" {...register('birth_date')} defaultValue={profileData?.profile.birth_date} max={maxDate} className="form-control me-2" />

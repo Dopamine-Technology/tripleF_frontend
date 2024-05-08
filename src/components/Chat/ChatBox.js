@@ -8,6 +8,7 @@ import Pusher from 'pusher-js';
 import NavBar from '../Layout/Navbar';
 import { UserDataContext } from '../UserContext/UserData.context';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useNavigate } from 'react-router-dom';
 
 function ChatBox() {
   const [messages,setMessages]=useState([]);
@@ -15,23 +16,32 @@ function ChatBox() {
   const {user}=useContext(UserDataContext);
   const [currentChatId, setCurrentChatId] = useState(null);
   const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+  const navigate=useNavigate();
+
+  const handleChatSelection = () => {
+    navigate(`/chat/${currentChatId}`); // Redirect to chat page
+  };
 
   return (
     <>
-        <NavBar />
-    <div className="chat-box">
-    <Navbar />
+      <NavBar />
     {isSmallScreen?
-
-    <Sidebar  setCurrentChatId={setCurrentChatId}/>:
     <>
-    <Sidebar  setCurrentChatId={setCurrentChatId}/>
+     <div className="chats-list">
+      <Sidebar  setCurrentChatId={setCurrentChatId} onSelectChat={handleChatSelection}/>
+    </div>
+    </>:
+    <>
+     <div className="chat-box">
+      <Navbar />
+      <Sidebar  setCurrentChatId={setCurrentChatId}/>
       <ChatList  id={currentChatId}/>
-      <ChatInput id={currentChatId} />
-      </>
+      <ChatInput id={currentChatId} /> 
+    </div>
+    </>
     }
       
-    </div>
+   
     </>
   );
 }

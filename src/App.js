@@ -33,8 +33,9 @@ import ProfilesApplied from './components/Opportunities/ProfilesApplied';
 import NotificationList from './components/Notification/NotificationList';
 import SearchAccounts from './components/SearchAccounts/SearchAccounts';
 import {io} from 'socket.io-client';
-import ChatBox from './components/Chat/ChatBox';
-
+import ChatBox from './components/Chat/ChatBox'
+import Chat from './components/Chat/Chat';
+import NewChat from './components/Chat/NewChat';
 
 
 function App() {
@@ -80,6 +81,9 @@ function App() {
           <Route path='/profile/:id' element={<WholeProfile />} />
           <Route path='/test' element={<Test />}  />
           <Route path='/chatBox' element={<ChatBox />}  />
+          <Route path='/new-message' element={<NewChat />}  />
+          <Route path='/chat/:id' element={<Chat />}  />
+  
           </>
         ):(
           <Route>
