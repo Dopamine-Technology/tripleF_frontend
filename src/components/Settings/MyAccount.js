@@ -501,7 +501,7 @@ function MyAccount() {
     className="form-control form-control-sm rounded"
     validation={{}}
     type="text"
-    inputWidth={isProScreen?'395px':'595px'}
+    inputWidth={isProScreen?'395px':isSmallScreen?'295px':'595px'}
     defaultValue={profileData?.email}
 
   />
@@ -518,13 +518,14 @@ function MyAccount() {
 
                 
                   <Form.Group className='mb-3' controlId='phoneAndUsername'>
-    <div className={isProScreen?"":"d-flex"}>
+    <div className={isProScreen||isSmallScreen?"":"d-flex"}>
         <div className="me-3 mt-2">
             <label htmlFor="mobile_number">{t('Register.mobileNumber')}</label>
             <PhoneInput
     className={`form-control py-1 rounded-sm custom-phone-input${errors && errors["mobile_number"] ? "border-danger" : ""}`}
     inputClass={` border-0 form-control-lg py-0 shadow-none custom-phone-input `}
     buttonClass="border-0"
+    style={{width:isProScreen?'395px':isSmallScreen?'295px':'395px'}}
     country={"jo"}
     value={profileData ? profileData.profile.mobile_number:'mobile_number' } 
     defaultValue={profileData ? profileData.profile.mobile_number : ''}
@@ -552,7 +553,7 @@ function MyAccount() {
                 <div className="text-danger">Please enter a valid mobile number.</div>
             )}
         </div>
-        <div className={isProScreen?"":"flex-fill"}>
+        <div className={isProScreen||isSmallScreen?"":"flex-fill"}>
           {user.userData.profile.type_name=='club'?
    <Form.Group controlId='birthdate' className='mt-3' style={{marginLeft:'1rem',width:'188px',height:'23px'}}>
    <label htmlFor="birthdate">{t('Register.year_founded')}</label>
@@ -576,7 +577,7 @@ function MyAccount() {
                 validation={{}}
                 type="text"
                 defaultValue={profileData?.user_name}
-                inputWidth='188px'
+                inputWidth={isSmallScreen?'300px':'188px'}
                 disabled
       
             />}

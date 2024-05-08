@@ -7,21 +7,30 @@ import './style.css';
 import Pusher from 'pusher-js'; 
 import NavBar from '../Layout/Navbar';
 import { UserDataContext } from '../UserContext/UserData.context';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 function ChatBox() {
   const [messages,setMessages]=useState([]);
   const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
   const {user}=useContext(UserDataContext);
   const [currentChatId, setCurrentChatId] = useState(null);
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
   return (
     <>
         <NavBar />
     <div className="chat-box">
     <Navbar />
-      <Sidebar  setCurrentChatId={setCurrentChatId}/>
+    {isSmallScreen?
+
+    <Sidebar  setCurrentChatId={setCurrentChatId}/>:
+    <>
+    <Sidebar  setCurrentChatId={setCurrentChatId}/>
       <ChatList  id={currentChatId}/>
       <ChatInput id={currentChatId} />
+      </>
+    }
+      
     </div>
     </>
   );

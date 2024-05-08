@@ -117,6 +117,30 @@ height: 1.3rem;
     color:white;
     cursor: pointer;
 }
+
+@media only screen and (max-width: 600px) {
+    .edit-data{
+        border-radius: 8px;
+        border: 1px solid rgba(225, 225, 225, 1);
+        opacity: 1;
+        background-color: white;
+        padding:3rem;
+        padding-top: 3rem;
+        
+        }
+        .title-editData{
+            opacity: 1;
+        color: rgba(70, 70, 70, 1);
+        font-family: "Quicksand-Bold";
+        font-size: 24px;
+        font-weight: 700;
+        font-style: Bold;
+        letter-spacing: 0px;
+        text-align: center;
+        margin-left: 2rem;
+        }
+}
+
 @media only screen and (min-width:  1100px) and (max-width: 1366px) {
     .edit-data{
         padding:5rem
