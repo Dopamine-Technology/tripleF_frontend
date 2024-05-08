@@ -19,6 +19,7 @@ import ProfileStrongView from './ProfileStrongView';
 import LoadingScreen from '../../LoadingScreen/LoadingScreen';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../LanguageContext/LanguageProvider';
+import { useScreenWidth } from '../../ScreenWidthContext/ScreenWidth.context';
 
 function WholeProfile(){
     const axios=useAxios();
@@ -30,6 +31,7 @@ function WholeProfile(){
     const { language, changeLanguage } = useLanguage(); // Access language context
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
+    const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
     useEffect(() => {
         // Programmatically reload the page when the `id` parameter changes
@@ -93,7 +95,7 @@ function WholeProfile(){
     return(
 <div style={{overflowX:'hidden'}}>
         <NavBar />
-        <Row style={{marginLeft:'3rem'}}>
+        <Row style={{marginLeft:isSmallScreen?'0rem':'3rem'}}>
             <Col md={6} lg={4} xs={12}>
             {profileData && profileData.profile && profileData.profile.type_name == 'talent' ?
                 <ProfileCard id={id} profileData={profileData} />:

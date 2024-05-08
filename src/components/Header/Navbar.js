@@ -382,10 +382,10 @@ const CombinedNavbars = () => {
 
     ):
     isSmallScreen?(
-      <Navbar expand="lg" className='p-0' >
+      <Navbar expand="lg" className='p-0 m-4 mb-0'  >
       <Container className='navbar-container' style={{boxShadow:'none'}} >
         <Navbar.Brand href="" className="d-flex align-items-center navbar.brand2 ">
-          <img src={LogoWhite} className='logo-register' style={{width:'10rem',paddingLeft:'2rem'}} />
+          <img src={LogoWhite} className='logo-register' style={{paddingLeft:'2rem'}} />
           <Navbar.Toggle aria-controls="basic-navbar-nav custom-toggler"
            style={{ borderColor: 'transparent',color: 'white !important' }} className=" ms-1" />
         </Navbar.Brand>
@@ -418,14 +418,14 @@ const CombinedNavbars = () => {
               {t('navbar.login')}
             </Link>
           </Nav>
-          <Nav className="me-auto">
-            <Nav.Link href='/#section1' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>{t('navbar.home')}</p></Nav.Link>
-                <Nav.Link href="/#about"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>{t('navbar.aboutus')}</p></Nav.Link>
-                <Nav.Link href="/#Who"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >{t('navbar.whoFor')}</p></Nav.Link>
-                 <Nav.Link href="/#How" className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>{t('navbar.howItWorks')}</p></Nav.Link>
-                 <Nav.Link href="/#Testimonial" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>{t('navbar.testimonial')}</p></Nav.Link>
-                 <Nav.Link href="/#Contact" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>{t('navbar.contactUs')}</p></Nav.Link>
-                 <Nav.Link href="/#News" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>{t('navbar.news')}</p></Nav.Link>
+          <Nav className="me-5 m-2" >
+            <Nav.Link href='/#section1' className='' style={{textDecoration:'none',color:'white'}} onClick={() => handleNavLinkClick('about')}>  <p className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>{t('navbar.home')}</p></Nav.Link>
+                <Nav.Link href="/#about"className='' style={{textDecoration:'none',color:'white'}}> <p className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>{t('navbar.aboutus')}</p></Nav.Link>
+                <Nav.Link href="/#Who"className='' style={{textDecoration:'none',color:'white'}}> <p className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >{t('navbar.whoFor')}</p></Nav.Link>
+                 <Nav.Link href="/#How" className='' style={{textDecoration:'none',color:'white'}}> <p className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>{t('navbar.howItWorks')}</p></Nav.Link>
+                 <Nav.Link href="/#Testimonial" className='' style={{textDecoration:'none',color:'white'}}><p className={` ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>{t('navbar.testimonial')}</p></Nav.Link>
+                 <Nav.Link href="/#Contact" className='' style={{textDecoration:'none',color:'white'}}><p className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>{t('navbar.contactUs')}</p></Nav.Link>
+                 <Nav.Link href="/#News" className='' style={{textDecoration:'none',color:'white'}}><p className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>{t('navbar.news')}</p></Nav.Link>
             </Nav>
         </Navbar.Collapse>
       </Container>

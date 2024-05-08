@@ -10,6 +10,7 @@ import useAxios from '../Auth/useAxiosHook.interceptor';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../LanguageContext/LanguageProvider';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 function NotificationDropDown() {
     const [notifications, setNotifications] = useState([]);
@@ -17,11 +18,13 @@ function NotificationDropDown() {
     const [unreadCount, setUnreadCount] = useState(0);
     const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
     const { user } = useContext(UserDataContext);
+    const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
     const axios = useAxios();
     const navigate=useNavigate();
     const { language, changeLanguage } = useLanguage(); // Access language context
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
+    
   
 
     useEffect(() => {
@@ -84,11 +87,21 @@ function NotificationDropDown() {
         }
     }
 
+    const handleClick = () => {
+        if (isSmallScreen) {
+            // Navigate to specific link for small screens
+            navigate('/my/notifications');
+        } else {
+            // Handle dropdown toggle for larger screens
+            handleToggleClick();
+        }
+    };
+
     const displayedNotifications = allNotifications?.length > 0 ? allNotifications.slice(0, 7) : [];
-    console.log('notification here', notifications);
+    // console.log('notification here', notifications);
 
     return (
-        <Dropdown className="d-inline mx-2" drop='start' onClick={handleToggleClick} >
+        <Dropdown className="d-inline mx-2" drop='start' onClick={handleClick} >
             <Dropdown.Toggle id="dropdown-autoclose-true" className="bg-transparent border-white">
             {(notifications.some(notification => notification.notifiable_id === user.userData.id) && hasUnreadNotifications) ? (
     <img src={morethanone} className="icon me-2" />

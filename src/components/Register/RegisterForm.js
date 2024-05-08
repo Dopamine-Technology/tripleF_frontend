@@ -396,14 +396,22 @@ function RegisterForm({ onLoadingChange }) {
             await stepTwoSchema[accountType].validate(data, { abortEarly: false });
 
             if (!data.position) {
-              data.position = [1,0];
+              data.position = [1, 0];
+          } else {
+              let dataArray = [];
           
-            } 
-              else {
-                if (Array.isArray(data.position)) {
-                  data.position = [data.position, 0]; // If only one option is selected, send [option, 0]
-                }
+              // Extracting values from the object and adding them to the array
+              for (let key in data.position) {
+                  if (data.position.hasOwnProperty(key)) {
+                      dataArray.push(data.position[key]);
+                  }
               }
+              
+              // Assigning the array to data.position
+              data.position = dataArray;
+              console.log('Type of data.position after processing:', data.position);
+          }
+          
 
             
            

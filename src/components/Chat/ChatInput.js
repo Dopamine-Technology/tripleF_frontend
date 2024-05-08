@@ -1,29 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Send from '../../assets/imgs/send.png';
+import useAxios from '../Auth/useAxiosHook.interceptor';
 
-function ChatInput() {
+function ChatInput({id}) {
   const [message, setMessage] = useState('');
+  const axios=useAxios();
 
-  const handleMessageChange = (e) => {
-    setMessage(e.target.value);
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+
+    try {
+      const data = {
+        message_to: id, // Use the id passed from props
+        message: message
+      }
+      await axios.post('chat/send_message', data );
+
+      setMessage(''); 
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   };
 
-  const handleSendMessage = () => {
-    // Implement logic to send message
-    console.log("Sending message:", message);
-    // Clear the input after sending
-    setMessage('');
-  };
 
   return (
     <div className="chat-input-container">
       <input
         type="text"
-        placeholder="Type your message..."
+        placeholder="Write a message …"
         value={message}
-        onChange={handleMessageChange}
         className="chat-input-field"
+        onChange={e => setMessage(e.target.value)}
       />
-      <button onClick={handleSendMessage} className="send-button">Send</button>
+      <button onClick={handleSendMessage} className="send-button">
+        <img src={Send} />
+      </button>
     </div>
   );
 }

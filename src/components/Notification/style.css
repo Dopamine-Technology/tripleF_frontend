@@ -91,3 +91,28 @@ text-align: left;
  .notification-main{
   background-color: #F5F5F5;
  }
+
+ @media only screen and (max-width: 600px) {
+  .notification-container{
+    width: 100%;
+    height: 838px;
+    margin: 0px;
+    padding: 20px 0 20px;
+    border-radius: 16px;
+    border: solid 1px #e2e2ea;
+    background-color: white
+  }
+  .notifiactionList-title{
+    width: 144px;
+  height: 30px;
+  margin: 32px 1041px 16px 10px;
+  font-family: 'Quicksand-Medium';
+  font-size: 24px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #464646;
+  }
+ }
