@@ -80,7 +80,9 @@ function App() {
           {/* <Route path='/profile' element={<WholeProfile />} /> */}
           <Route path='/profile/:id' element={<WholeProfile />} />
           <Route path='/test' element={<Test />}  />
-          <Route path='/chatBox' element={<ChatBox />}  />
+          <Route path='/chatBox' element={<ChatBox />} />
+          <Route path='/chatBox/:id' element={<ChatBox />} />
+          
           <Route path='/new-message' element={<NewChat />}  />
           <Route path='/chat/:id' element={<Chat />}  />
   

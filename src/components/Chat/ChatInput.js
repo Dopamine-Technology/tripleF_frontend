@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Send from '../../assets/imgs/send.png';
 import useAxios from '../Auth/useAxiosHook.interceptor';
+import { useParams } from 'react-router-dom';
 
-function ChatInput({id}) {
+function ChatInput({ id: propId }) {
   const [message, setMessage] = useState('');
+  const { id: urlId } = useParams(); // Extract id from URL params
+  const id = urlId || propId; // Use propId if exists, otherwise use urlId
   const axios=useAxios();
 
   const handleSendMessage = async (e) => {
