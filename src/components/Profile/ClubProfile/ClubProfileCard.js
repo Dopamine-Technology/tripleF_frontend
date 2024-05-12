@@ -15,6 +15,7 @@ import checkmark from '../../../assets/imgs/checkmark.svg';
 import FollowBtn from '../FollowBtn';
 import { useLanguage } from '../../LanguageContext/LanguageProvider';
 import { useTranslation } from 'react-i18next';
+import MessageBtn from '../MessageBtn';
 
 
 function ClubProfileCard({id,profileData}) {
@@ -64,6 +65,7 @@ function ClubProfileCard({id,profileData}) {
         <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} {t('Profile.following')}</span>
       </p>
       {profileData.id!=user.userData.id?   <FollowBtn id={id}  is_followed={profileData.is_followed}/>:null}
+      {profileData.id!=user.userData.id?   <MessageBtn />:null}
       {profileData.profile.type_name == 'club' ? 
         (ClubData.map((data, index) => (
           <div>

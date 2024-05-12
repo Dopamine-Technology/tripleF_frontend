@@ -108,19 +108,20 @@ const handleUpdateIsFollowed = (value) => {
         updateFollowersCount={updateFollowersCount}
         updateFollowingCount={updateFollowingCount}
         updateIsFollowed={setIsFollowed} />:null}
-        <MessageBtn />
-      {/* {profileData.id!=user.userData.id?  
-       <FollowBtn id={id} is_followed={isFollowed}
-        updateFollowersCount={updateFollowersCount}
-        updateFollowingCount={updateFollowingCount}
-        updateIsFollowed={setIsFollowed} />:null}
+      {profileData.id!=user.userData.id?  
+            <MessageBtn />:null}
    
-      {profileData.profile.type_name == 'talent' && profileData.profile.parent_position.name=='goalkeeper'&&
+      {/* {profileData.profile.type_name == 'talent' && profileData.profile.parent_position.name=='goalkeeper'&&
         <Card.Img src={GoalKeeper} className='mt-4' />
       }
 
-        {profileData.profile.type_name == 'talent'&& profileData.profile.position.name=='Sweeper'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
+
+        {profileData.profile.type_name == 'talent'&& profileData.profile.position.map(position => {
+  if (position.name === "Right Back") {
+    return <Card.Img src={GoalKeeper} key={position.id} className='mt-4' />;
+  }
+  return null;
+})
       }
           {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Left Back'&&
         <Card.Img src={GoalKeeper} className='mt-4' />

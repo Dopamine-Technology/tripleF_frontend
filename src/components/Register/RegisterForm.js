@@ -395,8 +395,9 @@ function RegisterForm({ onLoadingChange }) {
         
             await stepTwoSchema[accountType].validate(data, { abortEarly: false });
 
-            if (!data.position) {
-              data.position = [1, 0];
+            if (data.parent_position==1) {
+              data.position = JSON.stringify(['1', '0']);
+              console.log('positionTest',data.position)
           } else {
               let dataArray = [];
           
@@ -408,7 +409,7 @@ function RegisterForm({ onLoadingChange }) {
               }
               
               // Assigning the array to data.position
-              data.position = dataArray;
+              data.position = JSON.stringify(dataArray);
               console.log('Type of data.position after processing:', data.position);
           }
           
@@ -1469,7 +1470,7 @@ function RegisterForm({ onLoadingChange }) {
 {subPositions ? (
   <div className='form-group'>
     <label htmlFor="subPosition">Sub Positions:</label>
-    <select id="subPosition" {...register('position')}>
+    <select id="subPosition" {...register('position') } multiple>
       {subPositions.map(subPosition => (
         <option key={subPosition.id} value={subPosition.id}>
           {subPosition.name}

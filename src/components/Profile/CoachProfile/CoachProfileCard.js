@@ -21,6 +21,7 @@ import exp from '../../../assets/imgs/sport-filled-soccer.svg';
 import FollowBtn from '../FollowBtn';
 import { useLanguage } from '../../LanguageContext/LanguageProvider';
 import { useTranslation } from 'react-i18next';
+import MessageBtn from '../MessageBtn';
 
 
 function CoachProfileCard({profileData,id}) {
@@ -82,6 +83,7 @@ const finalAge = hasBirthdayOccurred ? age : age - 1;
         <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} {t('Profile.following')}</span>
       </p>
       {profileData.id!=user.userData.id?   <FollowBtn id={id}  is_followed={profileData.is_followed}/>:null}
+      {profileData.id!=user.userData.id?   <MessageBtn />:null}
       
       {profileData.profile.type_name == 'coach'||profileData.profile.type_name == 'scout' ? 
         (CoachData.map((data, index) => (

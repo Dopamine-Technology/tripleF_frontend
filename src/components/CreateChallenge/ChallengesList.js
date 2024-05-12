@@ -63,7 +63,6 @@ function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
         message.success('File uploaded successfully');
         setShow(false);
         onNewPostCreated();
-        
       })
       .catch((error) => {
         // message.error('Error uploading file');

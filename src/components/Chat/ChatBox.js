@@ -18,9 +18,7 @@ function ChatBox() {
   const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
   const navigate=useNavigate();
 
-  const handleChatSelection = () => {
-    navigate(`/chat/${currentChatId}`); // Redirect to chat page
-  };
+
 
   return (
     <>
@@ -28,7 +26,7 @@ function ChatBox() {
     {isSmallScreen?
     <>
      <div className="chats-list">
-      <Sidebar  setCurrentChatId={setCurrentChatId} onSelectChat={handleChatSelection}/>
+      <Sidebar  setCurrentChatId={setCurrentChatId}/>
     </div>
     </>:
     <>

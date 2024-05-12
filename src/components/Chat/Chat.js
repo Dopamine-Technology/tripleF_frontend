@@ -9,7 +9,7 @@ function Chat() {
   const axios = useAxios();
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
-  const chatEndRef = useRef(null); // Ref for scrolling to the bottom
+  // const chatEndRef = useRef(null); // Ref for scrolling to the bottom
   const {id}=useParams();
 
   useEffect(() => {
@@ -69,7 +69,7 @@ function Chat() {
               id={id}
             />
           ))}
-          <div ref={chatEndRef} />
+          {/* <div ref={chatEndRef} /> */}
       
         </>
       )}

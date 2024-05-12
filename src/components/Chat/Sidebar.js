@@ -9,8 +9,10 @@ import remove from '../../assets/imgs/remove.png';
 import block from '../../assets/imgs/block.png';
 import { useNavigate } from 'react-router-dom';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
+import { useParams } from 'react-router-dom';
+import { message } from 'antd';
 
-function Sidebar({ setCurrentChatId,onSelectChat }) {
+function Sidebar({ setCurrentChatId }) {
   const axios = useAxios();
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,6 +20,7 @@ function Sidebar({ setCurrentChatId,onSelectChat }) {
   const [hoveredChatIds, setHoveredChatIds] = useState({});
   const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
   const navigate=useNavigate();
+  const { id } = useParams(); 
 
   useEffect(() => {
     setLoading(true);
@@ -25,8 +28,8 @@ function Sidebar({ setCurrentChatId,onSelectChat }) {
       .get('chat/get_chats')
       .then((response) => {
         setChats(response.data.result.reverse()); // Reverse the order of chats
-        setSelectedChatId(response.data.result[0]?.id); 
-        setCurrentChatId(response.data.result[0]?.id);
+        setSelectedChatId(id||response.data.result[0]?.id); 
+        setCurrentChatId(id||response.data.result[0]?.id);
       })
       .catch((error) => {
         console.error("Error fetching chats data:", error);
@@ -59,6 +62,12 @@ function Sidebar({ setCurrentChatId,onSelectChat }) {
       [chatId]: false // Reset hovered state for the specific chat ID
     }));
   };
+  const handleDelete =(id)=>{
+    axios.delete(`chat/delete/${id}`);
+    setChats(chats.filter(chat => chat.id !== id));
+    message.success('post deleted successfully');
+    
+  }
 
   return (
     <div className="sidebar">
@@ -71,7 +80,7 @@ function Sidebar({ setCurrentChatId,onSelectChat }) {
             onMouseEnter={() => handleMouseEnter(chat.id)}
             onMouseLeave={() => handleMouseLeave(chat.id)}
           >
-            <img src={chat.image} alt={chat.first_name} className="avatar" />
+            <img src={chat.image} alt={chat.first_name} className="avatar" style={{    backgroundColor:'rgb(224, 207, 186)',padding:'0.2rem'}} />
             <div className="info">
               <p className='info-name'>{chat.first_name} {chat.last_name}</p>
               <p>{chat.last_message.message}</p>
@@ -83,7 +92,7 @@ function Sidebar({ setCurrentChatId,onSelectChat }) {
                     <BsThreeDotsVertical />
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#" className='mt-1 p-2'><img src={remove} className='me-2' />Delete</Dropdown.Item>
+                    <Dropdown.Item href="#" className='mt-1 p-2'  onClick={() => handleDelete(chat.id)} ><img src={remove} className='me-2'/>Delete</Dropdown.Item>
                     <Dropdown.Item href="#" className='mt-1 p-2'><img src={block} className='me-2' />Report / Block</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
