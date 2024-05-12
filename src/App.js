@@ -82,6 +82,7 @@ function App() {
           <Route path='/test' element={<Test />}  />
           <Route path='/chatBox' element={<ChatBox />} />
           <Route path='/chatBox/:id' element={<ChatBox />} />
+          <Route path='/verify' element={<VerifyPage />} />
           
           <Route path='/new-message' element={<NewChat />}  />
           <Route path='/chat/:id' element={<Chat />}  />
@@ -94,7 +95,7 @@ function App() {
           <Route path='/blogs/:id' element={<BlogPage />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/verify/:token' element={<VerifyPage />} />
+    
           <Route path='/reset-password/' element={<Reset />} />
           <Route path='/reset-password/:user_token' element={<NewPassword />} />
           </Route>
