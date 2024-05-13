@@ -111,7 +111,16 @@ margin-top: 2rem;
   background-color: #4D5D77;
 
 }
+.thumbnail-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
 
+.thumbnail {
+  max-width: 20rem;
+  max-height: 20rem;
+}
 ul {
   list-style: none; 
   padding: 0; 

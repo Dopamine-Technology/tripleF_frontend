@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useParams,useNavigate } from 'react-router-dom';
@@ -8,27 +8,36 @@ import Input from '../Login/Input';
 import NavBar from '../Register/Navbar';
 import Footer from '../Footer/Footer';
 import loginPic from '../../assets/imgs/login.png'
+import useAxios from '../Auth/useAxiosHook.interceptor';
 
 const NewPassword = () => {
     const { register, handleSubmit, formState: { errors } } = useForm(); 
     let params = useParams();
     const navigate = useNavigate();
+    const axios=useAxios();
+    const [buttonDisabled, setButtonDisabled] = useState(false)
 
     const onSubmitNewPassword = (data) => {
-        axios
-          .post(`https://backend.triplef.group/api/user/auth/reset_password`, { ...data, user_token: params.user_token, })
-          .then((response) => {
-            message.success('password reset successfully')
-            
-          })
-          .catch((error) => {
-            message.error('please try again')
-          });
-      };
+      setButtonDisabled(true); // Disable the button during API call
+      axios
+        .post(`user/auth/reset_password`, { ...data, user_token: params.user_token })
+        .then((response) => {
+          message.success('password reset successfully');
+        })
+        .catch((error) => {
+          message.error('please try again');
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setButtonDisabled(false); // Enable the button after 8 seconds
+          }, 8000);
+        });
+    };
+    
 
       
     return (
-        <div>
+        <div style={{overflowX:'hidden'}}>
             <NavBar />
             <Row>
     <Col md={6}>

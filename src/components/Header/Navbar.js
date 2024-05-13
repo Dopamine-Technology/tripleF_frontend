@@ -333,10 +333,11 @@ const CombinedNavbars = () => {
    {
     isTabletScreen?(
       <Navbar expand="lg" className='p-0' >
-  <Container className='navbar-container' style={{backgroundColor:'white',paddingLeft:'2rem'}}>
+  <Container className='navbar-container' style={{paddingLeft:'2rem'}}>
     <Navbar.Brand href="" className="d-flex align-items-center navbar.brand2  ">
-      <img src={Logo} className='logo-register' />
-      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
+      <img src={LogoWhite} className='' />
+      <Navbar.Toggle aria-controls="basic-navbar-nav custom-toggler"
+           style={{ borderColor: 'transparent',color: 'white !important' }} className=" ms-1" />
     </Navbar.Brand>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mt-1">

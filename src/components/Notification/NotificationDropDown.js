@@ -17,6 +17,7 @@ function NotificationDropDown() {
     const [allNotifications, setAllNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
     const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const { user } = useContext(UserDataContext);
     const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
     const axios = useAxios();
@@ -94,6 +95,7 @@ function NotificationDropDown() {
         } else {
             // Handle dropdown toggle for larger screens
             handleToggleClick();
+            setIsDropdownOpen(!isDropdownOpen);
         }
     };
 
@@ -103,7 +105,7 @@ function NotificationDropDown() {
     return (
         <Dropdown className="d-inline mx-2" drop='start' onClick={handleClick} >
             <Dropdown.Toggle id="dropdown-autoclose-true" className="bg-transparent border-white">
-            {(notifications.some(notification => notification.notifiable_id === user.userData.id) && hasUnreadNotifications) ? (
+            {(notifications.some(notification => notification.notifiable_id === user.userData.id) && hasUnreadNotifications&&!isDropdownOpen) ? (
     <img src={morethanone} className="icon me-2" />
 ) : (
     <img src={NotificationIcon} className="icon me-2" />

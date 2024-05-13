@@ -800,7 +800,7 @@ function RegisterForm({ onLoadingChange }) {
 {subPositions?.length > 0 && (
   <div className='form-group' required>
     <label htmlFor="subPosition">{t('Register.subPosition')}</label>
-    <select id="subPosition" {...register('position')} multiple>
+    <select id="subPosition" {...register('position')} >
       {subPositions?.map(subPosition => (
         <option key={subPosition.id} value={subPosition.id}>
           {subPosition.name}
@@ -1470,7 +1470,7 @@ function RegisterForm({ onLoadingChange }) {
 {subPositions ? (
   <div className='form-group'>
     <label htmlFor="subPosition">Sub Positions:</label>
-    <select id="subPosition" {...register('position') } multiple>
+    <select id="subPosition" {...register('position') } >
       {subPositions.map(subPosition => (
         <option key={subPosition.id} value={subPosition.id}>
           {subPosition.name}

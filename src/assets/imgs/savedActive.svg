@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Saved / filled icon</title>
+    <g id="Search-Pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Saved-/-filled-icon" transform="translate(5.0025, 2.9992)" fill="#92E3CC" fill-rule="nonzero">
+            <path d="M1.18801355,18.8547287 C0.691874981,19.2116829 0,18.8571275 0,18.245924 L0,3.25 C0,1.45507455 1.45507455,0 3.25,0 L10.7483902,0 C12.5433156,0 13.9983892,1.45507455 13.9983892,3.25 L13.9983892,18.245924 C13.9983892,18.8571275 13.3065147,19.2116829 12.8103762,18.8547287 L6.9991951,14.67379 L1.18801355,18.8547287 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 import { useLanguage } from '../LanguageContext/LanguageProvider';
+import useAxios from '../Auth/useAxiosHook.interceptor';
 
 const News = () => {
   const [news, setNews] = useState([]);
@@ -15,7 +16,7 @@ const News = () => {
 
   const { language, changeLanguage,direction } = useLanguage(); 
   const [t,i18n]=useTranslation();
-
+  const axios=useAxios();
 
   const axiosConfig = {
     headers: {
@@ -29,7 +30,7 @@ const News = () => {
 
  
   useEffect(() => {
-    axios.post('https://backend.triplef.group/api/app/latest_posts', axiosConfig)
+    axios.post('app/latest_posts', axiosConfig)
       .then((response) => {
         console.log('news', response.data); 
         setNews(response.data.result);
@@ -51,6 +52,7 @@ const News = () => {
       content: "Few benefits of group & personal training"
     },
     {
+
       img: "https://th.bing.com/th/id/R.e9509b638beca9e17499ee45b20fc1dd?rik=%2fmxruNZokLGgPg&pid=ImgRaw&r=0",
       category: "Category name",
       content: "Few benefits of group & personal training"
@@ -64,7 +66,7 @@ const News = () => {
         <p><a href="/blogs" className='read-more-link mt-2'>{t('News.view_more')}</a> {language=='ar'?<FaArrowLeft  className='arrow-hidden' />:<FaArrowRight className='arrow-hidden' />}</p>
       </div>
       <Row className={isSmallScreen?`news-row`:`mt-5 news-row`} >
-        {news2 && news2.length > 0 ? (
+        {news && news.length > 0 ? (
           news2.map((item, index) => (
             <Col key={index} md={4} xs={12}  className='col-single' style={{ paddingBottom: '16px' }}>
               <SingleOne img={item.img} content={item.content} category={item.category} />

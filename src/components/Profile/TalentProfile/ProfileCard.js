@@ -111,60 +111,105 @@ const handleUpdateIsFollowed = (value) => {
       {profileData.id!=user.userData.id?  
             <MessageBtn />:null}
    
-      {/* {profileData.profile.type_name == 'talent' && profileData.profile.parent_position.name=='goalkeeper'&&
+      {profileData.profile.type_name == 'talent' && profileData.profile.parent_position.name=='goalkeeper'&&
         <Card.Img src={GoalKeeper} className='mt-4' />
       }
+     {profileData.profile.type_name == 'talent'&& profileData.profile.position.map(position => {
+    return <Card.Img src={position.image} key={position.id} className='mt-4' />;
 
-
-        {profileData.profile.type_name == 'talent'&& profileData.profile.position.map(position => {
+})}
+      
+        {/* {profileData.profile.type_name == 'talent'&& profileData.profile.position.map(position => {
   if (position.name === "Right Back") {
-    return <Card.Img src={GoalKeeper} key={position.id} className='mt-4' />;
+    return <Card.Img src={position.image} key={position.id} className='mt-4' />;
   }
   return null;
 })
       }
-          {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Left Back'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-           {profileData.profile.type_name === 'talent' && profileData.profile.position.name=='Right Back'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-              {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Central Back'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-                    {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Left Wing Back'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-                    {profileData.profile.type_name  == 'talent' && profileData.profile.position.name=='Right Wing Back'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-              {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Defending Mid Fielder'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-             {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Left Mid Fielder'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-            {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Right Mid Fielder'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-            {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Central Mid Fielder'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-            {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Attacking Mid Fielder'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-            {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Left Winger'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-             {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Right Winger'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-              {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Seconder Striker'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
-              {profileData.profile.type_name == 'talent' && profileData.profile.position.name=='Central Forward'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      } */}
+          {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Left Back"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+               {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Right Back"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+                   {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Central Back"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+                        {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Left Wing Back"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+                                {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Right Wing Back"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+                {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Defending Mid Fielder"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+             {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Left Mid Fielder"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+              {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Right Mid Fielder"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+             {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Central Mid Fielder"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+              {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Attacking Mid Fielder"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+               {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Left Winger"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+                 {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Right Winger"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+                  {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Seconder Striker"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })}
+                {profileData.profile.type_name == 'talent' && profileData.profile.position.map(position => {
+            if (position.name === "Central Forward"){
+      return  <Card.Img src={GoalKeeper} className='mt-4' />
+            }
+            return null;
+      })} */}
       {profileData.profile.type_name == 'talent' ? 
         (TalentData.map((data, index) => (
           <div>

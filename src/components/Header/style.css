@@ -45,7 +45,7 @@
 
 .header-h1{
   width: 574px;
-  height: 140px;
+  /* height: 140px; */
   margin: 0 0 40px;
   font-family: 'Quicksand-Bold';
   font-size: 56px;
@@ -120,6 +120,10 @@
   font-size: 1rem;
   padding: 0.9rem 
   
+}
+.navbar.brand2{
+  width:20rem;
+
 }
 
 .header-p2{

@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { message } from 'antd';
 import axios from 'axios';
-import NavBar from './Navbar';
+import NavBar from '../Layout/Navbar';
 import Verify from '../../assets/imgs/Verify.svg';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../LanguageContext/LanguageProvider';

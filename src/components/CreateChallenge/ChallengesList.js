@@ -43,9 +43,12 @@ function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
         // Selected file is not a video, show an error message
         message.error('Please select a valid video file.');
         setVideoUploaded(false);
+
       }
     }
   };
+
+  
 
   const uploadVideo = (file) => {
     const formData = new FormData();
@@ -127,6 +130,7 @@ function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
                 ref={fileInputRef}
                 onChange={handleFileChange}
               />
+      
             </div>
           </div>
         );
@@ -177,6 +181,7 @@ function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
             </select>
           </div>
           {renderSteps()}
+
         </div>
       </Modal.Body>
       <Modal.Footer className='challenge-footer'>
