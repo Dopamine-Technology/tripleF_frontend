@@ -16,7 +16,7 @@ const Step = ({ step, content, stepNum, isSmallScreen,isTabletScreen,isProScreen
             </Row>
             <Row>
               <Col xs={12} className="mb-1" style={{ textAlign: 'left' }}>
-                <h5>Step {step}</h5>
+                <h5> {step}</h5>
               </Col>
             </Row>
             <Row>
@@ -51,7 +51,7 @@ const Step = ({ step, content, stepNum, isSmallScreen,isTabletScreen,isProScreen
             <Col xs={10}>
               <Row>
                 <Col xs={12} className="mb-2" style={{ textAlign: 'left' }}>
-                  <h5>Step {step}</h5>
+                  <h5> {step}</h5>
                 </Col>
                 <Col xs={12} style={{ textAlign: 'left' }}>
                   <p className='steps-content'>{content}</p>

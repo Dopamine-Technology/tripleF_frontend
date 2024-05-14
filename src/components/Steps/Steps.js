@@ -28,13 +28,13 @@ const Steps = () => {
     },
     {
       stepNum:'02',
-      step: t('howItWorks.cards.0.title'),
-      content: t('howItWorks.cards.0.desc')
+      step: t('howItWorks.cards.1.title'),
+      content: t('howItWorks.cards.1.desc')
     },
     {
       stepNum:'03',
-      step: t('howItWorks.cards.0.title'),
-      content: t('howItWorks.cards.0.desc')
+      step: t('howItWorks.cards.2.title'),
+      content: t('howItWorks.cards.2.desc')
     },
   ];
   

@@ -22,6 +22,7 @@ const WhosForImg = ({ img, title, desc }) => {
           overflow: 'hidden',
           backgroundColor: '#E4F8F2',
           margin: '0 auto', 
+         padding:'1.5rem'
         }}
       >
         <img

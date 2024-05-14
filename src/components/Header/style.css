@@ -45,7 +45,7 @@
 
 .header-h1{
   width: 574px;
-  height: 140px;
+  /* height: 140px; */
   margin: 0 0 40px;
   font-family: 'Quicksand-Bold';
   font-size: 56px;
@@ -121,6 +121,10 @@
   padding: 0.9rem 
   
 }
+.navbar.brand2{
+  width:20rem;
+
+}
 
 .header-p2{
   width:31.5rem;
@@ -192,7 +196,7 @@ z-index:3;
   }
   .header-h1{
     width: 225px;
-    height: 40px;
+    /* height: 40px; */
     font-family: 'Quicksand-Regular';
     font-size: 24px;
     font-weight: bold;
@@ -201,6 +205,8 @@ z-index:3;
     line-height: normal;
     letter-spacing: normal;
     color: #ffffff;
+    margin-top: 5rem;
+    margin-bottom: 0rem;
     }
     .header-p2{
       width: 201px;
@@ -213,6 +219,8 @@ z-index:3;
       font-style: normal;
       line-height: normal;
       letter-spacing: normal;
+      margin-top: 0rem;
+      margin-bottom: 2rem;
     
     }
     .register-responsive-btn{
@@ -231,7 +239,7 @@ z-index:3;
       background-position:0%; 
     }
     .whole-div{
-     height:80vh
+     height:60vh
     }
     .scroll-navbar2{
 

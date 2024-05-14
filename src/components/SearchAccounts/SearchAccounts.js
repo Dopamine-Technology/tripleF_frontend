@@ -40,7 +40,7 @@ const handleSearchInputChange = (event) => {
         alignItems: 'center', 
         marginLeft:isSmallScreen?'1rem':'',
         // width:isSmallScreen?'100%':isProScreen?'100%':'70rem'
-        width:"auto"
+        width:"100%"
          }}>
 <div className="search-container2" style={{ width: isTabletGalaxyScreen?'73%':'83%' }}>
                 <input type="text" placeholder="Search" className="search-input" value={searchInput} onChange={handleSearchInputChange} />

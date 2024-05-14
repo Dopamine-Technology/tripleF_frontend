@@ -12,7 +12,7 @@ import { UserDataContext } from '../UserContext/UserData.context';
 import ScoutOppFilter from './ScoutOppFilter';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../LanguageContext/LanguageProvider';
-
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 function OpportunityList(){
   const navigate=useNavigate();
@@ -29,6 +29,7 @@ function OpportunityList(){
       const [filterTextCountry, setFilterTextCountry] = useState('');
       const itemsPerPage = 5;
       const [currentPage, setCurrentPage] = useState(1);
+      const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
       const { language, changeLanguage } = useLanguage(); // Access language context
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
@@ -139,7 +140,10 @@ function OpportunityList(){
 
 <Col lg={1}></Col>
 
-{user.userData.profile.type_name=="talent"?(null):(<Col lg={3} ><Button className='share-btn' onClick={() => {navigate('/home/add/opportunity')}}>{t('AddOpportunity.addOpportunity')}</Button>
+{user.userData.profile.type_name=="talent"?(null):(<Col lg={3} >
+  <Button className='share-btn' onClick={() => {navigate('/home/add/opportunity')}} style={{width:isSmallScreen?'auto':'',marginLeft:isSmallScreen?'1.5rem':''}}>
+    {t('AddOpportunity.addOpportunity')}
+    </Button>
 </Col>)}
 
 

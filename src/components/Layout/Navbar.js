@@ -24,6 +24,7 @@ import { SearchResultsList } from "./SearchResultsList";
 import { useLanguage } from '../LanguageContext/LanguageProvider';
 import { useTranslation } from 'react-i18next';
 import Pusher from 'pusher-js'; 
+import { useLocation } from 'react-router-dom';
 
 function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
     const { user } = useContext(UserDataContext);
@@ -38,6 +39,8 @@ function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
     const [messages,setMessages]=useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
     const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
+    const location = useLocation();
+    const isChatLocation=window.location.pathname === "/chatbox"
 
     useEffect(() => {
       const pusher = new Pusher('323996d4cfab0016889a', {
@@ -233,7 +236,7 @@ const changeLanguageHandler = () => {
                 </Nav>
        
                 <Nav className="right-content">
-                {(messages.some(notification => notification.notifiable_id === user.userData.id) && hasUnreadMessages) ? (
+                {(messages.some(notification => notification.notifiable_id === user.userData.id) && hasUnreadMessages&&!isChatLocation) ? (
    <div className="icon-wrapper position-relative" onClick={()=>{navigate('/chatbox')}}>
    <img src={messagesIcon} className="icon me-2" />
     <div className="unread-spot"></div>

@@ -10,12 +10,16 @@ import Footer from '../Footer/Footer';
 import loginPic from '../../assets/imgs/login.png'
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../LanguageContext/LanguageProvider';
+import useAxios from '../Auth/useAxiosHook.interceptor';
+
 
 const Reset = () => {
 
   const { language, changeLanguage } = useLanguage(); 
   const [direction, setDirection] = useState('ltr');
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [t, i18n] = useTranslation();
+  const axios=useAxios();
 
     const {
         register,
@@ -26,21 +30,31 @@ const Reset = () => {
       const navigate = useNavigate();
 
       const onSubmitEmail = (data) => {
+        setButtonDisabled(true); // Disable the button when clicked
         axios
           .post(
-            ``,
+            `user/auth/send_forget_password_email`,
             data
           )
           .then((response) => {
-            message.success({ type: "success", data: "activation link sent to your inbox" });
+            message.success("activation link sent to your email");
+            setTimeout(() => {
+              setButtonDisabled(false); // Enable the button after 8 seconds
+            }, 8000);
           })
           .catch((error) => {
-            message.error({ type: "danger", data: error.response.data[0] });
+            if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.email) {
+              message.error(error.response.data.errors.email[0]);
+            } else {
+              message.error("An unknown error occurred."); // Default error message
+            }
+            setButtonDisabled(false); // Enable the button if there's an error
           });
+          
       };
     
     return(
-    <div>
+    <div style={{overflowX:'hidden'}}>
         <NavBar />
         <Row>
     <Col md={6}>
@@ -62,9 +76,9 @@ const Reset = () => {
                 
                 />
               </Form.Group>
-              <Button variant="" className='w-50 btn-tall' type='submit' >
-              {t('ResetPassword.btn')}
-                </Button>
+              <Button variant="" className='w-50 btn-tall' type='submit' disabled={buttonDisabled}>
+  {t('ResetPassword.btn')}
+</Button>
             </Form>
       </Col>
     

@@ -19,11 +19,11 @@ import profileIcon from '../../assets/imgs/profile-black-icon.svg';
 import ArrowDownImage from '../../assets/imgs/dropdownWhite.svg';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
-
 const TopNavbar = () => {
   const currentLanguage = Cookies.get('language') || 'En';
   const [t,i18n]=useTranslation();
   const [direction, setDirection] = useState('ltr');
+  
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -155,8 +155,27 @@ const BottomNavbar = () => {
 }
 
 const CombinedNavbars = () => {
+  const [activeLink, setActiveLink] = useState(1);
+
+  const handleNavLinkClick = (index,sectionId) => {
+    setActiveLink(index);
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  const [t,i18n]=useTranslation();
   const currentLanguage = Cookies.get('language') || 'en';
   const [direction, setDirection] = useState('ltr');
+
+const changeLanguage = (lng) => {
+  i18n.changeLanguage(lng);
+  Cookies.set('language', lng);
+}
+const availableLanguages = [
+  { code: 'en', label: 'English',img:En },
+  { code: 'ar', label: 'Arabic' ,img:Ar },
+];
   useEffect(() => {
     // Change direction based on the selected language
     if (currentLanguage === 'ar') {
@@ -165,13 +184,68 @@ const CombinedNavbars = () => {
       setDirection('ltr')
     }
   }, [currentLanguage]);
+
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+  
   return (
+
     <div>
-    <Container  style={{marginLeft:'2.2rem',direction:direction}}>
+      {isSmallScreen?
+      <Navbar expand="lg" className='p-0 m-4 mb-0'  >
+      <Container className='navbar-container' style={{boxShadow:'none'}} >
+        <Navbar.Brand href="" className="d-flex align-items-center navbar.brand2 ">
+          <img src={Logo} className='logo-register' style={{paddingLeft:'2rem'}} />
+          <Navbar.Toggle aria-controls="basic-navbar-nav custom-toggler"
+           style={{ borderColor: 'transparent',color: 'white !important' }} className=" ms-1" />
+        </Navbar.Brand>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mt-1">
+            <DropdownButton
+              title={
+                <div className='d-flex align-items-center'>
+                  <img src={LanguageIcon} width='24px' height='24px' className='me-1 mb-4' />
+                  <span className='mb-4'>{currentLanguage}</span>
+                  <img src={ArrowDownImage} width='24px' height='24px' className='ms-1 mb-4' />
+                </div>
+              }
+              id="language-dropdown"
+              variant=""
+              className=" bg-transparent mr-5 custom-dropdown mt-1"
+            >
+              {availableLanguages.map((lang) => (
+                <Dropdown.Item key={lang.code} 
+                onClick={() => changeLanguage(lang.code)}
+           >
+                  <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
+                  {lang.label}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+            
+            <Link to='/login' className='text-black d-flex mt-2' style={{ textDecoration: 'none', }}>
+              <img src={profileIcon} width='24px' height='24px' className='me-1' />
+              {t('navbar.login')}
+            </Link>
+          </Nav>
+          <Nav className="me-5 m-2" >
+            <Nav.Link href='/#section1' className='' style={{textDecoration:'none'}} onClick={() => handleNavLinkClick('about')}>  <p className={`  ${activeLink === 1 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(1)} style={{ marginRight: '2rem' }}>{t('navbar.home')}</p></Nav.Link>
+                <Nav.Link href="/#about"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 2 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(2)} style={{ marginRight: '2rem' }}>{t('navbar.aboutus')}</p></Nav.Link>
+                <Nav.Link href="/#Who"className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 3 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(3)} style={{ marginRight: '2rem' }} >{t('navbar.whoFor')}</p></Nav.Link>
+                 <Nav.Link href="/#How" className='' style={{textDecoration:'none'}}> <p className={` ${activeLink === 4 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(4)} style={{ marginRight: '2rem' }}>{t('navbar.howItWorks')}</p></Nav.Link>
+                 <Nav.Link href="/#Testimonial" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 5? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(5)} style={{ marginRight: '2rem' }}>{t('navbar.testimonial')}</p></Nav.Link>
+                 <Nav.Link href="/#Contact" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 6 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(6)} style={{ marginRight: '2rem' }}>{t('navbar.contactUs')}</p></Nav.Link>
+                 <Nav.Link href="/#News" className='' style={{textDecoration:'none'}}><p className={` ${activeLink === 7 ? 'activeButton' : ''}`} onClick={() => handleNavLinkClick(7)} style={{ marginRight: '2rem' }}>{t('navbar.news')}</p></Nav.Link>
+            </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+      :
+      <Container  style={{marginLeft:'2.2rem',direction:direction}}>
       <TopNavbar />
       <hr className='Line-2'/>
       <BottomNavbar />
-    </Container>
+    </Container>}
+    
      
     </div>
   );

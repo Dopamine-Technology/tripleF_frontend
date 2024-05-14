@@ -612,8 +612,8 @@ function MyAccount() {
       <input type="radio" id="female" value="female" {...register('gender')} defaultChecked={profileData?.profile.gender === 'female'} />
       <span className="checkmark"></span>
   </label>
-  <label className='custom-radio-btn'>
-      <span className="label">{genderOptions[2]}</span>
+  <label className='custom-radio-btn' >
+      <span className="label" style={{width:'8rem'}}>{genderOptions[2]}</span>
       <input type="radio" id="other" value="other" {...register('gender')} defaultChecked={profileData?.profile.gender === 'other'} />
       <span className="checkmark"></span>
   </label>

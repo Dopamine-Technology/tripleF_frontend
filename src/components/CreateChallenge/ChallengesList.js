@@ -8,8 +8,9 @@ import useAxios from '../Auth/useAxiosHook.interceptor';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../LanguageContext/LanguageProvider';
+import { CiFileOn } from "react-icons/ci";
 
-function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
+function ChallengesList({ handleClose, show, onNewPostCreated, setShow }) {
   const { language, changeLanguage } = useLanguage();
   const [direction, setDirection] = useState('ltr');
   const [t, i18n] = useTranslation();
@@ -18,6 +19,8 @@ function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
   const [selectedChallenge, setSelectedChallenge] = useState(null);
   const [challengeContent, setChallengeContent] = useState(null);
   const [videoUploaded, setVideoUploaded] = useState(false);
+  const [fileSelected, setFileSelected] = useState(false);
+  const [selectedFileName, setSelectedFileName] = useState(''); // State to store the selected file name
   const axios = useAxios();
 
   const fileInputRef = useRef(null);
@@ -39,10 +42,14 @@ function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
           URL.revokeObjectURL(video.src);
         };
         video.src = URL.createObjectURL(selectedFile);
+        setFileSelected(true);
+        setSelectedFileName(selectedFile.name); // Set selected file name
       } else {
         // Selected file is not a video, show an error message
         message.error('Please select a valid video file.');
         setVideoUploaded(false);
+        setFileSelected(false);
+        setSelectedFileName(''); // Clear selected file name
       }
     }
   };
@@ -59,7 +66,6 @@ function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
         },
       })
       .then((response) => {
-      
         message.success('File uploaded successfully');
         setShow(false);
         onNewPostCreated();
@@ -72,7 +78,7 @@ function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
   const handleSubmit = () => {
     if (videoUploaded) {
       uploadVideo(fileInputRef.current.files[0]);
-      console.log('test2',fileInputRef.current.files[0])
+      console.log('test2', fileInputRef.current.files[0]);
     } else {
       message.error('Please upload a valid video before submitting.');
     }
@@ -177,6 +183,14 @@ function ChallengesList({ handleClose, show, onNewPostCreated,setShow }) {
             </select>
           </div>
           {renderSteps()}
+          {fileSelected && (
+            <div className='file-info'>
+              <span className='file-selected-icon me-1'>
+                <CiFileOn />
+              </span>
+              <span className='mt-1'>{selectedFileName}</span> {/* Display selected file name */}
+            </div>
+          )}
         </div>
       </Modal.Body>
       <Modal.Footer className='challenge-footer'>
