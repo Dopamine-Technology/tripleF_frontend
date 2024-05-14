@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 import { useParams } from 'react-router-dom';
 import { message } from 'antd';
+import New from '../../assets/imgs/new.png';
 
 function Sidebar({ setCurrentChatId }) {
   const axios = useAxios();
@@ -68,10 +69,23 @@ function Sidebar({ setCurrentChatId }) {
     message.success('post deleted successfully');
     
   }
+  const handleNewMessageClick = () => {
+    navigate('/new-message'); // Redirect to new message page
+  };
 
   return (
     <div className="sidebar">
       <div className="chats">
+      {chats.length === 0 && isSmallScreen && ( // Render message only when there are no chats and on small screens
+      <>
+              <button className='btn-tall' style={{width:'auto',padding:'0.5rem',marginLeft:'4.4rem'}} onClick={handleNewMessageClick}>
+              <img src={New}  /> New Message
+ </button>
+ <p className='no-profiles-message'>start a conversation</p>
+ </>
+ 
+        )}
+
         {chats.map(chat => (
           <div
             key={chat.id}

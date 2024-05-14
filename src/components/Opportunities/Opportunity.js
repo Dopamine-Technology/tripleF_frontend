@@ -117,7 +117,7 @@ function Opportunity({data}){
 </div>
 <div>
            
-            <div className='four-div-container d-flex ' >
+            <div className={`four-div-container ${isSmallScreen?'':'d-flex'} `} >
             {titles.map((singleData) => (
   <div className='four-div me-4'>
     <p className=''> {singleData.title} <span className='four-span-name'>{singleData.name}</span></p>

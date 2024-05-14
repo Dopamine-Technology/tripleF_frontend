@@ -27,7 +27,8 @@ function NewChat() {
     {isSmallScreen?
     <>
      <div className="chats-list">
-      <Sidebar  setCurrentChatId={setCurrentChatId}/>
+      {/* <Sidebar  setCurrentChatId={setCurrentChatId}/> */}
+      <ChatSuggestion />
     </div>
     </>:
     <>

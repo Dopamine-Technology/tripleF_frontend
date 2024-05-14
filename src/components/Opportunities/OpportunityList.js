@@ -12,6 +12,7 @@ import { UserDataContext } from '../UserContext/UserData.context';
 import ScoutOppFilter from './ScoutOppFilter';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../LanguageContext/LanguageProvider';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 
 function OpportunityList(){
@@ -22,6 +23,8 @@ function OpportunityList(){
   const navigate=useNavigate();
   const isAppliedPath = location.pathname != '/applied/list';
   const { user } = useContext(UserDataContext);
+  const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+  
 
 
       const axios=useAxios();
@@ -146,7 +149,10 @@ function OpportunityList(){
 </Col>
 
 <Col lg={1}></Col>
-{user.userData.profile.type_name=="talent"?(null):(<Col lg={3} ><Button className='share-btn' onClick={() => {navigate('/home/add/opportunity')}}>Add Opportunity</Button>
+{user.userData.profile.type_name=="talent"?(null):
+(<Col lg={3} ><Button className='share-btn' onClick={() => {navigate('/home/add/opportunity')}}
+  style={{width:isSmallScreen?'auto':'',marginLeft:isSmallScreen?'1.5rem':''}}
+>{t('AddOpportunity.addOpportunity')}</Button>
 </Col>)}
 
 
