@@ -26,6 +26,7 @@
   top: 0;
   right: 0;
 }
+
 .how-h1{
 
     width: 493px;
@@ -75,7 +76,7 @@
   }
   .Lorem-responsive{
     width: 303px;
-    height: 350px;
+    height: auto;
   margin: 0px 0px 0px 0;
   opacity: 0.8;
   font-family: 'Poppins-Regular';

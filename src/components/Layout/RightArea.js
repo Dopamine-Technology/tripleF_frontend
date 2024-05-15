@@ -217,7 +217,7 @@ function RightArea(){
                   src={item.image}
                   alt="Profile Pic"
                   className={!isClub ? `rightSide-img` : ''}
-                  style={{ height: '3rem', width: '3rem', borderRadius: '60%', backgroundColor: 'gray' }}
+                  style={{ height: '3rem', width: '3rem', borderRadius: '60%', backgroundColor: '#213555' }}
                 />
                 <div>
                 <Link to={`/profile/${item.id}`} style={{textDecoration:'none',color:'none'}}>

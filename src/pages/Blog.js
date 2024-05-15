@@ -22,7 +22,7 @@ const BlogPage = () => {
     }
   }, [currentLanguage]);
     return(
-        <div style={{direction:direction}}>
+        <div >
         <Navbar />
         <Row>
             <Col sm={8}  >

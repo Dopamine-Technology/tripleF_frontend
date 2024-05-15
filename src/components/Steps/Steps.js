@@ -42,9 +42,9 @@ const Steps = () => {
 
 
   return (
-    <div className='steps-div' id='How' style={{direction:direction}}>
+    <div className='steps-div' id='How' >
    <div className="Shape"></div>
-      <Row style={{marginTop:'2rem',marginRight:currentLanguage=='ar'?'14rem':''}}>
+      <Row style={{marginTop:'2rem',marginRight:currentLanguage=='ar'?'4rem':''}}>
         <Col md={6} className="order-md-1 order-2">
           <Row className='mb-3'>
             {stepsArray.map((step, index) => (
@@ -59,7 +59,7 @@ const Steps = () => {
           </Row>
         </Col>
         <Col md={6} className="order-md-2 order-1">
-          <div className='desc-responsive' >
+          <div className='desc-responsive' style={{marginRight:currentLanguage=='ar'?'14rem':''}} >
             <p className='text-white how-h1 mt-5 mb-4' >{t('howItWorks.title')}</p>
             <p style={{color:"white"}} className='mb-5 Lorem-responsive'>{t('howItWorks.desc')}
               </p>

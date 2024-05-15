@@ -139,7 +139,7 @@ function StorySection() {
         <div className="story-section">
             <div className="story-container" ref={storyContainerRef}>
                 <div className="story" onClick={() => handleStoryClick(null, null)}>
-                    <img src={user.userData.profile.type_name=='club'?user.userData.profile.club_logo:user.userData.image} alt="Story" style={{ border: 'white',backgroundColor:'#979797',boxShadow:
+                    <img src={user.userData.profile.type_name=='club'?user.userData.profile.club_logo:user.userData.image} alt="Story" style={{ border: 'white',backgroundColor:'#213555',boxShadow:
                         seenStories.includes(user.userData.id) || myStories.is_seen
                             ? 'none'
                             : '', }} />

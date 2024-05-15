@@ -38,7 +38,7 @@ const OurClients = () => {
   }, [currentLanguage]);
 
   return (
-    <div className='OurClientsWhole' id='Testimonial'>
+    <div className='OurClientsWhole' id='Testimonial' style={{direction:'ltr'}}>
       <Row>
         <Col><ClientTalk selectedImageIndex={selectedImageIndex} setSelectedImageIndex={setSelectedImageIndex} /></Col>
         {isSmallScreen?

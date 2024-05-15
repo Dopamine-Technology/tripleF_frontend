@@ -9,6 +9,8 @@ import NavBar from '../Layout/Navbar';
 import { UserDataContext } from '../UserContext/UserData.context';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 import { useNavigate } from 'react-router-dom';
+import CurrentChat from './currentChat';
+import { useParams } from 'react-router-dom';
 
 function ChatBox() {
   const [messages,setMessages]=useState([]);
@@ -17,6 +19,7 @@ function ChatBox() {
   const [currentChatId, setCurrentChatId] = useState(null);
   const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
   const navigate=useNavigate();
+  const {id}=useParams();
 
 
 
@@ -33,6 +36,7 @@ function ChatBox() {
      <div className="chat-box">
       <Navbar />
       <Sidebar  setCurrentChatId={setCurrentChatId}/>
+      <CurrentChat id={currentChatId||id} />
       <ChatList  id={currentChatId}/>
       <ChatInput id={currentChatId} /> 
     </div>

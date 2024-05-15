@@ -38,9 +38,9 @@ const Blogs = () => {
     const isTabletScreen = windowWidth > 600 && windowWidth <= 820;
 
     return(
-        <div style={{direction:direction}}>
+        <div >
         <Navbar />
-        <Row style={{direction:direction}}>
+        <Row >
             <Col sm={8}  >
                 <div >
                     <p className='Col-title'>{t('BlogsList.news')}</p>

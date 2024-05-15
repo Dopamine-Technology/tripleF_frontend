@@ -62,7 +62,7 @@ function ProfilesApplied() {
                                 <p className='appProfile-name'>{profile.first_name} {profile.last_name}</p>
                                 <div className='d-flex' style={{ justifyContent: 'space-between' }}>
                                     <div className='d-flex' style={{ justifyContent: 'space-between' }}>
-                                        <img src={JordanFlag} width='18px' height='18px' style={{ margin: '1px 6px 1px 0' }} />
+                                        <img src={profile.profile.country.image} width='18px' height='18px' style={{ margin: '1px 6px 1px 0' }} />
                                         <p className='appProfile-content me-4'>{profile.profile.country.name}</p>
                                     </div>
                                     <div className='d-flex'><img src={PersonRunning} width='18px' height='18px' style={{ margin: '1px 6px 1px 0' }} />

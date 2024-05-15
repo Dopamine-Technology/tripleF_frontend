@@ -22,25 +22,26 @@ import burgerImg from '../../assets/imgs/burger.svg'
 import { useTranslation } from 'react-i18next';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 import { useLanguage } from '../LanguageContext/LanguageProvider';
+import Turkey from '../../assets/imgs/TurkeyFlag.webp'
+import Spain from '../../assets/imgs/flagSpain.webp'
 
 const TopNavbar = ({content}) => {
-  const currentLanguage = Cookies.get('language') || 'En';
+  const currentLanguage = Cookies.get('language') || 'en';
   const [t,i18n]=useTranslation();
+  const [direction, setDirection] = useState(currentLanguage == 'ar' ? 'rtl' : 'ltr');
 
-
-  // const changeLanguage = (lng) => {
-  //   window.location.reload();
-  //   Cookies.set('language', lng);
-  // };
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     Cookies.set('language', lng);
     console.log('language',i18n.language)
+    
   };
   
   const availableLanguages = [
     { code: 'en', label: 'English',img:En },
     { code: 'ar', label: 'Arabic' ,img:Ar },
+    { code: 'tr', label: 'Turkish' ,img:Turkey },
+    { code: 'es', label: 'Spanish' ,img:Spain },
   ];
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,6 +54,16 @@ const TopNavbar = ({content}) => {
   const handleHoverOut = () => {
     setIsHovering(false);
   };
+
+  useEffect(() => {
+    // Change direction based on the selected language
+    if (currentLanguage === 'ar') {
+      setDirection('rtl');
+    } 
+    else{
+      setDirection('ltr')
+    }
+  }, [currentLanguage]);
 
   
 
@@ -118,7 +129,7 @@ const TopNavbar = ({content}) => {
   </Container>
 </Navbar>:
 <Navbar expand="lg" className='fixed-navbar' >
-  <Container style={{ marginLeft: currentLanguage === 'ar' ? '0rem' : '-1rem', marginRight: currentLanguage === 'ar' ? '-5rem' : '-1rem' }}>
+  <Container style={{ marginLeft: '-1rem', marginRight: '-1rem' }}>
     <Navbar.Brand  className="d-flex align-items-center navbar-brand2">
       <img src={LogoWhite} className='logo-header' />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className="custom-toggler ms-5" />
@@ -229,7 +240,7 @@ const BottomNavbar = () => {
   return (
     <>
     {isScrolled?
-    <Navbar expand="lg" className='scroll-navbar2' style={{ zIndex: '0',direction:direction }}>
+    <Navbar expand="lg" className='scroll-navbar2' style={{ zIndex: '0'}}>
     <Container className='container-tablet-responsive'>
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'18.8rem':'14.5rem'}} className=""/>
       <Navbar.Collapse id="basic-navbar-nav">
@@ -246,7 +257,7 @@ const BottomNavbar = () => {
         </Nav>
       </Navbar.Collapse>
     </Container>
-  </Navbar>:<Navbar expand="lg" className='fixed-navbar2' style={{ direction:direction }} >
+  </Navbar>:<Navbar expand="lg" className='fixed-navbar2' >
     <Container style={{marginLeft:currentLanguage=='ar'?'30rem':'1rem'}}>
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'16rem':'13rem'}} className="custom-toggler"/>
@@ -329,7 +340,7 @@ const CombinedNavbars = () => {
 
  
   return (
-    <div style={{ direction: direction }}>
+    <div>
    {
     isTabletScreen?(
       <Navbar expand="lg" className='p-0' >

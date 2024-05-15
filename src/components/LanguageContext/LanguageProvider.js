@@ -7,23 +7,21 @@ const LanguageContext = createContext();
 export const useLanguage = () => useContext(LanguageContext);
 
 export const LanguageProvider = ({ children }) => {
-    const [language, setLanguage] = useState(Cookies.get('language') || 'En'); // Default language is English
+    const [language, setLanguage] = useState(Cookies.get('language') || 'en'); // Default language is English
     const [t, i18n] = useTranslation();
     const [direction, setDirection] = useState('ltr');
 
     useEffect(() => {
-        // Change direction based on the selected language
-        if (language === 'ar') {
-            setDirection('rtl');
-        } else {
-            setDirection('ltr');
-        }
-    }, [language]);
+        document.body.dir = direction;
+    }, [direction]);
 
     const changeLanguage = (newLanguage) => {
         setLanguage(newLanguage);
         i18n.changeLanguage(newLanguage);
         Cookies.set('language', newLanguage);
+        const newDirection = newLanguage === 'ar' ? 'rtl' : 'ltr';
+        setDirection(newDirection);
+        document.body.dir = newDirection;
     };
 
     return (

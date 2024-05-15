@@ -87,6 +87,7 @@ const handleUpdateIsFollowed = (value) => {
         roundedCircle
         className='profile-img'
         src={profileData.image?profileData.image:profileData.social_image}
+        style={{backgroundColor:'#213555'}}
       />
       <Card.Img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ__AlJC7xkCAQituHiG5hIzlQWn-DbhiCj4g&usqp=CAU" 

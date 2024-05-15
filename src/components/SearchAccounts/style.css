@@ -5,7 +5,8 @@ opacity: 1;
 background-color: rgba(255, 255, 255, 1);
 border:none;
 width: 15rem;
-margin-top:1.9rem
+margin-top:1.9rem;
+height:auto
 }
 
 .account-img{
@@ -27,5 +28,9 @@ margin-top:1.9rem
 @media only screen and (max-width: 600px) {
     .account-card{
         width: 11rem;
+        height:23rem
+    }
+    .card-title,.card-subTitle{
+        font-size: 14px;
     }
 }

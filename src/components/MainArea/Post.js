@@ -211,7 +211,7 @@ function Post({socket,newPostCreated}){
         <div className='text'>
         <div className="poster">
         <div className="Simplilearn">
-            <img src={post.user.image!=''?post.user.image:post.user.social_image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
+            <img src={post.user.image!=''?post.user.image:post.user.social_image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%",backgroundColor:'#213555'}}/>
             <p className='post-username'>{post.user.user_name} <br /> <p className='post-time'>{post.created_at}</p></p> 
          
         </div>

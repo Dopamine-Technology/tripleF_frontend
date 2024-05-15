@@ -15,8 +15,8 @@ const HeaderDesc = () => {
   const [t,i18n]=useTranslation();
     
   return (
-    <div className='header-div' style={{direction:direction} } >
-      <Row style={{marginRight:language=='ar'?'-28rem':''}} >
+    <div className='header-div' style={{marginRight:language=='ar'?'14rem':''}} >
+      <Row >
         <Col md={6} className={isSmallScreen ? '':'mt-5'} >
           <p className='header-h1' style={{ zIndex: '999' }}>
             {t('header.title')}

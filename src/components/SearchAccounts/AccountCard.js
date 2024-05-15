@@ -35,6 +35,7 @@ const updateFollowingCount = (count) => {
         roundedCircle
         className='account-img'
         src={profile.image?profile.image:profile.social_image}
+        style={{backgroundColor:'#213555'}}
       />
       <Card.Img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHAQtNjjewe_ekXHvG5oZ4W7bOAt6qpk3LQzx-bkO6WGg3oJlZakcAB6DL3jG76IHFZfU&usqp=CAU" 

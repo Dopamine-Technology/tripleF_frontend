@@ -17,7 +17,7 @@ const About = () => {
         setDirection('ltr')
       }
     }, [currentLanguage]);
-    return ( <div style={{direction:direction}}>
+    return ( <div >
         <Row className='mt-5' >
             <Col><AboutDesc /></Col>
             <Col><AboutImg /></Col>

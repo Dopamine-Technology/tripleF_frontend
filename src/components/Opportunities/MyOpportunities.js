@@ -126,57 +126,49 @@ function OpportunityList(){
 
 
     return(
-        <div style={{backgroundColor:'white',marginLeft:'3rem'}}>
-        <Row>
-
-          <Col lg={7} >
-  
-       <div class="search-container2 w-100">
-          <input type="text" placeholder={t('Opportunity.search')} class="search-input" />
-          <AiOutlineSearch className="search-icon2" />
-          
-</div>
-</Col>
-
-<Col lg={1}></Col>
-
-{user.userData.profile.type_name=="talent"?(null):(<Col lg={3} >
-  <Button className='share-btn' onClick={() => {navigate('/home/add/opportunity')}} style={{width:isSmallScreen?'auto':'',marginLeft:isSmallScreen?'1.5rem':''}}>
-    {t('AddOpportunity.addOpportunity')}
-    </Button>
-</Col>)}
-
-
-<Col lg={1}></Col>
-
-       
-        </Row>
-
-
-          <Row>
-            {user.userData.profile.type_name=="scout"?( <ScoutOppFilter filterTypeSelected={onFilterTypeSelected} />):null}
-      
-       </Row>
-  
-       
-        <Row>
-
-        {opportunities?.map((opportunity) => (
-          <Opportunity key={opportunity.id} data={opportunity} />
-        ))}
-        </Row>
-        <Row>
+      <div style={{ backgroundColor: 'white', marginLeft: '3rem' }}>
+      <Row>
+        <Col lg={7}>
+          <div class="search-container2 w-100">
+            <input type="text" placeholder={t('Opportunity.search')} class="search-input" />
+            <AiOutlineSearch className="search-icon2" />
+          </div>
+        </Col>
+        <Col lg={1}></Col>
+        {user.userData.profile.type_name === "talent" ? null : (
+          <Col lg={3}>
+            <Button className='share-btn' onClick={() => { navigate('/home/add/opportunity') }} style={{ width: isSmallScreen ? 'auto' : '', marginLeft: isSmallScreen ? '1.5rem' : '' }}>
+              {t('AddOpportunity.addOpportunity')}
+            </Button>
+          </Col>
+        )}
+        <Col lg={1}></Col>
+      </Row>
+      <Row>
+        {user.userData.profile.type_name === "scout" ? (<ScoutOppFilter filterTypeSelected={onFilterTypeSelected} />) : null}
+      </Row>
+      <Row>
+        {opportunities && opportunities.length > 0 ? (
+          opportunities.map((opportunity) => (
+            <Opportunity key={opportunity.id} data={opportunity} />
+          ))
+        ) : (
+          <p  className='no-profiles-message'>No opportunity yet</p>
+        )}
+      </Row>
+      <Row>
         {filteredListPosition && filteredListPosition.length > 0 && (
-  <Pagination className="center-icon mt-4">
-    {Array.from({ length: Math.ceil(filteredListPosition.length / itemsPerPage) }).map((_, index) => (
-      <Pagination.Item key={index + 1} onClick={() => paginate(index + 1)}>
-        {index + 1}
-      </Pagination.Item>
-    ))} 
-  </Pagination>
-)}
-        </Row>
-        </div>
+          <Pagination className="center-icon mt-4">
+            {Array.from({ length: Math.ceil(filteredListPosition.length / itemsPerPage) }).map((_, index) => (
+              <Pagination.Item key={index + 1} onClick={() => paginate(index + 1)}>
+                {index + 1}
+              </Pagination.Item>
+            ))}
+          </Pagination>
+        )}
+      </Row>
+    </div>
+    
     )
 }
 

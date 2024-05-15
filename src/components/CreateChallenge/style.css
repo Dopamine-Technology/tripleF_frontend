@@ -73,8 +73,6 @@ text-align: left;
 width:auto;
 text-align: center;
 margin-top: 2rem;
-
-
 }
 .submit-btn{
   background-color: #A6AEBB;
@@ -179,4 +177,25 @@ border-color: white;
         appearance: none;
         -webkit-appearance: none;
         -moz-appearance: none;
+}
+
+@media (max-width: 600px) {
+  .upload-btn{
+    border-radius: 24px;
+  box-shadow: 0px 2px 12px rgba(1,37,43, 0.3);
+  opacity: 1;
+  background-color: rgba(119,220,191, 1);
+  border: none;
+  opacity: 1;
+  color: rgba(29,45,41,1);
+  font-family: "Quicksand-Medium";
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0px;
+  text-align: left;
+  width:auto;
+  text-align: center;
+  margin-top: 2rem;
+  }
 }
