@@ -60,7 +60,7 @@ const News = () => {
   ];
 
   return (
-    <div className='p-4 mt-5' id='News' style={{direction:direction}}>
+    <div className='p-4 mt-5' id='News' >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <p className='news-h1' style={{ width: '30rem', marginLeft: isSmallScreen?'0.8rem':'2.7rem' }}>{t('News.title')}</p>
         <p><a href="/blogs" className='read-more-link mt-2'>{t('News.view_more')}</a> {language=='ar'?<FaArrowLeft  className='arrow-hidden' />:<FaArrowRight className='arrow-hidden' />}</p>

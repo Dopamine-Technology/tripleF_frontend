@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import { Form, Col } from "react-bootstrap";
+import { useLanguage } from "../LanguageContext/LanguageProvider";
 
 const Input = ({
   register,
@@ -17,7 +18,7 @@ const Input = ({
   const isTextarea = type === "textarea";
 
   const [isHovering, setIsHovering] = useState(false);
-
+  const { language, changeLanguage } = useLanguage(); 
   const handleHover = () => {
     setIsHovering(true);
   };
@@ -60,6 +61,7 @@ const Input = ({
             
           }}
           className='text-input'
+          style={{width:language=='ar'?'12rem':'`'}}
           placeholder={placeholder}
           type={type}
           onMouseOver={handleHover} onMouseOut={handleHoverOut}

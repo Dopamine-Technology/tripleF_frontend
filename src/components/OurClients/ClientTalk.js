@@ -59,7 +59,7 @@ const ClientTalk = ({ selectedImageIndex, setSelectedImageIndex }) => {
   }
 
   return (
-    <div className='bg-gray mb-4 clientTalk-container' style={{direction:direction}}>
+    <div className='bg-gray mb-4 clientTalk-container' >
       <p className=' mt-5 test-h1'>    {t('ourClients.title')}</p>
       <p className='' style={{ width: '30rem',marginLeft:'-1rem' }}>
         <span style={{  color: '#213555' }} className='talkQ '>
@@ -81,10 +81,19 @@ const ClientTalk = ({ selectedImageIndex, setSelectedImageIndex }) => {
 
       <div className='mt-4' style={{marginLeft:'-1.3rem'}} >
         <Button className='customButton' style={{ backgroundColor: '#213555' }} onClick={handlePrevButtonClick}>
-          <img src={language=='ar'?RightVector:LeftVector} style={{width: '17.1px',height: '15px'}} />
+          <img src={language=='ar'?
+          // RightVector
+          LeftVector
+          :
+          LeftVector
+          } style={{width: '17.1px',height: '15px'}} />
         </Button>
         <Button className='customButton' style={{ backgroundColor: '#213555' }} onClick={handleNextButtonClick}>
-          <img src={language=='ar'?LeftVector:RightVector} style={{width: '17.1px',height: '15px'}} />
+          <img src={language=='ar'?
+          //LeftVector
+         RightVector
+          :
+          RightVector} style={{width: '17.1px',height: '15px'}} />
         </Button>
       </div>
     </div>

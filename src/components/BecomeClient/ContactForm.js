@@ -72,13 +72,13 @@ const ContactForm = ({isTabletScreen}) => {
   };
   
   return (
-    <div className='form-contact' style={{direction:direction}}>
+    <div className='form-contact'>
       <h2 className='become-h1 text-white' >
       {t('ContactUs.title')}
       </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Row className='mt-4'>
-          <Col>
+        <Row className={`${language=='ar'?'mt-0':'mt-4'}`}>
+          <Col style={{marginTop:language=='ar'?'1.5rem':'' }}>
             <Input
               label={t('ContactUs.contactUs_name')}
               name='name'
@@ -112,7 +112,7 @@ const ContactForm = ({isTabletScreen}) => {
           errors={errors}
          
         />
-        <Button type='submit' className='submit-button hover-element'>
+        <Button type='submit' className={`submit-button hover-element`} style={{marginRight:language=='ar'?'23rem':''}}>
         {t('ContactUs.contactUs_btn')}
         </Button>
       </form>

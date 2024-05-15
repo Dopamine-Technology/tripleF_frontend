@@ -16,7 +16,6 @@ import Blogs from './pages/Blogs';
 import ComingSoon from './components/ComingSoon/ComingSoon';
 import BlogPage from './pages/Blog';
 import NewOpportunity from './components/Opportunities/NewOpportunity';
-import NavBar from './components/Layout/Navbar';
 import OpportunityList from './components/Opportunities/OpportunityList';
 import MyOpportunities from './components/Opportunities/MyOpportunities';
 import LayoutWithoutRight from './components/Layout/LayoutWithoutRight';
@@ -32,18 +31,18 @@ import Notification from './components/Settings/Notification';
 import ProfilesApplied from './components/Opportunities/ProfilesApplied';
 import NotificationList from './components/Notification/NotificationList';
 import SearchAccounts from './components/SearchAccounts/SearchAccounts';
-import {io} from 'socket.io-client';
 import ChatBox from './components/Chat/ChatBox'
 import Chat from './components/Chat/Chat';
 import NewChat from './components/Chat/NewChat';
-
+import { useLanguage } from './components/LanguageContext/LanguageProvider';
 
 function App() {
   const { user } = useContext(UserDataContext);
   const checkRole = useRoleCheck();
+  const { direction } = useLanguage();
 
   return (
-    <div className="App">
+    <div className="App" >
        <Router>
       
         <Routes>

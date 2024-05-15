@@ -72,7 +72,7 @@ function Opportunity({data}){
    <div className={isSmallScreen ? "" : "d-flex justify-content-between"}>
    <div className="poster">
    <div className="Simplilearn">
-       <img src={user.userData.profile.type_name=="club"?data.user.profile.club_logo:data.user.image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
+       <img src={user.userData.profile.type_name=="club"?data.user.profile.club_logo:data.user.image} alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%",backgroundColor:'#213555'}}/>
        <p className='post-username'>{user.userData.profile.type_name=="club"?data.user.profile.club_name:data.user.user_name} <br /> 
        <div className='d-flex'>
                                     <p className='me-5 blog-sub'>{data.country.name}

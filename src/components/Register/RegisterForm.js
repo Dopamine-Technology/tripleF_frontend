@@ -822,17 +822,18 @@ function RegisterForm({ onLoadingChange }) {
             <div className='form-group'>
   <label>{t('Register.gender')}</label>
   <div className="radio-buttons">
-    <label className='custom-radio-btn'>
+    <label className='custom-radio-btn' style={{width:isSmallScreen?'8rem':''}} >
       <span className="label">{genderOptions[0]}</span>
       <input type="radio" id="male" value="male" {...register('gender')} defaultChecked={!formData.gender}   />
       <span className="checkmark"></span>
+      
     </label>
-    <label className='custom-radio-btn'>
+    <label className='custom-radio-btn'  style={{width:isSmallScreen?'8rem':''}}  >
       <span className="label">{genderOptions[1]}</span>
       <input type="radio" id="female" value="female" {...register('gender')}  />
       <span className="checkmark"></span>
     </label>
-    <label className='custom-radio-btn'>
+    <label className='custom-radio-btn'  style={{width:isSmallScreen?'10rem':'',fontSize:isSmallScreen?'14px':''}}  >
       <span className="label">{genderOptions[2]}</span>
       <input type="radio" id="other" value="other" {...register('gender')}  />
       <span className="checkmark"></span>

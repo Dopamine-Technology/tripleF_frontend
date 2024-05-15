@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import './footer.css';
 import { FaFacebookF,FaTwitter,FaSnapchatGhost  } from "react-icons/fa";
 import { BsInstagram } from "react-icons/bs";
-import Logo from '../../assets/imgs/Logo.png'
+import Logo from '../../assets/imgs/LogoLastVersion.png'
 import { RiTwitterXLine } from "react-icons/ri";
 import facebook2 from '../../assets/imgs/facebook2.png'
 import twitter from '../../assets/imgs/twitter.svg';
@@ -30,14 +30,14 @@ const Footer = () => {
   }, [currentLanguage]);
 
   return (
-    <footer className='footer' style={{direction:direction}}>
+    <footer className='footer' >
       <div className='section'>
       <Navbar.Brand href="/" className="" style={{}}>
       <img src={Logo} className='mb-3' style={{ width: '140px',height: '50px',marginRight:'14rem'}} />
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1" />
     </Navbar.Brand>
-        <p className='footer-p'>{t('Footer.desc')}</p>
-        <div className='social-icons'>
+        <p className='footer-p' style={{marginRight:currentLanguage=='ar'?'2rem':''}}>{t('Footer.desc')}</p>
+        <div className='social-icons' style={{marginRight:currentLanguage=='ar'?'13rem':''}}>
         <Link to='https://www.facebook.com/triple.f.ln/'><img src={facebook2} className='icon' /></Link>
         <Link to='https://twitter.com/TripleF_lnc'><img src={twitter}  className='icon'  /></Link>
         <Link to='https://www.instagram.com/triple.f.lnc/'><img src={instagram}  className='icon'  /></Link>

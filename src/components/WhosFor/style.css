@@ -56,6 +56,10 @@
     line-height: normal;
     letter-spacing: normal;
     color: #464646;
+
+  }
+  html[dir='rtl'] .who2-h1 {
+    margin: 0 112px 63px 93px; /* Reverse margin for Arabic */
   }
 
   @media only screen and (min-width: 400px) and (max-width: 600px) {

@@ -23,7 +23,7 @@ const BecomeClient = () => {
   
     
   return (
-    <div className="becomeClient-div" id='Contact' style={{direction:direction}}>
+    <div className="becomeClient-div" id='Contact' >
       <Row>
         <Col md={7} >
           <ContactForm isTabletScreen={isTabletScreen} />

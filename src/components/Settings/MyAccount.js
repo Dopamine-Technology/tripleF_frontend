@@ -223,7 +223,7 @@ function MyAccount() {
 
             setVerificationEmail(true);
              const watchEmail = watch('email', ''); 
-            axios.post('/your-api-endpoint', watchEmail)
+            axios.get('user/auth/send_verify_email', watchEmail)
             .then(response => {
               console.log("Email sent successfully:", response.data);
             })
@@ -506,8 +506,8 @@ function MyAccount() {
 
   />
   {profileData?.is_email_verified? null:
-  verificationEmail? <p className='sent-verify'  style={{ position: 'absolute', right: '7rem', bottom: '-1rem' }} ><img src={CheckCircleFill}  className='me-1'/>{t('Register.SendVerification')}</p>:
-  <p className='need-verify' onClick={handleVerifyClick} style={{ position: 'absolute', right: '7rem', bottom: '-1rem' }} >{t('Register.verifyEmail')}</p>
+  verificationEmail? <p className='sent-verify'  style={{ position: 'absolute', right: '7rem', bottom: isSmallScreen?'-2rem':'-1rem',marginTop:isSmallScreen?'1rem':'' }} ><img src={CheckCircleFill}  className='me-1'/>{t('Register.SendVerification')}</p>:
+  <p className='need-verify' onClick={handleVerifyClick} style={{ position: 'absolute', right: '7rem', bottom: '-1rem',marginTop:isSmallScreen?'1rem':'' }} >{t('Register.verifyEmail')}</p>
 
 }
 

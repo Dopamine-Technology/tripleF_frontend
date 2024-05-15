@@ -2,6 +2,8 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import TranslationEn from './translation/en/global_en.json';
 import TranslationAr from './translation/ar/global_ar.json';
+import TranslationTr from './translation/tr/global_tr.json';
+import TranslationEs from './translation/es/global_es.json'
 
 const resources = {
   en: {
@@ -9,6 +11,12 @@ const resources = {
   },
   ar: {
     translation: TranslationAr
+  },
+  tr:{
+    translation: TranslationTr
+  },
+  es:{
+    translation: TranslationEs
   }
 };
 
