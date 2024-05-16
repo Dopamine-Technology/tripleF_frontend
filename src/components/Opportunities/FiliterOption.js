@@ -114,7 +114,7 @@ function onFilterLocationChanged(event) {
           onChange={onFilterLocationChanged}
         />
       </Col>
-      {user.userData.profile.type_name=='talent'?(<><Col md={6} lg={3}>
+      {user.userData.profile.type_id=='1'?(<><Col md={6} lg={3}>
         <Input
           type='select'
           label=''

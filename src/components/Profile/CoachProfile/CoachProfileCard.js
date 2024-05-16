@@ -85,7 +85,7 @@ const finalAge = hasBirthdayOccurred ? age : age - 1;
       {profileData.id!=user.userData.id?   <FollowBtn id={id}  is_followed={profileData.is_followed}/>:null}
       {profileData.id!=user.userData.id?   <MessageBtn />:null}
       
-      {profileData.profile.type_name == 'coach'||profileData.profile.type_name == 'scout' ? 
+      {profileData.profile.type_id == '2'||profileData.profile.type_id == '4' ? 
         (CoachData.map((data, index) => (
           <div>
           <div key={index} className='d-flex  d-flex align-items-center justify-content-between '>

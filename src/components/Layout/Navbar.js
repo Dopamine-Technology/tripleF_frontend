@@ -253,7 +253,7 @@ const changeLanguageHandler = () => {
                     <Dropdown menu={{ items }} className="dropdown-responsive">
                         <Space>
                             <div className="image-container">
-                                <img src={user.userData.profile.type_name=='club'?user.userData.profile.club_logo:user.userData.image} alt="Profile" width={isProScreen?'20px':'30px'} height={isProScreen?'20px':'30px'} style={{borderRadius:'30px',   backgroundColor:'#213555'}}/>
+                                <img src={user.userData.profile.type_id=='3'?user.userData.profile.club_logo:user.userData.image} alt="Profile" width={isProScreen?'20px':'30px'} height={isProScreen?'20px':'30px'} style={{borderRadius:'30px',   backgroundColor:'#213555'}}/>
                                 <p className="me">Me</p>
                             </div>
                             <MdArrowDropDown fontSize={38} style={{ color: '#979797' }} />

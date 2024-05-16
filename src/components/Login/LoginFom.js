@@ -107,7 +107,7 @@ function LoginForm() {
   
         if (response.data.result) {
           Cookies.set("token", response.data.result.token);
-          Cookies.set("profileType", response.data.result.user.profile.type_name);
+          Cookies.set("profileType", response.data.result.user.profile.type_id);
   
           setUser({
             isAuthenticated: true,
@@ -264,7 +264,7 @@ function LoginForm() {
      type='password'
    />
  </Form.Group>
- <Form.Group className='mb-3' controlId='formRememberMe'  >
+ <Form.Group className='mb-3 responsive-check' controlId='formRememberMe'  >
   <Row >
     <Col xs={5}>
       <Form.Check type='checkbox'  label={t('Login.remmeberMe')} onChange={handleRememberMeChange} checked={rememberMe}

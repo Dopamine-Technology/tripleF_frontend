@@ -25,6 +25,7 @@ import ReportPostPopup from '../Post/ReportPostPopup';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../LanguageContext/LanguageProvider';
+import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 function Post({socket,newPostCreated}){
     const [show, setShow] = useState(false);
@@ -43,6 +44,7 @@ function Post({socket,newPostCreated}){
     const { language, changeLanguage } = useLanguage(); 
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
+    const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
   
     useEffect(() => {
       if (language === 'ar') {
@@ -258,9 +260,10 @@ function Post({socket,newPostCreated}){
         <Col xs={6} md={6} lg={8} xl={6}>
          
             <Row>
-                <Col></Col>
+                {isSmallScreen?null:<Col></Col>}
+                
     
-                <Col className="share-time"> <span className='me-3'>{post.shares} {t('mainarea.share')}</span>
+                <Col className="share-time" > <span className={'me-3'}>{post.shares} {t('mainarea.share')}</span>
                                              <span>{post.saves} {t('mainarea.save')}</span></Col>
             </Row>
         </Col>

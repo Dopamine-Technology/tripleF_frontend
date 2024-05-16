@@ -6,6 +6,7 @@ const defaultOptions = {
   baseURL: "https://backend.triplef.group/api/",
   headers: {
     "Content-Type": "application/json",
+    "language": Cookies.get("language")
   },
 };
 

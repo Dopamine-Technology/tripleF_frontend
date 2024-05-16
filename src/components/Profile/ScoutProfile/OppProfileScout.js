@@ -75,9 +75,9 @@ function OppProfileScout({profileData}){
    <div className='d-flex justify-content-between' >
    <div className="poster">
    <div className="Simplilearn" style={{marginTop:'0.7rem'}}>
-       <img src={profileData.profile.type_name=='club'?data.user.profile.club_logo:data.user.image}
+       <img src={profileData.profile.type_id=='3'?data.user.profile.club_logo:data.user.image}
         alt="Img" style={{height:"50px", width:"50px", borderRadius:"50%"}}/>
-       <p className='post-username'>{profileData.profile.type_name=='club'?data.user.profile.club_name:data.user.user_name} <br /> 
+       <p className='post-username'>{profileData.profile.type_id=='3'?data.user.profile.club_name:data.user.user_name} <br /> 
 
        </p> 
     

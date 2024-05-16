@@ -1097,6 +1097,11 @@ user-select: none;
         justify-content:start
 
     }
+    .story-section {
+   
+       max-width: 80%;
+      
+    }
     .story{
         margin-left: 1rem;
     }

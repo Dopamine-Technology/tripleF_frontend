@@ -115,13 +115,13 @@ opacity: 0.8;
 
    @media (max-width: 600px) {
     .social-icons{
-      margin-right: 10rem;
+      /* margin-right: 0rem; */
       margin-bottom: 2rem;
     }
     .section {
       flex: none;
       margin: 1rem;
-      margin-left: 4rem;
+      margin-left: 0rem;
       
     }
    }

@@ -1,19 +1,20 @@
-import React,{useLayoutEffect,useState} from 'react';
+import React,{useLayoutEffect,useState,useEffect} from 'react';
 import './style.css';
 import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
 import single from '../../assets/imgs/SingleRight.svg'
 import { Card } from 'antd';
-import { useNavigate, Link } from 'react-router-dom';
+import { useLocation , Link } from 'react-router-dom';
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const { Meta } = Card;
-const SingleOne = ({ img, content, category }) => {
+const SingleOne = ({ img, content, category ,id}) => {
   
   const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
 
+
   
   return (
-    <Link to="/blogs/1" style={{ textDecoration: 'none' }}>
+    <Link to={`/blogs/${id}`} style={{ textDecoration: 'none' }}>
     <Card
       hoverable
       style={{
@@ -29,10 +30,10 @@ const SingleOne = ({ img, content, category }) => {
       <Meta
         title={<p className='category-p'>{category}</p>}
         description={
-          <Link to='/blogs/1' style={{textDecoration:'none'}}><p className="description-text">{content}</p></Link>
+          <Link to={`/blogs/${id}`} style={{textDecoration:'none'}}><p className="description-text">{content}</p></Link>
         }
       />
-      <a href='/blogs/1'><img src={single} style={{ marginTop: '1rem'}} /></a>
+      <a href={`/blogs/${id}`}><img src={single} style={{ marginTop: '1rem'}} /></a>
     </Card>
     </Link>
   );

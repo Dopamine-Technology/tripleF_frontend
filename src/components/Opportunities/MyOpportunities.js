@@ -81,7 +81,7 @@ function OpportunityList(){
       
       const fetchOppData = async () => {
   
-        if (user.userData.profile.type_name == "talent") {
+        if (user.userData.profile.type_id == "1") {
           setFilterTextType('applied')
           } 
           // else  {
@@ -135,7 +135,7 @@ function OpportunityList(){
           </div>
         </Col>
         <Col lg={1}></Col>
-        {user.userData.profile.type_name === "talent" ? null : (
+        {user.userData.profile.type_id == "1" ? null : (
           <Col lg={3}>
             <Button className='share-btn' onClick={() => { navigate('/home/add/opportunity') }} style={{ width: isSmallScreen ? 'auto' : '', marginLeft: isSmallScreen ? '1.5rem' : '' }}>
               {t('AddOpportunity.addOpportunity')}
@@ -145,7 +145,7 @@ function OpportunityList(){
         <Col lg={1}></Col>
       </Row>
       <Row>
-        {user.userData.profile.type_name === "scout" ? (<ScoutOppFilter filterTypeSelected={onFilterTypeSelected} />) : null}
+        {user.userData.profile.type_id == "4" ? (<ScoutOppFilter filterTypeSelected={onFilterTypeSelected} />) : null}
       </Row>
       <Row>
         {opportunities && opportunities.length > 0 ? (

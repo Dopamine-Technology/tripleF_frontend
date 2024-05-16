@@ -141,7 +141,7 @@ function FiliterOption(props) {
           onChange={handleFilterChange}
         />
       </Col>
-      {user.userData.profile.type_name=='talent'?(
+      {user.userData.profile.type_id=='1'?(
       <><Col md={6} lg={6} xl={3}>
         <Input
           type='select'

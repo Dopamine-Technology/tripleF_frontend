@@ -39,7 +39,7 @@ function MyAccount() {
 
 
   useEffect(() => {
-    if (user.userData.profile.type_name === 'talent') {
+    if (user.userData.profile.type_id == '1') {
         const clubSchema = Yup.object().shape({
           first_name: Yup.string().required("First name is required"),
           last_name:  Yup.string().required("Last name is required"),
@@ -61,7 +61,7 @@ function MyAccount() {
             
         });
         setValidationSchema(clubSchema);
-    } else if (user.userData.profile.type_name === 'club') {
+    } else if (user.userData.profile.type_id == '3') {
         const talentSchema = Yup.object().shape({
            club_name: Yup.string().required('Club Name is required'),
            email:Yup.string()
@@ -72,7 +72,7 @@ function MyAccount() {
            year_founded: Yup.number().typeError('year founded must be a valid date').required('year founded is required'),
         });
         setValidationSchema(talentSchema);
-    } else if (user.userData.profile.type_name === 'coach' || user.userData.profile.type_name === 'scout') {
+    } else if (user.userData.profile.type_id == '2' || user.userData.profile.type_id == '4') {
         const coachSchema = Yup.object().shape({
           first_name: Yup.string().required("First name is required"),
           last_name:  Yup.string().required("Last name is required"),
@@ -113,6 +113,8 @@ function MyAccount() {
           const [profileData,setProfileData]=useState();
           const genderOptions = t('Register.genderOptions', { returnObjects: true });
           const preferredFootOptions = t('Register.preferredFootOptions', { returnObjects: true });
+
+ 
         
           const axios=useAxios();
 
@@ -139,7 +141,7 @@ function MyAccount() {
           data.talent_type = '1';
           // Add the mobile number from profileData or from the form state if changed
           data.mobile_number = watch("mobile_number") || profileData?.profile.mobile_number || '';
-          if(user.userData.profile.type_name=='talent'){
+          if(user.userData.profile.type_id=='1'){
           data.position = watch("position") || profileData?.profile.position.id || '';}
       
           try {
@@ -317,10 +319,10 @@ function MyAccount() {
         </div>
     </div>
 </Form.Group> 
-{user.userData.profile.type_name=='talent'&&
+{user.userData.profile.type_id=='1'&&
 <Form.Group controlId='gender' className='me-2'>
 <label>{t('Register.position')}</label>
-<div className={`d-flex ${isProScreen ? 'flex-wrap' : ''}`} onChange={(e) => handlePositionSelect(e.target.value)}>
+<div className={`d-flex ${isProScreen||isSmallScreen ? 'flex-wrap' : ''}`} onChange={(e) => handlePositionSelect(e.target.value)}>
     {positions?.map((position, index) => (
         <label key={position.id} className={`custom-radio-btn me-2 ${isProScreen && index % 2 !== 0 ? 'mb-2' : ''}`}>
             <span className="label">{position.name}</span>
@@ -338,14 +340,14 @@ function MyAccount() {
     
     </Form.Group>}
 
-    {watch('parent_position') != '1' && user.userData.profile.type_name=='talent'&&<Form.Group controlId='subPosition' className='mb-3 me-4'>
+    {watch('parent_position') != '1' && user.userData.profile.type_id=='1'&&<Form.Group controlId='subPosition' className='mb-3 me-4'>
     <div className='form-group'>
         <Form.Label htmlFor="subPosition">{t('Register.subPosition')}</Form.Label>
         <select 
             id="subPosition" 
             {...register('position')} 
             className='form-control' 
-            style={{width:'391px'}} 
+            style={{width:isSmallScreen?'300px':'391px'}} 
             defaultValue={profileData?.profile.parent_position?.id == watch('parent_position') ? profileData?.profile.position.id : ''}
         >
             {profileData?.profile.parent_position.id == watch('parent_position')&&
@@ -448,7 +450,7 @@ function MyAccount() {
             <LoadingScreen />
            ):(
             <Form className='signup-form' onSubmit={handleSubmit(onSubmit)}>
-            {user.userData.profile.type_name=='club'? 
+            {user.userData.profile.type_id=='3'? 
             <Input
     register={register}
     errors={errors}
@@ -492,7 +494,7 @@ function MyAccount() {
                     </div>}
       
                   <Form.Group className='' controlId='email' style={{ position: 'relative' }}>
-  <Input
+                  <Input
     register={register}
     errors={errors}
     name="email"
@@ -554,7 +556,7 @@ function MyAccount() {
             )}
         </div>
         <div className={isProScreen||isSmallScreen?"":"flex-fill"}>
-          {user.userData.profile.type_name=='club'?
+          {user.userData.profile.type_id=='3'?
    <Form.Group controlId='birthdate' className='mt-3' style={{marginLeft:'1rem',width:'188px',height:'23px'}}>
    <label htmlFor="birthdate">{t('Register.year_founded')}</label>
    <div className="d-flex">
@@ -586,7 +588,7 @@ function MyAccount() {
     </div>
 </Form.Group>
 
-    {user.userData.profile.type_name=='club'?(<Form.Group controlId='country' className='mb-3'>
+    {user.userData.profile.type_id=='3'?(<Form.Group controlId='country' className='mb-3'>
     <Form.Label htmlFor="country">{t('Register.residencePlace')}</Form.Label>
     <Form.Control as="select" id="country" {...register('country_id')}  style={{width:'391px'}} >
         <option value={profileData?.profile.country.id}>{profileData?.profile.country.name}</option>
@@ -631,8 +633,8 @@ function MyAccount() {
   </div>
     )}
 
-{user.userData.profile.type_name === 'talent' && talentFields}
-{(user.userData.profile.type_name === 'scout'||user.userData.profile.type_name === 'coach') && coachFields}
+{user.userData.profile.type_id == '1' && talentFields}
+{(user.userData.profile.type_id == '4'||user.userData.profile.type_id == '2') && coachFields}
 
   <hr style={{ border: 'solid 1px #e1e1e1', opacity: '0.5',marginTop:'3rem',marginBottom:'1rem' }}  />
   <Row>
