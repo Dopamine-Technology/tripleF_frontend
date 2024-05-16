@@ -67,9 +67,9 @@ const News = () => {
       </div>
       <Row className={isSmallScreen?`news-row`:`mt-5 news-row`} >
         {news && news.length > 0 ? (
-          news2.map((item, index) => (
+          news.map((item, index) => (
             <Col key={index} md={4} xs={12}  className='col-single' style={{ paddingBottom: '16px' }}>
-              <SingleOne img={item.img} content={item.content} category={item.category} />
+              <SingleOne img={item.main_image} content={item.content} category={item.title} />
             </Col>
           ))
         ) : (

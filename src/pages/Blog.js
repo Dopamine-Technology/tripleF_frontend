@@ -8,6 +8,9 @@ import { useScreenWidth } from '../components/ScreenWidthContext/ScreenWidth.con
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { useLocation , Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import useAxios from '../components/Auth/useAxiosHook.interceptor';
+
 const BlogPage = () => {
     const tags=['#hashtag','#hashtag'];
     const {  isTabletScreen } = useScreenWidth();
@@ -15,6 +18,20 @@ const BlogPage = () => {
   const [direction, setDirection] = useState('ltr');
   const [t,i18n]=useTranslation()
   const location = useLocation();
+  const axios=useAxios();
+  const {id}=useParams();
+  const [blog,setBlog]=useState();
+
+  useEffect(() => {
+    axios.get(`app/get_post/${id}`)
+      .then((response) => {
+        console.log('news', response.data); 
+        setBlog(response.data.result);
+      })
+      .catch((error) => {
+        console.error('Error fetching news:', error);
+      });
+  }, []);
 
   useEffect(() => {
     if (currentLanguage === 'ar') {
@@ -31,7 +48,7 @@ const BlogPage = () => {
         <Navbar />
         <Row>
             <Col sm={8}  >
-                    <SingleBlog />
+                    <SingleBlog blog={blog} />
             </Col>
 
         
@@ -63,9 +80,10 @@ const BlogPage = () => {
                                 <p className='Col-title'>{t('BlogsList.Tags')}</p>
                                 <hr className='hr-title' />
                                 <div style={{ marginLeft: '4rem' }}>
-                                    {tags.map((tag, index) => (
-                                        <span key={index} className="badge me-2 p-2">{tag}</span>
-                                    ))}
+                                {Array.isArray(tags) && tags.map((tag, index) => (
+    <span key={index} className="badge me-2 p-2">{tag}</span>
+))}
+
                                 </div>
                             </div>
                         </Row>

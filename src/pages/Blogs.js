@@ -77,11 +77,10 @@ const Blogs = () => {
   <p className='Col-title' >{t('BlogsList.Tags')}</p>
   <hr className='hr-title' />
   <div style={{marginLeft:'4rem'}}>
-  {tags.map((tag, index) => (
-                           <span className="badge  me-2 p-2">{tag}</span>
-                        
-            
-        ))}
+  {Array.isArray(tags) && tags.map((tag, index) => (
+    <span key={index} className="badge me-2 p-2">{tag}</span>
+))}
+
   </div>
 
 </div>
