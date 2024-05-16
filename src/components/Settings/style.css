@@ -126,6 +126,8 @@ height: 1.3rem;
         background-color: white;
         padding:3rem;
         padding-top: 3rem;
+        overflow-x: hidden;
+        margin-left: 0rem;
         
         }
         .title-editData{

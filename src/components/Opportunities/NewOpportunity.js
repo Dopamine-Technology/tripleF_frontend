@@ -274,7 +274,7 @@ EditorState.createEmpty()
             delete formData.to_weight;
 
         }
-        if(user.userData.profile.type_name=='scout'){
+        if(user.userData.profile.type_id=='4'){
           formData.targeted_type='1'
         }
    
@@ -762,7 +762,7 @@ EditorState.createEmpty()
                       />
                       </Col>
                      
-                      {user.userData.profile.type_name!='scout'?
+                      {user.userData.profile.type_id!='4'?
                       <Col md={4} lg={4}>
                             <Input
                           register={register}

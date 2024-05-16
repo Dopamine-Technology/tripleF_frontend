@@ -112,10 +112,10 @@ const handleUpdateIsFollowed = (value) => {
       {profileData.id!=user.userData.id?  
             <MessageBtn />:null}
    
-      {profileData.profile.type_name == 'talent' && profileData.profile.parent_position.name=='goalkeeper'&&
+      {profileData.profile.type_id == '1' && profileData.profile.parent_position.name=='1'&&
         <Card.Img src={GoalKeeper} className='mt-4' />
       }
-     {profileData.profile.type_name == 'talent'&& profileData.profile.position.map(position => {
+     {profileData.profile.type_id == '1'&& profileData.profile.position.map(position => {
     return <Card.Img src={position.image} key={position.id} className='mt-4' />;
 
 })}
@@ -211,7 +211,7 @@ const handleUpdateIsFollowed = (value) => {
             }
             return null;
       })} */}
-      {profileData.profile.type_name == 'talent' ? 
+      {profileData.profile.type_id == '1' ? 
         (TalentData.map((data, index) => (
           <div>
           <div key={index} className=' d-flex align-items-center justify-content-between mt-1'>

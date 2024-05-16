@@ -3,6 +3,7 @@ import { Card, Row, Col } from 'react-bootstrap';
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { RxDividerVertical } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Blog = ({img,title,categoryName,date,desc,tags}) => {
     const id=1;
@@ -22,7 +23,7 @@ const Blog = ({img,title,categoryName,date,desc,tags}) => {
                       
                         <Col md={7}>
                             <div>
-                                <p className='blog-title' onClick={() => { navigate(`/blogs/${id}`) }}>{title}</p>
+                                <Link to={`/blogs/${id}`} style={{textDecoration:'none',color:'none'}}><p className='blog-title'>{title}</p></Link>
                                 <div className='d-flex'>
                                     <p className='me-5 blog-sub'>{categoryName}
                                     <RxDividerVertical color="gray" size={30} className='' />

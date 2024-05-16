@@ -55,6 +55,26 @@
   letter-spacing: normal;
   color: #ffffff;
   }
+  .custom-navbar-collapse {
+    background-color: white;
+    position: fixed; /* Changed from absolute to fixed */
+    top: 0; /* Ensure it stays at the top */
+    left: 0; /* Ensure it stays at the left edge */
+    width: 100%;
+    z-index: 1000;
+    padding-top: 1rem; /* Optional: Adjust padding to prevent overlap */
+    padding-bottom: 1rem; /* Optional: Adjust padding to prevent overlap */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+  }
+  
+  
+  .custom-navbar-collapse .nav-link, .custom-navbar-collapse .dropdown-menu {
+    color: black; /* Ensure the text is visible against the white background */
+  }
+  
+  .custom-navbar-collapse .nav-link:hover, .custom-navbar-collapse .dropdown-item:hover {
+    background-color: #f0f0f0; /* Optional: Add a hover effect for better UX */
+  }
 
   .custom-dropdown .dropdown-toggle::after {
     display:none;
@@ -152,7 +172,8 @@
   background-color: white;
   width:100%;
   margin-left: -12px;
-  z-index:3;
+  z-index:1000;
+  
 }
 .scroll-navbar2{
   position: fixed;
@@ -161,7 +182,7 @@ margin-top: 5rem;
 width:100%;
 box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 margin-left: -12px;
-z-index:3;
+z-index:1000;
 }
 .btn-hover:hover{
   color:#77dcbf

@@ -139,7 +139,7 @@ function StorySection() {
         <div className="story-section">
             <div className="story-container" ref={storyContainerRef}>
                 <div className="story" onClick={() => handleStoryClick(null, null)}>
-                    <img src={user.userData.profile.type_name=='club'?user.userData.profile.club_logo:user.userData.image} alt="Story" style={{ border: 'white',backgroundColor:'#213555',boxShadow:
+                    <img src={user.userData.profile.type_id=='3'?user.userData.profile.club_logo:user.userData.image} alt="Story" style={{ border: 'white',backgroundColor:'#213555',boxShadow:
                         seenStories.includes(user.userData.id) || myStories.is_seen
                             ? 'none'
                             : '', }} />
@@ -172,7 +172,7 @@ function StorySection() {
                                     <p className='all-challenges'>{t('mainarea.allChallenges')}</p>
                                     <div className="profiles-stories d-flex" >
                                           
-                                          <img src={user.userData.profile.type_name=='club'?user.userData.profile.club_logo:user.userData.image} alt="Story"  style={{
+                                          <img src={user.userData.profile.type_id=='3'?user.userData.profile.club_logo:user.userData.image} alt="Story"  style={{
                   boxShadow:
                       seenStories.includes(user.userData.id) 
                           ? 'none'
@@ -233,8 +233,8 @@ function StorySection() {
                             }}>
                                 {selectedStory === null ? (
                                     <Stories
-                                        width="500px"
-                                        height="700px"
+                                    width={isSmallScreen?"300px":"500px"}
+                                    height={isSmallScreen?"800px":"700px"}
                                         stories={myStories.map(story => ({
                                             url: story.video,
                                             type: 'video', 
@@ -243,8 +243,8 @@ function StorySection() {
                                     />
                                 ) : (
                                     <Stories
-                                        width="500px"
-                                        height="700px"
+                                        width={isSmallScreen?"300px":"500px"}
+                                        height={isSmallScreen?"500px":"700px"}
                                         stories={timelineStories[currentUserIndex]?.stories?.map(story => ({
                                             url: story.video,
                                             type: 'video', 

@@ -97,24 +97,24 @@ function WholeProfile(){
         <NavBar />
         <Row style={{marginLeft:isSmallScreen?'0rem':'3rem'}}>
             <Col md={6} lg={4} xs={12}>
-            {profileData && profileData.profile && profileData.profile.type_name == 'talent' ?
+            {profileData && profileData.profile && profileData.profile.type_id == '1' ?
                 <ProfileCard id={id} profileData={profileData} />:
-                profileData && profileData.profile && profileData.profile.type_name == 'club' ?
+                profileData && profileData.profile && profileData.profile.type_id == '3' ?
                 <ClubProfileCard id={id} profileData={profileData} />:
                 <CoachProfileCard profileData={profileData} id={id}  />
             }
-            {profileData.profile.type_name =='coach'?
+            {profileData.profile.type_id =='2'?
                <Certifications sectionName='license' data={License} id={id}/>:null
             }
 
-            {profileData.profile.type_name =='coach'||profileData.profile.type_name =='scout'?
+            {profileData.profile.type_id =='2'||profileData.profile.type_id =='4'?
                <Certifications sectionName="certification" data={Certification} id={id}/>:null
             }
         {
      id == user.userData.id ? (
     <ProfileStrong profileData={profileData} />
      ) : (
-        id != user.userData.id && profileData.profile.type_name === 'club' ? null : 
+        id != user.userData.id && profileData.profile.type_id == '3' ? null : 
 
 
     <ProfileStrongView profileData={profileData} />
@@ -127,9 +127,9 @@ function WholeProfile(){
            {id == user.userData.id ? 
                 <NewPost profileData={profileData} />:null}
                 {
-                profileData.profile.type_name=='talent'? <Post />:
-                profileData.profile.type_name=='scout'||profileData.profile.type_name=='club'? <OppProfileScout  profileData={profileData}/>:
-                profileData.profile.type_name=='coach'?  <Post />:
+                profileData.profile.type_id=='1'? <Post />:
+                profileData.profile.type_id=='4'||profileData.profile.type_id=='3'? <OppProfileScout  profileData={profileData}/>:
+                profileData.profile.type_id=='2'?  <Post />:
                 <OppProfileScout  profileData={profileData}/>
                 }
             

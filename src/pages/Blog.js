@@ -7,13 +7,15 @@ import { Row,Col } from 'react-bootstrap';
 import { useScreenWidth } from '../components/ScreenWidthContext/ScreenWidth.context';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-
+import { useLocation , Link } from 'react-router-dom';
 const BlogPage = () => {
     const tags=['#hashtag','#hashtag'];
     const {  isTabletScreen } = useScreenWidth();
     const currentLanguage = Cookies.get('language') || 'en';
   const [direction, setDirection] = useState('ltr');
   const [t,i18n]=useTranslation()
+  const location = useLocation();
+
   useEffect(() => {
     if (currentLanguage === 'ar') {
       setDirection('rtl');
@@ -21,6 +23,9 @@ const BlogPage = () => {
       setDirection('ltr')
     }
   }, [currentLanguage]);
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page when the component mounts
+  }, [location.pathname])
     return(
         <div >
         <Navbar />

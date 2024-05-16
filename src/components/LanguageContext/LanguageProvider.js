@@ -19,9 +19,9 @@ export const LanguageProvider = ({ children }) => {
         setLanguage(newLanguage);
         i18n.changeLanguage(newLanguage);
         Cookies.set('language', newLanguage);
-        const newDirection = newLanguage === 'ar' ? 'rtl' : 'ltr';
-        setDirection(newDirection);
-        document.body.dir = newDirection;
+        // const newDirection = newLanguage === 'ar' ? 'rtl' : 'ltr';
+        // setDirection(newDirection);
+        // document.body.dir = newDirection;
     };
 
     return (

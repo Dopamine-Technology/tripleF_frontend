@@ -45,9 +45,10 @@ return(
               isMacTablet&&isProfilePath?'4rem':
               isProfilePath ? '0rem':
               isMacTablet?'0rem':
-              '4rem' 
+              '4rem' ,
+  width:isSmallScreen&&!isProfilePath?"80%":""
 }}>
-    {user.userData.profile.type_name === "talent" ? (
+    {user.userData.profile.type_id== "1" ? (
         <Row>
         <Col xs={6} sm={8} md={9} lg={9} xl={9}>
             <div className='d-flex'>
@@ -66,7 +67,7 @@ return(
         </Col>
     </Row>
     ) : (
-        user.userData.profile.type_name === "coach" ? (
+        user.userData.profile.type_id == "2" ? (
           <Row>
             <Col xs={6} sm={6} md={9} lg={10} >
                 <div className='d-flex'>

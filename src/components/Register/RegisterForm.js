@@ -833,7 +833,7 @@ function RegisterForm({ onLoadingChange }) {
       <input type="radio" id="female" value="female" {...register('gender')}  />
       <span className="checkmark"></span>
     </label>
-    <label className='custom-radio-btn'  style={{width:isSmallScreen?'10rem':'',fontSize:isSmallScreen?'14px':''}}  >
+    <label className='custom-radio-btn'  style={{width:isSmallScreen?'10rem':'',fontSize:isSmallScreen?'12px':''}}  >
       <span className="label">{genderOptions[2]}</span>
       <input type="radio" id="other" value="other" {...register('gender')}  />
       <span className="checkmark"></span>
