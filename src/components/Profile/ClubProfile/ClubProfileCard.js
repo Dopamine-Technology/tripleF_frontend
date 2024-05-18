@@ -58,7 +58,7 @@ function ClubProfileCard({id,profileData}) {
     </div>
     <Card.Body className='mt-3'>
       <Card.Title className='card-title'>{profileData.profile.club_name} {id!=null?<img src={checkmark} />:null}</Card.Title>
-      <Card.Subtitle className='card-subTitle'>{profileData.profile.type_id}</Card.Subtitle>
+      <Card.Subtitle className='card-subTitle'>{profileData.profile.type_name}</Card.Subtitle>
       <p className='followers-number'>
         <span className='followers-span me-2' onClick={() => handleShow('followers')}>{profileData.followers_count} {t('Profile.followers')}</span>
         <span className='me-2'>.</span>

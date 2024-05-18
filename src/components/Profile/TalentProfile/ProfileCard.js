@@ -112,9 +112,9 @@ const handleUpdateIsFollowed = (value) => {
       {profileData.id!=user.userData.id?  
             <MessageBtn />:null}
    
-      {profileData.profile.type_id == '1' && profileData.profile.parent_position.name=='1'&&
-        <Card.Img src={GoalKeeper} className='mt-4' />
-      }
+      {/* {profileData.profile.type_id == '1' && profileData.profile.parent_position.name=='1'&&
+        <Card.Img src={position.image} className='mt-4' />
+      } */}
      {profileData.profile.type_id == '1'&& profileData.profile.position.map(position => {
     return <Card.Img src={position.image} key={position.id} className='mt-4' />;
 
