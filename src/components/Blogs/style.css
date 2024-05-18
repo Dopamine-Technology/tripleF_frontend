@@ -165,7 +165,7 @@ margin-right: 1rem;
   letter-spacing: normal;
   color: #464646;
 }
-.sub-img1{
+/* .sub-img1{
     width:60%;
     margin-top: 0rem;
 }
@@ -173,7 +173,7 @@ margin-right: 1rem;
     width:60%;
     margin-top: 0rem;
     margin-left: 3rem;
-}
+} */
 @media only screen and (max-width: 600px) {
   .singleBlog-container{
     width: 80%;

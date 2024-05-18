@@ -35,7 +35,8 @@ import ChatBox from './components/Chat/ChatBox'
 import Chat from './components/Chat/Chat';
 import NewChat from './components/Chat/NewChat';
 import { useLanguage } from './components/LanguageContext/LanguageProvider';
-
+import ScrollToTop from './components/ScrollToTop';
+// import { ScrollRestoration } from "react-router-dom";
 function App() {
   const { user } = useContext(UserDataContext);
   const checkRole = useRoleCheck();
@@ -44,7 +45,7 @@ function App() {
   return (
     <div className="App" >
        <Router>
-      
+      <ScrollToTop />
         <Routes>
         {user.isAuthenticated ? (
             <>

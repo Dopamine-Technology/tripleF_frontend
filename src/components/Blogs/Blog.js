@@ -5,9 +5,32 @@ import { RxDividerVertical } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-const Blog = ({img,title,categoryName,date,desc,tags}) => {
-    const id=1;
-    const navigate=useNavigate();
+const Blog = ({img, title, categoryName, date, desc, tags}) => {
+    const id = 1;
+    const navigate = useNavigate();
+
+    // Function to truncate the description to 200 words
+    const truncateDescription = (description) => {
+        // Create a div element to parse the HTML content
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = description;
+
+        // Extract text content from HTML and split into words
+        const textContent = tempElement.textContent || tempElement.innerText || '';
+        const words = textContent.trim().split(/\s+/);
+
+        // Check if the number of words is greater than 200
+        if (words.length > 100) {
+            // Join the first 200 words and append ellipsis
+            return words.slice(0, 100).join(' ') + '...';
+        } else {
+            // If the number of words is 200 or fewer, return the original content
+            return textContent;
+        }
+    };
+
+    const truncatedDesc = truncateDescription(desc);
+
     return (
         <div>
             <Card className='blog-card'>
@@ -29,14 +52,11 @@ const Blog = ({img,title,categoryName,date,desc,tags}) => {
                                     <RxDividerVertical color="gray" size={30} className='' />
                                      <FaRegCalendarAlt className='me-2' />{date}</p>
                                 </div>
-                                <p className='blog-desc'>{desc}</p>
+                                <p className='blog-desc'>{truncatedDesc}</p>
                                 <div>
-                                {tags.map((tag, index) => (
-                           <span className="badge  me-2 p-2">{tag}</span>
-            
-        ))}
-                                   
-                                  
+                                    {Array.isArray(tags) && tags.map((tag, index) => (
+                                        <span key={index} className="badge me-2 p-2">{tag}</span>
+                                    ))}
                                 </div>
                             </div>
                         </Col>
@@ -48,5 +68,3 @@ const Blog = ({img,title,categoryName,date,desc,tags}) => {
 };
 
 export default Blog;
-
-
