@@ -86,21 +86,26 @@ function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
       }
   }, [language]);
 
-    const fetchData = (value) => {
-      fetch("https://jsonplaceholder.typicode.com/users")
-        .then((response) => response.json())
-        .then((json) => {
-          const results = json.filter((user) => {
-            return (
-              value &&
-              user &&
-              user.name &&
-              user.name.toLowerCase().includes(value)
-            );
-          });
-          setResults(results);
+  const fetchData = async (value) => {
+    try {
+        const response = await axios.post("https://backend.triplef.group/api/app/global_search", {
+            name: value,
+            page: 0,
+            limit: 5
         });
-    };
+        const results = response.data.result.filter((user) => {
+            return (
+                value &&
+                user &&
+                user.name &&
+                user.name.toLowerCase().includes(value.toLowerCase())
+            );
+        });
+        setResults(results);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
 
     const handleChange = (value) => {
       setInput(value);

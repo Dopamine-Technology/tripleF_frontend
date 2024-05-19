@@ -114,20 +114,24 @@ function StorySection() {
     };
 
    
-
-    const goToNextStory = () => {
+const goToNextStory = () => {
         const currentUser = timelineStories[currentUserIndex];
         if (currentUser && currentUser.userStories && currentStoryIndex < currentUser.userStories.length - 1) {
+            // Move to the next story within the same user
             setCurrentStoryIndex(currentStoryIndex + 1);
-            setSeenStories(prevSeenStories => [...prevSeenStories, currentUser.id]); // Use currentUser.id
+            setSeenStories(prevSeenStories => [...prevSeenStories, currentUser.id]);
         } else if (currentUserIndex < timelineStories.length - 1) {
+            // Move to the next user
             setCurrentUserIndex(currentUserIndex + 1);
             setCurrentStoryIndex(0);
-            setSeenStories(prevSeenStories => [...prevSeenStories, timelineStories[currentUserIndex + 1].id]); // Use the next user's ID
+            setSeenStories(prevSeenStories => [...prevSeenStories, timelineStories[currentUserIndex + 1].id]);
         } else {
+            // Hide the story viewer as all stories are seen
             setShow(false);
         }
     };
+
+    
     
     const handleCloseList = () => {
         setShowUserList(false);
