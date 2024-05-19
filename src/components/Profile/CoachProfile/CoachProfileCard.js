@@ -31,6 +31,22 @@ function CoachProfileCard({profileData,id}) {
   const [t, i18n] = useTranslation();
   const { user } = useContext(UserDataContext);
 
+  const [followersCount, setFollowersCount] = useState(profileData.followers_count);
+  const [followingCount, setFollowingCount] = useState(profileData.following_count);
+  const [isFollowed, setIsFollowed] = useState(profileData.is_followed);
+
+  const updateFollowersCount = (count) => {
+    setFollowersCount(prevCount => prevCount + count);
+
+};
+const updateFollowingCount = (count) => {
+  setFollowersCount(prevCount => prevCount + count);
+
+};
+const handleUpdateIsFollowed = (value) => {
+  setIsFollowed(value);
+};
+
   const birthDate = new Date(profileData.profile.birth_date);
 const today = new Date();
 const age = today.getFullYear() - birthDate.getFullYear();
@@ -82,7 +98,10 @@ const finalAge = hasBirthdayOccurred ? age : age - 1;
         <span className='me-2'>.</span>
         <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} {t('Profile.following')}</span>
       </p>
-      {profileData.id!=user.userData.id?   <FollowBtn id={id}  is_followed={profileData.is_followed}/>:null}
+      {profileData.id!=user.userData.id?    <FollowBtn id={id} is_followed={isFollowed}
+        updateFollowersCount={updateFollowersCount}
+        updateFollowingCount={updateFollowingCount}
+        updateIsFollowed={setIsFollowed} />:null}
       {profileData.id!=user.userData.id?   <MessageBtn />:null}
       
       {profileData.profile.type_id == '2'||profileData.profile.type_id == '4' ? 

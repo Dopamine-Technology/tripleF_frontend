@@ -18,7 +18,7 @@ import {
 
 function SocialPopup({handleClose,show,id}) {
 
-    const shareUrl=`https://triplef.dopaminetechnology.com/view/post/${id}`;
+    const shareUrl=`https://triplef.group/view/post/${id}`;
     const axios=useAxios();
 
     const handleShare = () => {

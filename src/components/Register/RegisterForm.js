@@ -395,20 +395,19 @@ function RegisterForm({ onLoadingChange }) {
         
             await stepTwoSchema[accountType].validate(data, { abortEarly: false });
 
-            if (data.parent_position==1) {
-              data.position = JSON.stringify(['1', '0']);
+            if (data.parent_position=='1') {
+              data.position = JSON.stringify(['1']);
               console.log('positionTest',data.position)
-          } else {
+          } 
+          else {
               let dataArray = [];
-          
-              // Extracting values from the object and adding them to the array
+
               for (let key in data.position) {
                   if (data.position.hasOwnProperty(key)) {
                       dataArray.push(data.position[key]);
                   }
               }
-              
-              // Assigning the array to data.position
+
               data.position = JSON.stringify(dataArray);
               console.log('Type of data.position after processing:', data.position);
           }
@@ -800,7 +799,7 @@ function RegisterForm({ onLoadingChange }) {
 {subPositions?.length > 0 && (
   <div className='form-group' required>
     <label htmlFor="subPosition">{t('Register.subPosition')}</label>
-    <select id="subPosition" {...register('position')} >
+    <select id="subPosition"    {...register("position", { setValueAs: (value) => [value] })} >
       {subPositions?.map(subPosition => (
         <option key={subPosition.id} value={subPosition.id}>
           {subPosition.name}
@@ -814,9 +813,9 @@ function RegisterForm({ onLoadingChange }) {
     )}
   </div>
 )}
-{subPositions?.length ==0 && (
+{/* {subPositions?.length ==0 && (
   <input type="hidden" name="position" value="1" /> 
-)}
+)} */}
 
             
             <div className='form-group'>
@@ -1471,7 +1470,7 @@ function RegisterForm({ onLoadingChange }) {
 {subPositions ? (
   <div className='form-group'>
     <label htmlFor="subPosition">Sub Positions:</label>
-    <select id="subPosition" {...register('position') } >
+    <select id="subPosition"    {...register("position", { setValueAs: (value) => [value] })}>
       {subPositions.map(subPosition => (
         <option key={subPosition.id} value={subPosition.id}>
           {subPosition.name}

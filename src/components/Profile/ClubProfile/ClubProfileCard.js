@@ -41,7 +41,21 @@ function ClubProfileCard({id,profileData}) {
     setActiveKey(whichOne)}
 
       const [activeKey,setActiveKey]=useState();
-   
+      const [followersCount, setFollowersCount] = useState(profileData.followers_count);
+      const [followingCount, setFollowingCount] = useState(profileData.following_count);
+      const [isFollowed, setIsFollowed] = useState(profileData.is_followed);
+
+      const updateFollowersCount = (count) => {
+        setFollowersCount(prevCount => prevCount + count);
+    
+    };
+    const updateFollowingCount = (count) => {
+      setFollowersCount(prevCount => prevCount + count);
+    
+    };
+    const handleUpdateIsFollowed = (value) => {
+      setIsFollowed(value);
+    };
 
   return (
     <Card className='profile-card'style={{padding:'0'}} >
@@ -64,8 +78,13 @@ function ClubProfileCard({id,profileData}) {
         <span className='me-2'>.</span>
         <span className='followers-span' onClick={() => handleShow('following')}> {profileData.following_count} {t('Profile.following')}</span>
       </p>
-      {profileData.id!=user.userData.id?   <FollowBtn id={id}  is_followed={profileData.is_followed}/>:null}
-      {profileData.id!=user.userData.id?   <MessageBtn />:null}
+      {profileData.id!=user.userData.id?  
+       <FollowBtn id={id} is_followed={isFollowed}
+        updateFollowersCount={updateFollowersCount}
+        updateFollowingCount={updateFollowingCount}
+        updateIsFollowed={setIsFollowed} />:null}
+      {profileData.id!=user.userData.id?   
+      <MessageBtn />:null}
       {profileData.profile.type_id == '3' ? 
         (ClubData.map((data, index) => (
           <div>
