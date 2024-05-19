@@ -136,15 +136,18 @@ function StorySection() {
         setShowUserList(true);
     }
     return (
+        <>
+        {myStories.length>0||timelineStories.length>0?
         <div className="story-section">
             <div className="story-container" ref={storyContainerRef}>
-                <div className="story" onClick={() => handleStoryClick(null, null)}>
+                {myStories.length>0?         <div className="story" onClick={() => handleStoryClick(null, null)}>
                     <img src={user.userData.profile.type_id=='3'?user.userData.profile.club_logo:user.userData.image} alt="Story" style={{ border: 'white',backgroundColor:'#213555',boxShadow:
                         seenStories.includes(user.userData.id) || myStories.is_seen
                             ? 'none'
                             : '', }} />
                     <span>Me</span>
-                </div>
+                </div>:null}
+       
                 {timelineStories.map((user2, userIndex) => (
                     <div key={userIndex}>
                         <div className="story" onClick={() => handleStoryClick(userIndex, 0)}>
@@ -260,7 +263,8 @@ function StorySection() {
                     </Row>
                 </Modal.Body>
             </Modal>
-        </div>
+        </div>:null}
+        </>
     );
 }
 

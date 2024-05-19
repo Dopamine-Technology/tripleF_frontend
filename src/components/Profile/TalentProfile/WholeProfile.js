@@ -3,7 +3,7 @@ import { Row,Col,Container } from 'react-bootstrap';
 import NavBar from '../../Layout/Navbar';
 import ProfileCard from './ProfileCard';
 import '../style.css';
-import Post from './Post';
+import Post from '../../MainArea/Post';
 import NewPost from '../../MainArea/NewPost';
 import { UserDataContext } from '../../UserContext/UserData.context';
 import OpportunityList from '../../Opportunities/OpportunityList';
@@ -20,6 +20,7 @@ import LoadingScreen from '../../LoadingScreen/LoadingScreen';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../LanguageContext/LanguageProvider';
 import { useScreenWidth } from '../../ScreenWidthContext/ScreenWidth.context';
+
 
 function WholeProfile(){
     const axios=useAxios();

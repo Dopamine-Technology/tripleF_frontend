@@ -44,6 +44,7 @@ function Post({socket,newPostCreated}){
     const { language, changeLanguage } = useLanguage(); 
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
+    const isProfilePath = location.pathname.startsWith('/profile');
     const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
   
     useEffect(() => {
@@ -83,37 +84,48 @@ function Post({socket,newPostCreated}){
     
       const handleSelectMedal = async (id, medal, is_reacted) => {
         const medalPoints = {
-            gold: 3,
-            silver: 2,
-            saddlebrown: 1, 
+          gold: 3,
+          silver: 2,
+          saddlebrown: 1, 
         };
     
+        const medalWeight = medalPoints[medal];
         const requestBody = {
-            status_id: id,
-            points: medal === 'gold' ? 3 : medal === 'silver' ? 2 : 1,
+          status_id: id,
+          points: medalWeight,
         };
     
-        const response = await axios.post('status/react', requestBody);
-        const updatedPosts = posts.map(post => {
+        // If the selected medal is the same as the current reaction, reset it
+        if (medalWeight == is_reacted) {
+          setSelectedMedal('');
+          const updatedPosts = posts.map(post => {
             if (post.id === id) {
-              
-                return {
-                    ...post,
-                    is_reacted: medalPoints[medal], 
-                    reaction_count: is_reacted=='0'?post.reaction_count+1:post.reaction_count
-                    
-
-                };
-                
+              return {
+                ...post,
+                is_reacted: 0, // Reset the reaction
+                reaction_count: post.reaction_count - 1
+              };
             }
             return post;
-        });
+          });
+          setPosts(updatedPosts);
+        } else {
+          const response = await axios.post('status/react', requestBody);
+          const updatedPosts = posts.map(post => {
+            if (post.id === id) {
+              return {
+                ...post,
+                is_reacted: medalWeight,
+                reaction_count: is_reacted == 0 ? post.reaction_count + 1 : post.reaction_count
+              };
+            }
+            return post;
+          });
+          setSelectedMedal(medal);
+          setPosts(updatedPosts);
+        }
+      };
     
-        setSelectedMedal(medal);
-        setSelectedMedalColor(medalPoints[medal]);
-        setPosts(updatedPosts);
-        setShow(false);
-    };
 
     const handleCopyLink = (postId) => {
       const postLink = `${window.location.origin}/view/post/${postId}`;
@@ -207,7 +219,7 @@ function Post({socket,newPostCreated}){
 
 
     return(
-        <div className='post-continer'>
+        <div className='post-continer' style={{marginLeft:isProfilePath?'0rem':''}}>
              {posts &&
                 posts.map((post, index) => (
         <div className='text'>
@@ -273,13 +285,13 @@ function Post({socket,newPostCreated}){
 {showMedalPopups[index] && (
 
     <div className="MedalOptions" onMouseLeave={clearSelection}>
-        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'gold', post.is_reacted)}>
+        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'gold', post.is_reacted,selectedMedal)}>
             <img src={Gold} className='me-2' />
         </div>
-        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'silver', post.is_reacted)}>
+        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'silver', post.is_reacted,selectedMedal)}>
             <img src={Silver} className='me-2' />
         </div>
-        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'saddlebrown', post.is_reacted)}>
+        <div className="MedalOption" onClick={() => handleSelectMedal(post.id, 'saddlebrown', post.is_reacted,selectedMedal)}>
             <img src={Bronze} className='me-2' />
         </div>
     </div>
