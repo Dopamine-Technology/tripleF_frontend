@@ -220,7 +220,7 @@ function LoginForm() {
   >
     <Button variant="" className='facebook-btn' >
       <img src={facebook} alt='search' className='me-2' />
-      Sign up with Facebook
+      Login with Facebook
     </Button>
   </LoginSocialFacebook>
                 

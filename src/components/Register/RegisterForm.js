@@ -999,7 +999,7 @@ function RegisterForm({ onLoadingChange }) {
               <form onSubmit={handleSubmit(onSubmit)} onChange={handleChange} className='register-form'>
   <div className='form-container'>
     <div className='form-group'>
-      <label htmlFor="talentType">{t('Register.talent_type')}</label>
+      <label htmlFor="talentType">{t('Register.sport_type')}</label>
       <select id="talentType" {...register('talent_type')}>
         {sports.map(sport => (
           <option key={sport.id} value={sport.id}>
@@ -1149,7 +1149,7 @@ function RegisterForm({ onLoadingChange }) {
               <form onSubmit={handleSubmit(onSubmit)} onChange={handleChange} className='register-form'>
               <div className='form-container'>
                 <div className='form-group'>
-                  <label htmlFor="talentType"> {t('Register.talent_type')}</label>
+                  <label htmlFor="talentType"> {t('Register.sport_type')}</label>
                   <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
       <option key={sport.id} value={sport.id}>
@@ -1326,7 +1326,7 @@ function RegisterForm({ onLoadingChange }) {
   )}
         </div>
       <div className='form-group'>
-  <label htmlFor="talentType">{t('Register.talent_type')}</label>
+  <label htmlFor="talentType">{t('Register.sport_type')}</label>
   <select id="talentType" {...register('talent_type')}>
     {sports.map(sport => (
       <option key={sport.id} value={sport.id}>

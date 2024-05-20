@@ -20,6 +20,7 @@ const useAxios = () => {
     headers: {
       ...defaultOptions.headers,
       Authorization: `Bearer ${token}`,
+      "language": Cookies.get("language")
     },
   });
   axiosInstance.interceptors.response.use(
