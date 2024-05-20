@@ -32,7 +32,7 @@ const SingleOne = ({ img, content, category, id }) => {
   const truncatedContent = truncateContent(content);
 
   return (
-    <Link to={`/blogs/${id}`} style={{ textDecoration: 'none' }}>
+    <a href={`/blogs/${id}`} style={{ textDecoration: 'none' }}>
       <Card
         hoverable
         style={{
@@ -48,14 +48,14 @@ const SingleOne = ({ img, content, category, id }) => {
         <Meta
           title={<p className='category-p'>{category}</p>}
           description={
-            <Link to={`/blogs/${id}`} style={{ textDecoration: 'none' }}>
+            <a to={`/blogs/${id}`} style={{ textDecoration: 'none' }}>
               <p className="description-text">{truncatedContent}</p>
-            </Link>
+            </a>
           }
         />
         <a href={`/blogs/${id}`}><img src={single} style={{ marginTop: '1rem' }} /></a>
       </Card>
-    </Link>
+    </a>
   );
 }
 
