@@ -134,6 +134,7 @@ margin-right: 1rem;
     border-radius: 12px;
     box-shadow: 0 2px 24px 0 rgba(70, 70, 70, 0.12);
     background-color: var(--white);
+    overflow-x: hidden;
   }
   .main-img{
     width: 100%;

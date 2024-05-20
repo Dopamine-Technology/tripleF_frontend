@@ -41,25 +41,7 @@ const News = () => {
         console.error('Error fetching news:', error);
       });
   }, []);
-  const news2 = [
-    {
-      img: "https://th.bing.com/th/id/R.e9509b638beca9e17499ee45b20fc1dd?rik=%2fmxruNZokLGgPg&pid=ImgRaw&r=0",
-      category: "Category name",
-      content: "Few benefits of group & personal training"
-    },
-    {
-      img: "https://th.bing.com/th/id/R.e9509b638beca9e17499ee45b20fc1dd?rik=%2fmxruNZokLGgPg&pid=ImgRaw&r=0",
-      category: "Category name",
-      content: "Few benefits of group & personal training"
-    },
-    {
-
-      img: "https://th.bing.com/th/id/R.e9509b638beca9e17499ee45b20fc1dd?rik=%2fmxruNZokLGgPg&pid=ImgRaw&r=0",
-      category: "Category name",
-      content: "Few benefits of group & personal training"
-    },
-  ];
-
+  
   return (
     <div className='p-4 mt-5' id='News' >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -70,7 +52,7 @@ const News = () => {
         {news && news.length > 0 ? (
           news.map((item, index) => (
             <Col key={index} md={4} xs={12}  className='col-single' style={{ paddingBottom: '16px' }}>
-              <SingleOne img={item.main_image} content={item.content} category={item.title} />
+              <SingleOne img={item.main_image} content={item.content} category={item.title} id={item.id} />
             </Col>
           ))
         ) : (

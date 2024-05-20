@@ -1,10 +1,12 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { RxDividerVertical } from "react-icons/rx";
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const SingleBlog = ({ blog }) => {
   const { windowWidth, isSmallScreen, isTabletScreen, isProScreen } = useScreenWidth();
+
+
 
   return (
     <div className='singleBlog-container'>
@@ -14,6 +16,7 @@ const SingleBlog = ({ blog }) => {
           <RxDividerVertical color="#E1E1E1" size={30} className='' />
           <FaRegCalendarAlt className='me-2' />{blog?.created_at}
         </p>
+        
       </div>
       <img src={blog?.main_image} alt="Blog Image" className='main-img' />
       <div className='Lorem-ipsum-dolor-si' dangerouslySetInnerHTML={{ __html: blog?.content }}></div>
