@@ -17,6 +17,9 @@ import En from '../../assets/imgs/en.jpg';
 import LanguageIcon from '../../assets/imgs/langauge-icon.svg';
 import profileIcon from '../../assets/imgs/profile-black-icon.svg';
 import ArrowDownImage from '../../assets/imgs/dropdownWhite.svg';
+import Turkey from '../../assets/imgs/TurkeyFlag.webp'
+import Spain from '../../assets/imgs/flagSpain.webp'
+
 import { useScreenWidth } from '../ScreenWidthContext/ScreenWidth.context';
 
 const TopNavbar = () => {
@@ -34,6 +37,8 @@ const TopNavbar = () => {
   const availableLanguages = [
     { code: 'en', label: 'English',img:En },
     { code: 'ar', label: 'Arabic' ,img:Ar },
+    { code: 'tr', label: 'Turkish' ,img:Turkey },
+    { code: 'es', label: 'Spanish' ,img:Spain },
   ];
 
   
