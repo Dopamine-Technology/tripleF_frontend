@@ -338,9 +338,10 @@ margin-left: 4rem;
   }
   .form-control:focus ,.form-group select:focus ,.form-group select:focus ,
   .form-group input[type="date"]:focus, .form-group input[type="number"]:focus,
-  .form-group input[type="text"]:focus{
+  .form-group input[type="text"]:focus,.react-tel-input:focus,.custom-focus-outline:focus{
     outline: solid 1px #77dcbf !important;
     box-shadow: none !important; /* Some browsers may apply box-shadow instead of outline */
+    border: solid 1px #77dcbf !important;
   }
   .password-ul{
     list-style:disc;

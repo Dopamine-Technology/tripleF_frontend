@@ -947,8 +947,8 @@ function RegisterForm({ onLoadingChange }) {
 <div className='form-group'>
   <label htmlFor="mobile_number">{t('Register.mobileNumber')}</label>
   <PhoneInput
-  className={`form-control py-1 rounded-sm ${formErrors.mobile_number ? "border-danger" : ""}`}
-  inputClass={` w-100 border-0 form-control-lg py-0 shadow-none`}
+  className={`form-control react-tel-input py-1 rounded-sm ${formErrors.mobile_number ? "border-danger" : ""} custom-focus-outline`}
+  inputClass={` w-100 border-0 form-control-lg py-0 shadow-none react-tel-input`}
   buttonClass="border-0"
   country={selectedCountryCode}
   value={"mobile_number"} // Not sure if this line is correct, please verify
@@ -1377,7 +1377,7 @@ function RegisterForm({ onLoadingChange }) {
   <div className='form-group'>
           <label htmlFor="phone">{t('Register.mobileNumber')}</label>
           <PhoneInput
-  className={`form-control py-1 rounded-sm ${formErrors.mobile_number ? "border-danger" : ""}`}
+  className={`form-control py-1 rounded-sm ${formErrors.mobile_number ? "border-danger" : ""} custom-focus-outline`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100'} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
   country={selectedCountryCode||'jo'}
