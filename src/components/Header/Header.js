@@ -21,7 +21,7 @@ const Header = ({ content }) => {
                 <NavBar content={content} setNavbarExpanded={setNavbarExpanded} />
             </Row>
             <div id="overlay" >
-            <Row className='header-row' style={{ position: 'relative', zIndex: 2 }}> 
+            <Row className='header-row'  style={{ position: 'relative', zIndex: 0 }}> 
             {!navbarExpanded && 
                 <Col md={8}><HeaderDesc  /></Col>
             }
