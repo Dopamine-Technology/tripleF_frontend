@@ -32,14 +32,15 @@ const News = () => {
   useEffect(() => {
     axios.post('app/latest_posts', axiosConfig)
       .then((response) => {
-        console.log('news', response.data); 
-        setNews(response.data.result);
+        console.log('news', response.data);
+        // Assuming response.data.result is an array
+        const limitedNews = response.data.result.slice(0, 3);
+        setNews(limitedNews);
       })
       .catch((error) => {
         console.error('Error fetching news:', error);
       });
   }, []);
-
   const news2 = [
     {
       img: "https://th.bing.com/th/id/R.e9509b638beca9e17499ee45b20fc1dd?rik=%2fmxruNZokLGgPg&pid=ImgRaw&r=0",

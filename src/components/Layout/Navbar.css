@@ -235,6 +235,7 @@ text-align: left;
     padding: 10px 20px;
   }
   
+  
   .search-result:hover {
     background-color: #efefef;
   }
@@ -248,6 +249,10 @@ text-align: left;
     margin: 1rem auto 0;
     max-height: 300px;
     overflow-y: auto;
+    position: absolute;
+    left:16%;
+    z-index: 1000;
+    width: 30%;
     
   }
   .unread-spot {
@@ -259,6 +264,13 @@ text-align: left;
     background-color: red;
     border-radius: 50%;
   }
+
+
+
+.search-container {
+    position: relative;
+}
+
   
 
 
