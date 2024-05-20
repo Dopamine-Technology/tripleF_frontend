@@ -80,7 +80,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
                 <div className={`Pro ${activeLink === 1 ? 'activeLink' : ''}`} onClick={() => handleNavLinkClick(1, '/home')}>
                     <img src={activeLink==1?HomeActive:HomeIcon} />
                     <div>
-                        <div>{t('leftArea.home')}</div>
+                        <div style={{color:'black'}}>{t('leftArea.home')}</div>
                     </div>
                 </div>
             }
@@ -89,7 +89,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
                 <div className={`Pro ${activeLink === 2 ? 'activeLink' : ''}`} onClick={() => handleNavLinkClick(2, '/clubs/profiles/list')}>
                     <img src={activeLink==2?ClubsActive:ClubIcon} />
                     <div>
-                        {!isCollapsed && <div>{t('leftArea.clubs')}</div>}
+                        {!isCollapsed && <div style={{color:'black'}}>{t('leftArea.clubs')}</div>}
                     </div>
                 </div>
             }
@@ -98,7 +98,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
                 <div className={`Pro ${activeLink === 3 ? 'activeLink' : ''}`} onClick={() => handleNavLinkClick(3, '/scouts/profiles/list')}>
                     <img src={activeLink==3?ScoutsActive:scoutIcon} />
                     <div>
-                        {!isCollapsed && <div>{t('leftArea.scouts')}</div>}
+                        {!isCollapsed && <div style={{color:'black'}}>{t('leftArea.scouts')}</div>}
                     </div>
                 </div>
             }
@@ -107,7 +107,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
                 <div className={`Pro ${activeLink === 4 ? 'activeLink' : ''}`} onClick={() => handleNavLinkClick(4, '/coaches/profiles/list')}>
                     <img src={activeLink==4?CoachActive:coach} />
                     <div>
-                        {!isCollapsed && <div>{t('leftArea.coaches')}</div>}
+                        {!isCollapsed && <div style={{color:'black'}}>{t('leftArea.coaches')}</div>}
                     </div>
                 </div>
             }
@@ -116,7 +116,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
                 <div className={`Pro ${activeLink === 5 ? 'activeLink' : ''}`} onClick={() => handleNavLinkClick(5, '/talents/profiles/list')}>
                     <img src={activeLink==5?TalentActive:talents} />
                     <div>
-                        {!isCollapsed && <div>{t('leftArea.talents')}</div>}
+                        {!isCollapsed && <div style={{color:'black'}}>{t('leftArea.talents')}</div>}
                     </div>
                 </div>
             }
@@ -142,7 +142,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
                     <hr style={{ color: '#B0B0B0', width: '130%' }} />
                     <div onClick={() => handleNavLinkClick(8, '/applied/list')} className={`Pro ${activeLink === 8 ? 'activeSubLink' : 'not-activeSub'}`}>
                         <div>
-                            {!isCollapsed && <div>{t('leftArea.myOpportunities')}</div>}
+                            {!isCollapsed && <div style={{color:'black'}}>{t('leftArea.myOpportunities')}</div>}
                         </div>
                     </div>
                 </div>
@@ -152,7 +152,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
                 <div className={`Pro ${activeLink === 7 ? 'activeLink' : ''}`} onClick={() => handleNavLinkClick(7, '/challenges')}>
                     <img src={ChallengesIcon} alt="Saved Icon" className="icon" />
                     <div>
-                        {!isCollapsed && <div>{t('leftArea.challenges')}</div>}
+                        {!isCollapsed && <div style={{color:'black'}}>{t('leftArea.challenges')}</div>}
                     </div>
                 </div>
             }
@@ -161,7 +161,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
                 <div className={`Pro ${activeLink === 8 ? 'activeLink' : ''}`} onClick={() => handleNavLinkClick(8, '/saved')}>
                     <img src={activeLink==8?SavedActive:savedIcon} alt="Saved Icon" className="icon" />
                     <div>
-                        {!isCollapsed && <div>{t('leftArea.saved')}</div>}
+                        {!isCollapsed && <div style={{color:'black'}}>{t('leftArea.saved')}</div>}
                     </div>
                 </div>
             }
