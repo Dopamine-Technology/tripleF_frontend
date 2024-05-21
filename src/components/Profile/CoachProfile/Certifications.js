@@ -21,12 +21,11 @@ function Certifications({ sectionName, id }) {
     const handleShowEdit = () => setShowEdit(true);
     const [certifications, setCertifications] = useState([]);
     const [license,setLicense]=useState([]);
-    const { language, changeLanguage } = useLanguage(); // Access language context
+    const { language, changeLanguage } = useLanguage(); 
     const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
 
     useEffect(() => {
-        // if (id == user.userData.id) {
             axios.get(`profiles/get_certificate/${id}`)
                 .then(response => {
                     setCertifications(response.data.result);
@@ -34,12 +33,10 @@ function Certifications({ sectionName, id }) {
                 .catch(error => {
                     console.error('Error fetching certifications:', error);
                 });
-        // }
     }, []);
 
     
     useEffect(() => {
-        // if (id == user.userData.id) {
             axios.get(`profiles/get_licences/${id}`)
                 .then(response => {
                     setLicense(response.data.result);
@@ -47,8 +44,11 @@ function Certifications({ sectionName, id }) {
                 .catch(error => {
                     console.error('Error fetching certifications:', error);
                 });
-        // }
+        
     }, []);
+    const handleAddCertificate = (newCertificate) => {
+        setCertifications(prevCertifications => [...prevCertifications, newCertificate]);
+    };
 
     return (
         <Card className='profile-card'>
@@ -92,7 +92,7 @@ function Certifications({ sectionName, id }) {
                  {index !== certifications.length - 1 && <hr className='line mb-3' />}
              </Row>
             ))}
-            {show && <AddCertificate handleClose={handleClose} show={show} />}
+            {show && <AddCertificate handleClose={handleClose} show={show} onAddCertificate={handleAddCertificate} />}
             {showEdit && <EditCertificate handleClose={handleCloseEdit} show={showEdit} data={certifications} />}
         </Card>
     )
