@@ -5,8 +5,8 @@ import { RxDividerVertical } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-const Blog = ({img, title, categoryName, date, desc, tags}) => {
-    const id = 1;
+const Blog = ({img, title, categoryName, date, desc, tags,id}) => {
+    // const id = 1;
     const navigate = useNavigate();
 
     // Function to truncate the description to 200 words
@@ -22,7 +22,7 @@ const Blog = ({img, title, categoryName, date, desc, tags}) => {
         // Check if the number of words is greater than 200
         if (words.length > 100) {
             // Join the first 200 words and append ellipsis
-            return words.slice(0, 100).join(' ') + '...';
+            return words.slice(0, 50).join(' ') + '...';
         } else {
             // If the number of words is 200 or fewer, return the original content
             return textContent;

@@ -57,7 +57,7 @@ const Blogs = () => {
   <RecentPosts />
 </div>
 </Row>
-<Row>
+{/* <Row>
 <div>
   <p className='Col-title' >{t('BlogsList.categories')}</p>
   <hr className='hr-title' />
@@ -84,7 +84,7 @@ const Blogs = () => {
   </div>
 
 </div>
-</Row>
+</Row> */}
             </Col>
  
         </Row>

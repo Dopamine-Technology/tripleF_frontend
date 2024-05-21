@@ -72,6 +72,7 @@ return (
             date={blog.created_at?blog.created_at:''}
             desc={blog.content?blog.content:''}
             tags={blog.tags?blog.tags:''}
+            id={blog.id}
           />
         ))
       ) : (
