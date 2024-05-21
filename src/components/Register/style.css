@@ -348,6 +348,11 @@ margin-left: 4rem;
     padding: 0; /* Remove default padding */
     margin-left:2rem
   }
+  .form-container div:focus {
+    outline: solid 1px #77dcbf !important;
+    box-shadow: none !important; /* Some browsers may apply box-shadow instead of outline */
+    border: solid 1px #77dcbf !important;/* Optional: remove the default focus outline */
+}
   .password-li{
     position: relative;
     padding-left: 0px; 

@@ -127,7 +127,7 @@ function FiliterOption(props) {
   return (
     <Row className='' style={{ marginLeft: isSmallScreen?'6rem':'1rem' }}>
       { location.pathname === '/talents/profiles/list'?(<>
-       <Col md={6} lg={6} xl={3}>
+       <Col md={6} lg={3} xl={3}>
         <Input
           type='select'
           label=''
@@ -141,8 +141,8 @@ function FiliterOption(props) {
           onChange={handleFilterChange}
         />
       </Col>
-      {user.userData.profile.type_id=='1'?(
-      <><Col md={6} lg={6} xl={3}>
+     
+      <><Col md={6} lg={3} xl={3}>
         <Input
           type='select'
           label=''
@@ -156,7 +156,7 @@ function FiliterOption(props) {
           onChange={handleFilterChange}
         />
       </Col>
-      <Col md={6} lg={6} xl={3}>
+      <Col md={6} lg={3} xl={3}>
         <Input
           type='select'
           label=''
@@ -170,7 +170,7 @@ function FiliterOption(props) {
           onChange={handleFilterChange}
         />
       </Col> 
-      <Col md={6} lg={6} xl={3}>
+      <Col md={6} lg={3} xl={3}>
         <Input
           type='select'
           label=''
@@ -184,8 +184,8 @@ function FiliterOption(props) {
           onChange={handleFilterChange}
         />
       </Col>
-      </> ):(
-        <>    <Col md={6} lg={6} xl={3}>
+      </> 
+        {/* <>    <Col md={6} lg={3} xl={3}>
         <Input
           type='select'
           label=''
@@ -199,7 +199,7 @@ function FiliterOption(props) {
           onChange={handleFilterChange}
         />
       </Col> 
-      <Col md={6} lg={6} xl={3}>
+      <Col md={6} lg={3} xl={3}>
       <Input
           type='select'
           label=''
@@ -214,12 +214,13 @@ function FiliterOption(props) {
         />
       </Col>
       </>
-      )}
+       */}
      
-      </>):
+      </>
+      ):
       location.pathname === '/scouts/profiles/list'?
       (<>   
-        <Col md={6} lg={6} xl={3}>
+        <Col md={6} lg={3} xl={3}>
          <Input
            type='select'
            label=''
@@ -233,7 +234,7 @@ function FiliterOption(props) {
            onChange={handleFilterChange}
          />
        </Col>
-        <Col md={6} lg={6} xl={3}>
+        <Col md={6} lg={3} xl={3}>
         <Input
           type='select'
           label=''
@@ -247,7 +248,7 @@ function FiliterOption(props) {
           onChange={handleFilterChange}
         />
        </Col> 
-       <Col md={6} lg={6} xl={3}>
+       <Col md={6} lg={3} xl={3}>
        <Input
            type='select'
            label=''
@@ -261,7 +262,7 @@ function FiliterOption(props) {
            onChange={handleExpYearChange}
          />
        </Col>
-       <Col md={6} lg={6}  xl={3}>
+       <Col md={6} lg={3}  xl={3}>
        <Input
            type='select'
            label=''
@@ -278,7 +279,7 @@ function FiliterOption(props) {
        </>):
       location.pathname === '/coaches/profiles/list'?
       (  <>   
-       <Col md={6} lg={6} xl={4}>
+       <Col md={6} lg={3} xl={4}>
         <Input
           type='select'
           label=''
@@ -292,7 +293,7 @@ function FiliterOption(props) {
           onChange={handleFilterChange}
         />
       </Col>
-       <Col md={6} lg={6} xl={4}>
+       <Col md={6} lg={3} xl={4}>
        <Input
           type='select'
           label=''
@@ -306,7 +307,7 @@ function FiliterOption(props) {
           onChange={handleFilterChange}
         />
       </Col> 
-      <Col md={6} lg={6} xl={4}>
+      <Col md={6} lg={3} xl={4}>
       <Input
           type='select'
           label=''

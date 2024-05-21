@@ -299,7 +299,7 @@ function Post({socket,newPostCreated}){
         
     <div className="Comment">
     
-<div className="Like" onClick={() => likeHandle(index,1)}>
+<div className="Like" style={{cursor:'pointer'}} onClick={() => likeHandle(index,1)}>
     {post.is_reacted=='1' ?<img src={Bronze} />:
       post.is_reacted=='2'?<img src={Silver} />:
       post.is_reacted=='3'? <img src={Gold} />: 

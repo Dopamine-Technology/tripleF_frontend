@@ -73,7 +73,7 @@ function App() {
            <Route path='/settings/changePassword' element={<ChangePassword />} />
            <Route path='/settings/ControlNofification' element={<Notification />} />
            </Route>
-           {checkRole(["scout","coach","club"]) && (
+           {checkRole([2,3,4]) && (
           <Route path='home/add/opportunity' element={<NewOpportunity />}  />
           )}
           <Route path='/my/notifications' element={<NotificationList />}  />

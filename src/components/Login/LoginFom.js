@@ -66,14 +66,14 @@ function LoginForm() {
     axios.post('https://backend.triplef.group/api/user/auth/google_login', dataToSend)
     .then((response) => {
       if (response.data.result) {
-        setUser(response.data.result.user);
         Cookies.set('token', response.data.result.token);
+        setUser(response.data.result.user);
+  
         message.success('Logged in successfully');
 
         const savedToken = Cookies.get('token');
         if (savedToken === response.data.result.token) {
           navigate('/home');
-          window.location.reload();
         } else {
           console.error('Token not saved correctly');
         }
@@ -202,7 +202,7 @@ function LoginForm() {
           const savedToken = Cookies.get('token');
           if (savedToken === response.data.result.token) {
             navigate('/home');
-            window.location.reload();
+            // window.location.reload();
           } else {
             console.error('Token not saved correctly');
           }

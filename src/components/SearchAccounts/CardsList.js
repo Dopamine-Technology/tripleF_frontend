@@ -60,7 +60,7 @@ function CardsList({  filters }) {
                     (index % numColumns === 0 || index === profiles?.length - 1) && (
                         <Row key={index} style={{ marginLeft: isSmallScreen? '0rem' : '' }}>
                             {profiles?.slice(index, index + numColumns).map((profile, i) => (
-                                <Col key={i} md={3} xs={6} lg={6} xl={3}>
+                                <Col key={i} md={3} xs={6} lg={3} xl={3}>
                                     <AccountCard profile={profile} />
                                 </Col>
                             ))}
