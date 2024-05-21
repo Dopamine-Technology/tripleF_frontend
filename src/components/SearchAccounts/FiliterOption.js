@@ -47,8 +47,8 @@ function FiliterOption(props) {
   }
   
   const genderOptions = [
-    { id: 'female', name: genderOptions2[0]},
-    { id: 'male', name: genderOptions2[1]},
+    { id: 'female', name: genderOptions2[1]},
+    { id: 'male', name: genderOptions2[0]},
     { id: 'other', name: genderOptions2[2]},
   ];
   const preferredFoot = [
@@ -114,14 +114,23 @@ function FiliterOption(props) {
   };
 
   const handleExpYearChange = (event) => {
-    const selectedExpYear = expYears.find(year => year.id === event.target.value);
+  const selectedValue = event.target.value;
+  if (selectedValue === '') {
+    // Clear the experience filters
+    props.onFilterChange('experience_from', null);
+    props.onFilterChange('experience_to', null);
+    props.onFilterChange('exp_year', '');
+  } else {
+    const selectedExpYear = expYears.find(year => year.id === selectedValue);
     if (selectedExpYear) {
       const { from_years_exp, to_years_exp } = selectedExpYear;
       props.onFilterChange('experience_from', from_years_exp);
       props.onFilterChange('experience_to', to_years_exp);
-      props.onFilterChange('exp_year', event.target.value);
+      props.onFilterChange('exp_year', selectedValue);
     }
-  };
+  }
+};
+
   
 
   return (

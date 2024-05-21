@@ -7,7 +7,7 @@ import useAxios from '../Auth/useAxiosHook.interceptor';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../LanguageContext/LanguageProvider';
 
-function AddCertificate({ handleClose, show, certificate }) {
+function AddCertificate({ handleClose, show, onAddCertificate, certificate }) {
     const axios = useAxios();
     const { language, changeLanguage } = useLanguage(); 
     const [direction, setDirection] = useState('ltr');
@@ -34,40 +34,39 @@ function AddCertificate({ handleClose, show, certificate }) {
     }
 
     const onSubmit = (data) => {
-      if (certificate) {
-          // Editing an existing certificate
-          axios.post(`profiles/edit_certificate/${certificate.id}`, data)
-              .then(response => {
-                  // Handle success response
-                  console.log('Certificate updated successfully:', response.data);
-                  handleClose(); // Close the modal after successful submission
-              })
-              .catch(error => {
-                  // Handle error
-                  console.error('Error updating certificate:', error);
-              });
-      } else {
-          // Adding a new certificate
-          axios.post('profiles/create_certificate', data)
-              .then(response => {
-                  // Handle success response
-                  console.log('Certificate added successfully:', response.data);
-                  handleClose(); // Close the modal after successful submission
-              })
-              .catch(error => {
-                  // Handle error
-                  console.error('Error adding certificate:', error);
-              });
-      }
-  };
-
-    
+        if (certificate) {
+            // Editing an existing certificate
+            axios.post(`profiles/edit_certificate/${certificate.id}`, data)
+                .then(response => {
+                    // Handle success response
+                    console.log('Certificate updated successfully:', response.data);
+                    handleClose(); // Close the modal after successful submission
+                })
+                .catch(error => {
+                    // Handle error
+                    console.error('Error updating certificate:', error);
+                });
+        } else {
+            // Adding a new certificate
+            axios.post('profiles/create_certificate', data)
+                .then(response => {
+                    // Handle success response
+                    console.log('Certificate added successfully:', response.data);
+                    onAddCertificate(response.data.result); // Update the parent state with the new certificate
+                    handleClose(); // Close the modal after successful submission
+                })
+                .catch(error => {
+                    // Handle error
+                    console.error('Error adding certificate:', error);
+                });
+        }
+    };
 
     return (
         <div>
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title className='share-title'>{certificate ?t('AddCertificate.editCertificate'):t('AddCertificate.addCertificate')}</Modal.Title>
+                    <Modal.Title className='share-title'>{certificate ? t('AddCertificate.editCertificate') : t('AddCertificate.addCertificate')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='challenge-container'>
@@ -120,12 +119,12 @@ function AddCertificate({ handleClose, show, certificate }) {
                 </Modal.Body>
                 <Modal.Footer className='challenge-footer'>
                     <Button type="submit" form="certificateForm" className={certificate ? 'editSubmit-btn' : 'afterSubmit-btn'}>
-                        {certificate ? t('Register.saveChanges') :t('mainarea.add')}
+                        {certificate ? t('Register.saveChanges') : t('mainarea.add')}
                     </Button>
                 </Modal.Footer>
             </Modal>
         </div>
-    )
+    );
 }
 
 export default AddCertificate;
