@@ -25,7 +25,9 @@ text-align: left;
   border-radius: 5px;
   box-sizing: border-box;
   margin-top: 1rem;
+
 }
+
 .challenge-label{
   opacity: 1;
 color: rgba(70,70,70,1);

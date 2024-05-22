@@ -29,14 +29,14 @@ function FiliterOption(props) {
   const preferredFootOptions = t('Register.preferredFootOptions', { returnObjects: true });
 
   const genderOptions = [
-    { id: 'female', name: genderOptions2[0]},
-    { id: 'male', name: genderOptions2[1]},
-    { id: 'other', name: genderOptions2[2]},
+    { id: 'male', name: genderOptions2[0]}, //male
+    { id: 'female', name: genderOptions2[1]}, //female
+    { id: 'other', name: genderOptions2[2]}, // rather not to say
   ];
   const preferredFoot = [
-    { id: 'right', name: preferredFootOptions[0] },
-    { id: 'left', name: preferredFootOptions[1] },
-    { id: 'both', name: preferredFootOptions[2] },
+    { id: 'Right', name: preferredFootOptions[0] },
+    { id: 'Left', name: preferredFootOptions[1] },
+    { id: 'Both', name: preferredFootOptions[2] },
   ];
   
   const expYears = [

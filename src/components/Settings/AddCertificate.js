@@ -40,7 +40,10 @@ function AddCertificate({ handleClose, show, onAddCertificate, certificate }) {
                 .then(response => {
                     // Handle success response
                     console.log('Certificate updated successfully:', response.data);
-                    handleClose(); // Close the modal after successful submission
+                    window.location.reload();
+                    // handleClose(); // Close the modal after successful submission
+
+
                 })
                 .catch(error => {
                     // Handle error
@@ -71,18 +74,30 @@ function AddCertificate({ handleClose, show, onAddCertificate, certificate }) {
                 <Modal.Body>
                     <div className='challenge-container'>
                         <Form id="certificateForm" className='signup-form' onSubmit={handleSubmit(onSubmit)}>
-                            <Input
-                                register={register}
-                                errors={errors}
-                                name="name"
-                                label={t('AddCertificate.certificateName')}
-                                placeholder=''
-                                className="form-control form-control-sm rounded"
-                                validation={{}}
-                                type="text"
-                                inputWidth='440px'
-                                defaultValue={certificate ? certificate.name : null}
-                            />
+                            
+                        {/* <Input
+    register={register} // Pass the register function
+    errors={errors}
+    name="name"
+    label={t('AddCertificate.certificateName')}
+    placeholder=''
+    className="form-control form-control-sm rounded"
+    type="text"
+    inputWidth='440px'
+    defaultValue={certificate ? certificate.name : null}
+/> */}
+<Form.Group controlId='issued_by' className='mb-3'>
+                                <Form.Label>{t('Profile.issudBy')}</Form.Label>
+                                <Form.Control
+                                    type='text'
+                                    {...register('name', { required: true })}
+                                    placeholder={t('AddCertificate.certificateName')}
+                                    defaultValue={certificate ? certificate.name : null}
+                                />
+                                {errors.name && <span className="text-danger">This field is required</span>}
+                            </Form.Group>
+
+                   
                             <Form.Group controlId='issued_by' className='mb-3'>
                                 <Form.Label>{t('Profile.issudBy')}</Form.Label>
                                 <Form.Control

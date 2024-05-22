@@ -160,13 +160,14 @@ function ChallengesList({ handleClose, show, onNewPostCreated, setShow }) {
       <Modal.Header closeButton>
         <Modal.Title className='share-title'>{t('ShareChallenge.title')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body style={{height:selectedChallenge?'':'16rem'}} >
         <div className='challenge-container'>
           <div className='form-group'>
             <label htmlFor='challenge' className='challenge-label'>
               {t('ShareChallenge.selectChallenge')}
             </label>
             <select
+  
               id='challenge'
               {...register('challenge')}
               className='challenge-input e-caret-hide'
@@ -176,9 +177,12 @@ function ChallengesList({ handleClose, show, onNewPostCreated, setShow }) {
               }}>
               <option value=''></option>
               {challenges.map((challenge) => (
+             
                 <option key={challenge.id} value={challenge.id}>
                   {challenge.name}
                 </option>
+              
+            
               ))}
             </select>
           </div>
