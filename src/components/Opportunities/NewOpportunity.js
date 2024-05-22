@@ -790,6 +790,8 @@ EditorState.createEmpty()
                  className='mt-1'
                  
                    />
+                   
+
        {errors && errors.position_id && (
   <div className="text-danger text-start">{errors['position_id']?.message}</div>
 )}

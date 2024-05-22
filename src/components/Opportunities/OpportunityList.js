@@ -44,11 +44,44 @@ function OpportunityList() {
 
   const applyFilters = () => {
     let filteredList = newDataList?.filter((singleData) => {
-      // Your filter conditions here
+      if (filterTextValue == 'Right' && singleData.foot != 'Right') {
+        return false;
+      }
+      if (filterTextValue == 'Left' && singleData.foot != 'Left') {
+        return false;
+      }
+      if (filterTextValue == 'Both' && singleData.preferredFoot != 'Both') {
+        return false;
+      }
+
+      if (filterTextGender === 'male' && singleData.gender !== 'male') {
+        return false;
+      }
+      if (filterTextGender === 'female' && singleData.gender !== 'female') {
+        return false;
+      }
+      if (filterTextGender === 'other' && singleData.gender !== 'other') {
+        return false;
+      }
+      if (
+        (filterTextPosition == '1' && singleData.position.id != '1') ||
+        (filterTextPosition == '2' && singleData.position.id != '2') ||
+        (filterTextPosition == '3' && singleData.position.id != '3') ||
+        (filterTextPosition == '4' && singleData.position.id != '4')
+      )
+      return false;
+      if (filterTextCountry && singleData.country.id != filterTextCountry) {
+        return false;
+      }
+      {
+        return singleData;
+      }
+      return true;
     });
 
     return filteredList;
   };
+
 
   useEffect(() => {
     const filteredList = applyFilters();

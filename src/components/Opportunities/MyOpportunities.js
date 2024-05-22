@@ -84,6 +84,9 @@ function OpportunityList(){
         if (user.userData.profile.type_id == "1") {
           setFilterTextType('applied')
           } 
+          if (user.userData.profile.type_id == "2") {
+            setFilterTextType('applied')
+            } 
           // else  {
         //     setFilterTextType('published');
         //   }

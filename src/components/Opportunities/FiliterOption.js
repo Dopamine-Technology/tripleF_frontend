@@ -34,9 +34,9 @@ function FiliterOption(props) {
     { id: 'other', name: genderOptions2[2]}, // rather not to say
   ];
   const preferredFoot = [
-    { id: 'right', name: preferredFootOptions[0] },
-    { id: 'left', name: preferredFootOptions[1] },
-    { id: 'both', name: preferredFootOptions[2] },
+    { id: 'Right', name: preferredFootOptions[0] },
+    { id: 'Left', name: preferredFootOptions[1] },
+    { id: 'Both', name: preferredFootOptions[2] },
   ];
   
   const expYears = [
