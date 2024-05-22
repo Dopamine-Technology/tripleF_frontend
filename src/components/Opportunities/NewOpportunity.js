@@ -26,9 +26,6 @@ function NewOpportunity(){
   const [accountType, setAccountType] = useState('1');
   const [editorContent, setEditorContent] = useState('');
   const [editorContent2,setEditorContent2]=useState('');
-
-  const { language, changeLanguage } = useLanguage(); 
-  const [direction, setDirection] = useState('ltr');
   const [t, i18n] = useTranslation();
 
   const talentSchema = Yup.object().shape({
@@ -62,6 +59,24 @@ function NewOpportunity(){
     city_id:Yup.string().required(t('validationErrors.city_id')),
  
   });
+
+  const coachSchema = Yup.object().shape({
+    title: Yup.string().required("Opportunity Title is required"),
+    targeted_type:Yup.string().required("Targeted Type is required"),
+    from_exp:Yup.number()
+    .typeError('Years must be a valid number')
+    .required("Years is required")  
+    .min(0, 'Years must be greater than 0') 
+    .max(300, 'Years must be less than or equal to 300'),
+    to_exp:Yup.number()
+    .typeError('Years must be a valid number')
+    .required("Years is required")  
+    .min(0, 'Years must be greater than 0') ,
+    gender:Yup.string().required("Gender is required"),
+    country_id:Yup.string().required("Country is required"),
+    city_id:Yup.string().required("City is required"),
+
+  });
     
   
 
@@ -83,18 +98,16 @@ function NewOpportunity(){
 
   });
 
- 
 
   const getValidationSchema = () => {
     switch (accountType) {
       case '1':
         return talentSchema;
       case '2':
+        return coachSchema;
+      case '4':
         return scoutSchema;
-      case '3':
-        return scoutSchema;
-      default:
-        return talentSchema;
+    
     }
   };
 
@@ -122,27 +135,10 @@ function NewOpportunity(){
       const [requirementError,setRequirementError]=useState('');
       // const [disableAddButton, setDisableAddButton] = useState(false);
       const MAX_COUNT = 3;
-      const genderOptions2 = t('Register.genderOptions', { returnObjects: true });
-      const preferredFootOptions = t('Register.preferredFootOptions', { returnObjects: true });
-      const typesOptions = t('AddOpportunity.targeted_type_options', { returnObjects: true });
 
-      const options=
-      [
-        { value: 'option1', label: 'Option 1' },
-        { value: 'option2', label: 'Option 2' },
-        { value: 'option3', label: 'Option 3' },
-      ];
-    const colourOptions = [
-        { value: "German", label: "Deutsch  (German)" },
-        { value: "English", label: "English" },
-        { value: "Spanish", label: "español  (Spanish)" },
-        { value: "French", label: "français  (French)" },
-        { value: "Croatian", label: "hrvatski  (Croatian)" },
-        { value: "Italian", label: "italiano  (Italian)" },
-        { value: "Dutch", label: "Nederlands  (Dutch)" },
-        { value: "Polish", label: "polski  (Polish)" },
-      ];
       const animatedComponents = makeAnimated();
+
+      
       
     
       const [selectedOptions, setSelectedOptions] = useState([]);
@@ -155,6 +151,9 @@ function NewOpportunity(){
     
     const [selectedItems, setSelectedItems] = useState([]);
 
+    const genderOptions2 = t('Register.genderOptions', { returnObjects: true });
+    const preferredFootOptions = t('Register.preferredFootOptions', { returnObjects: true });
+    const typesOptions = t('AddOpportunity.targeted_type_options', { returnObjects: true });
 
     const genderOptions = [
       { label:  genderOptions2[0], value: "male" },
@@ -168,9 +167,9 @@ function NewOpportunity(){
       { label: preferredFootOptions[2], value: "Both" },
     ];
       const Types = [
-        { label:  typesOptions[0] , value: "1" },
-        { label: typesOptions[1], value: "2" },
-        { label: typesOptions[2], value: "3" },
+        { label:  typesOptions[0] , value: "1" }, //talent
+        { label: typesOptions[1], value: "4" }, //scout
+        { label: typesOptions[2], value: "2" }, //coach
       
       ];
 
@@ -195,6 +194,8 @@ function NewOpportunity(){
 const [editorState2, setEditorState2] = useState(() =>
 EditorState.createEmpty()
 );
+
+
 
 
       
@@ -251,7 +252,7 @@ EditorState.createEmpty()
         try {
               // Validate editor content
     if (!editorContent.trim()) {
-      setRequirementError(t('validationErrors.requirements'));
+      setRequirementError('Requirements are required');
       return; // Exit function if requirements are empty
     }
 
@@ -274,7 +275,7 @@ EditorState.createEmpty()
             delete formData.to_weight;
 
         }
-        if(user.userData.profile.type_id=='4'){
+        if(user.userData.profile.type_name=='scout'){
           formData.targeted_type='1'
         }
    
@@ -513,7 +514,7 @@ EditorState.createEmpty()
                register={register}
                errors={errors}
                name="from_exp"
-               label= {t('AddOpportunity.experienceFrom')}
+               label={t('AddOpportunity.experienceFrom')}
                placeholder=""
                className="form-control form-control-sm rounded"
                validation={{ validate: validateToGreaterThanFrom('age') }}
@@ -558,15 +559,15 @@ EditorState.createEmpty()
  </Row>
  <Row>
    <Col md={4} lg={4} >
-   <label>{t('LayoutNavbar.language')}</label>
-            <SelectComponent onSelectLanguages={handleSelectLanguages} />
+     <label>{t('LayoutNavbar.language')}</label>
+     <SelectComponent onSelectLanguages={handleSelectLanguages} />
 </Col>
  </Row>
  <Row>
      <Input
        type="select"
-       label="Country"
-       name={t('Register.country')}
+       label={t('Register.country')}
+       name="country_id"
        register={register}
        errors={errors} 
        selectOptions={countries}
@@ -590,8 +591,8 @@ EditorState.createEmpty()
     
      <JoditEditor value={editorContent} onChange={onEditorChange} />
      {requirementError && (
-      <p className="text-danger text-start">{requirementError}</p>
-    )}
+<p className="text-danger text-start">{requirementError}</p>
+)}
 </Col>
 <Col md={4} col={4}></Col>
 
@@ -606,7 +607,7 @@ EditorState.createEmpty()
        
      
      <JoditEditor value={editorContent2} onChange={onEditorChange2} />
-
+ 
 
 
 </Col>
@@ -616,116 +617,116 @@ EditorState.createEmpty()
 
   
               );
-              case '3':
+              case '4':
                 return (
                   <>
-                       <Row> 
+                  <Row> 
+   
+   <Col md={2} lg={2}>
+   <Input
+                 register={register}
+                 errors={errors}
+                 name="from_exp"
+                 label={t('AddOpportunity.experienceFrom')}
+                 placeholder=""
+                 className="form-control form-control-sm rounded"
+                 validation={{ validate: validateToGreaterThanFrom('age') }}
+                 type="number"
+                 inputWidth="6rem"
+               />
+               {errors.from_age && (
+                 <p className="error-message">{errors.from_age.message}</p>
+               )}
+   </Col>
+   <Col md={2} lg={2}>
+   <Input
+                 register={register}
+                 errors={errors}
+                 name="to_exp"
+                 label={t('AddOpportunity.to')}
+                 placeholder=""
+                 className="form-control form-control-sm rounded"
+                 validation={{
+                   validate: validateToGreaterThanFrom('age'),
+                 }}
+                 type="number"
+                 inputWidth="6rem"
+               />
+               {errors.to_age && (
+                 <p className="error-message">{errors.to_age.message}</p>
+               )}
+   </Col>
+   <Col md={8} lg={8}>
+   <Input
+     register={register}
+     errors={errors}
+     name="gender"
+     label={t('Register.gender')}
+     className="form-control form-control-sm rounded me-3"
+     type="radio"
+     radioOptions={genderOptions}
+  
+   />
+  </Col>
+  
+   </Row>
+   <Row>
+     <Col md={4} lg={4} >
+       <label>{t('LayoutNavbar.language')}</label>
+       <SelectComponent onSelectLanguages={handleSelectLanguages} />
+  </Col>
+   </Row>
+   <Row>
+       <Input
+         type="select"
+         label={t('Register.country')}
+         name="country_id"
+         register={register}
+         errors={errors} 
+         selectOptions={countries}
+         onChange={(e) => handleCountrySelect(e.target.value)}
+       />
+       
+         <Input
+         type="select"
+         label={t('Register.city')}
+         name="city_id"
+         register={register}
+         errors={{}}
+         selectOptions={cities}
+       />
+       </Row>
+       <Row>
+       <Col md={8} col={8}>
+       <Form.Label className={`text-capitalize text-black label2`}>
+       {t('AddOpportunity.requirements')}
+       </Form.Label>
+      
+       <JoditEditor value={editorContent} onChange={onEditorChange} />
+       {requirementError && (
+  <p className="text-danger text-start">{requirementError}</p>
+  )}
+  </Col>
+  <Col md={4} col={4}></Col>
+  
+       </Row>
+       <Row>
         
-        <Col md={2} lg={2}>
-        <Input
-                      register={register}
-                      errors={errors}
-                      name="from_exp"
-                      label={t('AddOpportunity.experienceFrom')}
-                      placeholder=""
-                      className="form-control form-control-sm rounded"
-                      validation={{ validate: validateToGreaterThanFrom('age') }}
-                      type="number"
-                      inputWidth="6rem"
-                    />
-                    {errors.from_age && (
-                      <p className="error-message">{errors.from_age.message}</p>
-                    )}
-        </Col>
-        <Col md={2} lg={2}>
-        <Input
-                      register={register}
-                      errors={errors}
-                      name="to_exp"
-                      label={t('AddOpportunity.to')}
-                      placeholder=""
-                      className="form-control form-control-sm rounded"
-                      validation={{
-                        validate: validateToGreaterThanFrom('age'),
-                      }}
-                      type="number"
-                      inputWidth="6rem"
-                    />
-                    {errors.to_age && (
-                      <p className="error-message">{errors.to_age.message}</p>
-                    )}
-        </Col>
-        <Col md={8} lg={8}>
-        <Input
-          register={register}
-          errors={errors}
-          name="gender"
-          label={t('Register.gender')}
-          className="form-control form-control-sm rounded me-3"
-          type="radio"
-          radioOptions={genderOptions}
+         <Col md={8} col={8}>
+       <Form.Label className={`text-capitalize text-black label2`}>
+       {t('AddOpportunity.additionalInformation')}
+       </Form.Label>
       
-        />
-      </Col>
-      
-        </Row>
-        <Row>
-          <Col md={4} lg={4} >
-            <label>{t('LayoutNavbar.language')}</label>
-            <SelectComponent onSelectLanguages={handleSelectLanguages} />
-    </Col>
-        </Row>
-        <Row>
-            <Input
-              type="select"
-              label={t('Register.country')}
-              name="country_id"
-              register={register}
-              errors={errors} 
-              selectOptions={countries}
-              onChange={(e) => handleCountrySelect(e.target.value)}
-            />
-            
-              <Input
-              type="select"
-              label={t('Register.city')}
-              name="city_id"
-              register={register}
-              errors={{}}
-              selectOptions={cities}
-            />
-            </Row>
-            <Row>
-            <Col md={8} col={8}>
-            <Form.Label className={`text-capitalize text-black label2`}>
-            {t('AddOpportunity.requirements')}
-            </Form.Label>
-           
-            <JoditEditor value={editorContent} onChange={onEditorChange} />
-            {requirementError && (
-      <p className="text-danger text-start">{requirementError}</p>
-    )}
-      </Col>
-      <Col md={4} col={4}></Col>
-      
-            </Row>
-            <Row>
-             
-              <Col md={8} col={8}>
-            <Form.Label className={`text-capitalize text-black label2`}>
-            {t('AddOpportunity.additionalInformation')}
-            </Form.Label>
-           
-              
-            
-            <JoditEditor value={editorContent2} onChange={onEditorChange2} />
-        
-      
-      
-      </Col>
-      <Col md={4} col={4}></Col>
-            </Row>
-                  </>
+         
+       
+       <JoditEditor value={editorContent2} onChange={onEditorChange2} />
+   
+  
+  
+  </Col>
+  <Col md={4} col={4}></Col>
+       </Row>
+             </>
     
                 );
         }}
@@ -743,7 +744,7 @@ EditorState.createEmpty()
         <NavBar />
       
       <Form className='newOpp-form' onSubmit={handleSubmit(onSubmit)}>
-      <p className='addOpp-title'><Link style={{textDecoration:'none',color:'#464646'}} to='/home'><div className='back-arrow me-3' ><IoIosArrowBack color='#979797' size={20}/> </div>{t('AddOpportunity.addOpportunity')}</Link></p>
+      <p className='addOpp-title'><Link style={{textDecoration:'none',color:'#464646'}} to='/home'><div className='back-arrow me-3' ><IoIosArrowBack color='#979797' size={20}/> </div>Add opportunity</Link></p>
         <Col md={4} lg={4}></Col>
         <Col md={8} lg={8}>
         <Row>
@@ -752,7 +753,7 @@ EditorState.createEmpty()
                         register={register}
                         errors={errors}
                         name="title"
-                        label={t('AddOpportunity.opportunitieTitle')}
+                        label="Opportunitie Title"
                         placeholder=''
                         className="form-control form-control-sm rounded me-4 mt-1"
                         validation={{}}
@@ -762,13 +763,13 @@ EditorState.createEmpty()
                       />
                       </Col>
                      
-                      {user.userData.profile.type_id!='4'?
+                      {user.userData.profile.type_name!='scout'?
                       <Col md={4} lg={4}>
                             <Input
                           register={register}
                           errors={errors}
                           name="targeted_type"
-                          label={t('AddOpportunity.targeted_type')}
+                          label="Type"
                           className="form-control form-control-sm rounded me-3"
                           type="radio"
                           radioOptions={Types}
@@ -781,7 +782,7 @@ EditorState.createEmpty()
       {accountType=='1'?  <Col md={4} lg={4}>
                               <Input
                  type="select"
-                 label={t('Register.position')}
+                 label="Position"
                  name="position_id"
                  register={register} 
                  errors={errors}
@@ -803,7 +804,7 @@ EditorState.createEmpty()
         <Col>
         <Button className='add-btn' type='submit'
          disabled={disableBtn}
-         >{t('mainarea.add')}</Button>
+         >Add</Button>
         </Col>
       <Col></Col>
       </Row>
