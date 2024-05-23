@@ -506,7 +506,7 @@ isProScreen?(
 
  
 ):(
-  <Container style={{ marginRight: isScrolled && currentLanguage === 'ar' ? '-7rem' : isScrolled ? '14rem' : '2.5rem',zIndex:'1000' }}>
+  <Container style={{ marginRight: isScrolled ? '14rem' : '2.5rem',zIndex:'1000' }}>
 
       <TopNavbar />
       <BottomNavbar />
