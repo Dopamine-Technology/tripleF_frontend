@@ -79,11 +79,11 @@ const TopNavbar = ({content}) => {
   return (
     <>
     {isScrolled?
-<Navbar expand="lg" className='scroll-navbar' style={{ zIndex: 999 }}  >
+<Navbar expand="lg" className='scroll-navbar' >
   <Container className='navbar-container'>
     <Navbar.Brand  className="d-flex align-items-center navbar-brand2 " style={{marginLeft:'5rem'}}>
       <img src={Logo} className='logo-register' />
-      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-1"/>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent' }} className=" ms-5"/>
     </Navbar.Brand>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ms-auto mt-2">
@@ -98,10 +98,12 @@ const TopNavbar = ({content}) => {
           id="language-dropdown"
           variant=""
           className=" bg-transparent mr-5 custom-dropdown mt-1"
+          style={{ zIndex: 999 }}
+          
        
         >
           {availableLanguages.map((lang) => (
-            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}    style={{ zIndex: '999' }} >
+            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}    style={{ zIndex: 999 }} >
               <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
               {lang.label}
             </Dropdown.Item>
@@ -138,9 +140,11 @@ const TopNavbar = ({content}) => {
           id="language-dropdown"
           variant=""
           className="text-white bg-transparent mr-5 custom-dropdown  mt-1 "
+          style={{ zIndex: 999 }}
+          
         >
           {availableLanguages.map((lang) => (
-            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
+            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}   style={{ zIndex: 999 }}>
               <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
               {lang.label}
             </Dropdown.Item>
@@ -225,7 +229,7 @@ const BottomNavbar = () => {
   return (
     <>
     {isScrolled?
-    <Navbar expand="lg" className='scroll-navbar2' style={{ zIndex: 999 }}>
+    <Navbar expand="lg" className='scroll-navbar2'>
     <Container className='container-tablet-responsive'>
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'18.8rem':'14.5rem'}} className=""/>
       <Navbar.Collapse id="basic-navbar-nav">
@@ -335,7 +339,7 @@ const CombinedNavbars = ({setNavbarExpanded }) => {
     <Navbar.Brand href="" className="d-flex align-items-center navbar.brand2  ">
       <img src={LogoWhite} className='' />
       <Navbar.Toggle aria-controls="basic-navbar-nav custom-toggler"
-           style={{ borderColor: 'transparent',color: 'white !important' }} className=" ms-1" />
+           style={{ borderColor: 'transparent',color: 'white !important' }} className=" ms-5" />
     </Navbar.Brand>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mt-1">
@@ -350,10 +354,12 @@ const CombinedNavbars = ({setNavbarExpanded }) => {
           id="language-dropdown"
           variant=""
           className=" bg-transparent mr-5 custom-dropdown mt-1"
+          style={{ zIndex: 999 }}
         >
           {availableLanguages.map((lang) => (
             <Dropdown.Item key={lang.code} 
             onClick={() => changeLanguage(lang.code)}
+            style={{ zIndex: 999 }}
        >
               <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
               {lang.label}
@@ -385,7 +391,7 @@ const CombinedNavbars = ({setNavbarExpanded }) => {
       <Container className='navbar-container' style={{ boxShadow: 'none' }}>
         <Navbar.Brand href="" className="d-flex align-items-center navbar.brand2 ">
           <img src={LogoWhite} className='logo-register' style={{ paddingLeft: '2rem' }} />
-          <Navbar.Toggle aria-controls="basic-navbar-nav custom-toggler" className="ms-1">
+          <Navbar.Toggle aria-controls="basic-navbar-nav custom-toggler" className="ms-5">
   <img src={burgerImg} alt="Burger Menu" style={{ width: '24px', height: 'auto', cursor: 'pointer' }} />
 </Navbar.Toggle>
         </Navbar.Brand>
@@ -402,9 +408,10 @@ const CombinedNavbars = ({setNavbarExpanded }) => {
               id="language-dropdown"
               variant=""
               className="bg-transparent mr-5 custom-dropdown mt-1"
+              style={{ zIndex: 999 }}
             >
               {availableLanguages.map((lang) => (
-                <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
+                <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}   style={{ zIndex: 999 }}>
                   <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
                   {lang.label}
                 </Dropdown.Item>
@@ -463,9 +470,10 @@ isProScreen?(
           id="language-dropdown"
           variant=""
           className="bg-transparent mr-5 custom-dropdown mt-1"
+          style={{ zIndex: 999 }}
         >
           {availableLanguages.map((lang) => (
-            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}>
+            <Dropdown.Item key={lang.code} onClick={() => changeLanguage(lang.code)}   style={{ zIndex: 999 }}>
               <img src={lang.img} style={{ height: '1.5rem', width: '1.5rem' }} className='me-2' />
               {lang.label}
             </Dropdown.Item>
