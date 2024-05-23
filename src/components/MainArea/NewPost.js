@@ -72,7 +72,7 @@ return(
             <Col xs={6} sm={6} md={9} lg={10} >
                 <div className='d-flex'>
                     <div>
-                        <img src={asset2} width='90px' height='70px' className='m-3' />
+                        <img src={asset2} width='90px' height='70px' className='m-3 shareChallenge-img' />
                     </div>
                     <div>
                         <p className='newPost-title'>{t('mainarea.shareTrainingSession')}</p>
