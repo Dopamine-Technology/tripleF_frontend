@@ -56,36 +56,43 @@ function LoginForm() {
     }, [currentLanguage]);
 
 
-  const onSuccess = (res) => {
-    const { profileObj } = res;
-    const dataToSend = {
-      email: profileObj.email,
-      google_identifier: res.accessToken,
-    };
-  
-    axios.post('https://backend.triplef.group/api/user/auth/google_login', dataToSend)
-    .then((response) => {
-      if (response.data.result) {
-        Cookies.set('token', response.data.result.token);
-        setUser(response.data.result.user);
-  
-        message.success('Logged in successfully');
+    const onSuccess = (res) => {
+      const { profileObj, accessToken } = res;
+      const dataToSend = {
+        email: profileObj.email,
+        google_identifier: accessToken,
+      };
+    
+      axios.post('https://backend.triplef.group/api/user/auth/google_login', dataToSend)
+        .then((response) => {
+          if (response.data.result) {
+            
+            const { token, user } = response.data.result;
+    
+            // Save token and user data in cookies
+            Cookies.set('token', token);
+            setUser(user);
+    
+            message.success('Logged in successfully');
+    
+            // Verify if the token was saved correctly
+            const savedToken = Cookies.get('token');
+            if (savedToken === token) {
+              window.location.reload();
 
-        const savedToken = Cookies.get('token');
-        if (savedToken === response.data.result.token) {
-          navigate('/home');
-        } else {
-          console.error('Token not saved correctly');
-        }
-      } else {
-        message.error('Invalid response from server');
-      }
-    })
-    .catch((error) => {
-      console.error('Error sending data to other API:', error);
-    });
-  }
-  
+            } else {
+              console.error('Token not saved correctly');
+              message.error('Error saving authentication token');
+            }
+          } else {
+            message.error('Invalid response from server');
+          }
+        })
+        .catch((error) => {
+          console.error('Error during Google login:', error);
+          message.error('Failed to log in with Google');
+        });
+    };
 
     const onFailure =()=>{
       // message.error('logged in failed, please try again')
@@ -113,6 +120,7 @@ function LoginForm() {
             isAuthenticated: true,
             userData: response.data.result.user,
           });
+          
   
           message.success('Logged in successfully');
           navigate('/home');
