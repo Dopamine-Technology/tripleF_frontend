@@ -28,7 +28,7 @@ import Spain from '../../assets/imgs/flagSpain.webp'
 const TopNavbar = ({content}) => {
   const currentLanguage = Cookies.get('language') || 'en';
   const [t,i18n]=useTranslation();
-  const [direction, setDirection] = useState(currentLanguage == 'ar' ? 'rtl' : 'ltr');
+
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -55,16 +55,7 @@ const TopNavbar = ({content}) => {
     setIsHovering(false);
   };
 
-  useEffect(() => {
-    // Change direction based on the selected language
-    if (currentLanguage === 'ar') {
-      setDirection('rtl');
-    } 
-    else{
-      setDirection('ltr')
-    }
-  }, [currentLanguage]);
-
+  
   
 
   useEffect(() => {
@@ -226,15 +217,9 @@ const BottomNavbar = () => {
     }
   };
   const currentLanguage = Cookies.get('language') || 'en';
-  const [direction, setDirection] = useState('ltr');
 
-  useEffect(() => {
-    if (currentLanguage === 'ar') {
-      setDirection('rtl');
-    } else {
-      setDirection('ltr');
-    }
-  }, [currentLanguage]);
+
+
 
 
   return (
@@ -258,7 +243,7 @@ const BottomNavbar = () => {
       </Navbar.Collapse>
     </Container>
   </Navbar>:<Navbar expand="lg" className='fixed-navbar2' >
-    <Container style={{marginLeft:currentLanguage=='ar'?'30rem':'1rem'}}>
+    <Container style={{marginLeft:'1rem'}}>
     
       <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent',marginLeft:isSmallScreen?'16rem':'13rem'}} className="custom-toggler"/>
       <Navbar.Collapse id="basic-navbar-nav">
@@ -309,7 +294,7 @@ const CombinedNavbars = ({setNavbarExpanded }) => {
 
 
     const currentLanguage = Cookies.get('language') || 'en';
-    const [direction, setDirection] = useState('ltr');
+  
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -333,13 +318,7 @@ const CombinedNavbars = ({setNavbarExpanded }) => {
     setNavbarExpanded(false);
 
   };
-  useEffect(() => {
-    if (currentLanguage === 'ar') {
-      setDirection('rtl');
-    } else {
-      setDirection('ltr');
-    }
-  }, [currentLanguage]);
+
 
   const handleToggle = () => {
     setExpanded(!expanded);

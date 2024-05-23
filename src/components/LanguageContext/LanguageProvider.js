@@ -11,9 +11,9 @@ export const LanguageProvider = ({ children }) => {
     const [t, i18n] = useTranslation();
     const [direction, setDirection] = useState('ltr');
 
-    useEffect(() => {
-        document.body.dir = direction;
-    }, [direction]);
+    // useEffect(() => {
+    //     document.body.dir = direction;
+    // }, [direction]);
 
     const changeLanguage = (newLanguage) => {
         setLanguage(newLanguage);

@@ -34,7 +34,6 @@ function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
     const [input, setInput] = useState("");
     const [results,setResults]=useState([])
     const { language, changeLanguage } = useLanguage(); 
-    const [direction, setDirection] = useState('ltr');
     const [t, i18n] = useTranslation();
     const [messages,setMessages]=useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
@@ -76,15 +75,7 @@ function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
       console.log('messages', messages);
   }, [messages]);
    
-    
-  
-    useEffect(() => {
-      if (language === 'ar') {
-          setDirection('rtl');
-      } else {
-          setDirection('ltr');
-      }
-  }, [language]);
+
 
   const fetchData = async (value) => {
     try {
@@ -140,13 +131,7 @@ function NavBar({ toggleCollapse,isSmallScreen,notifications ,isProScreen}) {
       })
   }
 
-  useEffect(() => {
-    if (language === 'ar') {
-        setDirection('rtl');
-    } else {
-        setDirection('ltr');
-    }
-}, [language]);
+
 
 const changeLanguageHandler = () => {
   const newLanguage = language == 'en' ? 'ar' : 'en'; 
@@ -226,7 +211,7 @@ const changeLanguageHandler = () => {
     return (
       <div >
         <Navbar expand="lg" className="bg-body-tertiary"
-         style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)",direction:direction}}>
+         style={{ boxShadow: "0px 1px 10px rgba(181,181,181, 1)"}}>
             <Container>
                 <Navbar.Brand href="/home" className="me-5">
                     <img src={Logo} width='80%' alt="Logo " className="me-3"  />

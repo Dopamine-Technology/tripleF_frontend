@@ -55,7 +55,7 @@ const TopNavbar = () => {
 
 
   return (
-<Navbar expand="lg" className='' style={{ direction: direction }}>
+<Navbar expand="lg" className='' >
   <Container className='navbar-container'>
     <Navbar.Brand href="/" className="d-flex align-items-center">
       <img src={Logo} className='logo-register' />
@@ -125,8 +125,8 @@ const BottomNavbar = () => {
 
 
   return (
-    <Navbar expand="lg" className='' style={{ direction: direction }}>
-  <Container style={{ marginLeft: isTabletScreen ? '30rem' :currentLanguage=='ar'?'32rem': '1rem' }}>
+    <Navbar expand="lg" className='' >
+  <Container style={{ marginLeft: isTabletScreen ? '30rem' :'1rem' }}>
     <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'transparent', marginLeft: 'auto' }} />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
@@ -245,7 +245,7 @@ const availableLanguages = [
       </Container>
     </Navbar>
       :
-      <Container  style={{marginLeft:'2.2rem',direction:direction}}>
+      <Container  style={{marginLeft:'2.2rem'}}>
       <TopNavbar />
       <hr className='Line-2'/>
       <BottomNavbar />

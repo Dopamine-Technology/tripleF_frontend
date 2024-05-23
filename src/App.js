@@ -40,7 +40,6 @@ import ScrollToTop from './components/ScrollToTop';
 function App() {
   const { user } = useContext(UserDataContext);
   const checkRole = useRoleCheck();
-  const { direction } = useLanguage();
 
   return (
     <div className="App" >
