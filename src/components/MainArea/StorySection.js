@@ -252,6 +252,7 @@ function StorySection() {
                                                     duration: 30000,
                                                 })) || []}
                                             />
+                                            
                                         )}
                                         
                                             <div className='challenge-Story-arrow' onClick={goToNextStory}>

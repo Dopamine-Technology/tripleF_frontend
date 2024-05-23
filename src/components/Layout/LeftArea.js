@@ -151,7 +151,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
             <div style={{ fontSize: "15px" }}>
               {user.userData.profile.type_id === "1"
                 ? !isCollapsed && (
-                    <div>
+                    <div >
                       <span className="me-3">
                         {t("leftArea.opportunities")}
                       </span>{" "}
@@ -159,7 +159,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
                     </div>
                   )
                 : !isCollapsed && (
-                    <div>
+                    <div style={{ color: "black" }}>
                       {t("leftArea.opportunities")} <img src={dropdownImg} />{" "}
                     </div>
                   )}
@@ -196,7 +196,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
             </div>
           </div>
         )}
-        <hr style={{ color: "#B0B0B0", width: "130%" }} />
+        {/* <hr style={{ color: "#B0B0B0", width: "130%" }} />
         {!isCollapsed && (
           <div
             className={`Pro ${activeLink === 7 ? "activeLink" : ""}`}
@@ -209,7 +209,7 @@ function LeftArea({ isCollapsed, toggleCollapse }) {
               )}
             </div>
           </div>
-        )}
+        )} */}
         <hr style={{ color: "#B0B0B0", width: "130%" }} />
         {!isCollapsed && (
           <div

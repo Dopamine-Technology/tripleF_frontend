@@ -137,7 +137,7 @@ function OpportunityList() {
           </div>
         </Col>
         <Col lg={1}></Col>
-        {user.userData.profile.type_id == "1" ? null :
+        {user.userData.profile.type_id == "1"||user.userData.profile.type_id == "2" ? null :
           (<Col lg={3} >
             <Button className='share-btn' onClick={() => { navigate('/home/add/opportunity') }}
               style={{ width: isSmallScreen ? 'auto' : '', marginLeft: isSmallScreen ? '1.5rem' : '' }}

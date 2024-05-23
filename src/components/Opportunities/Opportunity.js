@@ -118,11 +118,14 @@ function Opportunity({data}){
 <div>
            
             <div className={`four-div-container ${isSmallScreen?'':'d-flex'} `} >
-            {titles.map((singleData) => (
-  <div className='four-div me-4'>
-    <p className=''> {singleData.title} <span className='four-span-name'>{singleData.name}</span></p>
-  </div>
-))}
+                {data.targeted_type=='1'?
+                           titles.map((singleData) => (
+                            <div className='four-div me-4'>
+                              <p className=''> {singleData.title} <span className='four-span-name'>{singleData.name}</span></p>
+                            </div>
+                          )):
+                          ''}
+ 
  
             </div>
           </div>
