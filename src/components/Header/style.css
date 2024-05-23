@@ -256,6 +256,7 @@ z-index:1000;
     .whole-div {
 
       background-position:0%; 
+      overflow-x: hidden;
    
     }
 
