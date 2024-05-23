@@ -257,15 +257,39 @@ z-index:1000;
 
       background-position:0%; 
     }
-    .whole-div{
-     height:70vh;
-     background-image: url('../../assets/imgs/heromobile.png');
-    }
+
     .scroll-navbar2{
 
     margin-top: 3.4rem;
  
     }
+    
+
+
+
+
+    .header-div {
+   
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 2rem;
+  }
+  
+  .header-row{
+    margin-top: 10rem;
+    width: 80%;
+  }
+  
+  .whole-div {
+    position: relative;
+    background-image: url('../../assets/imgs/HeroImage.png');
+    background-size:cover ;
+    background-position: 0%;
+    background-repeat: no-repeat;
+    height: 80vh;
+    border-radius: 0px 0px 0px 86px;
+  }
  
 
 }
