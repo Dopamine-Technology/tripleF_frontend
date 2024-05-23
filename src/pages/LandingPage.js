@@ -15,7 +15,7 @@ function LandingPage() {
   const content = UseContentFetcher('landing');
 
   return (
-    <div style={{overflowY:'hidden'}}>
+    <div style={{overflowY:'hidden',overflowX:'hidden'}}>
     <Header content={content} />
     <About id="about" content={content}/>
     <WhosFor id="who" content={content} />
