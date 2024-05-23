@@ -41,10 +41,10 @@ const OurClients = () => {
     <div className='OurClientsWhole' id='Testimonial' style={{direction:'ltr'}}>
       <Row>
         <Col><ClientTalk selectedImageIndex={selectedImageIndex} setSelectedImageIndex={setSelectedImageIndex} /></Col>
-        {isSmallScreen?
+        {/* {isSmallScreen?
         <Col><ClientImgResponsive selectedImageIndex={selectedImageIndex} onImageClick={handleImageChange} isSmallScreen={isSmallScreen} /></Col>:
         <Col><ClientImg selectedImageIndex={selectedImageIndex} onImageClick={handleImageChange} isSmallScreen={isSmallScreen} /></Col>
-        }
+        } */}
         
       </Row>
     </div>
