@@ -406,8 +406,9 @@ const CombinedNavbars = ({setNavbarExpanded }) => {
       <Container className='navbar-container' style={{ boxShadow: 'none' }}>
         <Navbar.Brand href="" className="d-flex align-items-center navbar.brand2 ">
           <img src={LogoWhite} className='logo-register' style={{ paddingLeft: '2rem' }} />
-          <Navbar.Toggle aria-controls="basic-navbar-nav custom-toggler"
-            style={{ borderColor: 'transparent', color: 'white !important' }} className="ms-1" />
+          <Navbar.Toggle aria-controls="basic-navbar-nav custom-toggler" className="ms-1">
+  <img src={burgerImg} alt="Burger Menu" style={{ width: '24px', height: 'auto', cursor: 'pointer' }} />
+</Navbar.Toggle>
         </Navbar.Brand>
         <Navbar.Collapse id="basic-navbar-nav" className="custom-navbar-collapse">
           <Nav className="mt-1">

@@ -343,6 +343,10 @@ margin-left: 4rem;
     box-shadow: none !important; /* Some browsers may apply box-shadow instead of outline */
     border: solid 1px #77dcbf !important;
   }
+  .phone-input:focus {
+    border-color: #77dcbf !important; /* Change border color when focused */
+    outline: none; /* Remove default outline */
+}
   .password-ul{
     list-style:disc;
     padding: 0; /* Remove default padding */
@@ -352,6 +356,9 @@ margin-left: 4rem;
     outline: solid 1px #77dcbf !important;
     box-shadow: none !important; /* Some browsers may apply box-shadow instead of outline */
     border: solid 1px #77dcbf !important;/* Optional: remove the default focus outline */
+}
+.form-container div :focus{
+  border-color: #77dcbf !important;
 }
   .password-li{
     position: relative;

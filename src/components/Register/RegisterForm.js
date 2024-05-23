@@ -947,6 +947,7 @@ function RegisterForm({ onLoadingChange }) {
 <div className='form-group'>
   <label htmlFor="mobile_number">{t('Register.mobileNumber')}</label>
   <PhoneInput
+  tabindex="0"
   className={`form-control react-tel-input py-1 rounded-sm ${formErrors.mobile_number ? "border-danger" : ""} custom-focus-outline`}
   inputClass={` w-100 border-0 form-control-lg py-0 shadow-none react-tel-input`}
   buttonClass="border-0"
@@ -1097,10 +1098,11 @@ function RegisterForm({ onLoadingChange }) {
     )}
       </div>
     )}
-    <div className='form-group'>
+    <div className='form-group' >
       <label htmlFor="phone">{t('Register.mobileNumber')}</label>
       <PhoneInput
-        className={`form-control py-1 rounded-sm ${formErrors.mobile_number? "border-danger" : ""}`}
+      tabindex="0"
+        className={`form-control  py-1 rounded-sm ${formErrors.mobile_number? "border-danger" : ""}`}
         inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
         buttonClass="border-0"
         country={selectedCountryCode || 'jo'}
@@ -1250,6 +1252,7 @@ function RegisterForm({ onLoadingChange }) {
         <div className='form-group'>
           <label htmlFor="phone">{t('Register.mobileNumber')}</label>
           <PhoneInput
+          tabindex="0"
   className={`form-control py-1 rounded-sm ${formErrors.mobile_number  ? "border-danger" : ""}`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100 border-0'} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
@@ -1377,6 +1380,7 @@ function RegisterForm({ onLoadingChange }) {
   <div className='form-group'>
           <label htmlFor="phone">{t('Register.mobileNumber')}</label>
           <PhoneInput
+          tabindex="0"
   className={`form-control py-1 rounded-sm ${formErrors.mobile_number ? "border-danger" : ""} custom-focus-outline`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100'} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
@@ -1542,6 +1546,7 @@ function RegisterForm({ onLoadingChange }) {
         <div className='form-group'>
           <label htmlFor="mobile_number">Phone:</label>
           <PhoneInput
+          tabindex="0"
   className={`form-control py-1 rounded-sm ${errors && errors["mobile_number"] ? "border-danger" : ""}`}
   inputClass={`${isSmallScreen ? 'w-50' : 'w-100 '} border-0 form-control-lg py-0 shadow-none`}
   buttonClass="border-0"
